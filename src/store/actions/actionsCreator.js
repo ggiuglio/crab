@@ -1,7 +1,8 @@
 import {
   LOGIN_ERROR,
   RESET_LOGIN_ERROR,
-  SET_USER
+  SET_USER,
+  LOAD_QUOTATION
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -41,5 +42,25 @@ export const setUserAction = (user) => {
       type: SET_USER,
       user: user ? { email: user.email } : null
     });
+  }
+}
+
+export const loadQuotationAction = (username, password) => {
+  return dispatch => {
+    return FirebaseInstance.quotation.orderByChild().on('value', snapshot => {
+      const quotation = JSON.parse(JSON.stringify(snapshot.val()));
+        return dispatch(
+          {
+            type: LOAD_QUOTATION,
+            quotation: quotation
+          }
+        )
+      })
+      .catch(() => {
+        dispatch({
+          type: LOGIN_ERROR,
+          error: "Wrong username or password"
+        })
+      });
   }
 }

@@ -1,0 +1,41 @@
+{
+  "quotation": {
+    "modules": {
+      "MDG7t4I7kdYV62KNllm": {
+        "title": "Study setup",
+        "geo": "Italy",
+        "activities": {
+          "MDGD7asXaGVJz6lwQQM": {
+            "activity": "protocollo",
+            "unit": "document",
+            "responsibility-CRO": true,
+            "responsibility-sponsor": true,
+            "resources": {
+              "MDGD7efXaGVJz3lwQQM": {
+                "resource-type": "PM",
+                "hours": 3.5,
+                "resource-hour-cost": 8.7,
+                "resource-cost": 30.45
+              },
+              "MDGD7efXaGVJz3arQQM": {
+                "resource-type": "DM",
+                "hours": 1.5,
+                "resource-hour-cost": 16.7,
+                "resource-cost": 25.05
+              }
+            },
+            "unit-cost": 55.50
+          },
+          "unit-number": 5,
+          "comment": "costa tanto",
+          "invoiced": "",
+          "activity-cost": 277.5
+        }
+      },
+      "module-cost": 277.5,
+      "discount": 10,
+      "module-dicounted-cost": 249.75
+    },
+    "quotation-cost": 249.75
+  }
+}
