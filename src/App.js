@@ -3,14 +3,15 @@ import { connect } from "react-redux";
 import { Router, Route } from 'react-router-dom';
 import './App.css';
 import Firebase from './firebase/firebase';
-import createHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from "history";
 import Main from './main/main';
+import Budget from './budget/budget';
 import Login from './login/login'
 import { 
   logoutAction,
   setUserAction
 } from './store/actions/actionsCreator';
-export const history = createHistory()
+export const history = createBrowserHistory()
 export const FirebaseInstance = new Firebase();
 
 class App extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
       <Router history={history}>
         <Route path={'/login'} component={Login} />
         <Route path={'/crab'} component={Main} />
+        <Route path={'/crab/budget'} component={Budget} />
       </Router>
       </div>
     );

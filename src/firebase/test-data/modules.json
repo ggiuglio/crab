@@ -1,0 +1,30 @@
+{
+  "modules": {
+    "0001": {
+      "title": "Study set-up",
+      "activities": {
+        "0011": {
+          "title": "Study Protocol preparation according to applicable guidelines",
+          "unit": "Document"
+        },
+        "0012": {
+          "title": "Study Protocol review - up to 2 review cycles",
+          "unit": "Document"
+        }
+      }
+    },
+    "0002": {
+      "title": "Feasibility",
+      "activities": {
+        "0021": {
+          "title": "Screening & pool of potential sites identification",
+          "unit": "Process"
+        },
+        "0022": {
+          "title": "Feasibility Questionnaire preparation",
+          "unit": "Document"
+        }
+      }
+    }
+  }
+}

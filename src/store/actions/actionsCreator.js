@@ -45,22 +45,17 @@ export const setUserAction = (user) => {
   }
 }
 
-export const loadQuotationAction = (username, password) => {
+export const loadQuotationAction = () => {
   return dispatch => {
-    return FirebaseInstance.quotation.orderByChild().on('value', snapshot => {
+    return FirebaseInstance.quotation.orderByChild('id').on('value', snapshot => {
       const quotation = JSON.parse(JSON.stringify(snapshot.val()));
-        return dispatch(
-          {
-            type: LOAD_QUOTATION,
-            quotation: quotation
-          }
-        )
-      })
-      .catch(() => {
-        dispatch({
-          type: LOGIN_ERROR,
-          error: "Wrong username or password"
-        })
-      });
+      
+      return dispatch(
+        {
+          type: LOAD_QUOTATION,
+          quotation: quotation
+        }
+      )
+    })
   }
 }
