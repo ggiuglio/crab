@@ -8,20 +8,20 @@
           "0011": {
             "title": "Study Protocol preparation according to applicable guidelines",
             "unit": "document",
-            "responsibility-CRO": true,
-            "responsibility-sponsor": true,
+            "responsibilityCRO": true,
+            "responsibilitySponsor": true,
             "resources": {
               "MDGD7efXaGVJz3lwQQM": {
-                "resource-type": "PM",
+                "resourceType": "PM",
                 "hours": 3.5,
-                "resource-hour-cost": 8.7,
-                "resource-cost": 30.45
+                "resourceHourCost": 8.7,
+                "resourceCost": 30.45
               },
               "MDGD7efXaGVJz3arQQM": {
-                "resource-type": "DM",
+                "resourceType": "DM",
                 "hours": 1.5,
-                "resource-hour-cost": 16.7,
-                "resource-cost": 25.05
+                "resourceHourCost": 16.7,
+                "resourceCost": 25.05
               }
             },
             "unitCost": 55.50,
