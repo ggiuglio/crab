@@ -2,17 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { getUser } from '../store/selectors/selector';
 import { history } from '../App';
-import styled from 'styled-components';
 import Header from '../menu/header';
-
-const Container = styled.div`
-  width: 100vw;
-  ::-webkit-scrollbar {
-    background: #efefef;
-    width: 3px;
-    height: 3px;
-  }
-`;
+import SideMenu from '../menu/side/sideMenu';
 
 const Main = ({user}) => {
   React.useEffect(() => {
@@ -21,9 +12,10 @@ const Main = ({user}) => {
     }
   }, [user]);
 
-  return <Container>
+  return <div>
     <Header></Header>
-  </Container>
+    <SideMenu></SideMenu>
+  </div>
 }
 
 const mapStateToProps = state => {

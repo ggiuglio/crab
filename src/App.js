@@ -11,8 +11,13 @@ import {
   logoutAction,
   setUserAction
 } from './store/actions/actionsCreator';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import 'materialize-css/dist/css/materialize.min.css';
 export const history = createBrowserHistory()
 export const FirebaseInstance = new Firebase();
+library.add(fab, fas);
 
 class App extends Component {
   componentDidMount() {
@@ -28,7 +33,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="App">
       <Router history={history}>
         <Route path={'/login'} component={Login} />
         <Route path={'/crab'} component={Main} />

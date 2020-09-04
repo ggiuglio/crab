@@ -1,23 +1,22 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
-
-const ResourceContainer = styled.div`
-  margin-left: 20px;
-`;
+import React from "react";
+import { connect } from "react-redux";
 
 const Resource = ({ resource }) => {
-  return <ResourceContainer>
-      <span>{resource.resourceType}</span>  <span>{resource.hours}</span>
-  </ResourceContainer>
-}
-
-const mapStateToProps = state => {
-  return {}
+  return (
+    <div className="col s6 m3">
+      <p>
+        {resource.resourceType} {resource.hours}
+      </p>
+    </div>
+  );
 };
 
-const mapDispatchToProps = dispatch => {
-  return {}
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Resource);
