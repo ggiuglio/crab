@@ -7,10 +7,10 @@ const SignedInLinks = ({ logout }) => {
   return (
     <div>
       <li>
-        <NavLink to="/crab/projects">Projects</NavLink>
+        <NavLink to="/projects">Projects</NavLink>
       </li>
       <li>
-        <NavLink to="/crab/budget">Budget</NavLink>
+        <NavLink to="/budget">Budget</NavLink>
       </li>
       <li>
         <NavLink to="#" className="btn btn-floating indigo darken-4 z-depth-0">

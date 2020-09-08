@@ -8,12 +8,12 @@ const SignedInSideLinks = ({ logout }) => {
   return (
     <div>
       <li>
-        <NavLink to="/crab/projects" className="sidenav-close">
+        <NavLink to="/projects" className="sidenav-close">
         <FontAwesomeIcon icon="tasks" fixedWidth /> Projects
         </NavLink>
       </li>
       <li>
-        <NavLink to="/crab/budget" className="sidenav-close">
+        <NavLink to="/budget" className="sidenav-close">
         <FontAwesomeIcon icon="piggy-bank" fixedWidth /> Budget
         </NavLink>
       </li>

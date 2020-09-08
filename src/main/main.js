@@ -1,31 +1,42 @@
-import React from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getUser } from '../store/selectors/selector';
-import { history } from '../App';
-import Header from '../menu/header';
-import SideMenu from '../menu/side/sideMenu';
+import { getUser } from "../store/selectors/selector";
+import { history } from "../App";
+import Header from "../menu/header";
+import SideMenu from "../menu/side/sideMenu";
+import Footer from "../footer/footer";
+import { FirebaseInstance } from '../App';
 
-const Main = ({user}) => {
-  React.useEffect(() => {
-    if (!user) {
-      history.push('/login');
-    }
-  }, [user]);
+class Main extends Component {
 
-  return <div>
-    <Header></Header>
-    <SideMenu></SideMenu>
-  </div>
+  componentDidMount() {
+    FirebaseInstance.auth.onAuthStateChanged((user) => {
+      if (!this.props.user) {
+        history.push("/login");
+      }
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Header />
+        <SideMenu />
+        {this.props.children}
+        <Footer />
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = state => {
-  return { 
-    user: getUser(state)
-  }
+const mapStateToProps = (state) => {
+  return {
+    user: getUser(state),
+  };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {}
+const mapDispatchToProps = (dispatch) => {
+  return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps) (Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SignedOutSideLinks = () => {
   return (
     <div>
-      <li>
+      {/* <li>
         <NavLink to="/signup" className="sidenav-close">
           <FontAwesomeIcon icon="user-plus" fixedWidth /> Signup
         </NavLink>
@@ -14,7 +14,7 @@ const SignedOutSideLinks = () => {
         <NavLink to="/login" className="sidenav-close">
           <FontAwesomeIcon icon="sign-in-alt" fixedWidth /> Login
         </NavLink>
-      </li>
+      </li> */}
     </div>
   );
 };

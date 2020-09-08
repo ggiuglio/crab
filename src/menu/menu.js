@@ -9,9 +9,11 @@ const Menu = ({ user }) => {
 
   return (
     <div>
-      <a href="#" className="sidenav-trigger" data-target="mobile-links">
-        <i className="material-icons">menu</i>
-      </a>
+      {user ? (
+        <a href="#" className="sidenav-trigger" data-target="mobile-links">
+          <i className="material-icons">menu</i>
+        </a>
+      ) : null}
       <ul className="right hide-on-med-and-down">{links}</ul>
     </div>
   );
