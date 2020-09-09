@@ -2,7 +2,9 @@ import {
   LOGIN_ERROR,
   RESET_LOGIN_ERROR,
   SET_USER,
-  LOAD_QUOTATION
+  LOAD_PROJECT,
+  SHOW_NEW_INVOICE,
+  HIDE_NEW_INVOICE
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -45,17 +47,38 @@ export const setUserAction = (user) => {
   }
 }
 
-export const loadQuotationAction = () => {
+export const loadProjectAction = () => {
   return dispatch => {
-    return FirebaseInstance.quotation.orderByChild('id').on('value', snapshot => {
-      const quotation = JSON.parse(JSON.stringify(snapshot.val()));
-      
+    return FirebaseInstance.projects.orderByKey().equalTo('uhruhf44uhf').on('value', snapshot => {
+      const projects = JSON.parse(JSON.stringify(snapshot.val()));
+      console.log('projects', projects['uhruhf44uhf']);
+
       return dispatch(
         {
-          type: LOAD_QUOTATION,
-          quotation: quotation
+          type: LOAD_PROJECT,
+          project: projects['uhruhf44uhf']
         }
       )
     })
+  }
+}
+
+export const ShowNewInvoice = () => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SHOW_NEW_INVOICE,
+      }
+    )
+  }
+}
+
+export const HideNewInvoice = () => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: HIDE_NEW_INVOICE,
+      }
+    )
   }
 }

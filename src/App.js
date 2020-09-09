@@ -6,6 +6,7 @@ import Firebase from './firebase/firebase';
 import { createBrowserHistory } from "history";
 import Main from './main/main';
 import Budget from './budget/budget';
+import Invoice from './invoice/invoice';
 import Login from './login/login'
 import { 
   logoutAction,
@@ -38,6 +39,7 @@ class App extends Component {
         <Route path={'/login'} component={Login} />
         <Route path={'/crab'} component={Main} />
         <Route path={'/crab/budget'} component={Budget} />
+        <Route path={'/crab/invoice'} component={Invoice} />
       </Router>
       </div>
     );
