@@ -7,6 +7,7 @@ import { createBrowserHistory } from "history";
 import Main from "./main/main";
 import Budget from "./budget/budget";
 import Login from "./login/login";
+import Invoice from './invoice/invoice';
 import { logoutAction, setUserAction } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -34,6 +35,7 @@ class App extends Component {
         <Main>
           <Route path={"/login"} component={Login} />
           <Route path={"/budget"} component={Budget} />
+          <Route path={"/invoice"} component={Invoice} />
         </Main>
       </Router>
     );

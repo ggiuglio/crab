@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { loadQuotationAction } from "../store/actions/actionsCreator";
+import { loadProjectAction } from "../store/actions/actionsCreator";
 import { getQuotation } from "../store/selectors/selector";
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadQuotation: () => dispatch(loadQuotationAction()),
+    loadQuotation: () => dispatch(loadProjectAction()),
   };
 };
 
