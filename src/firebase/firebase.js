@@ -9,6 +9,7 @@ class Firebase {
     this.provider = new firebase.auth.GoogleAuthProvider()
     this.storageRef = app.storage().ref();
     this.projects = app.database().ref('projects');
+    this.dataRef = app.database();
 
     this.auth = app.auth();
   }

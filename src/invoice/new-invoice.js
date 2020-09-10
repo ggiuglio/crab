@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
+import { createNewInvoice } from "../store/actions/actionsCreator";
 
 const NewInvoiceContainer = styled.div`
   width: 80%;
@@ -31,13 +32,13 @@ const SaveButton = styled.button`
   margin-top: 10px;
 `;
 
-const NewInvoice = () => {
-  const [quotationId, setQuotationId] = useState();
-  const [moduleId, setModuleId] = useState();
-  const [activityId, setActivityId] = useState();
-  const [unitCost, setUnitCost] = useState();
-  const [unitNumber, setUnitNumber] = useState();
-  const [totalCost, setTotalCost] = useState();
+const NewInvoice = ({createInvoice}) => {
+  const [quotationId, setQuotationId] = useState('');
+  const [moduleId, setModuleId] = useState('');
+  const [activityId, setActivityId] = useState('');
+  const [unitCost, setUnitCost] = useState('');
+  const [unitNumber, setUnitNumber] = useState('');
+  const [totalCost, setTotalCost] = useState('');
 
   const unitCostChange = (newUnitCost) => {
     setUnitCost(newUnitCost);
@@ -53,9 +54,19 @@ const NewInvoice = () => {
     }
   }
 
-  const saveActivity = () => {
+  const saveInoice = () => {
     if(quotationId && moduleId && activityId && unitCost && unitNumber) {
+      const invoice = {
+        date: "12/12/1212",
+        quotationId: quotationId,
+        moduleId: moduleId,
+        activityId: activityId,
+        unitCost: unitCost,
+        unitNumber: unitNumber,
+        totalCost: totalCost
+      }
 
+      createInvoice(invoice);
     }
   };
 
@@ -63,7 +74,7 @@ const NewInvoice = () => {
     <NewInvoiceContainer>
       <NewInvoiceBody>
         <BodyItem>
-          <label for="quotation">Quotation Id</label>
+          <label htmlFor="quotation">Quotation Id</label>
           <InvoiceInput type="text" value={quotationId} onChange={e => setQuotationId(e.target.value)} />
         </BodyItem>
         <BodyItem type="text">
@@ -87,7 +98,7 @@ const NewInvoice = () => {
           <TotalCost>{totalCost}</TotalCost>
         </BodyItem>
       </NewInvoiceBody>
-      <SaveButton>Save Invoice</SaveButton>
+      <SaveButton onClick={() => saveInoice()}>Save Invoice</SaveButton>
     </NewInvoiceContainer>
   );
 };
@@ -97,7 +108,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    createInvoice: (invoice) => dispatch(createNewInvoice(invoice))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewInvoice);

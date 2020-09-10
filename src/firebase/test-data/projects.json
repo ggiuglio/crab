@@ -3,87 +3,236 @@
     "uhruhf44uhf": {
       "quotations": {
         "urjg77gtju": {
+          "type": "Sponsor",
+          "code": "PURE01",
+          "status": "submitted",
+          "start date": "",
+          "end date": "",
           "modules": {
-            "0001": {
+            "m0001": {
               "title": "Study set-up",
-              "geo": "Italy",
+              "geo": "General",
               "activities": {
-                "0011": {
+                "a0001": {
                   "title": "Study Protocol preparation according to applicable guidelines",
                   "unit": "document",
                   "responsibilityCRO": true,
                   "responsibilitySponsor": true,
                   "resources": {
-                    "MDGD7efXaGVJz3lwQQM": {
+                    "MDGD7efXaGVJz3lwQQM1": {
+                      "fixedcost": 1,
                       "resourceType": "PM",
-                      "hours": 3.5,
-                      "resourceHourCost": 8.7,
-                      "resourceCost": 30.45
+                      "hours": 10,
+                      "resourceHourCost": 100,
+                      "resourceCost": 1000
                     },
-                    "MDGD7efXaGVJz3arQQM": {
-                      "resourceType": "DM",
-                      "hours": 1.5,
-                      "resourceHourCost": 16.7,
-                      "resourceCost": 25.05
+                    "MDGD7efXaGVJz3arQQM2": {
+                      "fixedcost": 1,
+                      "resourceType": "MW",
+                      "hours": 20,
+                      "resourceHourCost": 120,
+                      "resourceCost": 2400
+                    },
+                    "MDGD7efXaGVJz3arQQM3": {
+                      "fixedcost": 1,
+                      "resourceType": "STAT",
+                      "hours": 5,
+                      "resourceHourCost": 150,
+                      "resourceCost": 750
                     }
                   },
-                  "unitCost": 55.50,
-                  "unitNumber": 5,
-                  "comment": "costa tanto",
-                  "invoiced": "",
-                  "activityCost": 277.5
+                  "unitCost": 4150,
+                  "unitNumber": 1,
+                  "comment": "The voice is not including PhV revision",
+                  "activityCost": 4150
                 }
               },
-              "moduleCost": 277.5,
+              "moduleCost": 4150,
               "discount": 10,
-              "moduleDicountedCost": 249.75
+              "moduleDicountedCost": 3753
             },
-            "0002": {
+            "m0002": {
               "title": "Feasibility",
-              "geo": "Italy",
+              "geo": "General",
               "activities": {
-                "0021": {
-                  "title": "Screening & pool of potential sites identification",
-                  "unit": "Process",
+                "a0023": {
+                  "title": "Feasibility Questionnaire preparation",
+                  "unit": "Document",
                   "responsibilityCRO": true,
-                  "responsibilitySponsor": true,
+                  "responsibilitySponsor": false,
                   "resources": {
-                    "MDGD7efXaGVJz3lwQQM": {
+                    "MDGD7efXafVJz3lwQQM3": {
+                      "fixedcost": 1,
                       "resourceType": "PM",
-                      "hours": 3.5,
-                      "resourceHourCost": 8.7,
-                      "resourceCost": 30.45
+                      "hours": 5,
+                      "resourceHourCost": 100,
+                      "resourceCost": 500
                     },
-                    "MDGD7efXaGVJz3arQQM": {
-                      "resourceType": "DM",
-                      "hours": 1.5,
-                      "resourceHourCost": 16.7,
-                      "resourceCost": 25.05
+                    "MDGD7efXaGVJz3lwQQM3": {
+                      "fixedcost": 2,
+                      "resourceType": "CTA",
+                      "hours": 1,
+                      "resourceHourCost": 40,
+                      "resourceCost": 40
                     }
                   },
-                  "unitCost": 55.50,
-                  "unitNumber": 5,
-                  "comment": "costa tanto",
-                  "invoiced": "",
-                  "activityCost": 277.5
+                  "unitCost": 540,
+                  "unitNumber": 1,
+                  "comment": "none",
+                  "activityCost": 450
+                },
+                "a0027": {
+                  "title": "Feasibility report preparation",
+                  "unit": "Document",
+                  "responsibilityCRO": true,
+                  "responsibilitySponsor": false,
+                  "resources": {
+                    "MDGD7efXaGVaz3lwQQM3": {
+                      "fixedcost": 1,
+                      "resourceType": "PM",
+                      "hours": 8,
+                      "resourceHourCost": 100,
+                      "resourceCost": 800
+                    },
+                    "MDGD7efXaGVJz3lwQQM3": {
+                      "fixedcost": 1,
+                      "resourceType": "CTA",
+                      "hours": 2,
+                      "resourceHourCost": 40,
+                      "resourceCost": 80
+                    }
+                  },
+                  "unitCost": 880,
+                  "unitNumber": 1,
+                  "comment": "interim reporting during feasibility included in the cost",
+                  "activityCost": 880
                 }
               },
-              "moduleCost": 277.5,
-              "discount": 10,
-              "moduleDicountedCost": 249.75
+              "moduleCost": 1420,
+              "discount": 0,
+              "moduleDicountedCost": 1420
+            },
+            "m0003": {
+              "title": "Feasibility",
+              "geo": "South Europe - ITA,SPA",
+              "activities": {
+                "a0022": {
+                  "title": "Screening & pool of potential sites identification",
+                  "unit": "process",
+                  "responsibilityCRO": true,
+                  "responsibilitySponsor": false,
+                  "resources": {
+                    "MDGD7efXaGVJz3lwQQM1": {
+                      "fixedcost": 1,
+                      "resourceType": "PM",
+                      "hours": 32,
+                      "resourceHourCost": 100,
+                      "resourceCost": 3200
+                    },
+                    "MDGD7efXaGVJz3arQQM2": {
+                      "fixedcost": 1,
+                      "resourceType": "CTA",
+                      "hours": 16,
+                      "resourceHourCost": 40,
+                      "resourceCost": 640
+                    }
+                  },
+                  "unitCost": 3840,
+                  "unitNumber": 1,
+                  "comment": "full sites discovery",
+                  "activityCost": 3840
+                },
+                "a0025": {
+                  "title": "Site Qualification Visits (SQV) - onsite (travel / accommodation excluded)",
+                  "unit": "visit",
+                  "responsibilityCRO": true,
+                  "responsibilitySponsor": false,
+                  "resources": {
+                    "MDGD7efXaGVJz3lwQQM1": {
+                      "fixedcost": 1,
+                      "resourceType": "CRA South Europe",
+                      "hours": 12,
+                      "resourceHourCost": 80,
+                      "resourceCost": 960
+                    }
+                  },
+                  "unitCost": 960,
+                  "unitNumber": 10,
+                  "comment": "full sites discovery",
+                  "activityCost": 9600
+                }
+              },
+              "moduleCost": 13440,
+              "discount": 0,
+              "moduleDicountedCost": 13440
+            },
+            "m0004": {
+              "title": "Feasibility",
+              "geo": "North Europe - DK,SWE",
+              "activities": {
+                "akiok0022": {
+                  "title": "Screening & pool of potential sites identification",
+                  "unit": "process",
+                  "responsibilityCRO": true,
+                  "responsibilitySponsor": false,
+                  "resources": {
+                    "MDGD7efXaGVJz3lwQQM1": {
+                      "fixedcost": 1,
+                      "resourceType": "CRA North Europe",
+                      "hours": 32,
+                      "resourceHourCost": 130,
+                      "resourceCost": 4160
+                    },
+                    "MDGD7efXaGVJz3arQQM2": {
+                      "fixedcost": 1,
+                      "resourceType": "CTA",
+                      "hours": 16,
+                      "resourceHourCost": 40,
+                      "resourceCost": 640
+                    }
+                  },
+                  "unitCost": 4800,
+                  "unitNumber": 1,
+                  "comment": "full sites discovery",
+                  "activityCost": 3840
+                },
+                "a340025": {
+                  "title": "Site Qualification Visits (SQV) - onsite (travel / accommodation excluded)",
+                  "unit": "visit",
+                  "responsibilityCRO": true,
+                  "responsibilitySponsor": false,
+                  "resources": {
+                    "MDGD7efXaGVJz3lwQQM1": {
+                      "fixedcost": 1,
+                      "resourceType": "CRA North Europe",
+                      "hours": 12,
+                      "resourceHourCost": 130,
+                      "resourceCost": 1560
+                    }
+                  },
+                  "unitCost": 1560,
+                  "unitNumber": 5,
+                  "comment": "full sites discovery",
+                  "activityCost": 7800
+                }
+              },
+              "moduleCost": 13440,
+              "discount": 0,
+              "moduleDicountedCost": 11640
             }
           },
-          "quotationCost": 499.50
+          "quotationCost": "30253"
         }
       },
       "invoices": {
-        "13123123": {
-          "quotationId": "00001",
-          "moduleId": "0001",
-          "activityId": "0011",
-          "unitCost": 13.22,
+        "inv001": {
+          "date": "20/10/2020",
+          "quotationId": "urjg77gtju",
+          "moduleId": "m0004",
+          "activityId": "akiok0022",
+          "unitCost": "4800",
           "unitNumber": 2,
-          "totalCost": 26.44
+          "totalCost": "8200"
         }
       }
     }
