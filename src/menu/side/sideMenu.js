@@ -7,8 +7,10 @@ import M from  'materialize-css/dist/js/materialize.min.js';
 
 const SideMenu = ({user}) => {
   React.useEffect(() => {
-    let sidenav = document.querySelector('.sidenav');
-    M.Sidenav.init(sidenav, {});
+    if(user) {
+      let sidenav = document.querySelector('.sidenav');
+      M.Sidenav.init(sidenav, {});
+    }
   });
 
   const links = user ? <SignedInSideLinks /> : <SignedOutSideLinks />;
