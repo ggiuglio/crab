@@ -8,6 +8,7 @@ import {
 } from '../actions/actionsTypes'
 
 export const INITIAL_STATE = {
+    selectedProject: 'uhruhf44uhf',
     quotation: undefined,
     invoiceList: [],
     showNewInvoice: false

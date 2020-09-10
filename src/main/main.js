@@ -1,42 +1,48 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getUser } from "../store/selectors/selector";
+import { getUser, getQuotation } from "../store/selectors/selector";
+import { loadProjectAction } from "../store/actions/actionsCreator";
 import { history } from "../App";
 import Header from "../menu/header";
 import SideMenu from "../menu/side/sideMenu";
 import Footer from "../footer/footer";
 import { FirebaseInstance } from '../App';
 
-class Main extends Component {
+const Main = ({user, quotation, loadQuotation, children}) => {
+  React.useEffect(() => {
+    if (!quotation) {
+      console.log('load');
+      loadQuotation();
+    }
 
-  componentDidMount() {
     FirebaseInstance.auth.onAuthStateChanged((user) => {
-      if (!this.props.user) {
+      if (!user) {
         history.push("/login");
       }
     });
-  }
+  });
 
-  render() {
-    return (
-      <div>
-        <Header />
-        <SideMenu />
-        {this.props.children}
-        <Footer />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Header />
+      <SideMenu />
+      {children}
+      <Footer />
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
+    quotation: getQuotation(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    loadQuotation: () => dispatch(loadProjectAction()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

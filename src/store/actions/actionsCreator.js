@@ -12,9 +12,7 @@ import { history } from '../../App';
 export const loginAction = (username, password) => {
   return dispatch => {
     FirebaseInstance.doSignInWithEmailAndPassword(username, password)
-      .then(() => {
-        history.push('/julia/about')
-      })
+      .then(() => {})
       .catch(() => {
         dispatch({
           type: LOGIN_ERROR,
@@ -48,15 +46,16 @@ export const setUserAction = (user) => {
 }
 
 export const loadProjectAction = () => {
-  return dispatch => {
-    return FirebaseInstance.projects.orderByKey().equalTo('uhruhf44uhf').on('value', snapshot => {
+  return (dispatch, getSate) => {
+    const projectId = getSate().selectedProject;    
+    
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
       const projects = JSON.parse(JSON.stringify(snapshot.val()));
-      console.log('projects', projects['uhruhf44uhf']);
 
       return dispatch(
         {
           type: LOAD_PROJECT,
-          project: projects['uhruhf44uhf']
+          project: projects
         }
       )
     })
@@ -82,3 +81,16 @@ export const HideNewInvoice = () => {
     )
   }
 }
+
+export const createNewInvoice = (invoice) => {
+  return (dispatch, getSate) => {
+    const projectId = getSate().selectedProject;
+
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices`).push(invoice).then(() => {
+      dispatch({
+        type: HIDE_NEW_INVOICE,
+      });
+    });
+  }
+}
+

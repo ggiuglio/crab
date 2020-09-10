@@ -6,11 +6,9 @@ import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
 import $ from "jquery";
 
-const Budget = ({ quotation, loadQuotation }) => {
+const Budget = ({ quotation }) => {
   React.useEffect(() => {
-    if (!quotation) {
-      loadQuotation();
-    } else {
+    if (quotation) {
       let collapsible = $(".collapsible");
       M.Collapsible.init(collapsible, { accordion: false });
     }
@@ -35,22 +33,22 @@ const Budget = ({ quotation, loadQuotation }) => {
           </div>
         </div>
       ) : (
-        <div className="center valign-page-center">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div>
-              <div className="gap-patch">
-                <div className="circle"></div>
-              </div>
-              <div className="circle-clipper right">
-                <div className="circle"></div>
+          <div className="center valign-page-center">
+            <div className="preloader-wrapper big active">
+              <div className="spinner-layer spinner-blue-only">
+                <div className="circle-clipper left">
+                  <div className="circle"></div>
+                </div>
+                <div className="gap-patch">
+                  <div className="circle"></div>
+                </div>
+                <div className="circle-clipper right">
+                  <div className="circle"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
@@ -62,9 +60,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    loadQuotation: () => dispatch(loadProjectAction()),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Budget);
