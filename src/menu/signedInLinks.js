@@ -13,7 +13,7 @@ const SignedInLinks = ({ logout }) => {
         <NavLink to="/budget">Budget</NavLink>
       </li>
       <li>
-        <NavLink to="/crab/invoice">Invoice</NavLink>
+        <NavLink to="/invoice">Invoice</NavLink>
       </li>
       <li>
         <NavLink to="#" className="btn btn-floating indigo darken-4 z-depth-0">
