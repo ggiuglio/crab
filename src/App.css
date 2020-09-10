@@ -1,3 +1,11 @@
 .valign-page-center {
     margin-top: Calc(20vh) !important;
 }
+
+.logo-footer {
+    max-height: 80px;
+}
+
+.page-footer {
+    background-color: #fefefc !important;
+}

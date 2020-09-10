@@ -6,13 +6,11 @@ import {
 } from "../store/actions/actionsCreator";
 import { getUser, getLoginError } from "../store/selectors/selector";
 import { history } from "../App";
-import Header from "../menu/header";
-import SideMenu from '../menu/side/sideMenu';
 
 const Login = ({ login, loginError, resetLoginError, user }) => {
   React.useEffect(() => {
     if (user) {
-      history.push("/crab/budget");
+      history.push("/budget");
     }
   }, [user]);
 
@@ -37,9 +35,6 @@ const Login = ({ login, loginError, resetLoginError, user }) => {
   const checkDisable = !username || !password;
 
   return (
-    <div className="App">
-      <Header></Header>
-      <SideMenu></SideMenu>
       <div className="container valign-page-center">
         <form className="white" onSubmit={(e) => handleSubmit(e)}>
           <div className="input-field">
@@ -74,7 +69,6 @@ const Login = ({ login, loginError, resetLoginError, user }) => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 
