@@ -2,6 +2,46 @@
     margin-top: Calc(20vh) !important;
 }
 
+.inline {
+    display: inline;
+}
+
+.static {
+    position: static !important;
+}
+
+.card .card-action {
+    border-top: 1px solid rgba(255,255,255,1);
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+}
+
+.price:after {
+    content: ' €';
+}
+
+.clear-flow {
+    display: flow-root;
+}
+
+.fixed-action-btn.static li {
+    margin-top: 20px !important;
+}
+
+.collapsible-header > div {
+    width: 100%;
+}
+
+.space-right {
+    margin-right: 1rem;
+}
+
+.document-type {
+    font-style: italic;
+}
+
 .logo-footer {
     max-height: 80px;
 }

@@ -5,10 +5,11 @@ import "./App.css";
 import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
-import Budget from "./budget/budget";
+import Quotation from "./quotation/quotation";
+import Quotations from "./quotation/quotations";
+import Invoice from "./invoice/invoice";
 import Login from "./login/login";
-import Invoice from './invoice/invoice';
-import { logoutAction, setUserAction } from "./store/actions/actionsCreator";
+import { setUserAction } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -21,9 +22,7 @@ class App extends Component {
   componentDidMount() {
     FirebaseInstance.auth.onAuthStateChanged((user) => {
       this.props.setUser(user);
-      if (user) {
-        history.push("/budget");
-      } else {
+      if (!user) {
         history.push("/login");
       }
     });
@@ -34,7 +33,8 @@ class App extends Component {
       <Router history={history}>
         <Main>
           <Route path={"/login"} component={Login} />
-          <Route path={"/budget"} component={Budget} />
+          <Route path={"/quotations"} component={Quotations} />
+          <Route path={"/quotation"} component={Quotation} />
           <Route path={"/invoice"} component={Invoice} />
         </Main>
       </Router>
@@ -48,7 +48,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch(logoutAction()),
     setUser: (user) => dispatch(setUserAction(user)),
   };
 };

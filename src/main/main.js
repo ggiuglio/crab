@@ -1,31 +1,37 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getUser, getQuotation } from "../store/selectors/selector";
+import { getQuotation } from "../store/selectors/selector";
 import { loadProjectAction } from "../store/actions/actionsCreator";
 import { history } from "../App";
 import Header from "../menu/header";
 import SideMenu from "../menu/side/sideMenu";
 import Footer from "../footer/footer";
 import { FirebaseInstance } from '../App';
+import ProjectMenu from "../menu/projectMenu";
 
-const Main = ({user, quotation, loadQuotation, children}) => {
+const Main = ({quotation, loadQuotation, children}) => {
   React.useEffect(() => {
-    if (!quotation) {
-      console.log('load');
-      loadQuotation();
-    }
-
     FirebaseInstance.auth.onAuthStateChanged((user) => {
       if (!user) {
         history.push("/login");
+      } else {
+        if (!quotation) {
+          loadQuotation();
+        }
       }
     });
   });
 
+  /**TODO
+   * change quotation check with selected project check for side menu
+   */
   return (
     <div>
       <Header />
       <SideMenu />
+      {quotation ? (
+        <ProjectMenu />
+      ) : null}
       {children}
       <Footer />
     </div>
@@ -34,7 +40,6 @@ const Main = ({user, quotation, loadQuotation, children}) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: getUser(state),
     quotation: getQuotation(state),
   };
 };

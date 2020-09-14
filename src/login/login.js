@@ -10,7 +10,7 @@ import { history } from "../App";
 const Login = ({ login, loginError, resetLoginError, user }) => {
   React.useEffect(() => {
     if (user) {
-      history.push("/budget");
+      history.push("/quotations");
     }
   }, [user]);
 

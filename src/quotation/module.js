@@ -2,17 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import Activity from "./activity";
 import M from "materialize-css/dist/js/materialize.min.js";
-import $ from "jquery"
 
 const Module = ({ key, module }) => {
   React.useEffect(() => {
-    let collapsible = $(".collapsible-body .collapsible");
+    // let collapsible = $(".collapsible-body .collapsible");
+    let collapsible = document.querySelectorAll(".collapsible-body .collapsible");
     M.Collapsible.init(collapsible, { accordion: false });
   });
 
   return (
     <li>
-      <div className="collapsible-header">{module.title}</div>
+      <div className="collapsible-header"><div className="center">{module.title} - {module.geo}<span className="right price">{module.moduleCost}</span></div></div>
       <div className="collapsible-body" id={key}>
         <ul className="collapsible expandable">
           {module.activities.map((activity) => (
