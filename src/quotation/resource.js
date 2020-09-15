@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 
 const Resource = ({ resource }) => {
   return (
-    <div className="col s6 m3">
-      <p>
-        {resource.resourceType} {resource.hours}
-      </p>
-    </div>
+    <tr>
+      <td>{resource.resourceType}</td>
+      <td>{resource.hours}</td>
+      {/* <td></td> */}
+    </tr>
   );
 };
 

@@ -2,12 +2,32 @@
     margin-top: Calc(20vh) !important;
 }
 
-.inline {
-    display: inline;
-}
-
 .static {
     position: static !important;
+}
+
+.block {
+    display: block !important;
+}
+
+.inline {
+    display: inline !important;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bolder {
+    font-weight: bolder;
+}
+
+.mbold {
+    font-weight: 500;
+}
+
+.side-by-side {
+    white-space: nowrap;
 }
 
 .card .card-action {
@@ -26,11 +46,15 @@
     display: flow-root;
 }
 
+#menu-project-dd {
+    overflow: hidden;
+}
+
 .fixed-action-btn.static li {
     margin-top: 20px !important;
 }
 
-.collapsible-header > div {
+.collapsible-header > div:first-of-type {
     width: 100%;
 }
 

@@ -42,12 +42,12 @@ const Quotations = ({ quotation }) => {
         <div>
           <div className="row">
             <div className="col s12 l6">
-              <div className="card indigo">
+              <div className="card indigo lighten-2">
                 <div className="card-content">
                   <NavLink to="quotation">
                     <div className="white-text">
                       <p className="card-title">
-                        <b>{quotation.code}</b>
+                        <span className="bolder">{quotation.code}</span>
                         <span className="right">{quotation.status}</span>
                       </p>
                       <p>

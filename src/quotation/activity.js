@@ -9,57 +9,122 @@ const Activity = ({ key, activity }) => {
     process: "project-diagram",
     visit: "eye",
   };
+  let rdm = Date.now();
   return (
     <li>
-      <div className="collapsible-header">
+      <div className="collapsible-header block">
+        <div className="section center">
+          <span className="bolder indigo-text">{activity.title}</span>{" "}
+          <span className="document-type side-by-side">
+            <FontAwesomeIcon
+              icon={iconTypeMap[activity.unit.toLowerCase()]}
+              className="indigo-text"
+              fixedWidth
+            />{" "}
+            {activity.unit}
+          </span>
+          <div className="right"></div>
+        </div>
         <div className="row">
-          <div className="col s7 l5">
-            <span className="indigo-text indigo-darken-2 space-right">
-              <b>{activity.title}</b>
-            </span>
-            
+          <div className="col s4">
+            <div className="center price">
+              <span className="hide-on-med-and-up mbold">Unit c: </span>
+              <span className="hide-on-small-only mbold">Unit cost: </span>
+              <br className="hide-on-med-and-up" />
+              {activity.unitCost}
+            </div>
           </div>
-          <div className="col s4 l2"><span className="document-type">
-              <FontAwesomeIcon
-                icon={iconTypeMap[activity.unit.toLowerCase()]}
-                className="indigo-text"
-                fixedWidth
-              />
-              {activity.unit}
-            </span></div>
-          <div className="col s1 l1"></div>
-          <div className="col s4 l1">
-            <span className="price right">Unit cost: {activity.unitCost}</span>
+          <div className="col s4">
+            <div className="center">
+              <span className="hide-on-med-and-up mbold">Unit n: </span>
+              <span className="hide-on-small-only mbold">Unit number: </span>
+              <br className="hide-on-med-and-up" />
+              {activity.unitNumber}
+            </div>
           </div>
-          <div className="col s4 l2">
-            <span className="right">Unit number: {activity.unitNumber}</span>
-          </div>
-          <div className="col s4 l1">
-            <span className="price right">
-              Total cost: {activity.activityCost}
-            </span>
+          <div className="col s4">
+            <div className="center price">
+              <span className="hide-on-med-and-up mbold">Total: </span>
+              <span className="hide-on-small-only mbold">Total cost: </span>
+              <br className="hide-on-med-and-up" />
+              {activity.activityCost}
+            </div>
           </div>
         </div>
-        {/* <span className="indigo-text indigo-darken-2 space-right">
-          <b>{activity.title}</b>
-        </span> */}
-        {/* <FontAwesomeIcon icon="file" className="indigo-text" fixedWidth />
-        <span className="document-type">{activity.unit}</span> */}
-        {/* <div className="right"> */}
-        {/* <span className="price">Unit cost: {activity.unitCost}</span> */}
-        {/* <span>Unit number: {activity.unitNumber}</span> */}
-        {/* <span className="price">Total cost: {activity.activityCost}</span> */}
-        {/* </div> */}
       </div>
-      <div className="collapsible-body" id={key}>
+      <div className="collapsible-body">
         <div className="row">
-          {activity.resources.map((resource) => (
-            <Resource key={resource.id} resource={resource} />
-          ))}
+          <div className="col s2">
+            <label>
+              <input
+                type="checkbox"
+                checked={activity.responsibilityCRO}
+                disabled="disabled"
+              />
+              <span className="hide-on-med-and-down">Responsibility CRO</span>
+              <span className="hide-on-large-only">Resp CRO</span>
+            </label>
+          </div>
+          <div className="col s2">
+            <label>
+              <input
+                type="checkbox"
+                checked={activity.responsibilitySponsor}
+                disabled="disabled"
+              />
+              <span className="hide-on-med-and-down">
+                Responsibility SPONSOR
+              </span>
+              <span className="hide-on-large-only">Resp SPO</span>
+            </label>
+          </div>
+          <div className="col s2 side-by-side">
+            <a href="!#" onClick={(e) => toggleResources(rdm, e)}>
+              <FontAwesomeIcon
+                icon="user-tie"
+                className="indigo-text"
+                title="Show Resources"
+                fixedWidth
+              />
+              <span className="hide-on-med-and-down"> Show&nbsp;Resources</span>
+              <span className="hide-on-small-only hide-on-large-only">
+                {" "}
+                Show&nbsp;Res
+              </span>
+            </a>
+          </div>
+          <div className="col s6 italic">{activity.comment}</div>
+        </div>
+        <div className="container hide" id={"resources_" + rdm}>
+          <div className="container">
+            <table className="centered responsive-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Hours</th>
+                  {/* <th>Item Price</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {activity.resources.map((resource) => (
+                  <Resource key={resource.id} resource={resource} />
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </li>
   );
+};
+
+const toggleResources = (id, event) => {
+  console.log(id);
+  event.preventDefault();
+  let res = document.getElementById("resources_" + id);
+  res.classList.contains("hide")
+    ? res.classList.remove("hide")
+    : res.classList.add("hide");
 };
 
 const mapStateToProps = (state) => {

@@ -28,14 +28,14 @@ const Quotation = ({ quotation }) => {
 
           <div className="row">
             <div className="col s12">
-              <ul className="collapsible expandable">
+              <ul className="collapsible">
                 {quotation.modules.map((module) => (
                   <Module key={module.id} module={module} />
                 ))}
               </ul>
               <div className="center">
                 <div className="col s12 z-depth-1">
-                  <p className="flow-text">
+                  <p className="flow-text price">
                     Quotation cost = {quotation.quotationCost}
                   </p>
                 </div>
