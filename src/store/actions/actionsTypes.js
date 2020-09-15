@@ -5,3 +5,4 @@ export const SET_USER = "SET_USER";
 export const LOAD_PROJECT = "LOAD_PROJECT";
 export const SHOW_NEW_INVOICE = "SHOW_NEW_INVOICE";
 export const HIDE_NEW_INVOICE = "HIDE_NEW_INVOICE";
+export const CLEAR_USER_DATA = "CLEAR_USER_DATA";

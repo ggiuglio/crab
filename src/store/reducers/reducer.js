@@ -4,7 +4,8 @@ import {
     RESET_LOGIN_ERROR,
     LOAD_PROJECT,
     SHOW_NEW_INVOICE,
-    HIDE_NEW_INVOICE
+    HIDE_NEW_INVOICE,
+    CLEAR_USER_DATA,
 } from '../actions/actionsTypes'
 
 export const INITIAL_STATE = {
@@ -53,6 +54,13 @@ const Reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 showNewInvoice: false
+            }
+        }
+        case CLEAR_USER_DATA: {
+            return {
+                ...state,
+                quotation: null,
+                invoiceList: null
             }
         }
 

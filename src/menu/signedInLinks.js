@@ -7,12 +7,12 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 const SignedInLinks = ({ user, quotation, logout }) => {
   React.useEffect(() => {
-    if(quotation) {
+    let userTooltip = document.querySelector(".tooltipped");
+    M.Tooltip.init(userTooltip);
+    if (quotation) {
       let dropdown = document.querySelector(".dropdown-trigger");
       M.Dropdown.init(dropdown, { coverTrigger: false });
     }
-    let userTooltip = document.querySelector('.tooltipped');
-    M.Tooltip.init(userTooltip);
   });
 
   /**TODO

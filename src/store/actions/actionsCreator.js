@@ -4,7 +4,8 @@ import {
   SET_USER,
   LOAD_PROJECT,
   SHOW_NEW_INVOICE,
-  HIDE_NEW_INVOICE
+  HIDE_NEW_INVOICE,
+  CLEAR_USER_DATA,
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -32,7 +33,10 @@ export const resetLoginErrorAction = () => {
 
 export const logoutAction = () => {
   return dispatch => {
-    FirebaseInstance.doSignOut()
+    FirebaseInstance.doSignOut();
+    dispatch({
+      type: CLEAR_USER_DATA
+    });
   }
 }
 

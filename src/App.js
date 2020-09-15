@@ -9,7 +9,8 @@ import Quotation from "./quotation/quotation";
 import Quotations from "./quotation/quotations";
 import Invoice from "./invoice/invoice";
 import Login from "./login/login";
-import { setUserAction } from "./store/actions/actionsCreator";
+import { getQuotation } from "./store/selectors/selector";
+import { setUserAction, loadProjectAction } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -24,6 +25,15 @@ class App extends Component {
       this.props.setUser(user);
       if (!user) {
         history.push("/login");
+      } else {
+        if (!this.props.quotation) {
+          /**
+         * TODO
+         * Move me in the Project component
+         * load projects --> quotations -> ...
+         */
+          this.props.loadQuotation();
+        }
       }
     });
   }
@@ -43,12 +53,15 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    quotation: getQuotation(state),
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => dispatch(setUserAction(user)),
+    loadQuotation: () => dispatch(loadProjectAction()),
   };
 };
 

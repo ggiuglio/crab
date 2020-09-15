@@ -119,7 +119,6 @@ const Activity = ({ key, activity }) => {
 };
 
 const toggleResources = (id, event) => {
-  console.log(id);
   event.preventDefault();
   let res = document.getElementById("resources_" + id);
   res.classList.contains("hide")
