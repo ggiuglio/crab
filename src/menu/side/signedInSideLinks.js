@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getUser, getQuotation  } from "../../store/selectors/selector";
+import { getUser, getQuotations  } from "../../store/selectors/selector";
 import { logoutAction } from "../../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 
@@ -96,7 +96,7 @@ const SignedInSideLinks = ({ user, quotation, logout }) => {
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
-    quotation: getQuotation(state),
+    quotation: getQuotations(state),
   };
 };
 

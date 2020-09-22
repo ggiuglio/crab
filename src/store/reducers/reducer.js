@@ -6,11 +6,13 @@ import {
     SHOW_NEW_INVOICE,
     HIDE_NEW_INVOICE,
     CLEAR_USER_DATA,
+    SELECT_QUOTATION
 } from '../actions/actionsTypes'
 
 export const INITIAL_STATE = {
     selectedProject: 'uhruhf44uhf',
-    quotation: undefined,
+    selectedQuotation: undefined,
+    quotations: undefined,
     invoiceList: [],
     showNewInvoice: false
  };
@@ -35,12 +37,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
             }
         }
         case LOAD_PROJECT: {
-            const quotations = mapQuotationList(action.project.quotations);
+            const quotations = action.project.quotations;
             const invoices = mapInvoiceList(action.project.invoices);
 
             return {
                 ...state,
-                quotation: quotations[0],
+                quotations: quotations,
                 invoiceList: invoices
             }
         }
@@ -63,6 +65,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
                 invoiceList: null
             }
         }
+        case SELECT_QUOTATION: {
+            return {
+                ...state,
+                selectedQuotation: action.quotation
+            }
+        }
 
         default:
             return state
@@ -71,48 +79,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
 
 export default Reducer
 
-const mapQuotationList = (quotations) => {
-    const quotationList = [];
-    Object.keys(quotations).forEach(k => {
-        quotations[k].id = k;
-        quotationList.push(mapQuotation(quotations[k]));
-    });
 
-    return quotationList;
-}
-
-const mapQuotation = (quotation => {
-    const modules = [];
-    Object.keys(quotation.modules).forEach(k => {
-        quotation.modules[k].id = k;
-        modules.push(mapModule(quotation.modules[k]));
-    });
-    quotation.modules = modules;
-
-    return quotation;
-});
-
-const mapModule = (module => {
-    const activities = [];
-    Object.keys(module.activities).forEach(k => {
-        module.activities[k].id = k;
-        activities.push(mapActivity(module.activities[k]));
-    });
-    module.activities = activities;
-
-    return module;
-});
-
-const mapActivity = (activity => {
-    const resources = [];
-    Object.keys(activity.resources).forEach(k => {
-        activity.resources[k].id = k;
-        resources.push(activity.resources[k]);
-    });
-    activity.resources = resources;
-
-    return activity;
-});
 
 const mapInvoiceList = (invoices => {
     const invoiceList = [];

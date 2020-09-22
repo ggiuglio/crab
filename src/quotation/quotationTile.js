@@ -1,0 +1,95 @@
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import { selectQuotation } from "../store/actions/actionsCreator";
+
+const QuotationTile = ({ quotation, chooseQuotation }) => {
+  const goToQuotationPage = () => {
+    chooseQuotation(quotation.id);
+  };
+
+  return <div>
+    <div className="row">
+      <div className="col s12 l6">
+        <div className="card indigo lighten-2">
+          <div className="card-content" onClick={() => goToQuotationPage()}>
+            <NavLink to="quotation">
+              <div className="white-text">
+                <p className="card-title">
+                  <span className="bolder">{quotation.code}</span>
+                  <span className="right">{quotation.status}</span>
+                </p>
+                <p>
+                  <span>Type: {quotation.type} </span>
+                  <span className="right price">
+                    Price: {quotation.quotationCost}{" "}
+                  </span>
+                </p>
+              </div>
+            </NavLink>
+          </div>
+          <div className="card-action clear-flow">
+            <div className="fixed-action-btn static right">
+              <a className="btn-floating orange darken-4">
+                <i className="material-icons">menu</i>
+              </a>
+              <ul>
+                <li>
+                  <a
+                    className="btn-floating btn-small red darken-1 modal-trigger"
+                    href="#modal-archive"
+                    title="Archive"
+                  >
+                    <i className="material-icons">archive</i>
+                  </a>
+                </li>
+                <li>
+                  <NavLink
+                    className="btn-floating btn-small green darken-1"
+                    to="#"
+                  >
+                    <i className="material-icons">edit</i>
+                  </NavLink>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-archive" className="modal">
+      <div className="modal-content">
+        <h4>Quotation Archiving</h4>
+        <p>Are you sure you want to archive this quotation?</p>
+      </div>
+      <div className="modal-footer">
+        <a
+          href="#!"
+          className="modal-close waves-effect waves-indigo btn-flat"
+        >
+          Cancel
+      </a>
+        <a
+          href="#!"
+          className="modal-close btn red darken-2 waves-effect waves-light"
+        >
+          Ok
+      </a>
+      </div>
+    </div>
+  </div>
+
+}
+
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    chooseQuotation: (quotationId) => dispatch(selectQuotation(quotationId))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuotationTile);

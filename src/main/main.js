@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getQuotation } from "../store/selectors/selector";
+import { getQuotations } from "../store/selectors/selector";
 // import { loadProjectAction } from "../store/actions/actionsCreator";
 // import { history } from "../App";
 import Header from "../menu/header";
@@ -9,7 +9,7 @@ import Footer from "../footer/footer";
 // import { FirebaseInstance } from '../App';
 import ProjectMenu from "../menu/projectMenu";
 
-const Main = ({quotation, loadQuotation, children}) => {
+const Main = ({quotations, loadQuotation, children}) => {
   // React.useEffect(() => {
   //   FirebaseInstance.auth.onAuthStateChanged((user) => {
   //     if (!user) {
@@ -29,7 +29,7 @@ const Main = ({quotation, loadQuotation, children}) => {
     <div>
       <Header />
       <SideMenu />
-      {quotation ? (
+      {quotations ? (
         <ProjectMenu />
       ) : null}
       {children}
@@ -40,7 +40,7 @@ const Main = ({quotation, loadQuotation, children}) => {
 
 const mapStateToProps = (state) => {
   return {
-    quotation: getQuotation(state),
+    quotations: getQuotations(state),
   };
 };
 

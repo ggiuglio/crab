@@ -6,6 +6,7 @@ import {
   SHOW_NEW_INVOICE,
   HIDE_NEW_INVOICE,
   CLEAR_USER_DATA,
+  SELECT_QUOTATION
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -95,6 +96,17 @@ export const createNewInvoice = (invoice) => {
         type: HIDE_NEW_INVOICE,
       });
     });
+  }
+}
+
+export const selectQuotation = (quotationId) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SELECT_QUOTATION,
+        quotation: quotationId
+      }
+    )
   }
 }
 

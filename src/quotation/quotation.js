@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getQuotation } from "../store/selectors/selector";
+import { getSelectedQuotation } from "../store/selectors/selector";
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
 
@@ -66,7 +66,7 @@ const Quotation = ({ quotation }) => {
 
 const mapStateToProps = (state) => {
   return {
-    quotation: getQuotation(state),
+    quotation: getSelectedQuotation(state),
   };
 };
 

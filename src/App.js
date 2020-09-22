@@ -9,7 +9,7 @@ import Quotation from "./quotation/quotation";
 import Quotations from "./quotation/quotations";
 import Invoice from "./invoice/invoice";
 import Login from "./login/login";
-import { getQuotation } from "./store/selectors/selector";
+import { getQuotations } from "./store/selectors/selector";
 import { setUserAction, loadProjectAction } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -26,7 +26,7 @@ class App extends Component {
       if (!user) {
         history.push("/login");
       } else {
-        if (!this.props.quotation) {
+        if (!this.props.quotations) {
           /**
          * TODO
          * Move me in the Project component
@@ -54,7 +54,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    quotation: getQuotation(state),
+    quotations: getQuotations(state),
   };
 };
 
