@@ -1,9 +1,29 @@
 export const getUser = state => state.user;
 export const getLoginError = state => state.loginError;
+export const getProjects = state => state.projects ? mapProjectList(state.projects) : undefined;
+export const getSelectedProject = state => state.selectedProject ? getFirsProject(state.projects, state.selectedProject) : undefined;
 export const getQuotations = state => state.quotations ? mapQuotationList(state.quotations) : undefined;
 export const getSelectedQuotation = state => state.quotations && state.selectedQuotation ? getFirsQuotation(state.quotations, state.selectedQuotation) : undefined;
 export const getShowNewInvoice = state => state.showNewInvoice;
 export const getInvoiceList = state => state.invoiceList;
+
+const mapProjectList = (projects) => {
+    const projectList = [];
+    Object.keys(projects).forEach(k => {
+        projects[k].id = k;
+        projectList.push(projects[k]);
+    });
+  
+    return projectList.reverse();
+  };
+
+//   const mapProject = (project => {
+//     Object.keys(quotation.modules).forEach(k => {
+//         quotation.modules[k].id = k;
+//     });
+  
+//     return quotation;
+//   });
 
 const mapQuotationList = (quotations) => {
   const quotationList = [];
@@ -47,5 +67,7 @@ const mapActivity = (activity => {
 
   return activity;
 });
+
+const getFirsProject = (projects, selectedProjects) => projects[selectedProjects];
 
 const getFirsQuotation = (quotations, selectedQuotation) => mapQuotation(quotations[selectedQuotation]);

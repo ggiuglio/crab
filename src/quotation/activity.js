@@ -54,28 +54,42 @@ const Activity = ({ key, activity }) => {
       </div>
       <div className="collapsible-body">
         <div className="row">
-          <div className="col s2">
-            <label>
+          <div className="col s5 m2">
+            <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
                 checked={activity.responsibilityCRO}
                 disabled="disabled"
               />
-              <span className="hide-on-med-and-down">Responsibility CRO</span>
-              <span className="hide-on-large-only">Resp CRO</span>
+              <span>Responsibility CRO</span>
+            </label>
+            <label className="hide-on-large-only">
+              <input
+                type="checkbox"
+                checked={activity.responsibilityCRO}
+                disabled="disabled"
+              />
+              <span>Resp CRO</span>
             </label>
           </div>
-          <div className="col s2">
-            <label>
+          <div className="col s5 m2">
+            <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
                 checked={activity.responsibilitySponsor}
                 disabled="disabled"
               />
-              <span className="hide-on-med-and-down">
+              <span>
                 Responsibility SPONSOR
               </span>
-              <span className="hide-on-large-only">Resp SPO</span>
+            </label>
+            <label className="hide-on-large-only">
+              <input
+                type="checkbox"
+                checked={activity.responsibilitySponsor}
+                disabled="disabled"
+              />
+              <span>Resp SPO</span>
             </label>
           </div>
           <div className="col s2 side-by-side">
@@ -93,7 +107,7 @@ const Activity = ({ key, activity }) => {
               </span>
             </a>
           </div>
-          <div className="col s6 italic">{activity.comment}</div>
+          <div className="col s12 m6 italic s-m-space-up">{activity.comment}</div>
         </div>
         <div className="container hide" id={"resources_" + rdm}>
           <div className="container">

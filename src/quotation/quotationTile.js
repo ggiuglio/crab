@@ -8,8 +8,7 @@ const QuotationTile = ({ quotation, chooseQuotation }) => {
     chooseQuotation(quotation.id);
   };
 
-  return <div>
-    <div className="row">
+  return (
       <div className="col s12 l6">
         <div className="card indigo lighten-2">
           <div className="card-content" onClick={() => goToQuotationPage()}>
@@ -55,31 +54,7 @@ const QuotationTile = ({ quotation, chooseQuotation }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div id="modal-archive" className="modal">
-      <div className="modal-content">
-        <h4>Quotation Archiving</h4>
-        <p>Are you sure you want to archive this quotation?</p>
-      </div>
-      <div className="modal-footer">
-        <a
-          href="#!"
-          className="modal-close waves-effect waves-indigo btn-flat"
-        >
-          Cancel
-      </a>
-        <a
-          href="#!"
-          className="modal-close btn red darken-2 waves-effect waves-light"
-        >
-          Ok
-      </a>
-      </div>
-    </div>
-  </div>
-
+      </div> )
 }
 
 const mapStateToProps = (state) => {

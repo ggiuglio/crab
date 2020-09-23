@@ -2,15 +2,54 @@ import {
     SET_USER,
     LOGIN_ERROR,
     RESET_LOGIN_ERROR,
+    LOAD_PROJECTS,
     LOAD_PROJECT,
     SHOW_NEW_INVOICE,
     HIDE_NEW_INVOICE,
     CLEAR_USER_DATA,
+    SELECT_PROJECT,
     SELECT_QUOTATION
 } from '../actions/actionsTypes'
 
 export const INITIAL_STATE = {
-    selectedProject: 'uhruhf44uhf',
+    projects: {
+        'uhruhf44uhf': {
+            title : 'PURE',
+            Sponsor : 'CoreQuest Sagl',
+            PM : 'Tommaso Prosdocimi',
+            GEO: {
+              'siughpisdfug' : {
+                geocode : 'General'
+              },
+              'bqpoirufb': {
+                geocode :'South Europe - ITA,SPA',
+                sites: {
+                  'ijacbpibc':{
+                    sitecode: '0101'
+                    },
+                  'oiadfvoaubv':{
+                    sitecode:'0102'
+                  }
+                }
+              },
+              'nasodncp':{
+                geo:'North Europe - DK,SWE',
+                sites:{
+                  'havdboi':{
+                    sitecode: '0201'
+                  },
+                  'oiabc':{
+                    sitecode:'0202'
+                  }
+                }
+              }
+            },
+            creationDate : '17/1/2020',
+            endDate : '',
+            status : 'open',
+          }
+    },
+    selectedProject: undefined,
     selectedQuotation: undefined,
     quotations: undefined,
     invoiceList: [],
@@ -34,6 +73,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loginError: ''
+            }
+        }
+        case LOAD_PROJECTS: {
+            // GET Projects from DB
+            return {
+                ...state,
             }
         }
         case LOAD_PROJECT: {
@@ -61,8 +106,16 @@ const Reducer = (state = INITIAL_STATE, action) => {
         case CLEAR_USER_DATA: {
             return {
                 ...state,
+                selectedProject: null,
+                selectedQuotation: null,
                 quotation: null,
                 invoiceList: null
+            }
+        }
+        case SELECT_PROJECT: {
+            return {
+                ...state,
+                selectedProject: action.project
             }
         }
         case SELECT_QUOTATION: {

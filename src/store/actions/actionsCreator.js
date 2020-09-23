@@ -2,10 +2,12 @@ import {
   LOGIN_ERROR,
   RESET_LOGIN_ERROR,
   SET_USER,
+  LOAD_PROJECTS,
   LOAD_PROJECT,
   SHOW_NEW_INVOICE,
   HIDE_NEW_INVOICE,
   CLEAR_USER_DATA,
+  SELECT_PROJECT,
   SELECT_QUOTATION
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
@@ -32,6 +34,14 @@ export const resetLoginErrorAction = () => {
   }
 }
 
+export const clearUserData = () => {
+  return dispatch => {
+    dispatch({
+      type: CLEAR_USER_DATA
+    });
+  }
+}
+
 export const logoutAction = () => {
   return dispatch => {
     FirebaseInstance.doSignOut();
@@ -47,6 +57,16 @@ export const setUserAction = (user) => {
       type: SET_USER,
       user: user ? { email: user.email } : null
     });
+  }
+}
+
+export const loadProjectsAction = () => {
+  return (dispatch, getSate) => {
+      return dispatch(
+        {
+          type: LOAD_PROJECTS,
+        }
+      )
   }
 }
 
@@ -96,6 +116,17 @@ export const createNewInvoice = (invoice) => {
         type: HIDE_NEW_INVOICE,
       });
     });
+  }
+}
+
+export const selectProject = (projectId) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SELECT_PROJECT,
+        project: projectId
+      }
+    )
   }
 }
 

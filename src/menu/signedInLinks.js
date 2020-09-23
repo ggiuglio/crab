@@ -1,27 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser, getQuotations } from "../store/selectors/selector";
+import { getUser, getSelectedProject } from "../store/selectors/selector";
 import { logoutAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const SignedInLinks = ({ user, quotation, logout }) => {
+const SignedInLinks = ({ user, selectedProject, logout }) => {
   React.useEffect(() => {
     let userTooltip = document.querySelector(".tooltipped");
     M.Tooltip.init(userTooltip);
-    if (quotation) {
+    if (selectedProject) {
       let dropdown = document.querySelector(".dropdown-trigger");
       M.Dropdown.init(dropdown, { coverTrigger: false });
     }
   });
 
-  /**TODO
-   * change quotation check with selected project check for side menu
-   */
-  const projectLinks = quotation ? (
+  const projectLinks = selectedProject ? (
     <div className="inline">
       <li>
-        <NavLink to="#">Projects</NavLink>
+        <NavLink to="/projects">Projects</NavLink>
       </li>
       <li>
         <a href="#" className="dropdown-trigger" data-target="menu-project-dd">
@@ -57,7 +54,7 @@ const SignedInLinks = ({ user, quotation, logout }) => {
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
-    quotation: getQuotations(state),
+    selectedProject: getSelectedProject(state),
   };
 };
 

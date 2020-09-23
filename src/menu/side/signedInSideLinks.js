@@ -2,25 +2,22 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getUser, getQuotations  } from "../../store/selectors/selector";
+import { getUser, getSelectedProject  } from "../../store/selectors/selector";
 import { logoutAction } from "../../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const SignedInSideLinks = ({ user, quotation, logout }) => {
+const SignedInSideLinks = ({ user, selectedProject, logout }) => {
   React.useEffect(() => {
-    if(quotation) {
+    if(selectedProject) {
       let collapsible = document.querySelector(".collapsible");
       M.Collapsible.init(collapsible, {accordion: false});
     }
   });
 
-  /**TODO
-   * change quotation check with selected project check for side menu
-   */
-  const projectLinks = quotation ? (
+  const projectLinks = selectedProject ? (
     <div>
       <li>
-        <NavLink to="#" className="sidenav-close">
+        <NavLink to="/projects" className="sidenav-close">
           <FontAwesomeIcon icon="tasks" fixedWidth /> Projects
         </NavLink>
       </li>
@@ -96,7 +93,7 @@ const SignedInSideLinks = ({ user, quotation, logout }) => {
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
-    quotation: getQuotations(state),
+    selectedProject: getSelectedProject(state),
   };
 };
 

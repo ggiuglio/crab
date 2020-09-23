@@ -5,12 +5,13 @@ import "./App.css";
 import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
+import Projects from "./project/projects";
 import Quotation from "./quotation/quotation";
 import Quotations from "./quotation/quotations";
 import Invoice from "./invoice/invoice";
 import Login from "./login/login";
-import { getQuotations } from "./store/selectors/selector";
-import { setUserAction, loadProjectAction } from "./store/actions/actionsCreator";
+import { getProjects } from "./store/selectors/selector";
+import { setUserAction, loadProjectsAction } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -26,13 +27,8 @@ class App extends Component {
       if (!user) {
         history.push("/login");
       } else {
-        if (!this.props.quotations) {
-          /**
-         * TODO
-         * Move me in the Project component
-         * load projects --> quotations -> ...
-         */
-          this.props.loadQuotation();
+        if (!this.props.projects) {
+          this.props.loadProjects();
         }
       }
     });
@@ -42,7 +38,9 @@ class App extends Component {
     return (
       <Router history={history}>
         <Main>
+          <Route exact path='/'component={Projects} />
           <Route path={"/login"} component={Login} />
+          <Route path={"/projects"} component={Projects} />
           <Route path={"/quotations"} component={Quotations} />
           <Route path={"/quotation"} component={Quotation} />
           <Route path={"/invoice"} component={Invoice} />
@@ -54,14 +52,14 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    quotations: getQuotations(state),
+    projects: getProjects(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => dispatch(setUserAction(user)),
-    loadQuotation: () => dispatch(loadProjectAction()),
+    loadProjects: () => dispatch(loadProjectsAction()),
   };
 };
 

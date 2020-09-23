@@ -58,6 +58,10 @@
     width: 100%;
 }
 
+.space-up {
+    margin-top: 1rem;
+}
+
 .space-right {
     margin-right: 1rem;
 }
@@ -72,4 +76,10 @@
 
 .page-footer {
     background-color: #fefefc !important;
+}
+
+@media only screen and (max-width: 599px) {
+    .s-m-space-up {
+        margin-top: 1rem;
+    }
 }
