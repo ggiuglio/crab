@@ -30,8 +30,13 @@
     white-space: nowrap;
 }
 
+.card .card-content {
+    padding: 1rem !important;
+}
+
 .card .card-action {
     border-top: 1px solid rgba(255,255,255,1);
+    padding: 1rem 1.5rem !important;
 }
 
 .page-title {
@@ -58,6 +63,14 @@
     width: 100%;
 }
 
+.collapsible-header, .collapsible-body {
+    padding: 0.5rem 1rem !important;
+}
+
+.row {
+    margin-bottom: 1rem !important;
+}
+
 .space-up {
     margin-top: 1rem;
 }
@@ -70,6 +83,10 @@
     font-style: italic;
 }
 
+th, td {
+    padding: 0rem !important;
+}
+
 .logo-footer {
     max-height: 80px;
 }
@@ -78,8 +95,37 @@
     background-color: #fefefc !important;
 }
 
-@media only screen and (max-width: 599px) {
-    .s-m-space-up {
+@media only screen and (min-width: 0) {
+    html {
+        font-size: 12px !important;
+    }
+}
+
+@media only screen and (min-width: 992px){
+    html {
+        font-size: 12.5px !important;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    html {
+        font-size: 13px !important;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .s-space-up {
         margin-top: 1rem;
+    }
+
+    .s-center {
+        text-align: center !important;
+    }
+
+    .s-truncate {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }

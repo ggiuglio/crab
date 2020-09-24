@@ -14,16 +14,16 @@ const QuotationTile = ({ quotation, chooseQuotation }) => {
           <div className="card-content" onClick={() => goToQuotationPage()}>
             <NavLink to="quotation">
               <div className="white-text">
-                <p className="card-title">
-                  <span className="bolder">{quotation.code}</span>
-                  <span className="right">{quotation.status}</span>
-                </p>
-                <p>
-                  <span>Type: {quotation.type} </span>
-                  <span className="right price">
+                <div className="row card-title">
+                  <span className="bolder col s12 m6 s-center">{quotation.code}</span>
+                  <span className="col s12 m6 s-center">{quotation.status}</span>
+                </div>
+                <div>
+                  <span className="col s12 m6 s-center">Type: {quotation.type} </span>
+                  <span className="col s12 m6 s-center price">
                     Price: {quotation.quotationCost}{" "}
                   </span>
-                </p>
+                </div>
               </div>
             </NavLink>
           </div>

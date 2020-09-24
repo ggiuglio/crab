@@ -1,44 +1,156 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSelectedQuotation } from "../store/selectors/selector";
+import { getPeople, getSelectedProject, getSelectedQuotation } from "../store/selectors/selector";
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
+import PersonCost from "../people/personCost";
 
-const Quotation = ({ quotation }) => {
+const Quotation = ({ quotation, people, selectedProject }) => {
   React.useEffect(() => {
     if (quotation) {
       let collapsible = document.querySelectorAll(".collapsible");
       M.Collapsible.init(collapsible, { accordion: false });
     }
-  });
+  }, [quotation]);
+
+  const togglePeopleTable = (evt) => {
+    evt.preventDefault();
+    let qg = document.getElementById("quotationGroup");
+    let pt = document.getElementById("peopleTable");
+    let checks = document.querySelectorAll(".activityCheck");
+    let rts = document.querySelectorAll(".resourcesTrigger");
+    let acs = document.querySelectorAll(".activityComment");
+    let qcs = document.querySelectorAll(".qtCost");
+    if (pt.classList.contains("scale-out")) {
+      qg.classList.remove("s12");
+      qg.classList.add("s8", "m8", "l9");
+
+      checks.forEach((check) => {
+        check.classList.remove("s5", "m2");});
+      checks.forEach((check) => {
+        check.classList.add("s6", "m3");});
+
+      rts.forEach((rt) => {rt.classList.remove("side-by-side")});
+      rts.forEach((rt) => {rt.classList.add("truncate", "center")});
+
+      acs.forEach((ac) => {ac.classList.remove("m6")});
+      acs.forEach((ac) => {ac.classList.add("m4", "s-space-up")});
+
+      qcs.forEach((ac) => {ac.classList.remove("m4")});
+
+      pt.classList.remove("scale-out");
+      pt.classList.add("scale-in");
+    } else {
+      pt.classList.remove("scale-in");
+      pt.classList.add("scale-out");
+      
+      qg.classList.remove("s8", "m8", "l9");
+      qg.classList.add("s12");
+
+      checks.forEach((check) => {
+        check.classList.remove("s6", "m3");});
+      checks.forEach((check) => {
+        check.classList.add("s5", "m2");});
+
+      rts.forEach((rt) => {rt.classList.remove("truncate", "center")});
+      rts.forEach((rt) => {rt.classList.add("side-by-side")});
+
+      acs.forEach((ac) => {ac.classList.remove("m4", "s-space-up")});
+      acs.forEach((ac) => {ac.classList.add("m6")});
+
+      qcs.forEach((ac) => {ac.classList.add("m4")});
+    }
+  };
+
+  const printPersonCost = (person) => {
+    let personC = [];
+    personC.push(<PersonCost key={person.title} title={person.title} fee={person.fee} />);
+    if (person.geobool) {
+      selectedProject.GEO
+      .filter((geo) => {
+        return !/^general$/i.test(geo.geocode);
+      })
+      .map((geo) => {
+        personC.push(<PersonCost key={person.title + " - " + geo.geocode} title={person.title + " - " + geo.geocode} fee={person.fee} />);
+      });
+    }
+    return personC;
+  }
 
   return (
     <div id="quotation">
-      <h5 className="center page-title">Quotation</h5>
+      <h5 className="center page-title">
+        {quotation.code} - <span className="italic">{quotation.status}</span>
+      </h5>
       {quotation ? (
         <div>
           <div className="container">
             <div className="row">
-              <div className="col s6 m3">CODE: {quotation.code}</div>
-              <div className="col s6 m3">STATUS: {quotation.status}</div>
-              <div className="col s6 m3">START DATE: {quotation.startDate}</div>
-              <div className="col s6 m3">END DATE: {quotation.endDate}</div>
+              <div className="col s6 m3">VALID FROM: {quotation.startDate}</div>
+              <div className="col s6 m3 offset-m6">
+                VALID THRU: {quotation.endDate}
+              </div>
             </div>
           </div>
 
           <div className="row">
-            <div className="col s12">
+            <div className="col s1 offset-s11">
+              <a
+                href="#"
+                id="peopleTableTrigger"
+                onClick={(evt) => togglePeopleTable(evt)}
+              >
+                <i
+                  className="material-icons indigo-text right"
+                  title="People Fees Table"
+                >
+                  assignment_ind
+                </i>
+              </a>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12" id="quotationGroup">
               <ul className="collapsible">
                 {quotation.modules.map((module) => (
                   <Module key={module.id} module={module} />
                 ))}
               </ul>
-              <div className="center">
-                <div className="col s12 z-depth-1">
-                  <p className="flow-text price">
-                    Quotation cost = {quotation.quotationCost}
-                  </p>
+                <div className="col s12 m4 l4 z-depth-1 qtCost">
+                  <h6 className="bolder price center">
+                    Price without PT  {quotation.quotationCost}
+                  </h6>
                 </div>
+                <div className="col s12 m4 l4 z-depth-1 qtCost">
+                  <h6 className="bolder price center">
+                    PT only  {quotation.quotationCost}
+                  </h6>
+                </div>
+                <div className="col s12 m4 l4 z-depth-1 qtCost">
+                  <h6 className="bolder price center">
+                    Quotation cost  {quotation.quotationCost}
+                  </h6>
+                </div>
+            </div>
+            <div
+              className="col s4 m4 l3 scale-transition scale-out"
+              id="peopleTable"
+            >
+              <div className="row">
+                <div className="col s10 offset-s1 bolder center">Hourly cost</div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Person</th>
+                      <th>Fee</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {people.map((person) => (
+                      printPersonCost(person)
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -67,6 +179,8 @@ const Quotation = ({ quotation }) => {
 const mapStateToProps = (state) => {
   return {
     quotation: getSelectedQuotation(state),
+    people: getPeople(state),
+    selectedProject: getSelectedProject(state)
   };
 };
 

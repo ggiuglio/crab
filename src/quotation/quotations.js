@@ -13,11 +13,11 @@ const Quotations = ({ selectedProject, quotations }) => {
       let fab = document.querySelectorAll(".fixed-action-btn");
       M.FloatingActionButton.init(fab, { direction: "left" });
     }
-  });
+  }, [quotations]);
 
   return (
     <div className="container">
-      <h4 className="center page-title">{selectedProject.title}</h4>
+      <h4 className="center page-title">{selectedProject.title} - <span className="italic">{selectedProject.status}</span></h4>
       <div className="row">
         <div className="col s6 center">
           <NavLink

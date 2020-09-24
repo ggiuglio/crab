@@ -15,18 +15,18 @@ const ProjectTile = ({ project, chooseProject, loadProject }) => {
         <div className="card-content" onClick={() => goToProjectPage()}>
           <NavLink to="quotations">
             <div className="white-text">
-              <p className="card-title">
-                <span className="bolder">{project.title}</span>
-                <span className="right">{project.status}</span>
-              </p>
-              <p>
-                <span>Sponsor: {project.sponsor} </span>
-                <span className="right">PM: {project.PM}</span>
-              </p>
-              <p>
-                <span>Creation date: {project.creationDate} </span>
-                <span className="right">End date: {project.endDate}</span>
-              </p>
+                <div className="row card-title">
+                  <span className="bolder col s12 m6 s-center">{project.title}</span>
+                  <span className="col s12 m6 s-center">{project.status}</span>
+                </div>
+                <div className="row">
+                <span className="col s12 m6 s-center">Sponsor: {project.sponsor} </span>
+                <span className="col s12 m6 s-center">PM: {project.PM}</span>
+              </div>
+              <div className="row">
+                <span className="col s12 m6 s-center">Creation date: {project.creationDate} </span>
+                <span className="col s12 m6 s-center">End date: {project.endDate}</span>
+              </div>
             </div>
           </NavLink>
         </div>

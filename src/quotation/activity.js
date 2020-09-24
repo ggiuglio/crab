@@ -13,20 +13,21 @@ const Activity = ({ key, activity }) => {
   return (
     <li>
       <div className="collapsible-header block">
-        <div className="section center">
-          <span className="bolder indigo-text">{activity.title}</span>{" "}
-          <span className="document-type side-by-side">
-            <FontAwesomeIcon
-              icon={iconTypeMap[activity.unit.toLowerCase()]}
-              className="indigo-text"
-              fixedWidth
-            />{" "}
-            {activity.unit}
-          </span>
-          <div className="right"></div>
-        </div>
         <div className="row">
           <div className="col s4">
+            <span className="bolder indigo-text">{activity.title}</span>
+          </div>
+          <div className="col s2">
+            <span className="document-type">
+              <FontAwesomeIcon
+                icon={iconTypeMap[activity.unit.toLowerCase()]}
+                className="indigo-text"
+                fixedWidth
+              />{" "}
+              <span className="s-truncate">{activity.unit}</span>
+            </span>
+          </div>
+          <div className="col s2">
             <div className="center price">
               <span className="hide-on-med-and-up mbold">Unit c: </span>
               <span className="hide-on-small-only mbold">Unit cost: </span>
@@ -34,7 +35,7 @@ const Activity = ({ key, activity }) => {
               {activity.unitCost}
             </div>
           </div>
-          <div className="col s4">
+          <div className="col s2">
             <div className="center">
               <span className="hide-on-med-and-up mbold">Unit n: </span>
               <span className="hide-on-small-only mbold">Unit number: </span>
@@ -42,7 +43,7 @@ const Activity = ({ key, activity }) => {
               {activity.unitNumber}
             </div>
           </div>
-          <div className="col s4">
+          <div className="col s2">
             <div className="center price">
               <span className="hide-on-med-and-up mbold">Total: </span>
               <span className="hide-on-small-only mbold">Total cost: </span>
@@ -54,7 +55,7 @@ const Activity = ({ key, activity }) => {
       </div>
       <div className="collapsible-body">
         <div className="row">
-          <div className="col s5 m2">
+          <div className="col s5 m2 activityCheck">
             <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
@@ -72,16 +73,14 @@ const Activity = ({ key, activity }) => {
               <span>Resp CRO</span>
             </label>
           </div>
-          <div className="col s5 m2">
+          <div className="col s5 m2 activityCheck">
             <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
                 checked={activity.responsibilitySponsor}
                 disabled="disabled"
               />
-              <span>
-                Responsibility SPONSOR
-              </span>
+              <span>Responsibility SPONSOR</span>
             </label>
             <label className="hide-on-large-only">
               <input
@@ -92,7 +91,7 @@ const Activity = ({ key, activity }) => {
               <span>Resp SPO</span>
             </label>
           </div>
-          <div className="col s2 side-by-side">
+          <div className="col s2 side-by-side resourcesTrigger">
             <a href="!#" onClick={(e) => toggleResources(rdm, e)}>
               <FontAwesomeIcon
                 icon="user-tie"
@@ -100,26 +99,44 @@ const Activity = ({ key, activity }) => {
                 title="Show Resources"
                 fixedWidth
               />
-              <span className="hide-on-med-and-down"> Show&nbsp;Resources</span>
+              <span className="hide-on-med-and-down ">
+                {" "}
+                Show&nbsp;Resources
+              </span>
               <span className="hide-on-small-only hide-on-large-only">
                 {" "}
                 Show&nbsp;Res
               </span>
             </a>
           </div>
-          <div className="col s12 m6 italic s-m-space-up">{activity.comment}</div>
+          <div className="col s12 m6 italic s-space-up activityComment">
+            {activity.comment}
+          </div>
         </div>
         <div className="container hide" id={"resources_" + rdm}>
           <div className="container">
             <table className="centered responsive-table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Hours</th>
-                  {/* <th>Item Price</th> */}
+                  <th className="hide-on-small-only">Type</th>
+                  <th className="hide-on-small-only">Resource hour cost</th>
+                  <th className="hide-on-small-only">Hours</th>
+                  <th className="hide-on-small-only">Resource cost</th>
+                  <th className="hide-on-med-and-up">Type</th>
+                  <th className="hide-on-med-and-up">Cost/h</th>
+                  <th className="hide-on-med-and-up">Hours</th>
+                  <th className="hide-on-med-and-up">Cost</th>
                 </tr>
               </thead>
               <tbody>
+                {
+                  activity.fixedCost ? ( <tr>
+                    <td>Fixed costs</td>
+                    <td> - </td>
+                    <td> - </td>
+                    <td>{activity.fixedCost}</td>
+                  </tr>) : ( null )
+                }
                 {activity.resources.map((resource) => (
                   <Resource key={resource.id} resource={resource} />
                 ))}

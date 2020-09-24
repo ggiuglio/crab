@@ -5,8 +5,9 @@ const Resource = ({ resource }) => {
   return (
     <tr>
       <td>{resource.resourceType}</td>
+      <td>{resource.resourceHourCost}</td>
       <td>{resource.hours}</td>
-      {/* <td></td> */}
+      <td>{resource.resourceCost}</td>
     </tr>
   );
 };

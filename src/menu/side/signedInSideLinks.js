@@ -12,7 +12,7 @@ const SignedInSideLinks = ({ user, selectedProject, logout }) => {
       let collapsible = document.querySelector(".collapsible");
       M.Collapsible.init(collapsible, {accordion: false});
     }
-  });
+  }, [selectedProject]);
 
   const projectLinks = selectedProject ? (
     <div>

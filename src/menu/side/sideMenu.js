@@ -11,7 +11,7 @@ const SideMenu = ({user}) => {
       let sidenav = document.querySelector('.sidenav');
       M.Sidenav.init(sidenav, {});
     }
-  });
+  }, [user]);
 
   const links = user ? <SignedInSideLinks /> : <SignedOutSideLinks />;
 

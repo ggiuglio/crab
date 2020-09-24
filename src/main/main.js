@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { getSelectedProject } from "../store/selectors/selector";
 // import { loadProjectAction } from "../store/actions/actionsCreator";
