@@ -18,7 +18,7 @@ const QuotationTile = ({ quotation, chooseQuotation }) => {
                   <span className="bolder col s12 m6 s-center">{quotation.code}</span>
                   <span className="col s12 m6 s-center">{quotation.status}</span>
                 </div>
-                <div>
+                <div className="row">
                   <span className="col s12 m6 s-center">Type: {quotation.type} </span>
                   <span className="col s12 m6 s-center price">
                     Price: {quotation.quotationCost}{" "}
