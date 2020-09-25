@@ -31,30 +31,30 @@ const SignedInSideLinks = ({ user, selectedProject, logout }) => {
             <div className="collapsible-body">
               <ul>
                 <li>
-                  <NavLink to="/dashboard" className="sidenav-close">
+                  <NavLink to={`/project/dashboard?project=${selectedProject.id}`} className="sidenav-close">
                     <FontAwesomeIcon icon="grip-horizontal" fixedWidth />{" "}
                     DashBoard
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/quotations" className="sidenav-close">
+                  <NavLink to={`/project/quotations?project=${selectedProject.id}`} className="sidenav-close">
                     <FontAwesomeIcon icon="search-dollar" fixedWidth />{" "}
                     Quotations
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/invoice" className="sidenav-close">
+                  <NavLink to={`/project/invoices?project=${selectedProject.id}`} className="sidenav-close">
                     <FontAwesomeIcon icon="file-invoice-dollar" fixedWidth />{" "}
                     Invoicing
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/budget" className="sidenav-close">
+                  <NavLink to={`/project/budget?project=${selectedProject.id}`} className="sidenav-close">
                     <FontAwesomeIcon icon="piggy-bank" fixedWidth /> Budget
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="#" className="sidenav-close">
+                  <NavLink to={`/project/analytics?project=${selectedProject.id}`} className="sidenav-close">
                     <FontAwesomeIcon icon="chart-line" fixedWidth /> Advanced
                     Analytics
                   </NavLink>
@@ -72,7 +72,7 @@ const SignedInSideLinks = ({ user, selectedProject, logout }) => {
     <div>
       {projectLinks}
       <li>
-        <NavLink to="#" className="sidenav-close">
+        <NavLink to="/" className="sidenav-close">
           <FontAwesomeIcon icon="users" fixedWidth /> Administration
         </NavLink>
       </li>

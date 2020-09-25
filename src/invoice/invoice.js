@@ -5,7 +5,8 @@ import InvoiceList from './invoice-list';
 import NewInvoice from './new-invoice';
 import add from '../assets/images/add.png';
 import { ShowNewInvoice } from '../store/actions/actionsCreator';
-import { getShowNewInvoice } from '../store/selectors/selector';;
+import { getShowNewInvoice, getSelectedProject } from '../store/selectors/selector';
+import { history } from "../App";
 
 const AddInvoice = styled.div`
   height: 30px; 
@@ -20,11 +21,23 @@ const AddArticleImage = styled.img`
   margin-right: 10px;
 `;
 
-const Invoice = ({openNewInvoice, isNewInvoiceOpen}) => {
+const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProject, chooseProject }) => {
+  React.useEffect(() => {
+    if (!selectedProject) {
+      const query = new URLSearchParams(history.location.search);
+      const queryProject = query.get('project')
+      if (queryProject) {
+        chooseProject(queryProject);
+      }
+      else {
+        history.push('/');
+      }
+    }
+  });
 
-const addInvoiceClick = () => {
-  openNewInvoice();
-};
+  const addInvoiceClick = () => {
+    openNewInvoice();
+  };
 
   return (
     <div>
@@ -32,7 +45,7 @@ const addInvoiceClick = () => {
         <AddArticleImage src={add} /> Insert new invoice
       </AddInvoice>
 
-      { isNewInvoiceOpen ? <NewInvoice /> : '' }
+      {isNewInvoiceOpen ? <NewInvoice /> : ''}
 
       <InvoiceList />
     </div>
@@ -41,7 +54,8 @@ const addInvoiceClick = () => {
 
 const mapStateToProps = (state) => {
   return {
-    isNewInvoiceOpen: getShowNewInvoice(state)
+    isNewInvoiceOpen: getShowNewInvoice(state),
+    selectedProject: getSelectedProject(state)
   };
 };
 

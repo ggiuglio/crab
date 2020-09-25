@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectQuotation } from "../store/actions/actionsCreator";
 
-const QuotationTile = ({ quotation, chooseQuotation }) => {
+const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
   const goToQuotationPage = () => {
     chooseQuotation(quotation.id);
   };
@@ -12,8 +12,7 @@ const QuotationTile = ({ quotation, chooseQuotation }) => {
       <div className="col s12 l6">
         <div className="card indigo lighten-2">
           <div className="card-content" onClick={() => goToQuotationPage()}>
-            <NavLink to="quotation">
-              <div className="white-text">
+          <NavLink to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`}>              <div className="white-text">
                 <div className="row card-title">
                   <span className="bolder col s12 m6 s-center">{quotation.code}</span>
                   <span className="col s12 m6 s-center">{quotation.status}</span>

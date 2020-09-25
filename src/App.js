@@ -5,10 +5,13 @@ import "./App.css";
 import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
-import Projects from "./project/projects";
-import Quotation from "./quotation/quotation";
 import Quotations from "./quotation/quotations";
+import Quotation from "./quotation/quotation";
+import Projects from "./project/projects";
 import Invoice from "./invoice/invoice";
+import Dashboard from "./dashboard/dashboard";
+import Budget from "./budget/budget";
+import Analytics from "./analytics/analytics";
 import Login from "./login/login";
 import { getProjects } from "./store/selectors/selector";
 import { setUserAction, loadProjectsAction } from "./store/actions/actionsCreator";
@@ -16,8 +19,10 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import "materialize-css/dist/css/materialize.min.css";
+import dashboard from "./dashboard/dashboard";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
+
 library.add(fab, fas);
 
 class App extends Component {
@@ -41,9 +46,12 @@ class App extends Component {
           <Route exact path='/'component={Projects} />
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
-          <Route path={"/quotations"} component={Quotations} />
-          <Route path={"/quotation"} component={Quotation} />
-          <Route path={"/invoice"} component={Invoice} />
+          <Route path={"/project/quotations"} component={Quotations} />
+          <Route path={"/project/dashboard"} component={Dashboard} />
+          <Route path={"/project/invoices"} component={Invoice} />
+          <Route path={"/project/budget"} component={Budget} />
+          <Route path={"/project/analytics"} component={Analytics} />
+          <Route path={"/project/quotation"} component={Quotation} />
         </Main>
       </Router>
     );

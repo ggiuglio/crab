@@ -1,12 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getSelectedProject } from "../store/selectors/selector";
-// import { loadProjectAction } from "../store/actions/actionsCreator";
-// import { history } from "../App";
 import Header from "../menu/header";
 import SideMenu from "../menu/side/sideMenu";
 import Footer from "../footer/footer";
-// import { FirebaseInstance } from '../App';
 import ProjectMenu from "../menu/projectMenu";
 
 const Main = ({selectedProject, children}) => {
@@ -31,9 +28,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    // loadQuotation: () => dispatch(loadProjectAction()),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

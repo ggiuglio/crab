@@ -3,19 +3,20 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getProjects } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { clearUserData } from "../store/actions/actionsCreator";
 import ProjectTile from "./projectTile";
+import { loadProjectsAction, clearUserData } from "../store/actions/actionsCreator";
 
-const Projects = ({ projects, clearUserData }) => {
+const Projects = ({ projects, loadProjects, clearSelectedProject }) => {
   React.useEffect(() => {
+    clearSelectedProject();
     if (projects) {
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
       let fab = document.querySelectorAll(".fixed-action-btn");
       M.FloatingActionButton.init(fab, { direction: "left" });
+    } else {
+      loadProjects();
     }
-
-      clearUserData();
   }, []);
 
   return (
@@ -88,7 +89,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {clearUserData: () => dispatch(clearUserData()),};
+  return {
+    loadProjects: () => dispatch(loadProjectsAction()),
+    clearSelectedProject: () => dispatch(clearUserData())
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Projects);

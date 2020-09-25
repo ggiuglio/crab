@@ -70,10 +70,8 @@ export const loadProjectsAction = () => {
   }
 }
 
-export const loadProjectAction = () => {
-  return (dispatch, getSate) => {
-    const projectId = getSate().selectedProject;    
-    
+export const loadProjectAction = (projectId) => {
+  return (dispatch) => {    
     return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
       const projects = JSON.parse(JSON.stringify(snapshot.val()));
 
@@ -121,6 +119,7 @@ export const createNewInvoice = (invoice) => {
 
 export const selectProject = (projectId) => {
   return dispatch => {
+    dispatch(loadProjectAction(projectId))
     return dispatch(
       {
         type: SELECT_PROJECT,

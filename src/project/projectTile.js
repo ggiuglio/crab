@@ -1,19 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadProjectAction, selectProject } from "../store/actions/actionsCreator";
+import { selectProject } from "../store/actions/actionsCreator";
 
 const ProjectTile = ({ project, chooseProject, loadProject }) => {
   const goToProjectPage = () => {
     chooseProject(project.id);
-    loadProject();
   };
 
   return (
     <div className="col s12 l6">
       <div className="card indigo lighten-2">
         <div className="card-content" onClick={() => goToProjectPage()}>
-          <NavLink to="quotations">
+          <NavLink to={`/project/quotations/?project=${project.id}`}>
             <div className="white-text">
                 <div className="row card-title">
                   <span className="bolder col s12 m6 s-center">{project.title}</span>
@@ -68,7 +67,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
-    loadProject: () => dispatch(loadProjectAction()),
   };
 };
 
