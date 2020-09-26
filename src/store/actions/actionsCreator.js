@@ -8,7 +8,8 @@ import {
   HIDE_NEW_INVOICE,
   CLEAR_USER_DATA,
   SELECT_PROJECT,
-  SELECT_QUOTATION
+  SELECT_QUOTATION,
+  LOAD_PROFESSIONALS
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -62,7 +63,7 @@ export const setUserAction = (user) => {
 
 export const loadProjectsAction = () => {
   return (dispatch, getSate) => {
-    
+
     const uid = getSate().user.uid;
     return FirebaseInstance.dataRef.ref(`userProjects/${uid}/projects`).on('value', snapshot => {
       const projects = JSON.parse(JSON.stringify(snapshot.val()));
@@ -153,4 +154,19 @@ export const selectQuotation = (quotationId) => {
     )
   }
 }
+
+export const loadProfessionals = () => {
+  return dispatch => {
+    return FirebaseInstance.dataRef.ref(`staticData/professionals`).on('value', snapshot => {
+      const professionals = JSON.parse(JSON.stringify(snapshot.val()));
+
+      return dispatch(
+        {
+          type: LOAD_PROFESSIONALS,
+          projects: professionals
+        }
+      )
+    });
+  }
+};
 

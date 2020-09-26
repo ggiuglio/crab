@@ -9,14 +9,16 @@ export const getSelectedQuotation = (state) => getQ(state);
 export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getInvoiceList = (state) => state.invoiceList;
 export const getPeople = (state) =>
-  state.people ? mapPeopleList(state.people) : undefined;
+  state.people ? mapPeopleList(state.professionals) : undefined;
 
 const mapPeopleList = (people) => {
   const peopleList = [];
-  Object.keys(people).forEach((k) => {
-    people[k].id = k;
-    peopleList.push(people[k]);
-  });
+  if (people) {
+    Object.keys(people).forEach((k) => {
+      people[k].id = k;
+      peopleList.push(people[k]);
+    });
+  }
 
   return peopleList;
 };

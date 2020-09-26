@@ -9,61 +9,11 @@ import {
   CLEAR_USER_DATA,
   SELECT_PROJECT,
   SELECT_QUOTATION,
+  LOAD_PROFESSIONALS
 } from "../actions/actionsTypes";
 
 export const INITIAL_STATE = {
-  people: {
-    "001": {
-      title: "PM",
-      geobool: false,
-      fee: 120,
-    },
-    "002": {
-      title: "CRA",
-      geobool: true,
-      fee: 100,
-    },
-    "003": {
-      title: "DM",
-      geobool: false,
-      fee: 90,
-    },
-    "004": {
-      title: "IT",
-      geobool: false,
-      fee: 60,
-    },
-    "005": {
-      title: "CTA",
-      geobool: false,
-      fee: 40,
-    },
-    "006": {
-      title: "LCRA",
-      geobool: false,
-      fee: 100,
-    },
-    "007": {
-      title: "MW",
-      geobool: false,
-      fee: 150,
-    },
-    "008": {
-      title: "PhV",
-      geobool: false,
-      fee: 150,
-    },
-    "009": {
-      title: "STAT",
-      geobool: false,
-      fee: 150,
-    },
-    "010": {
-      title: "DIR",
-      geobool: false,
-      fee: 120,
-    },
-  },
+  professionals: undefined,
   projects: undefined,
   selectedProject: undefined,
   selectedQuotation: undefined,
@@ -140,6 +90,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         selectedQuotation: action.quotation,
       };
+    }
+    case LOAD_PROFESSIONALS: {
+      return {
+        ...state,
+        professionals: action.professionals
+      }
     }
 
     default:
