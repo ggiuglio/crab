@@ -64,43 +64,7 @@ export const INITIAL_STATE = {
       fee: 120,
     },
   },
-  projects: {
-    uhruhf44uhf: {
-      title: "PURE",
-      Sponsor: "CoreQuest Sagl",
-      PM: "Tommaso Prosdocimi",
-      GEO: {
-        siughpisdfug: {
-          geocode: "General",
-        },
-        bqpoirufb: {
-          geocode: "South Europe - ITA,SPA",
-          sites: {
-            ijacbpibc: {
-              sitecode: "0101",
-            },
-            oiadfvoaubv: {
-              sitecode: "0102",
-            },
-          },
-        },
-        nasodncp: {
-          geo: "North Europe - DK,SWE",
-          sites: {
-            havdboi: {
-              sitecode: "0201",
-            },
-            oiabc: {
-              sitecode: "0202",
-            },
-          },
-        },
-      },
-      creationDate: "17/1/2020",
-      endDate: "",
-      status: "open",
-    },
-  },
+  projects: undefined,
   selectedProject: undefined,
   selectedQuotation: undefined,
   quotations: undefined,
@@ -128,14 +92,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
       };
     }
     case LOAD_PROJECTS: {
-      // GET Projects from DB
       return {
         ...state,
+        projects: action.projects
       };
     }
     case LOAD_PROJECT: {
-      const quotations = action.project.quotations;
-      const invoices = mapInvoiceList(action.project.invoices);
+      const quotations = action.project ? action.project.quotations : undefined;
+      const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
 
       return {
         ...state,
@@ -161,7 +125,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedProject: null,
         selectedQuotation: null,
         quotation: null,
-        invoiceList: null,
+        invoiceList: [],
+        projects: null
       };
     }
     case SELECT_PROJECT: {
@@ -186,10 +151,12 @@ export default Reducer;
 
 const mapInvoiceList = (invoices) => {
   const invoiceList = [];
-  Object.keys(invoices).forEach((k) => {
-    invoices[k].id = k;
-    invoiceList.push(invoices[k]);
-  });
+  if (invoices) {
+    Object.keys(invoices).forEach((k) => {
+      invoices[k].id = k;
+      invoiceList.push(invoices[k]);
+    });
+  }
 
   return invoiceList;
 };

@@ -1,6 +1,7 @@
 {
   "projects": {
     "uhruhf44uhf": {
+      "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
       "title": "PURE",
       "Sponsor": "CoreQuest Sagl",
       "PM": "Tommaso Prosdocimi",
@@ -332,6 +333,156 @@
           "unitNumber": 2,
           "totalCost": "8200"
         }
+      }
+    },
+    "iuz3234fmf": {
+      "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
+      "title": "Testone",
+      "Sponsor": "Coppa del nonno",
+      "PM": "Tommaso Prosdocimi",
+      "GEO": {
+        "123re": {
+          "geocode": "General"
+        }
+      },
+      "creationDate": "17/1/2020",
+      "endDate": "",
+      "status": "open",
+      "quotations": {
+        "298437uj": {
+          "type": "Sponsor",
+          "code": "ANCHE01",
+          "status": "submitted",
+          "start date": "",
+          "end date": "",
+          "modules": {}
+        }
+      },
+      "invoices": {}
+    }
+  },
+  "userProjects": {
+    "hyhX78KB2Wg5nKSyIAYR6gxzjwW2": {
+      "projects": {
+        "uhruhf44uhf": {
+          "title": "PURE",
+          "Sponsor": "CoreQuest Sagl",
+          "PM": "Tommaso Prosdocimi",
+          "GEO": {
+            "siughpisdfug": {
+              "geocode": "General"
+            },
+            "bqpoirufb": {
+              "geocode": "South Europe - ITA,SPA",
+              "sites": {
+                "ijacbpibc": {
+                  "sitecode": "0101"
+                },
+                "oiadfvoaubv": {
+                  "sitecode": "0102"
+                }
+              }
+            },
+            "nasodncp": {
+              "geo": "North Europe - DK,SWE",
+              "sites": {
+                "havdboi": {
+                  "sitecode": "0201"
+                },
+                "oiabc": {
+                  "sitecode": "0202"
+                }
+              }
+            }
+          },
+          "creationDate": "17/1/2020",
+          "endDate": "",
+          "status": "open"
+        },
+        "iuz3234fmf": {
+          "title": "Testone",
+          "Sponsor": "Coppa del nonno",
+          "PM": "Tommaso Prosdocimi",
+          "GEO": {
+            "123re": {
+              "geocode": "General"
+            }
+          },
+          "creationDate": "17/1/2020",
+          "endDate": "",
+          "status": "open"
+        }
+      }
+    },
+    "VI0LkX1MEcQdtn7SCt81840Sl032": {
+      "projects": {
+        "8733434dd": {
+          "title": "Testtwo",
+          "Sponsor": "Coppa del nonno",
+          "PM": "Tommaso Prosdocimi",
+          "GEO": {
+            "123re": {
+              "geocode": "General"
+            }
+          },
+          "creationDate": "17/1/2020",
+          "endDate": "",
+          "status": "open"
+        }
+      }
+    }
+  },
+  "staticData": {
+    "professionals": {
+      "001": {
+        "title": "PM",
+        "geobool": false,
+        "fee": 120
+      },
+      "002": {
+        "title": "CRA",
+        "geobool": true,
+        "fee": 100
+      },
+      "003": {
+        "title": "DM",
+        "geobool": false,
+        "fee": 90
+      },
+      "004": {
+        "title": "IT",
+        "geobool": false,
+        "fee": 60
+      },
+      "005": {
+        "title": "CTA",
+        "geobool": false,
+        "fee": 40
+      },
+      "006": {
+        "title": "LCRA",
+        "geobool": false,
+        "fee": 100
+      },
+      "007": {
+        "title": "MW",
+        "geobool": false,
+        "fee": 150
+      },
+      "008": {
+        "title": "PhV",
+        "geobool": false,
+        "fee": 150
+      },
+      "009": {
+        "title": "STAT",
+        "geobool": false,
+        "fee": 150
+      },
+      "010": {
+        "title": "DIR",
+        "geobool": false,
+        "fee": 120
       }
     }
   }

@@ -16,7 +16,7 @@ import { history } from '../../App';
 export const loginAction = (username, password) => {
   return dispatch => {
     FirebaseInstance.doSignInWithEmailAndPassword(username, password)
-      .then(() => {})
+      .then(() => { })
       .catch(() => {
         dispatch({
           type: LOGIN_ERROR,
@@ -55,30 +55,44 @@ export const setUserAction = (user) => {
   return dispatch => {
     dispatch({
       type: SET_USER,
-      user: user ? { email: user.email } : null
+      user: user ? { email: user.email, uid: user.uid } : null
     });
   }
 }
 
 export const loadProjectsAction = () => {
   return (dispatch, getSate) => {
-      return dispatch(
-        {
-          type: LOAD_PROJECTS,
-        }
-      )
-  }
-}
-
-export const loadProjectAction = (projectId) => {
-  return (dispatch) => {    
-    return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
+    
+    const uid = getSate().user.uid;
+    return FirebaseInstance.dataRef.ref(`userProjects/${uid}/projects`).on('value', snapshot => {
       const projects = JSON.parse(JSON.stringify(snapshot.val()));
 
       return dispatch(
         {
+          type: LOAD_PROJECTS,
+          projects: projects
+        }
+      )
+    });
+  }
+}
+
+export const loadProjectAction = (projectId) => {
+  return (dispatch) => {
+    dispatch(
+      {
+        type: LOAD_PROJECT,
+        project: undefined
+      }
+    )
+
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
+      const project = JSON.parse(JSON.stringify(snapshot.val()));
+
+      return dispatch(
+        {
           type: LOAD_PROJECT,
-          project: projects
+          project: project
         }
       )
     })
@@ -119,7 +133,7 @@ export const createNewInvoice = (invoice) => {
 
 export const selectProject = (projectId) => {
   return dispatch => {
-    dispatch(loadProjectAction(projectId))
+    dispatch(loadProjectAction(projectId));
     return dispatch(
       {
         type: SELECT_PROJECT,

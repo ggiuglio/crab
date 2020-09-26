@@ -2,16 +2,10 @@ export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
 export const getProjects = (state) =>
   state.projects ? mapProjectList(state.projects) : undefined;
-export const getSelectedProject = (state) =>
-  state.selectedProject
-    ? getFirsProject(state.projects, state.selectedProject)
-    : undefined;
+export const getSelectedProject = (state) => getP(state);
 export const getQuotations = (state) =>
   state.quotations ? mapQuotationList(state.quotations) : undefined;
-export const getSelectedQuotation = (state) =>
-  state.quotations && state.selectedQuotation
-    ? getFirsQuotation(state.quotations, state.selectedQuotation)
-    : undefined;
+export const getSelectedQuotation = (state) => getQ(state);
 export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getInvoiceList = (state) => state.invoiceList;
 export const getPeople = (state) =>
@@ -50,20 +44,24 @@ const mapProject = (project) => {
 
 const mapQuotationList = (quotations) => {
   const quotationList = [];
-  Object.keys(quotations).forEach((k) => {
-    quotations[k].id = k;
-    quotationList.push(mapQuotation(quotations[k]));
-  });
+  if (quotations) {
+    Object.keys(quotations).forEach((k) => {
+      quotations[k].id = k;
+      quotationList.push(mapQuotation(quotations[k]));
+    });
+  }
 
   return quotationList.reverse();
 };
 
 const mapQuotation = (quotation) => {
   const modules = [];
-  Object.keys(quotation.modules).forEach((k) => {
-    quotation.modules[k].id = k;
-    modules.push(mapModule(quotation.modules[k]));
-  });
+  if (quotation.modules) {
+    Object.keys(quotation.modules).forEach((k) => {
+      quotation.modules[k].id = k;
+      modules.push(mapModule(quotation.modules[k]));
+    });
+  }
   quotation.modules = modules;
 
   return quotation;
@@ -71,10 +69,12 @@ const mapQuotation = (quotation) => {
 
 const mapModule = (module) => {
   const activities = [];
-  Object.keys(module.activities).forEach((k) => {
-    module.activities[k].id = k;
-    activities.push(mapActivity(module.activities[k]));
-  });
+  if (module.activities) {
+    Object.keys(module.activities).forEach((k) => {
+      module.activities[k].id = k;
+      activities.push(mapActivity(module.activities[k]));
+    });
+  }
   module.activities = activities;
 
   return module;
@@ -82,17 +82,25 @@ const mapModule = (module) => {
 
 const mapActivity = (activity) => {
   const resources = [];
-  Object.keys(activity.resources).forEach((k) => {
-    activity.resources[k].id = k;
-    resources.push(activity.resources[k]);
-  });
+  if (activity.resources) {
+    Object.keys(activity.resources).forEach((k) => {
+      activity.resources[k].id = k;
+      resources.push(activity.resources[k]);
+    });
+  }
   activity.resources = resources;
 
   return activity;
 };
 
-const getFirsProject = (projects, selectedProjects) =>
-  mapProject(projects[selectedProjects]);
+const getP = (state) => {
+  const p = state.projects && state.selectedProject ? state.projects[state.selectedProject] : null;
 
-const getFirsQuotation = (quotations, selectedQuotation) =>
-  mapQuotation(quotations[selectedQuotation]);
+  return p;
+}
+
+const getQ = (state) => {
+  const p = state.quotations && state.selectedQuotation ? state.quotations[state.selectedQuotation] : null;
+
+  return p;
+}
