@@ -14,12 +14,11 @@ import Budget from "./budget/budget";
 import Analytics from "./analytics/analytics";
 import Login from "./login/login";
 import { getProjects } from "./store/selectors/selector";
-import { setUserAction, loadProjectsAction } from "./store/actions/actionsCreator";
+import { setUserAction, loadProjectsAction, loadProfessionals } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import "materialize-css/dist/css/materialize.min.css";
-import dashboard from "./dashboard/dashboard";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
 
@@ -34,6 +33,7 @@ class App extends Component {
         history.push("/login");
       } else {
         if (!this.props.projects) {
+          this.props.loadStaticData();
           this.props.loadProjects();
         }
       }
@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => dispatch(setUserAction(user)),
     loadProjects: () => dispatch(loadProjectsAction()),
+    loadStaticData: () => dispatch(loadProfessionals())
   };
 };
 

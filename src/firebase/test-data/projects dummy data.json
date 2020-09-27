@@ -1,40 +1,42 @@
 {
   "projects": {
     "uhruhf44uhf": {
-      "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
-      "title": "PURE",
-      "Sponsor": "CoreQuest Sagl",
-      "PM": "Tommaso Prosdocimi",
-      "GEO": {
-        "siughpisdfug": {
-          "geocode": "General"
-        },
-        "bqpoirufb": {
-          "geocode": "South Europe - ITA,SPA",
-          "sites": {
-            "ijacbpibc": {
-              "sitecode": "0101"
-            },
-            "oiadfvoaubv": {
-              "sitecode": "0102"
+      "project": {
+        "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
+        "title": "PURE",
+        "Sponsor": "CoreQuest Sagl",
+        "PM": "Tommaso Prosdocimi",
+        "GEO": {
+          "siughpisdfug": {
+            "geocode": "General"
+          },
+          "bqpoirufb": {
+            "geocode": "South Europe - ITA,SPA",
+            "sites": {
+              "ijacbpibc": {
+                "sitecode": "0101"
+              },
+              "oiadfvoaubv": {
+                "sitecode": "0102"
+              }
+            }
+          },
+          "nasodncp": {
+            "geo": "North Europe - DK,SWE",
+            "sites": {
+              "havdboi": {
+                "sitecode": "0201"
+              },
+              "oiabc": {
+                "sitecode": "0202"
+              }
             }
           }
         },
-        "nasodncp": {
-          "geo": "North Europe - DK,SWE",
-          "sites": {
-            "havdboi": {
-              "sitecode": "0201"
-            },
-            "oiabc": {
-              "sitecode": "0202"
-            }
-          }
-        }
+        "Creation Date": "17/1/2020",
+        "end date": "",
+        "status": "open"
       },
-      "Creation Date": "17/1/2020",
-      "end date": "",
-      "status": "open",
       "quotations": {
         "urjg77gtju": {
           "type": "Sponsor",
@@ -336,18 +338,20 @@
       }
     },
     "iuz3234fmf": {
-      "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
-      "title": "Testone",
-      "Sponsor": "Coppa del nonno",
-      "PM": "Tommaso Prosdocimi",
-      "GEO": {
-        "123re": {
-          "geocode": "General"
-        }
+      "project": {
+        "ownerId": "hyhX78KB2Wg5nKSyIAYR6gxzjwW2",
+        "title": "Testone",
+        "Sponsor": "Coppa del nonno",
+        "PM": "Tommaso Prosdocimi",
+        "GEO": {
+          "123re": {
+            "geocode": "General"
+          }
+        },
+        "creationDate": "17/1/2020",
+        "endDate": "",
+        "status": "open"
       },
-      "creationDate": "17/1/2020",
-      "endDate": "",
-      "status": "open",
       "quotations": {
         "298437uj": {
           "type": "Sponsor",

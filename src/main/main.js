@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSelectedProject } from "../store/selectors/selector";
+import { getSelectedProjectId } from "../store/selectors/selector";
 import Header from "../menu/header";
 import SideMenu from "../menu/side/sideMenu";
 import Footer from "../footer/footer";
@@ -23,7 +23,7 @@ const Main = ({selectedProject, children}) => {
 
 const mapStateToProps = (state) => {
   return {
-    selectedProject: getSelectedProject(state),
+    selectedProject: getSelectedProjectId(state),
   };
 };
 

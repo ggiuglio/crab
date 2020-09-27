@@ -1,25 +1,29 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getPeople, getSelectedProject, getSelectedQuotation } from "../store/selectors/selector";
+import { getPeople, getSelectedProjectId, getSelectedQuotationId, getQuotation, getProject } from "../store/selectors/selector";
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
 import PersonCost from "../people/personCost";
-import { selectProject, selectQuotation } from "../store/actions/actionsCreator";
+import { selectProject, selectQuotation, loadProjectAction } from "../store/actions/actionsCreator";
 import { history } from "../App";
 
-const Quotation = ({ quotation, people, selectedProject, chooseProject, chooseQuotation }) => {
+const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuotationId, chooseProject, chooseQuotation, loadProject }) => {
   React.useEffect(() => {
-    if (!selectedProject || !quotation) {
+    if (!selectedProjectId || !selectedQuotationId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project');
       const queryQuotation = query.get('quotation');
 
       if (queryProject && queryQuotation) {
-        chooseProject(queryProject);
         chooseQuotation(queryQuotation);
+        chooseProject(queryProject);
       }
       else {
         history.push('/');
+      }
+    } else {
+      if (!project || project.id !== selectedProjectId) {
+        loadProject(selectedProjectId);
       }
     }
 
@@ -86,7 +90,7 @@ const Quotation = ({ quotation, people, selectedProject, chooseProject, chooseQu
     let personC = [];
     personC.push(<PersonCost key={person.title} title={person.title} fee={person.fee} />);
     if (person.geobool) {
-      selectedProject.GEO
+      project.GEO
         .filter((geo) => {
           return !/^general$/i.test(geo.geocode);
         })
@@ -99,7 +103,7 @@ const Quotation = ({ quotation, people, selectedProject, chooseProject, chooseQu
 
   return (
     <div id="quotation">
-      {quotation ? (
+      {quotation && people ? (
         <div>
           <h5 className="center page-title">
             {quotation.code} - <span className="italic">{quotation.status}</span>
@@ -201,16 +205,19 @@ const Quotation = ({ quotation, people, selectedProject, chooseProject, chooseQu
 
 const mapStateToProps = (state) => {
   return {
-    quotation: getSelectedQuotation(state),
+    quotation: getQuotation(state),
+    project: getProject(state),
     people: getPeople(state),
-    selectedProject: getSelectedProject(state)
+    selectedProjectId: getSelectedProjectId(state),
+    selectedQuotationId: getSelectedQuotationId(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
-    chooseQuotation: (quotationId) => dispatch(selectQuotation(quotationId))
+    chooseQuotation: (quotationId) => dispatch(selectQuotation(quotationId)),
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
   };
 };
 

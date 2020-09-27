@@ -5,7 +5,7 @@ import InvoiceList from './invoice-list';
 import NewInvoice from './new-invoice';
 import add from '../assets/images/add.png';
 import { ShowNewInvoice } from '../store/actions/actionsCreator';
-import { getShowNewInvoice, getSelectedProject } from '../store/selectors/selector';
+import { getShowNewInvoice, getSelectedProjectId } from '../store/selectors/selector';
 import { history } from "../App";
 
 const AddInvoice = styled.div`
@@ -55,7 +55,7 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProject, chooseProj
 const mapStateToProps = (state) => {
   return {
     isNewInvoiceOpen: getShowNewInvoice(state),
-    selectedProject: getSelectedProject(state)
+    selectedProject: getSelectedProjectId(state)
   };
 };
 

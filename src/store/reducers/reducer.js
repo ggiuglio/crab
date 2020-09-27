@@ -15,9 +15,10 @@ import {
 export const INITIAL_STATE = {
   professionals: undefined,
   projects: undefined,
-  selectedProject: undefined,
-  selectedQuotation: undefined,
+  selectedProjectId: undefined,
+  selectedQuotationId: undefined,
   quotations: undefined,
+  project: undefined,
   invoiceList: [],
   showNewInvoice: false,
 };
@@ -50,11 +51,13 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case LOAD_PROJECT: {
       const quotations = action.project ? action.project.quotations : undefined;
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
+      const project = action.project ? {...action.project.project, id: action.projectId} : undefined;
 
       return {
         ...state,
         quotations: quotations,
         invoiceList: invoices,
+        project: project
       };
     }
     case SHOW_NEW_INVOICE: {
@@ -72,23 +75,24 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case CLEAR_USER_DATA: {
       return {
         ...state,
-        selectedProject: null,
-        selectedQuotation: null,
-        quotation: null,
+        selectedProjectId: null,
+        selectedQuotationId: null,
+        quotations: null,
         invoiceList: [],
-        projects: null
+        projects: null,
+        project: null
       };
     }
     case SELECT_PROJECT: {
       return {
         ...state,
-        selectedProject: action.project,
+        selectedProjectId: action.project,
       };
     }
     case SELECT_QUOTATION: {
       return {
         ...state,
-        selectedQuotation: action.quotation,
+        selectedQuotationId: action.quotation,
       };
     }
     case LOAD_PROFESSIONALS: {

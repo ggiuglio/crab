@@ -2,19 +2,19 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getUser, getSelectedProject  } from "../../store/selectors/selector";
+import { getUser, getSelectedProjectId  } from "../../store/selectors/selector";
 import { logoutAction } from "../../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const SignedInSideLinks = ({ user, selectedProject, logout }) => {
+const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
   React.useEffect(() => {
-    if(selectedProject) {
+    if(selectedProjectId) {
       let collapsible = document.querySelector(".collapsible");
       M.Collapsible.init(collapsible, {accordion: false});
     }
-  }, [selectedProject]);
+  }, [selectedProjectId]);
 
-  const projectLinks = selectedProject ? (
+  const projectLinks = selectedProjectId ? (
     <div>
       <li>
         <NavLink to="/projects" className="sidenav-close">
@@ -31,30 +31,30 @@ const SignedInSideLinks = ({ user, selectedProject, logout }) => {
             <div className="collapsible-body">
               <ul>
                 <li>
-                  <NavLink to={`/project/dashboard?project=${selectedProject.id}`} className="sidenav-close">
+                  <NavLink to={`/project/dashboard?project=${selectedProjectId}`} className="sidenav-close">
                     <FontAwesomeIcon icon="grip-horizontal" fixedWidth />{" "}
                     DashBoard
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/project/quotations?project=${selectedProject.id}`} className="sidenav-close">
+                  <NavLink to={`/project/quotations?project=${selectedProjectId}`} className="sidenav-close">
                     <FontAwesomeIcon icon="search-dollar" fixedWidth />{" "}
                     Quotations
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/project/invoices?project=${selectedProject.id}`} className="sidenav-close">
+                  <NavLink to={`/project/invoices?project=${selectedProjectId}`} className="sidenav-close">
                     <FontAwesomeIcon icon="file-invoice-dollar" fixedWidth />{" "}
                     Invoicing
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/project/budget?project=${selectedProject.id}`} className="sidenav-close">
+                  <NavLink to={`/project/budget?project=${selectedProjectId}`} className="sidenav-close">
                     <FontAwesomeIcon icon="piggy-bank" fixedWidth /> Budget
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to={`/project/analytics?project=${selectedProject.id}`} className="sidenav-close">
+                  <NavLink to={`/project/analytics?project=${selectedProjectId}`} className="sidenav-close">
                     <FontAwesomeIcon icon="chart-line" fixedWidth /> Advanced
                     Analytics
                   </NavLink>
@@ -93,7 +93,7 @@ const SignedInSideLinks = ({ user, selectedProject, logout }) => {
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
-    selectedProject: getSelectedProject(state),
+    selectedProjectId: getSelectedProjectId(state),
   };
 };
 

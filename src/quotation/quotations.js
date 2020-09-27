@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { getQuotations, getSelectedProject } from "../store/selectors/selector";
-import { selectProject } from "../store/actions/actionsCreator";
+import { getQuotations, getProject, getSelectedProjectId } from "../store/selectors/selector";
+import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 import QuotationTile from "./quotationTile";
 import { history } from "../App";
 
-const Quotations = ({ selectedProject, quotations, chooseProject }) => {
+const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject }) => {
   React.useEffect(() => {
-    if(!selectedProject) {
+    if(!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')
       if(queryProject) {
@@ -17,6 +17,10 @@ const Quotations = ({ selectedProject, quotations, chooseProject }) => {
       }
       else {
         history.push('/');
+      }
+    } else {
+      if (!project || project.id !== selectedProjectId) {
+        loadProject(selectedProjectId);
       }
     }
 
@@ -30,8 +34,8 @@ const Quotations = ({ selectedProject, quotations, chooseProject }) => {
 
   return (
     <div className="container">
-      {selectedProject ? <div>
-        <h4 className="center page-title">{selectedProject.title} - <span className="italic">{selectedProject.status}</span></h4>
+      {project ? <div>
+        <h4 className="center page-title">{project.title} - <span className="italic">{project.status}</span></h4>
         <div className="row">
           <div className="col s6 center">
             <NavLink
@@ -58,7 +62,7 @@ const Quotations = ({ selectedProject, quotations, chooseProject }) => {
       { quotations ? 
         <div>
           <div className="row">
-            { quotations.map(q => <QuotationTile key={q.id} projectId={selectedProject.id} quotation={q} />) }
+            { quotations.map(q => <QuotationTile key={q.id} projectId={project.id} quotation={q} />) }
           </div>
           <div id="modal-archive" className="modal">
             <div className="modal-content">
@@ -104,7 +108,8 @@ const Quotations = ({ selectedProject, quotations, chooseProject }) => {
 
 const mapStateToProps = (state) => {
   return {
-    selectedProject: getSelectedProject(state),
+    selectedProjectId: getSelectedProjectId(state),
+    project: getProject(state),
     quotations: getQuotations(state),
   };
 };
@@ -112,6 +117,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
   };
 };
 

@@ -80,20 +80,14 @@ export const loadProjectsAction = () => {
 
 export const loadProjectAction = (projectId) => {
   return (dispatch) => {
-    dispatch(
-      {
-        type: LOAD_PROJECT,
-        project: undefined
-      }
-    )
-
     return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
       const project = JSON.parse(JSON.stringify(snapshot.val()));
 
       return dispatch(
         {
           type: LOAD_PROJECT,
-          project: project
+          project: project,
+          projectId: projectId
         }
       )
     })
@@ -134,7 +128,6 @@ export const createNewInvoice = (invoice) => {
 
 export const selectProject = (projectId) => {
   return dispatch => {
-    dispatch(loadProjectAction(projectId));
     return dispatch(
       {
         type: SELECT_PROJECT,
@@ -163,7 +156,7 @@ export const loadProfessionals = () => {
       return dispatch(
         {
           type: LOAD_PROFESSIONALS,
-          projects: professionals
+          professionals: professionals
         }
       )
     });

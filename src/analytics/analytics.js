@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSelectedProject } from "../store/selectors/selector";
+import { getSelectedProjectId } from "../store/selectors/selector";
 import { history } from "../App";
 
 const Analytics = ({selectedProject, chooseProject}) => {
@@ -26,7 +26,7 @@ const Analytics = ({selectedProject, chooseProject}) => {
 
 const mapStateToProps = (state) => {
   return {
-    selectedProject: getSelectedProject(state),
+    selectedProject: getSelectedProjectId(state),
   };
 };
 

@@ -1,15 +1,14 @@
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
-export const getProjects = (state) =>
-  state.projects ? mapProjectList(state.projects) : undefined;
-export const getSelectedProject = (state) => getP(state);
-export const getQuotations = (state) =>
-  state.quotations ? mapQuotationList(state.quotations) : undefined;
-export const getSelectedQuotation = (state) => getQ(state);
+export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;
+export const getProject = (state) => state.project ?  mapProject(state.project) : undefined;
+export const getSelectedProjectId = (state) => state.selectedProjectId;
+export const getSelectedQuotationId = (state) => state.selectedQuotationId;
+export const getQuotations = (state) => state.quotations ? mapQuotationList(state.quotations) : undefined;
+export const getQuotation = (state) => state.quotations ? getSingleQuotation(state.quotations, state.selectedQuotationId) : undefined;
 export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getInvoiceList = (state) => state.invoiceList;
-export const getPeople = (state) =>
-  state.people ? mapPeopleList(state.professionals) : undefined;
+export const getPeople = (state) => state.professionals ? mapPeopleList(state.professionals) : undefined;
 
 const mapPeopleList = (people) => {
   const peopleList = [];
@@ -56,6 +55,13 @@ const mapQuotationList = (quotations) => {
   return quotationList.reverse();
 };
 
+const getSingleQuotation = (quotations, id) => {
+  const quotation = mapQuotation(quotations[id]);
+  quotation.id = id;
+  
+  return quotation;
+}
+
 const mapQuotation = (quotation) => {
   const modules = [];
   if (quotation.modules) {
@@ -94,15 +100,3 @@ const mapActivity = (activity) => {
 
   return activity;
 };
-
-const getP = (state) => {
-  const p = state.projects && state.selectedProject ? state.projects[state.selectedProject] : null;
-
-  return p;
-}
-
-const getQ = (state) => {
-  const p = state.quotations && state.selectedQuotation ? state.quotations[state.selectedQuotation] : null;
-
-  return p;
-}

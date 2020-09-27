@@ -1,21 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { getUser, getSelectedProject } from "../store/selectors/selector";
+import { getUser, getSelectedProjectId } from "../store/selectors/selector";
 import { logoutAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const SignedInLinks = ({ user, selectedProject, logout }) => {
+const SignedInLinks = ({ user, selectedProjectId, logout }) => {
   React.useEffect(() => {
     let userTooltip = document.querySelector(".tooltipped");
     M.Tooltip.init(userTooltip);
-    if (selectedProject) {
+    if (selectedProjectId) {
       let dropdown = document.querySelector(".dropdown-trigger");
       M.Dropdown.init(dropdown, { coverTrigger: false });
     }
   });
 
-  const projectLinks = selectedProject ? (
+  const projectLinks = selectedProjectId ? (
     <div className="inline">
       <li>
         <NavLink to="/projects">Projects</NavLink>
@@ -54,7 +54,7 @@ const SignedInLinks = ({ user, selectedProject, logout }) => {
 const mapStateToProps = (state) => {
   return {
     user: getUser(state),
-    selectedProject: getSelectedProject(state),
+    selectedProjectId: getSelectedProjectId(state),
   };
 };
 
