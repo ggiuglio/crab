@@ -9,66 +9,59 @@ const NewProject = (
   }
 ) => {
   //MATERIALIZE GEO SELECT INSTANCE
-  let geoSelectInstance;
   React.useEffect(() => {
-    let sel = document.querySelectorAll("select");
-    geoSelectInstance = M.FormSelect.init(sel);
+    let subSel = document.getElementById("subregion");
+    M.FormSelect.init(subSel);
+    const geoSelect = document.getElementById("geo");
+    M.FormSelect.init(geoSelect);
   }, []);
 
   const [projectName, setProjectName] = useState("");
   const [geo, setGeo] = useState({});
+  const [subregion, setSubregion] = useState("");
   //   const [siteNumber, setSiteNumber] = useState("");
   //   const [siteCodeList, setSiteCodeList] = useState("");
   const [providers, setProviders] = useState([]);
   const [provider, setProvider] = useState("");
   const [pmName, setPmName] = useState("");
 
-  //   const unitCostChange = (newUnitCost) => {
-  //     setUnitCost(newUnitCost);
-  //     if (unitNumber) {
-  //       setTotalCost(newUnitCost * unitNumber);
-  //     }
-  //   };
-
   // SUBREGION LIST OBJECT
-  const subregions = {
-    Caribbean: undefined,
-    "Central%20America": undefined,
-    "Central%20Asia": undefined,
-    "Eastern%20Africa": undefined,
-    "Eastern%20Asia": undefined,
-    "Eastern%20Europe": undefined,
-    Melanesia: undefined,
-    Micronesia: undefined,
-    "Middle%20Africa": undefined,
-    "Northern%20Africa": undefined,
-    "Northern%20America": undefined,
-    "Northern%20Europe": undefined,
-    Polynesia: undefined,
-    "South%20America": undefined,
-    "South-Eastern%20Asia": undefined,
-    "Southern%20Africa": undefined,
-    "Southern%20Asia": undefined,
-    "Southern%20Europe": undefined,
-    "Western%20Africa": undefined,
-    "Western%20Asia": undefined,
-    "Western%20Europe": undefined,
-  };
+  const [subregionList, setSubregionList] = useState({
+    "Australia%20and%20New%20Zealand": [],
+    Caribbean: [],
+    "Central%20America": [],
+    "Central%20Asia": [],
+    "Eastern%20Africa": [],
+    "Eastern%20Asia": [],
+    "Eastern%20Europe": [],
+    Melanesia: [],
+    Micronesia: [],
+    "Middle%20Africa": [],
+    "Northern%20Africa": [],
+    "Northern%20America": [],
+    "Northern%20Europe": [],
+    Polynesia: [],
+    "South%20America": [],
+    "South-Eastern%20Asia": [],
+    "Southern%20Africa": [],
+    "Southern%20Asia": [],
+    "Southern%20Europe": [],
+    "Western%20Africa": [],
+    "Western%20Asia": [],
+    "Western%20Europe": [],
+  });
 
   // URI PROXY, ENDPOINT GEO
   const proxyUrl = "https://cors-anywhere.herokuapp.com/",
     targetUrl = "https://restcountries.herokuapp.com/api/v1/subregion/";
 
-  //DOM ELEMENTS
-  const geoSelect = document.getElementById("geo");
-  const loader = document.querySelector(".preloader-wrapper");
-
-  // THE SELECTED SUBREGION
-  let selectedSubregion;
-
   // SUBREGION CHANGE
   const subregionChange = (newSubregion) => {
-    selectedSubregion = newSubregion;
+    //DOM ELEMENTS
+    const geoSelect = document.getElementById("geo");
+    const loader = document.querySelector(".preloader-wrapper");
+
+    setSubregion(newSubregion);
     // the geo nations select is the second one in the page
     const geoSelectDD = document.querySelectorAll(".select-wrapper");
 
@@ -78,10 +71,10 @@ const NewProject = (
     if (newSubregion.length === 0) {
       geoSelectDD[1].classList.remove("hide");
       loader.classList.add("hide");
-      geoSelectInstance = M.FormSelect.init(geoSelect);
+      M.FormSelect.init(geoSelect);
       return;
     }
-    if (!subregions[newSubregion]) {
+    if (subregionList[newSubregion].length === 0) {
       fetch(proxyUrl + targetUrl + newSubregion)
         .then((response) => response.json())
         .then((data) => {
@@ -91,43 +84,45 @@ const NewProject = (
               cca3: nation.cca3,
               name: nation.name.common,
             });
-            addNationToGeoSelect(nation.cca3, nation.name.common);
+            addNationToGeoSelect(nation.cca3, nation.name.common, newSubregion);
           });
-          subregions[newSubregion] = nationsList;
-          geoSelectInstance = M.FormSelect.init(geoSelect);
+        setSubregionList({...subregionList, [newSubregion]: nationsList});
+          M.FormSelect.init(geoSelect);
           geoSelectDD[1].classList.remove("hide");
           loader.classList.add("hide");
         })
         .catch((error) => {
           console.log(error);
+          alert(error);
         });
     } else {
-      subregions[newSubregion].map((nation) => {
-        addNationToGeoSelect(nation.cca3, nation.name);
+        subregionList[newSubregion].map((nation) => {
+        addNationToGeoSelect(nation.cca3, nation.name, newSubregion);
       });
-      geoSelectInstance = M.FormSelect.init(geoSelect);
+      M.FormSelect.init(geoSelect);
       geoSelectDD[1].classList.remove("hide");
       loader.classList.add("hide");
     }
   };
 
-  // SELECTED GEO OBJECT
-  const selectedGeo = {};
-
   // ADD NATION TO GEO SELECT
-  const addNationToGeoSelect = (cca3, name) => {
+  const addNationToGeoSelect = (cca3, name, newSubregion) => {
+    const geoSelect = document.getElementById("geo");
     geoSelect.options[geoSelect.options.length] = new Option(
       `${cca3} - ${name}`,
       cca3,
       false,
-      selectedGeo.hasOwnProperty(selectedSubregion) &&
-        selectedGeo[selectedSubregion].includes(cca3)
+      geo.hasOwnProperty(newSubregion) && geo[newSubregion].includes(cca3)
     );
   };
 
   // GEO SELECT CHANGE
   const geoChange = () => {
-    selectedGeo[selectedSubregion] = geoSelectInstance.getSelectedValues();
+    const geoSelect = document.getElementById("geo");
+    setGeo({
+      ...geo,
+      [subregion]: M.FormSelect.getInstance(geoSelect).getSelectedValues(),
+    });
   };
 
   // ADD PROVIDER TO LIST
@@ -143,16 +138,16 @@ const NewProject = (
   const removeProvider = (event) => {
     event.preventDefault();
     let icnId = event.target.id;
-    let idx = icnId.substring(icnId.lastIndexOf("_")+1);
+    let idx = icnId.substring(icnId.lastIndexOf("_") + 1);
     let providersCopy = providers.slice();
-    providersCopy.splice(idx, 1)
+    providersCopy.splice(idx, 1);
     setProviders(providersCopy);
   };
 
   const saveProject = (e) => {
-      e.preventDefault();
-    setGeo(selectedGeo);
-    console.log(geo)
+    e.preventDefault();
+    console.log(geo);
+    console.log(providers);
   };
 
   return (
@@ -169,7 +164,7 @@ const NewProject = (
         </div>
         <div className="input-field col s6">
           <select
-            name="geoRegion"
+            id="subregion"
             onChange={(e) => subregionChange(e.target.value)}
           >
             <option value="" defaultValue>
@@ -204,7 +199,7 @@ const NewProject = (
         </div>
         <div className="input-field col s6">
           <div className="center">
-            <div className="preloader-wrapper active hide">
+            <div className="preloader-wrapper small active hide">
               <div className="spinner-layer spinner-blue-only">
                 <div className="circle-clipper left">
                   <div className="circle"></div>
@@ -221,8 +216,8 @@ const NewProject = (
           <select multiple id="geo" onChange={(e) => geoChange()}></select>
           <label>Geo</label>
         </div>
-        <div id="providerList">
-          <div className="input-field col s6">
+        <div id="providerList" className="col s12">
+          <div className="input-field col s6 no-padding">
             <label>Provider</label>
             <input
               className="col s10 m11"
@@ -238,7 +233,7 @@ const NewProject = (
               <i className="material-icons">add</i>
             </a>
           </div>
-          <div className="col s6">
+          <div className="col s6 no-padding">
             <table className="centered striped">
               <thead>
                 <tr>
@@ -250,12 +245,20 @@ const NewProject = (
                 {providers.map((provider, idx) => (
                   <tr key={provider + "_" + idx}>
                     <td>{provider}</td>
-                    <td><a
+                    <td>
+                      <a
                         href="#"
                         className="right btn-floating btn-small red darken-2 waves-effect waves-light"
                         onClick={(e) => removeProvider(e)}
-                        ><i id={"cancelProvider_"+idx} className="material-icons">cancel</i>
-                        </a></td>
+                      >
+                        <i
+                          id={"cancelProvider_" + idx}
+                          className="material-icons"
+                        >
+                          cancel
+                        </i>
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -272,13 +275,10 @@ const NewProject = (
           ></input>
         </div>
         <div className="input-field col s12 center">
-            <button
-              className="btn indigo lighten-1 z-depth-0"
-              type="submit"
-            >
-              Create
-            </button>
-          </div>
+          <button className="btn indigo lighten-1 z-depth-0" type="submit">
+            Create
+          </button>
+        </div>
       </form>
     </div>
   );
