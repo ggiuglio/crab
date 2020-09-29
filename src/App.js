@@ -8,6 +8,7 @@ import Main from "./main/main";
 import Quotations from "./quotation/quotations";
 import Quotation from "./quotation/quotation";
 import Projects from "./project/projects";
+import NewProject from "./project/new-project";
 import Invoice from "./invoice/invoice";
 import Dashboard from "./dashboard/dashboard";
 import Budget from "./budget/budget";
@@ -47,6 +48,7 @@ class App extends Component {
           <Route exact path='/'component={Projects} />
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
+          <Route path={"/new-project"} component={NewProject} />
           <Route path={"/project/quotations"} component={Quotations} />
           <Route path={"/project/dashboard"} component={Dashboard} />
           <Route path={"/project/invoices"} component={Invoice} />

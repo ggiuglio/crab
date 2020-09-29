@@ -25,7 +25,7 @@ const Projects = ({ projects, loadProjects, clearSelectedProject }) => {
         <div className="col s12 center">
           <NavLink
             className="btn-floating btn-large waves-effect waves-light indigo"
-            to="#"
+            to="/new-project"
           >
             <i className="material-icons">add</i>
           </NavLink>
