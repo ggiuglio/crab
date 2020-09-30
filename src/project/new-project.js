@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
+import Site from "../geo/site/site";
 // import { createNewProject } from "../store/actions/actionsCreator";
 
 const NewProject = (
@@ -18,13 +19,16 @@ const NewProject = (
 
     let collapsible = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsible);
+
+    let modal = document.querySelector(".modal");
+    M.Modal.init(modal);
   }, []);
 
   const [projectName, setProjectName] = useState("");
   const [subregion, setSubregion] = useState("");
   const [geo, setGeo] = useState({});
-  //   const [siteNumber, setSiteNumber] = useState("");
-  //   const [siteCodeList, setSiteCodeList] = useState("");
+  const [siteName, setSiteName] = useState("");
+  const [sites, setSites] = useState({});
   const [providers, setProviders] = useState([]);
   const [provider, setProvider] = useState("");
   const [pmName, setPmName] = useState("");
@@ -112,12 +116,17 @@ const NewProject = (
   // ADD NATION TO GEO SELECT
   const addNationToGeoSelect = (cca3, name, newSubregion) => {
     const geoSelect = document.getElementById("geo");
-    geoSelect.options[geoSelect.options.length] = new Option(
+    let opt = new Option(
       `${cca3} - ${name}`,
       cca3,
       false,
       geo.hasOwnProperty(newSubregion) && geo[newSubregion].includes(cca3)
     );
+    opt.setAttribute(
+      "data-icon",
+      `https://restcountries.eu/data/${cca3.toLowerCase()}.svg`
+    );
+    geoSelect.options[geoSelect.options.length] = opt;
   };
 
   // GEO SELECT CHANGE
@@ -148,14 +157,46 @@ const NewProject = (
     setProviders(providersCopy);
   };
 
+  const checkDisabled = !siteName || siteName.length === 0;
+
+  const addSite = () => {
+    let nation = document.getElementById("siteNation").value;
+    const siteList = sites.hasOwnProperty(nation) ? sites[nation].sites : [];
+    siteList.push({ name: siteName });
+    setSites({
+      ...sites,
+      [nation]: {
+        sites: siteList,
+      },
+    });
+    setSiteName("");
+  };
+
+  const removeSite = (nation, idx) => {
+    let sitesCopy = sites[nation].sites.slice();
+    sitesCopy.splice(idx, 1);
+    if (sitesCopy.length === 0) delete sites[nation];
+    else {
+      setSites({
+        ...sites,
+        [nation]: {
+          sites: sitesCopy,
+        },
+      });
+    }
+  };
+
   const saveProject = (e) => {
     e.preventDefault();
+    console.log(projectName);
     console.log(geo);
+    console.log(sites);
     console.log(providers);
+    console.log(pmName);
   };
 
   return (
-    <div className="container row">
+    <div className="container section row">
       <form className="white" onSubmit={(e) => saveProject(e)}>
         <div className="input-field col s12">
           <label htmlFor="projectName">Project Name</label>
@@ -245,17 +286,43 @@ const NewProject = (
           </div>
         </div>
 
+        <div className="row">
+          <div className="col s12">
+            <ul className="collapsible">
+              <li>
+                <div className="collapsible-header">
+                  <div className="center">Sites</div>
+                </div>
+                <div className="collapsible-body">
+                  <div className="row">
+                    {Object.keys(sites).map((k) => (
+                      <Site
+                        key={k + "_sites"}
+                        nation={k}
+                        sites={sites[k].sites}
+                        classes="col s12"
+                        removeFunction={removeSite}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <div id="providerList" className="col s12">
           <div className="input-field col s6 no-padding">
-            <label>Provider</label>
+            <label htmlFor="provider">Provider</label>
             <input
               className="col s10 m11"
               type="text"
+              name="provider"
               value={provider}
               onChange={(e) => setProvider(e.target.value)}
             ></input>
             <a
-              href="#"
+              href="#!"
               className="right btn-floating btn-small waves-effect waves-light indigo"
               onClick={(e) => addProvider(e)}
             >
@@ -276,7 +343,7 @@ const NewProject = (
                     <td>{provider}</td>
                     <td>
                       <a
-                        href="#"
+                        href="#!"
                         className="right btn-floating btn-small red darken-2 waves-effect waves-light"
                         onClick={(e) => removeProvider(e)}
                       >
@@ -284,7 +351,7 @@ const NewProject = (
                           id={"cancelProvider_" + idx}
                           className="material-icons"
                         >
-                          cancel
+                          clear
                         </i>
                       </a>
                     </td>
@@ -309,6 +376,41 @@ const NewProject = (
           </button>
         </div>
       </form>
+
+      <div id="modal-site" className="modal">
+        <div className="modal-content">
+          <h4>
+            Insert site for <span id="siteNationTitle"></span>
+          </h4>
+          <div className="input-field">
+            <label htmlFor="siteName">Site name</label>
+            <input
+              name="siteName"
+              value={siteName}
+              type="text"
+              onChange={(e) => setSiteName(e.target.value)}
+            ></input>
+          </div>
+          <input id="siteNation" type="text" className="hide" readOnly></input>
+        </div>
+        <div className="modal-footer">
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-indigo btn-flat"
+            onClick={(e) => setSiteName("")}
+          >
+            Cancel
+          </a>
+          <a
+            href="#!"
+            className="modal-close btn green darken-1 waves-effect waves-light"
+            disabled={checkDisabled}
+            onClick={(e) => addSite()}
+          >
+            Add
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

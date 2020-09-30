@@ -91,6 +91,15 @@ th, td {
     padding: 0rem !important;
 }
 
+.flag-small {
+    width: 1.5rem;
+    margin: 0 0.5rem;
+}
+
+.remove-site-icon {
+    margin: 0 0.3rem;
+}
+
 .logo-footer {
     max-height: 80px;
 }
