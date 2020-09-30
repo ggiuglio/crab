@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
+import Geo from "../geo/geo";
 // import { createNewProject } from "../store/actions/actionsCreator";
 
 const NewProject = (
@@ -14,11 +15,14 @@ const NewProject = (
     M.FormSelect.init(subSel);
     const geoSelect = document.getElementById("geo");
     M.FormSelect.init(geoSelect);
+
+    let collapsible = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsible);
   }, []);
 
   const [projectName, setProjectName] = useState("");
-  const [geo, setGeo] = useState({});
   const [subregion, setSubregion] = useState("");
+  const [geo, setGeo] = useState({});
   //   const [siteNumber, setSiteNumber] = useState("");
   //   const [siteCodeList, setSiteCodeList] = useState("");
   const [providers, setProviders] = useState([]);
@@ -35,12 +39,12 @@ const NewProject = (
     "Eastern%20Asia": [],
     "Eastern%20Europe": [],
     Melanesia: [],
-    Micronesia: [],
+    // Micronesia: [],
     "Middle%20Africa": [],
     "Northern%20Africa": [],
     "Northern%20America": [],
     "Northern%20Europe": [],
-    Polynesia: [],
+    // Polynesia: [],
     "South%20America": [],
     "South-Eastern%20Asia": [],
     "Southern%20Africa": [],
@@ -86,7 +90,7 @@ const NewProject = (
             });
             addNationToGeoSelect(nation.cca3, nation.name.common, newSubregion);
           });
-        setSubregionList({...subregionList, [newSubregion]: nationsList});
+          setSubregionList({ ...subregionList, [newSubregion]: nationsList });
           M.FormSelect.init(geoSelect);
           geoSelectDD[1].classList.remove("hide");
           loader.classList.add("hide");
@@ -96,7 +100,7 @@ const NewProject = (
           alert(error);
         });
     } else {
-        subregionList[newSubregion].map((nation) => {
+      subregionList[newSubregion].map((nation) => {
         addNationToGeoSelect(nation.cca3, nation.name, newSubregion);
       });
       M.FormSelect.init(geoSelect);
@@ -180,12 +184,12 @@ const NewProject = (
             <option value="Eastern%20Asia">Eastern Asia</option>
             <option value="Eastern%20Europe">Eastern Europe</option>
             <option value="Melanesia">Melanesia</option>
-            <option value="Micronesia">Micronesia</option>
+            {/* <option value="Micronesia">Micronesia</option> */}
             <option value="Middle%20Africa">Middle Africa</option>
             <option value="Northern%20Africa">Northern Africa</option>
             <option value="Northern%20America">Northern America</option>
             <option value="Northern%20Europe">Northern Europe</option>
-            <option value="Polynesia">Polynesia</option>
+            {/* <option value="Polynesia">Polynesia</option> */}
             <option value="South%20America">South America</option>
             <option value="South-Eastern%20Asia">South-Eastern Asia</option>
             <option value="Southern%20Africa">Southern Africa</option>
@@ -216,6 +220,31 @@ const NewProject = (
           <select multiple id="geo" onChange={(e) => geoChange()}></select>
           <label>Geo</label>
         </div>
+
+        <div className="row">
+          <div className="col s12">
+            <ul className="collapsible">
+              <li>
+                <div className="collapsible-header">
+                  <div className="center">Selected Geo</div>
+                </div>
+                <div className="collapsible-body">
+                  <div className="row">
+                    {Object.keys(geo).map((k) => (
+                      <Geo
+                        key={k}
+                        subregion={k}
+                        nations={geo[k]}
+                        classes="col s12 m6 l4"
+                      />
+                    ))}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
         <div id="providerList" className="col s12">
           <div className="input-field col s6 no-padding">
             <label>Provider</label>
@@ -233,7 +262,7 @@ const NewProject = (
               <i className="material-icons">add</i>
             </a>
           </div>
-          <div className="col s6 no-padding">
+          <div className="col s6">
             <table className="centered striped">
               <thead>
                 <tr>

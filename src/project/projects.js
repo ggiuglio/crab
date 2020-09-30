@@ -4,9 +4,9 @@ import { NavLink } from "react-router-dom";
 import { getProjects } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import ProjectTile from "./projectTile";
-import { loadProjectsAction, selectProject } from "../store/actions/actionsCreator";
+import { selectProject } from "../store/actions/actionsCreator";
 
-const Projects = ({ projects, loadProjects, clearSelectedProject }) => {
+const Projects = ({ projects, clearSelectedProject }) => {
   React.useEffect(() => {
     clearSelectedProject();
 
@@ -89,7 +89,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadProjects: () => dispatch(loadProjectsAction()),
     clearSelectedProject: () => dispatch(selectProject(null))
   };
 };

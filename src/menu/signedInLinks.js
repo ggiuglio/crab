@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser, getSelectedProjectId } from "../store/selectors/selector";
 import { logoutAction } from "../store/actions/actionsCreator";
@@ -15,18 +15,27 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
     }
   });
 
-  const projectLinks = selectedProjectId ? (
-    <div className="inline">
+  const projectLinks =
+    useLocation().pathname === "/new-project" ? (
       <li>
         <NavLink to="/projects">Projects</NavLink>
       </li>
-      <li>
-        <a href="#" className="dropdown-trigger" data-target="menu-project-dd">
-          Operations
-        </a>
-      </li>
-    </div>
-  ) : null;
+    ) : selectedProjectId ? (
+      <div className="inline">
+        <li>
+          <NavLink to="/projects">Projects</NavLink>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="dropdown-trigger"
+            data-target="menu-project-dd"
+          >
+            Operations
+          </a>
+        </li>
+      </div>
+    ) : null;
   return (
     <div>
       {projectLinks}
