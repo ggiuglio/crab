@@ -163,3 +163,17 @@ export const loadProfessionals = () => {
   }
 };
 
+export const createNewProject = (project) => {
+  return (dispatch, getSate) => {
+    return FirebaseInstance.projects.push(project).then((res) => {
+      const id = res.path.pieces_[1];
+      const userId = getSate().user.uid;
+      project.id = id;
+
+      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
+        history.push('/projects')
+      });
+    });
+  }
+}
+

@@ -25,7 +25,6 @@ const mapPeopleList = (people) => {
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {
-    projects[k].id = k;
     projectList.push(mapProject(projects[k]));
   });
 
@@ -34,11 +33,11 @@ const mapProjectList = (projects) => {
 
 const mapProject = (project) => {
   const geo = [];
-  Object.keys(project.GEO).forEach((k) => {
-    project.GEO[k].id = k;
-    geo.push(project.GEO[k]);
+  Object.keys(project.geo).forEach((k) => {
+    project.geo[k].id = k;
+    geo.push(project.geo[k]);
   });
-  project.GEO = geo;
+  project.geo = geo;
 
   return project;
 };

@@ -3,13 +3,9 @@ import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site/site";
-// import { createNewProject } from "../store/actions/actionsCreator";
+import { createNewProject } from "../store/actions/actionsCreator";
 
-const NewProject = (
-  {
-    /*createProject*/
-  }
-) => {
+const NewProject = ({createProject}) => {
   //MATERIALIZE GEO SELECT INSTANCE
   React.useEffect(() => {
     let subSel = document.getElementById("subregion");
@@ -188,11 +184,15 @@ const NewProject = (
 
   const saveProject = (e) => {
     e.preventDefault();
-    console.log(projectName);
-    console.log(geo);
-    console.log(sites);
-    console.log(providers);
-    console.log(pmName);
+    const project = {
+      title: projectName,
+      geo: geo,
+      creationDate: new Date().toLocaleString("It-it").split(',')[0],
+      PM: pmName,
+      status: "Open",
+      providers: providers
+    };
+    createProject(project)
   };
 
   return (
@@ -421,7 +421,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // createProject: (project) => dispatch(createNewProject(project)),
+    createProject: (project) => dispatch(createNewProject(project)),
   };
 };
 

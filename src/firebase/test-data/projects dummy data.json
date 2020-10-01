@@ -6,7 +6,7 @@
         "title": "PURE",
         "Sponsor": "CoreQuest Sagl",
         "PM": "Tommaso Prosdocimi",
-        "GEO": {
+        "geo": {
           "siughpisdfug": {
             "geocode": "General"
           },
@@ -343,7 +343,7 @@
         "title": "Testone",
         "Sponsor": "Coppa del nonno",
         "PM": "Tommaso Prosdocimi",
-        "GEO": {
+        "geo": {
           "123re": {
             "geocode": "General"
           }
@@ -369,10 +369,11 @@
     "hyhX78KB2Wg5nKSyIAYR6gxzjwW2": {
       "projects": {
         "uhruhf44uhf": {
+          "id": "uhruhf44uhf",
           "title": "PURE",
           "Sponsor": "CoreQuest Sagl",
           "PM": "Tommaso Prosdocimi",
-          "GEO": {
+          "geo": {
             "siughpisdfug": {
               "geocode": "General"
             },
@@ -404,10 +405,11 @@
           "status": "open"
         },
         "iuz3234fmf": {
+          "id": "iuz3234fmf",
           "title": "Testone",
           "Sponsor": "Coppa del nonno",
           "PM": "Tommaso Prosdocimi",
-          "GEO": {
+          "geo": {
             "123re": {
               "geocode": "General"
             }
@@ -421,10 +423,11 @@
     "VI0LkX1MEcQdtn7SCt81840Sl032": {
       "projects": {
         "8733434dd": {
+          "id": "8733434dd",
           "title": "Testtwo",
           "Sponsor": "Coppa del nonno",
           "PM": "Tommaso Prosdocimi",
-          "GEO": {
+          "geo": {
             "123re": {
               "geocode": "General"
             }
