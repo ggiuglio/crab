@@ -90,7 +90,7 @@ const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuot
     let personC = [];
     personC.push(<PersonCost key={person.title} title={person.title} fee={person.fee} />);
     if (person.geobool) {
-      project.GEO
+      project.geo
         .filter((geo) => {
           return !/^general$/i.test(geo.geocode);
         })
