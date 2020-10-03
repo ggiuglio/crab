@@ -15,16 +15,16 @@ const ProjectTile = ({ project, chooseProject, loadProject }) => {
           <NavLink to={`/project/quotations/?project=${project.id}`}>
             <div className="white-text">
                 <div className="row card-title">
-                  <span className="bolder col s12 m6 s-center">{project.title}</span>
-                  <span className="col s12 m6 s-center">{project.status}</span>
+                  <span className="bolder col s12 m6 s-center truncate" title={project.title}>{project.title}</span>
+                  <span className="col s12 m6 s-center truncate" title={project.status}>{project.status}</span>
                 </div>
                 <div className="row">
-                <span className="col s12 m6 s-center">Sponsor: {project.sponsor} </span>
-                <span className="col s12 m6 s-center">PM: {project.PM}</span>
+                <span className="col s12 m6 s-center truncate" title={project.sponsor}>Sponsor: {project.sponsor} </span>
+                <span className="col s12 m6 s-center truncate" title={project.PM}>PM: {project.PM}</span>
               </div>
               <div className="row">
-                <span className="col s12 m6 s-center">Creation date: {project.creationDate} </span>
-                <span className="col s12 m6 s-center">End date: {project.endDate}</span>
+                <span className="col s12 m6 s-center truncate" title={project.creationDate}>Creation date: {project.creationDate} </span>
+                <span className="col s12 m6 s-center truncate" title={project.endDate}>End date: {project.endDate}</span>
               </div>
             </div>
           </NavLink>

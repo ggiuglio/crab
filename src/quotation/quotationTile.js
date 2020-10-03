@@ -14,12 +14,12 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
           <div className="card-content" onClick={() => goToQuotationPage()}>
           <NavLink to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`}>              <div className="white-text">
                 <div className="row card-title">
-                  <span className="bolder col s12 m6 s-center">{quotation.code}</span>
-                  <span className="col s12 m6 s-center">{quotation.status}</span>
+                  <span className="bolder col s12 m6 s-center truncate" title={quotation.code}>{quotation.code}</span>
+                  <span className="col s12 m6 s-center truncate" title={quotation.status}>{quotation.status}</span>
                 </div>
                 <div className="row">
-                  <span className="col s12 m6 s-center">Type: {quotation.type} </span>
-                  <span className="col s12 m6 s-center price">
+                  <span className="col s12 m6 s-center truncate" title={quotation.type}>Type: {quotation.type} </span>
+                  <span className="col s12 m6 s-center price truncate" title={quotation.quotationCost}>
                     Price: {quotation.quotationCost}{" "}
                   </span>
                 </div>

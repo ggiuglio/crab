@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site/site";
 import { createNewProject } from "../store/actions/actionsCreator";
 
-const NewProject = ({createProject}) => {
+const NewProject = ({ createProject }) => {
   //MATERIALIZE GEO SELECT INSTANCE
   React.useEffect(() => {
     let subSel = document.getElementById("subregion");
@@ -20,14 +20,17 @@ const NewProject = ({createProject}) => {
     M.Modal.init(modal);
   }, []);
 
+  //Effective state
   const [projectName, setProjectName] = useState("");
-  const [subregion, setSubregion] = useState("");
   const [geo, setGeo] = useState({});
+  const [providers, setProviders] = useState([]);
+  const [pmName, setPmName] = useState("");
+  
+  //Only for utility use
+  const [subregion, setSubregion] = useState("");
   const [siteName, setSiteName] = useState("");
   const [sites, setSites] = useState({});
-  const [providers, setProviders] = useState([]);
   const [provider, setProvider] = useState("");
-  const [pmName, setPmName] = useState("");
 
   // SUBREGION LIST OBJECT
   const [subregionList, setSubregionList] = useState({
@@ -97,6 +100,7 @@ const NewProject = ({createProject}) => {
         })
         .catch((error) => {
           console.log(error);
+          //**TODO REMOVE */
           alert(error);
         });
     } else {
@@ -116,7 +120,7 @@ const NewProject = ({createProject}) => {
       `${cca3} - ${name}`,
       cca3,
       false,
-      geo.hasOwnProperty(newSubregion) && geo[newSubregion].includes(cca3)
+      geo.hasOwnProperty(newSubregion) && geo[newSubregion].hasOwnProperty(cca3)
     );
     opt.setAttribute(
       "data-icon",
@@ -125,12 +129,53 @@ const NewProject = ({createProject}) => {
     geoSelect.options[geoSelect.options.length] = opt;
   };
 
+  const cleanUpGeoName = (name) => {
+    const regex = /%20/g;
+    return name.replaceAll(regex, " ");
+  };
+
   // GEO SELECT CHANGE
   const geoChange = () => {
     const geoSelect = document.getElementById("geo");
-    setGeo({
-      ...geo,
-      [subregion]: M.FormSelect.getInstance(geoSelect).getSelectedValues(),
+    let hasSubregion = geo.hasOwnProperty(subregion);
+    const geoKeysArray = hasSubregion ? Object.keys(geo[subregion]) : [];
+    const geoSelectedArray = M.FormSelect.getInstance(
+      geoSelect
+    ).getSelectedValues();
+    const sitesKeysArray = Object.keys(sites).filter((k) => {
+      return sites[k].subregion == subregion;
+    });
+
+    let geoObj = {};
+    let geoDesc = cleanUpGeoName(subregion);
+
+    geoSelectedArray.map((k, idx, list) => {
+      if (geoKeysArray.includes(k)) {
+        geoObj[k] = geo[subregion][k];
+      } else {
+        geoObj[k] = {
+          sites: [],
+        };
+      }
+      sitesKeysArray.splice(sitesKeysArray.indexOf(k), 1); // For the sites rendering. The remainigs will be removed
+      geoDesc += ` ${k}${list.length === idx + 1 ? "" : ","}`;
+    });
+
+    if (Object.keys(geoObj).length > 0) {
+      geoObj.description = geoDesc;
+
+      setGeo({
+        ...geo,
+        [subregion]: geoObj,
+      });
+    } else {
+      delete geo[subregion];
+      setGeo({ ...geo });
+    }
+
+    sitesKeysArray.map((k) => {
+      delete sites[k];
+      setSites({ ...sites });
     });
   };
 
@@ -153,30 +198,72 @@ const NewProject = ({createProject}) => {
     setProviders(providersCopy);
   };
 
-  const checkDisabled = !siteName || siteName.length === 0;
+  const checkAddSiteDisabled = !siteName || siteName.length === 0;
+  const checkCreateDisabled =  projectName.length === 0 || Object.keys(geo).length === 0 || providers.length === 0 || pmName.length === 0;
 
   const addSite = () => {
+    let subregion = document.getElementById("siteSubregion").value;
     let nation = document.getElementById("siteNation").value;
+
+    if (
+      !geo.hasOwnProperty(subregion) ||
+      !geo[subregion].hasOwnProperty(nation)
+    ) {
+      console.log("errore");
+      return;
+    }
+
     const siteList = sites.hasOwnProperty(nation) ? sites[nation].sites : [];
     siteList.push({ name: siteName });
     setSites({
       ...sites,
       [nation]: {
+        subregion: subregion,
         sites: siteList,
+      },
+    });
+
+    setGeo({
+      ...geo,
+      [subregion]: {
+        ...geo[subregion],
+        [nation]: {
+          sites: [
+            // ...geo[subregion][nation].sites,
+            ...siteList,
+          ],
+        },
       },
     });
     setSiteName("");
   };
 
-  const removeSite = (nation, idx) => {
+  const removeSite = (subregion, nation, idx) => {
     let sitesCopy = sites[nation].sites.slice();
     sitesCopy.splice(idx, 1);
-    if (sitesCopy.length === 0) delete sites[nation];
-    else {
+    if (sitesCopy.length === 0) {
+      delete sites[nation];
+      setSites({
+        ...sites,
+      });
+    } else {
       setSites({
         ...sites,
         [nation]: {
           sites: sitesCopy,
+          subregion: subregion,
+        },
+      });
+    }
+
+    if (geo.hasOwnProperty(subregion) && geo[subregion].hasOwnProperty(nation)) {
+      setGeo({
+        ...geo,
+        [subregion]: {
+          ...geo[subregion],
+          [nation]: {
+            sites: sitesCopy,
+          },
         },
       });
     }
@@ -187,11 +274,12 @@ const NewProject = ({createProject}) => {
     const project = {
       title: projectName,
       geo: geo,
-      creationDate: new Date().toLocaleString("It-it").split(',')[0],
+      creationDate: new Date().toLocaleString("It-it").split(",")[0],
       PM: pmName,
       status: "Open",
-      providers: providers
+      providers: providers,
     };
+    // console.log(project);
     createProject(project)
   };
 
@@ -277,6 +365,7 @@ const NewProject = ({createProject}) => {
                         subregion={k}
                         nations={geo[k]}
                         classes="col s12 m6 l4"
+                        cleanUpNameFunction={cleanUpGeoName}
                       />
                     ))}
                   </div>
@@ -298,6 +387,7 @@ const NewProject = ({createProject}) => {
                     {Object.keys(sites).map((k) => (
                       <Site
                         key={k + "_sites"}
+                        subregion={sites[k].subregion}
                         nation={k}
                         sites={sites[k].sites}
                         classes="col s12"
@@ -371,7 +461,7 @@ const NewProject = ({createProject}) => {
           ></input>
         </div>
         <div className="input-field col s12 center">
-          <button className="btn indigo lighten-1 z-depth-0" type="submit">
+          <button className="btn indigo lighten-1 z-depth-0" type="submit" disabled={checkCreateDisabled}>
             Create
           </button>
         </div>
@@ -392,6 +482,12 @@ const NewProject = ({createProject}) => {
             ></input>
           </div>
           <input id="siteNation" type="text" className="hide" readOnly></input>
+          <input
+            id="siteSubregion"
+            type="text"
+            className="hide"
+            readOnly
+          ></input>
         </div>
         <div className="modal-footer">
           <a
@@ -404,7 +500,7 @@ const NewProject = ({createProject}) => {
           <a
             href="#!"
             className="modal-close btn green darken-1 waves-effect waves-light"
-            disabled={checkDisabled}
+            disabled={checkAddSiteDisabled}
             onClick={(e) => addSite()}
           >
             Add
