@@ -90,12 +90,12 @@ const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuot
     let personC = [];
     personC.push(<PersonCost key={person.title} title={person.title} fee={person.fee} />);
     if (person.geobool) {
-      project.geo
-        .filter((geo) => {
-          return !/^general$/i.test(geo.geocode);
+      Object.keys(project.geo)
+        .filter((nation) => {
+          return !/^general$/i.test(nation);
         })
-        .map((geo) => {
-          personC.push(<PersonCost key={person.title + " - " + geo.geocode} title={person.title + " - " + geo.geocode} fee={person.fee} />);
+        .map((nation) => {
+          personC.push(<PersonCost key={person.title + " - " + nation} title={person.title + " - " + nation.description} fee={person.fee} />);
         });
     }
     return personC;

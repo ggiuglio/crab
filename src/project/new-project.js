@@ -126,6 +126,10 @@ const NewProject = ({ createProject }) => {
       "data-icon",
       `https://restcountries.eu/data/${cca3.toLowerCase()}.svg`
     );
+    opt.setAttribute(
+      "id",
+      `geo_option_${cca3}`,
+    );
     geoSelect.options[geoSelect.options.length] = opt;
   };
 
@@ -155,6 +159,7 @@ const NewProject = ({ createProject }) => {
       } else {
         geoObj[k] = {
           sites: [],
+          name: document.getElementById(`geo_option_${k}`).text
         };
       }
 
@@ -235,9 +240,9 @@ const NewProject = ({ createProject }) => {
         ...geo[subregion],
         [nation]: {
           sites: [
-            // ...geo[subregion][nation].sites,
             ...siteList,
           ],
+          name: document.getElementById(`geo_option_${nation}`).text
         },
       },
     });
@@ -272,6 +277,7 @@ const NewProject = ({ createProject }) => {
           ...geo[subregion],
           [nation]: {
             sites: sitesCopy,
+            name: document.getElementById(`geo_option_${nation}`).text
           },
         },
       });

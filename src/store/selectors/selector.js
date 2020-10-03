@@ -1,7 +1,8 @@
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
 export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;
-export const getProject = (state) => state.project ?  mapProject(state.project) : undefined;
+// export const getProject = (state) => state.project ?  mapProject(state.project) : undefined;
+export const getProject = (state) => state.project ?  state.project : undefined;
 export const getSelectedProjectId = (state) => state.selectedProjectId;
 export const getSelectedQuotationId = (state) => state.selectedQuotationId;
 export const getQuotations = (state) => state.quotations ? mapQuotationList(state.quotations) : undefined;
@@ -25,22 +26,23 @@ const mapPeopleList = (people) => {
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {
-    projectList.push(mapProject(projects[k]));
+    // projectList.push(mapProject(projects[k]));
+    projectList.push(projects[k]);
   });
 
   return projectList.reverse();
 };
 
-const mapProject = (project) => {
-  const geo = [];
-  Object.keys(project.geo).forEach((k) => {
-    project.geo[k].id = k;
-    geo.push(project.geo[k]);
-  });
-  project.geo = geo;
+// const mapProject = (project) => {
+//   const geo = [];
+//   Object.keys(project.geo).forEach((k) => {
+//     project.geo[k].id = k;
+//     geo.push(project.geo[k]);
+//   });
+//   project.geo = geo;
 
-  return project;
-};
+//   return project;
+// };
 
 const mapQuotationList = (quotations) => {
   const quotationList = [];
