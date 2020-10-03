@@ -25,7 +25,7 @@ const NewProject = ({ createProject }) => {
   const [geo, setGeo] = useState({});
   const [providers, setProviders] = useState([]);
   const [pmName, setPmName] = useState("");
-  
+
   //Only for utility use
   const [subregion, setSubregion] = useState("");
   const [siteName, setSiteName] = useState("");
@@ -157,7 +157,9 @@ const NewProject = ({ createProject }) => {
           sites: [],
         };
       }
-      sitesKeysArray.splice(sitesKeysArray.indexOf(k), 1); // For the sites rendering. The remainigs will be removed
+
+      if (sitesKeysArray.indexOf(k) >= 0)
+        sitesKeysArray.splice(sitesKeysArray.indexOf(k), 1); // For the sites rendering. The remainigs will be removed
       geoDesc += ` ${k}${list.length === idx + 1 ? "" : ","}`;
     });
 
@@ -199,7 +201,11 @@ const NewProject = ({ createProject }) => {
   };
 
   const checkAddSiteDisabled = !siteName || siteName.length === 0;
-  const checkCreateDisabled =  projectName.length === 0 || Object.keys(geo).length === 0 || providers.length === 0 || pmName.length === 0;
+  const checkCreateDisabled =
+    projectName.length === 0 ||
+    Object.keys(geo).length === 0 ||
+    providers.length === 0 ||
+    pmName.length === 0;
 
   const addSite = () => {
     let subregion = document.getElementById("siteSubregion").value;
@@ -256,7 +262,10 @@ const NewProject = ({ createProject }) => {
       });
     }
 
-    if (geo.hasOwnProperty(subregion) && geo[subregion].hasOwnProperty(nation)) {
+    if (
+      geo.hasOwnProperty(subregion) &&
+      geo[subregion].hasOwnProperty(nation)
+    ) {
       setGeo({
         ...geo,
         [subregion]: {
@@ -280,7 +289,7 @@ const NewProject = ({ createProject }) => {
       providers: providers,
     };
     // console.log(project);
-    createProject(project)
+    createProject(project);
   };
 
   return (
@@ -461,7 +470,11 @@ const NewProject = ({ createProject }) => {
           ></input>
         </div>
         <div className="input-field col s12 center">
-          <button className="btn indigo lighten-1 z-depth-0" type="submit" disabled={checkCreateDisabled}>
+          <button
+            className="btn indigo lighten-1 z-depth-0"
+            type="submit"
+            disabled={checkCreateDisabled}
+          >
             Create
           </button>
         </div>
