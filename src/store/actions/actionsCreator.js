@@ -8,7 +8,7 @@ import {
   HIDE_NEW_INVOICE,
   SELECT_PROJECT,
   SELECT_QUOTATION,
-  LOAD_PROFESSIONALS,
+  LOAD_STATIC_DATA,
   CLEAR_USER_DATA
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
@@ -140,15 +140,16 @@ export const selectQuotation = (quotationId) => {
   }
 }
 
-export const loadProfessionals = () => {
+export const loadStaticData = () => {
   return dispatch => {
-    return FirebaseInstance.dataRef.ref(`staticData/professionals`).on('value', snapshot => {
-      const professionals = JSON.parse(JSON.stringify(snapshot.val()));
+    return FirebaseInstance.dataRef.ref(`staticData`).on('value', snapshot => {
+      const data = JSON.parse(JSON.stringify(snapshot.val()));
 
       return dispatch(
         {
-          type: LOAD_PROFESSIONALS,
-          professionals: professionals
+          type: LOAD_STATIC_DATA,
+          professionals: data.professionals,
+          modules: data.baseModules
         }
       )
     });

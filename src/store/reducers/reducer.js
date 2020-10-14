@@ -9,11 +9,12 @@ import {
   CLEAR_USER_DATA,
   SELECT_PROJECT,
   SELECT_QUOTATION,
-  LOAD_PROFESSIONALS
+  LOAD_STATIC_DATA
 } from "../actions/actionsTypes";
 
 export const INITIAL_STATE = {
   professionals: undefined,
+  baseModules: undefined,
   projects: undefined,
   selectedProjectId: undefined,
   selectedQuotationId: undefined,
@@ -95,10 +96,11 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedQuotationId: action.quotation,
       };
     }
-    case LOAD_PROFESSIONALS: {
+    case LOAD_STATIC_DATA: {
       return {
         ...state,
-        professionals: action.professionals
+        professionals: action.professionals,
+        baseModules: action.modules
       }
     }
 

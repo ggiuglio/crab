@@ -8,18 +8,19 @@ import Main from "./main/main";
 import Quotations from "./quotation/quotations";
 import Quotation from "./quotation/quotation";
 import Projects from "./project/projects";
-import NewProject from "./project/new-project";
+import NewProject from "./project/newProject";
 import Invoice from "./invoice/invoice";
 import Dashboard from "./dashboard/dashboard";
 import Budget from "./budget/budget";
 import Analytics from "./analytics/analytics";
 import Login from "./login/login";
 import { getProjects } from "./store/selectors/selector";
-import { setUserAction, loadProjectsAction, loadProfessionals } from "./store/actions/actionsCreator";
+import { setUserAction, loadProjectsAction, loadStaticData } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import "materialize-css/dist/css/materialize.min.css";
+import newQuotation from "./quotation/newQuotation";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
 
@@ -34,7 +35,7 @@ class App extends Component {
         history.push("/login");
       } else {
         if (!this.props.projects) {
-          this.props.loadStaticData();
+          this.props.loadData();
           this.props.loadProjects();
         }
       }
@@ -50,11 +51,11 @@ class App extends Component {
           <Route path={"/projects"} component={Projects} />
           <Route path={"/new-project"} component={NewProject} />
           <Route path={"/project/quotations"} component={Quotations} />
+          <Route path={"/project/new-quotation"} component={newQuotation} />
           <Route path={"/project/dashboard"} component={Dashboard} />
           <Route path={"/project/invoices"} component={Invoice} />
           <Route path={"/project/budget"} component={Budget} />
           <Route path={"/project/analytics"} component={Analytics} />
-          <Route path={"/project/quotation"} component={Quotation} />
         </Main>
       </Router>
     );
@@ -71,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setUser: (user) => dispatch(setUserAction(user)),
     loadProjects: () => dispatch(loadProjectsAction()),
-    loadStaticData: () => dispatch(loadProfessionals())
+    loadData: () => dispatch(loadStaticData())
   };
 };
 

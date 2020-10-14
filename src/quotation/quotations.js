@@ -40,7 +40,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
           <div className="col s6 center">
             <NavLink
               className="btn-floating btn-large waves-effect waves-light green darken-1"
-              to="#"
+              to={`/project/new-quotation?project=${selectedProjectId}`}
             >
               <i className="material-icons">add</i>
             </NavLink>
@@ -49,7 +49,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
           <div className="col s6 center">
             <NavLink
               className="btn-floating btn-large waves-effect waves-light red darken-1"
-              to="#"
+              to={`/project/new-quotation?project=${selectedProjectId}`}
             >
               <i className="material-icons">add</i>
             </NavLink>

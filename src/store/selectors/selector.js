@@ -9,6 +9,7 @@ export const getQuotation = (state) => state.quotations ? getSingleQuotation(sta
 export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getInvoiceList = (state) => state.invoiceList;
 export const getPeople = (state) => state.professionals ? mapPeopleList(state.professionals) : undefined;
+export const getBaseModules = (state) => mapBaseModules(state.baseModules);
 
 const mapPeopleList = (people) => {
   const peopleList = [];
@@ -88,3 +89,15 @@ const mapActivity = (activity) => {
 
   return activity;
 };
+
+const mapBaseModules = (modules) => {
+  const moduleList = [];
+  if (modules) {
+    Object.keys(modules).forEach((k) => {
+      modules[k].id = k;
+      moduleList.push(modules[k]);
+    });
+  }
+
+  return moduleList;
+}
