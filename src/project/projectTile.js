@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectProject } from "../store/actions/actionsCreator";
 
-const ProjectTile = ({ project, chooseProject, loadProject }) => {
+const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
   const goToProjectPage = () => {
     chooseProject(project.id);
   };

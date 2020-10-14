@@ -1,2 +1,7 @@
 [0505/235818.223:WARNING:minidump_to_upload_parameters.cc(36)] duplicate key guid, discarding value 40f6c530-231e-4a15-addc-fa2e4d1b1a53
 [0505/235927.528:WARNING:minidump_to_upload_parameters.cc(36)] duplicate key guid, discarding value 40f6c530-231e-4a15-addc-fa2e4d1b1a53
+[1014/151602.729:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ggiug\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\0fcbddac-312c-49e8-ace5-9215591f3440: The system cannot find the path specified. (0x3)
+[1014/151602.737:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ggiug\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\2e0a95c2-be13-4041-b1d6-5ae79e66926e: The system cannot find the path specified. (0x3)
+[1014/151602.748:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ggiug\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\745f0b37-0877-4dfd-977c-dbbb63de9dd5: The system cannot find the path specified. (0x3)
+[1014/151602.756:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\ggiug\AppData\Local\Microsoft\Edge\User Data\Crashpad\attachments\fa58773d-6d45-4290-84d9-8d519e80cea9: The system cannot find the path specified. (0x3)
+[1014/151602.760:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

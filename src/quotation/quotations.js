@@ -59,7 +59,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
       </div>
       : ''}
 
-      { quotations ? 
+      { quotations !== undefined ? 
         <div>
           <div className="row">
             { quotations.map(q => <QuotationTile key={q.id} projectId={project.id} quotation={q} />) }

@@ -6,10 +6,10 @@ import {
   LOAD_PROJECT,
   SHOW_NEW_INVOICE,
   HIDE_NEW_INVOICE,
-  CLEAR_USER_DATA,
   SELECT_PROJECT,
   SELECT_QUOTATION,
-  LOAD_PROFESSIONALS
+  LOAD_PROFESSIONALS,
+  CLEAR_USER_DATA
 } from './actionsTypes.js'
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -31,14 +31,6 @@ export const resetLoginErrorAction = () => {
   return dispatch => {
     dispatch({
       type: RESET_LOGIN_ERROR
-    });
-  }
-}
-
-export const clearUserData = () => {
-  return dispatch => {
-    dispatch({
-      type: CLEAR_USER_DATA
     });
   }
 }
@@ -165,9 +157,15 @@ export const loadProfessionals = () => {
 
 export const createNewProject = (project) => {
   return (dispatch, getSate) => {
-    return FirebaseInstance.projects.push(project).then((res) => {
+    const userId = getSate().user.uid;
+    const projectData = {
+      project: {...project, ownerId: userId },
+      quotations: {},
+      invoices: {}
+    }
+
+    return FirebaseInstance.projects.push(projectData).then((res) => {
       const id = res.path.pieces_[1];
-      const userId = getSate().user.uid;
       project.id = id;
 
       return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
@@ -176,4 +174,3 @@ export const createNewProject = (project) => {
     });
   }
 }
-
