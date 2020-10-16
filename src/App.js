@@ -6,7 +6,6 @@ import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
 import Quotations from "./quotation/quotations";
-import Quotation from "./quotation/quotation";
 import Projects from "./project/projects";
 import NewProject from "./project/newProject";
 import Invoice from "./invoice/invoice";

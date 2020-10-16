@@ -91,6 +91,11 @@ th, td {
     padding: 0rem !important;
 }
 
+#wrapper-select-geo .select-wrapper .select-dropdown li img {
+    border-radius: 20px;
+    border: solid black;
+}
+
 .flag-small {
     width: 1.5rem;
     margin: 0 0.5rem;
