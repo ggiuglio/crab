@@ -51,6 +51,7 @@ class App extends Component {
           <Route path={"/projects"} component={Projects} />
           <Route path={"/new-project"} component={NewProject} />
           <Route path={"/project/quotations"} component={Quotations} />
+          <Route path={"/project/quotation"} component={Quotation} />
           <Route path={"/project/new-quotation"} component={newQuotation} />
           <Route path={"/project/dashboard"} component={Dashboard} />
           <Route path={"/project/invoices"} component={Invoice} />
