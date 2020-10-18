@@ -126,10 +126,7 @@ const NewProject = ({ createProject }) => {
       "data-icon",
       `https://restcountries.eu/data/${cca3.toLowerCase()}.svg`
     );
-    opt.setAttribute(
-      "id",
-      `geo_option_${cca3}`,
-    );
+    opt.setAttribute("id", `geo_option_${cca3}`);
     geoSelect.options[geoSelect.options.length] = opt;
   };
 
@@ -159,7 +156,7 @@ const NewProject = ({ createProject }) => {
       } else {
         geoObj[k] = {
           sites: [],
-          name: document.getElementById(`geo_option_${k}`).text
+          name: document.getElementById(`geo_option_${k}`).text,
         };
       }
 
@@ -239,10 +236,8 @@ const NewProject = ({ createProject }) => {
       [subregion]: {
         ...geo[subregion],
         [nation]: {
-          sites: [
-            ...siteList,
-          ],
-          name: document.getElementById(`geo_option_${nation}`).text
+          sites: [...siteList],
+          name: document.getElementById(`geo_option_${nation}`).text,
         },
       },
     });
@@ -277,7 +272,7 @@ const NewProject = ({ createProject }) => {
           ...geo[subregion],
           [nation]: {
             sites: sitesCopy,
-            name: document.getElementById(`geo_option_${nation}`).text
+            name: document.getElementById(`geo_option_${nation}`).text,
           },
         },
       });
@@ -345,7 +340,9 @@ const NewProject = ({ createProject }) => {
           </select>
           <label>Geo subregion</label>
         </div>
-        <div className="input-field col s6">
+        <div id="wrapper-select-geo" className="input-field col s6">
+          <select multiple id="geo" onChange={(e) => geoChange()}></select>
+          <label>Geo</label>
           <div className="center">
             <div className="preloader-wrapper small active hide">
               <div className="spinner-layer spinner-blue-only">
@@ -361,8 +358,6 @@ const NewProject = ({ createProject }) => {
               </div>
             </div>
           </div>
-          <select multiple id="geo" onChange={(e) => geoChange()}></select>
-          <label>Geo</label>
         </div>
 
         <div className="row">
