@@ -109,7 +109,6 @@ const mapBudget = (q) => {
   };
 
   if (q) {
-    console.log(q);
     let quotations = JSON.parse(JSON.stringify(q));
 
     if (quotations) {
