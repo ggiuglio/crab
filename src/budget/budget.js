@@ -1,11 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSelectedProjectId } from "../store/selectors/selector";
+import { getBudget, getSelectedProjectId, getProject } from "../store/selectors/selector";
 import { history } from "../App";
+import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
 
-const Budget = ({selectedProject, chooseProject}) => {
+const Budget = ({selectedProjectId, chooseProject, budget, project, loadProject}) => {
   React.useEffect(() => {
-    if(!selectedProject) {
+    if(!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')
       if(queryProject) {
@@ -14,8 +15,14 @@ const Budget = ({selectedProject, chooseProject}) => {
       else {
         history.push('/');
       }
+    } else {
+      if (!project || project.id !== selectedProjectId) {
+        loadProject(selectedProjectId);
+      }
     }
   });
+
+  console.log('budget component', budget);
 
   return (
     <div>
@@ -26,12 +33,17 @@ const Budget = ({selectedProject, chooseProject}) => {
 
 const mapStateToProps = (state) => {
   return {
-    selectedProject: getSelectedProjectId(state),
+    selectedProjectId: getSelectedProjectId(state),
+    budget: getBudget(state),
+    project: getProject(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    chooseProject: (projectId) => dispatch(selectProject(projectId)),
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Budget);
