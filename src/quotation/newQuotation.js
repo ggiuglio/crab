@@ -41,6 +41,8 @@ const NewQuotation = ({
   */
   const [availableGeos, setAvailableGeos] = useState();
   const [availableModules, setAvailableModules] = useState();
+  const [selectedModule, setSelectedModule] = useState("");
+  const [selectedGeo, setSelectedGeo] = useState("");
 
   React.useEffect(() => {
     if (!selectedProjectId) {
@@ -252,12 +254,45 @@ const NewQuotation = ({
     setMinDate(newDate);
   };
 
-  const addModule = (e) => {};
+  const checkAddModuleDisabled = selectedModule.length === 0 || selectedGeo.length === 0;
+
+  const addModule = (e) => {
+    if(checkAddModuleDisabled) return;
+
+    const moduleSelect = document.getElementById("availableModules");
+    const geoSelect = document.getElementById("availableGeo");
+
+    const moduleIdx = +selectedModule - 1;
+    const mods = quotation.modules;
+    const module = {
+      ...baseModules[moduleIdx],
+      geo: geoSelect.options[geoSelect.selectedIndex].text,
+    };
+    mods.push(module);
+    setQuotation({
+      ...quotation,
+      modules: mods,
+    });
+
+    if (availableGeos.hasOwnProperty(selectedModule)) {
+      const geosByModule = availableGeos[selectedModule];
+      const {[selectedGeo]: geoToRemove, ...rest} = geosByModule;
+      setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
+    }
+    moduleSelect.selectedIndex = 0;
+    M.FormSelect.init(moduleSelect);
+    availableModulesChange("");
+    M.FormSelect.init(geoSelect);
+
+    let collapsible = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsible, { accordion: false });
+  };
 
   const availableModulesChange = (e) => {
+    setSelectedModule(e);
+    const geoSelect = document.getElementById("availableGeo");
+    geoSelect.options.length = 0;
     if (availableGeos.hasOwnProperty(e)) {
-      const geoSelect = document.getElementById("availableGeo");
-      geoSelect.options.length = 0;
       Object.keys(availableGeos[e]).map((geoKey) => {
         let opt = new Option(
           `${availableGeos[e][geoKey].description}`,
@@ -268,8 +303,9 @@ const NewQuotation = ({
         opt.setAttribute("id", `geo_option_${e}_${geoKey}`);
         geoSelect.options[geoSelect.options.length] = opt;
       });
-      M.FormSelect.init(geoSelect);
+      setSelectedGeo(geoSelect.options.length > 0 ? geoSelect.options[0].value : "");
     }
+    M.FormSelect.init(geoSelect);
   };
 
   const saveQuotation = (e) => {
@@ -331,10 +367,7 @@ const NewQuotation = ({
                 </div>
               </div>
               <div className="row">
-                <div
-                  id="wrapper-select-modules"
-                  className="input-field col s6"
-                >
+                <div id="wrapper-select-modules" className="input-field col s6">
                   <select
                     id="availableModules"
                     onChange={(e) => availableModulesChange(e.target.value)}
@@ -344,13 +377,14 @@ const NewQuotation = ({
                   <label>Module</label>
                 </div>
                 <div id="wrapper-select-geo" className="input-field col s6">
-                  <select id="availableGeo"></select>
+                  <select id="availableGeo" onChange={(e) => setSelectedGeo(e.target.value)}></select>
                   <label>Geo</label>
                 </div>
                 <div className="col s2 offset-s5">
                   <a
                     className="waves-effect waves-light btn indigo"
                     href="#!"
+                    disabled={checkAddModuleDisabled}
                     onClick={(e) => addModule()}
                   >
                     Add module

@@ -19,8 +19,8 @@ const Module = ({ key, module }) => {
       </div>
       <div className="collapsible-body">
         <ul className="collapsible">
-          {module.activities.map((activity) => (
-            <Activity key={activity.id} activity={activity} />
+          {Object.keys(module.activities).map((key) => (
+            <Activity key={key} activity={module.activities[key]} />
           ))}
         </ul>
       </div>

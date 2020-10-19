@@ -137,9 +137,10 @@ const Activity = ({ key, activity }) => {
                     <td>{activity.fixedCost}</td>
                   </tr>) : ( null )
                 }
-                {activity.resources.map((resource) => (
+                {activity.resources ?
+                  activity.resources.map((resource) => (
                   <Resource key={resource.id} resource={resource} />
-                ))}
+                )) : null}
               </tbody>
             </table>
           </div>
