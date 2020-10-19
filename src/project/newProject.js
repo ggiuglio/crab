@@ -289,7 +289,6 @@ const NewProject = ({ createProject }) => {
       status: "Open",
       providers: providers,
     };
-    // console.log(project);
     createProject(project);
   };
 

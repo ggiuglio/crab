@@ -128,9 +128,6 @@ const NewQuotation = ({
     });
   };
 
-  console.log(availableGeos);
-  // console.log(availableModules);
-
   const populateModuleSelect = () => {
     const moduleSelect = document.getElementById("availableModules");
     availableModules.map((module) => {
