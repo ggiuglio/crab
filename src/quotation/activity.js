@@ -5,9 +5,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Activity = ({ key, activity }) => {
   const iconTypeMap = {
-    document: "file",
+    document: "folder",
+    file: "file",
     process: "project-diagram",
     visit: "eye",
+    hour: "clock",
+    site: "location-arrow",
+    month: "calendar-alt",
+    study: "microscope",
+    database: "database",
+    user: "user",
+    laboratory: "flask",
+    subject: "medrt",
+    sae: "book-dead",
+    event: "calendar-check",
+    page: "scroll",
+    submission: "balance-scale",
+    license: "id-badge",
+    shipment: "truck",
+    meeting: "handshake",
+    member: "user-friends",
+    patient: "user-injured",
+    year: "dot-circle",
   };
   let rdm = Date.now();
   return (

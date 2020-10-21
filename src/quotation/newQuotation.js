@@ -40,7 +40,7 @@ const NewQuotation = ({
     }
   */
   const [availableGeos, setAvailableGeos] = useState();
-  const [availableModules, setAvailableModules] = useState();
+  const [availableActivities, setAvailableActivities] = useState();
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedGeo, setSelectedGeo] = useState("");
 
@@ -72,7 +72,7 @@ const NewQuotation = ({
       };
 
       if (baseModules) {
-        setAvailableModules(baseModules);
+        populateModuleSelect();
 
         const avGeo = {};
         baseModules.map((module) => {
@@ -82,22 +82,14 @@ const NewQuotation = ({
         setAvailableGeos(avGeo);
       }
     }
-
     setDates();
-
-    // if (quotation) {
-    //   let collapsible = document.querySelectorAll(".collapsible");
-    //   M.Collapsible.init(collapsible, { accordion: false });
-    // }
   }, [project, people, baseModules]);
 
   React.useEffect(() => {
     setDates();
+    let collapsible = document.querySelectorAll(".collapsible");
+    M.Collapsible.init(collapsible, { accordion: false });
   }, [quotation, minDate]);
-
-  React.useEffect(() => {
-    if (availableModules) populateModuleSelect();
-  }, [availableModules]);
 
   React.useEffect(() => {
     const geoSel = document.getElementById("availableGeo");
@@ -132,7 +124,7 @@ const NewQuotation = ({
 
   const populateModuleSelect = () => {
     const moduleSelect = document.getElementById("availableModules");
-    availableModules.map((module) => {
+    baseModules.map((module) => {
       let opt = new Option(`${module.title}`, module.id, false, false);
       opt.setAttribute("id", `module_option_${module.id}`);
       moduleSelect.options[moduleSelect.options.length] = opt;
@@ -220,14 +212,14 @@ const NewQuotation = ({
     );
     if (person.geobool) {
       Object.keys(project.geo)
-        .filter((nation) => {
-          return !/^general$/i.test(nation);
-        })
+        // .filter((nation) => {
+        //   return !/^general$/i.test(nation);
+        // })
         .map((nation) => {
           personC.push(
             <PersonCost
               key={person.title + " - " + nation}
-              title={person.title + " - " + nation.description}
+              title={person.title + " - " + project.geo[nation].description}
               fee={person.fee}
             />
           );
@@ -235,6 +227,9 @@ const NewQuotation = ({
     }
     return personC;
   };
+
+  console.log(availableGeos)
+  console.log(baseModules)
 
   const setQuotationProp = (propName, propValue) => {
     setQuotation({
@@ -283,9 +278,6 @@ const NewQuotation = ({
     M.FormSelect.init(moduleSelect);
     availableModulesChange("");
     M.FormSelect.init(geoSelect);
-
-    let collapsible = document.querySelectorAll(".collapsible");
-    M.Collapsible.init(collapsible, { accordion: false });
   };
 
   const availableModulesChange = (e) => {
@@ -416,7 +408,7 @@ const NewQuotation = ({
               <div className="col s12" id="quotationGroup">
                 <ul className="collapsible">
                   {quotation.modules.map((module) => (
-                    <Module key={module.id} module={module} />
+                    <Module key={module.id+"_"+module.geo} module={module} />
                   ))}
                 </ul>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
