@@ -116,16 +116,13 @@ const mapBudget = (q) => {
         quotations[k].id = k;
         const quotation = mapQuotationForBudget(quotations[k]);
 
-        if (Object.keys(budget.modules).length === 0) {
-          budget.modules = quotation.modules
-        } else {
-          addQuotationToBudget(budget, quotation)
-        }
-
-      })
+        Object.keys(quotation.modules).forEach((j) => {
+          addModuleToBudget(budget, quotation.modules[j]);
+        });
+      });
     }
   }
-  return budget;
+  return mapBudgetWithData(budget);
 }
 
 const mapQuotationForBudget = (quotation) => {
@@ -133,7 +130,7 @@ const mapQuotationForBudget = (quotation) => {
   if (quotation.modules) {
     Object.keys(quotation.modules).forEach((k) => {
       quotation.modules[k].id = k;
-      modules[quotation.modules[k].code] = mapModuleForBudget(quotation.modules[k])
+      modules[quotation.modules[k].code] = mapModuleForBudget(quotation, quotation.modules[k])
     });
   }
   quotation.modules = modules;
@@ -141,13 +138,14 @@ const mapQuotationForBudget = (quotation) => {
   return quotation;
 }
 
-const mapModuleForBudget = (module) => {
+const mapModuleForBudget = (quotation, module) => {
   const activities = {};
   if (module.activities) {
     Object.keys(module.activities).forEach((k) => {
       let activity = module.activities[k];
       activity.id = k;
-      activity.sources = [activity];
+      activity.quotation = { id: quotation.id, code: quotation.code };
+      activity.module = { id: module.id, code: module.code, title: module.title };
       let resources = [];
       Object.keys(activity.resources).forEach((k) => {
         resources.push(activity.resources[k]);
@@ -161,35 +159,49 @@ const mapModuleForBudget = (module) => {
   return module;
 }
 
-const addQuotationToBudget = (budget, quotation) => {
-  Object.keys(quotation.modules).forEach((k) => {
-    let module = quotation.modules[k];
-    if (!budget.modules[module.code]) {
-      budget.modules[module.code] = module;
-    } else {
-      mergeBudgetModule(budget.modules[module.code], module);
-    }
-  });
-}
+const addModuleToBudget = (budget, module) => {
+  if (!budget.modules[module.code]) {
+    budget.modules[module.code] = {
+      code: module.code,
+      title: module.title,
+      estimatedCost: 0,
+      sustainedCost: 0,
+      activities: {}
+    };
+  }
 
-const mergeBudgetModule = (budgetModule, module) => {
   Object.keys(module.activities).forEach((k) => {
-    let activity = module.activities[k];
-    if (!budgetModule.activities[activity.code]) {
-      budgetModule.activities[activity.code] = activity;
-    } else {
-      budgetModule.activities[activity.code] = mergeBudgetActivity(budgetModule.activities[activity.code], activity)
-    }
+    addActivityToBudget(budget.modules[module.code], module.activities[k]);
   });
 }
 
-const mergeBudgetActivity = (budgetActivity, activity) => {
-  budgetActivity.sources.push(activity.sources[0]);
-  budgetActivity.fixedCost = activity.fixedCost + budgetActivity.fixedCost;
-  budgetActivity.unitCost = activity.unitCost + budgetActivity.unitCost;
-  budgetActivity.unitNumber = activity.unitNumber + budgetActivity.unitNumber;
-  budgetActivity.activityCost = activity.activityCost + budgetActivity.activityCost;
-  budgetActivity.resources = budgetActivity.resources.concat(activity.resources)
+const addActivityToBudget = (budgetModule, activity) => {
+  if (!budgetModule.activities[activity.code]) {
+    budgetModule.activities[activity.code] = {
+      code: activity.code,
+      title: activity.title,
+      estimatedCost: 0,
+      sustainedCost: 0,
+      originalActivities: []
+    };
+  }
+  budgetModule.activities[activity.code].estimatedCost += activity.activityCost;
+  budgetModule.activities[activity.code].originalActivities.push(activity);
+  budgetModule.estimatedCost += activity.activityCost;
+}
 
-  return budgetActivity;
+const mapBudgetWithData = (budget) => {
+  let modules = [];
+  Object.keys(budget.modules).forEach((k) => {
+    let module = budget.modules[k];
+    let activities = [];
+    Object.keys(module.activities).forEach((j) => {
+      activities.push(module.activities[j]);
+    });
+    module.activities = activities;
+    modules.push(module);
+  });
+  budget.modules = modules;
+
+  return budget;
 }

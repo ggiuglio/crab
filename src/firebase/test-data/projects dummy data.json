@@ -208,7 +208,7 @@
             "m0004": {
               "title": "Feasibility",
               "geo": "North Europe - DK,SWE",
-              "code": "STUDYNEU",
+              "code": "FEANEU",
               "activities": {
                 "akiok0022": {
                   "title": "Screening & pool of potential sites identification",
@@ -216,7 +216,7 @@
                   "code": "SITESCREEN",
                   "responsibilityCRO": true,
                   "responsibilitySponsor": false,
-                  "fixedCost": 1,
+                  "fixedCost": 100,
                   "resources": {
                     "MDGD7efXaGVJz3lwQQM1": {
                       "resourceType": "CRA North Europe",
@@ -231,10 +231,10 @@
                       "resourceCost": 640
                     }
                   },
-                  "unitCost": 4800,
-                  "unitNumber": 1,
+                  "unitCost": 4900,
+                  "unitNumber": 2,
                   "comment": "full sites discovery",
-                  "activityCost": 3840
+                  "activityCost": 9800
                 },
                 "a340025": {
                   "title": "Site Qualification Visits (SQV) - onsite (travel / accommodation excluded)",
@@ -274,7 +274,7 @@
             "m0005": {
               "title": "Feasibility",
               "geo": "North Europe - DK,SWE",
-              "code": "STUDYNEU",
+              "code": "FEANEU",
               "activities": {
                 "akiok0023": {
                   "title": "Screening & pool of potential sites identification",
@@ -282,7 +282,7 @@
                   "code": "SITESCREEN",
                   "responsibilityCRO": true,
                   "responsibilitySponsor": false,
-                  "fixedCost": 1,
+                  "fixedCost": 200,
                   "resources": {
                     "MDGD7efXaGVJz3arQQM2": {
                       "resourceType": "CTA",
@@ -291,10 +291,10 @@
                       "resourceCost": 1200
                     }
                   },
-                  "unitCost": 1200,
-                  "unitNumber": 1,
+                  "unitCost": 1400,
+                  "unitNumber": 3,
                   "comment": "full sites discovery",
-                  "activityCost": 1200
+                  "activityCost": 4200
                 },
                 "a340033": {
                   "title": "Trial Master File set-up",
