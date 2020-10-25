@@ -27,8 +27,6 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
     }
   });
 
-  console.log('budget component', budget);
-
   return (
     <div>
       <h3>Budget</h3>
