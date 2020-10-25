@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import InvoiceList from './invoice-list';
 import NewInvoice from './new-invoice';
 import add from '../assets/images/add.png';
-import { ShowNewInvoice } from '../store/actions/actionsCreator';
-import { getShowNewInvoice, getSelectedProjectId } from '../store/selectors/selector';
+import { ShowNewInvoice, selectProject, loadProjectAction } from '../store/actions/actionsCreator';
+import { getShowNewInvoice, getSelectedProjectId, getProject } from '../store/selectors/selector';
 import { history } from "../App";
 
 const AddInvoice = styled.div`
@@ -21,16 +21,20 @@ const AddArticleImage = styled.img`
   margin-right: 10px;
 `;
 
-const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProject, chooseProject }) => {
+const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project, chooseProject, loadProject }) => {
   React.useEffect(() => {
-    if (!selectedProject) {
+    if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')
-      if (queryProject) {
+      if(queryProject) {
         chooseProject(queryProject);
       }
       else {
         history.push('/');
+      }
+    } else {
+      if (!project || project.id !== selectedProjectId) {
+        loadProject(selectedProjectId);
       }
     }
   });
@@ -55,13 +59,15 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProject, chooseProj
 const mapStateToProps = (state) => {
   return {
     isNewInvoiceOpen: getShowNewInvoice(state),
-    selectedProject: getSelectedProjectId(state)
-  };
+    selectedProjectId: getSelectedProjectId(state),
+    project: getProject(state),  };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     openNewInvoice: () => dispatch(ShowNewInvoice()),
+    chooseProject: (projectId) => dispatch(selectProject(projectId)),
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
   };
 };
 

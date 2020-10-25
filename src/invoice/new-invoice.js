@@ -33,9 +33,9 @@ const SaveButton = styled.button`
 `;
 
 const NewInvoice = ({createInvoice}) => {
-  const [quotationId, setQuotationId] = useState('');
-  const [moduleId, setModuleId] = useState('');
-  const [activityId, setActivityId] = useState('');
+  const [quotationCode, setQuotationCode] = useState('');
+  const [moduleCode, setModuleCode] = useState('');
+  const [activityCode, setActivityCode] = useState('');
   const [unitCost, setUnitCost] = useState('');
   const [unitNumber, setUnitNumber] = useState('');
   const [totalCost, setTotalCost] = useState('');
@@ -55,12 +55,13 @@ const NewInvoice = ({createInvoice}) => {
   }
 
   const saveInoice = () => {
-    if(quotationId && moduleId && activityId && unitCost && unitNumber) {
+    if(quotationCode && moduleCode && activityCode && unitCost && unitNumber) {
       const invoice = {
         date: "12/12/1212",
-        quotationId: quotationId,
-        moduleId: moduleId,
-        activityId: activityId,
+        type: 'cost',
+        quotationCode: quotationCode.trim(),
+        moduleCode: moduleCode.trim(),
+        activityCode: activityCode.trim(),
         unitCost: unitCost,
         unitNumber: unitNumber,
         totalCost: totalCost
@@ -74,16 +75,16 @@ const NewInvoice = ({createInvoice}) => {
     <NewInvoiceContainer>
       <NewInvoiceBody>
         <BodyItem>
-          <label htmlFor="quotation">Quotation Id</label>
-          <InvoiceInput type="text" value={quotationId} onChange={e => setQuotationId(e.target.value)} />
+          <label htmlFor="quotation">Quotation Code</label>
+          <InvoiceInput type="text" value={quotationCode} onChange={e => setQuotationCode(e.target.value)} />
         </BodyItem>
         <BodyItem type="text">
-          <label>Module Id</label>
-          <InvoiceInput type="text" value={moduleId} onChange={e => setModuleId(e.target.value)} />
+          <label>Module Code</label>
+          <InvoiceInput type="text" value={moduleCode} onChange={e => setModuleCode(e.target.value)} />
         </BodyItem>
         <BodyItem type="text">
-          <label>Activity Id</label>
-          <InvoiceInput type="text" value={activityId} onChange={e => setActivityId(e.target.value)} />
+          <label>Activity Code</label>
+          <InvoiceInput type="text" value={activityCode} onChange={e => setActivityCode(e.target.value)} />
         </BodyItem>
         <BodyItem type="text">
           <label>Unit cost</label>

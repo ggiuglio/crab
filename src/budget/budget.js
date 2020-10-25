@@ -32,6 +32,8 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
   return (
     <div>
       <h3>Budget</h3>
+      <div>Estimated cost: {budget.estimatedCost} </div>
+      <div>Sustained cost: {budget.sustainedCost} </div>
       {
         budget.modules.map(m =>
           <div key={m.code}>
@@ -52,8 +54,9 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
                         a.originalActivities.map(oa =>
                           <div key={oa.id}>
                             <div>title: {oa.title}</div>
-                            <div>id: {oa.id}</div>
-                            <div>... [add the resto of the data here]</div>
+                            <div>code: {oa.code}</div>
+                            <div>esitameted cost: {a.activityCost}</div>
+                            <div>sustained cost: {a.sustainedCost}</div>
                           </div>
                         )
                       }

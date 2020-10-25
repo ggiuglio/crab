@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getQuotations, getProject, getSelectedProjectId } from "../store/selectors/selector";
@@ -8,7 +8,7 @@ import QuotationTile from "./quotationTile";
 import { history } from "../App";
 
 const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if(!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')

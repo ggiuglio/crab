@@ -1,3 +1,5 @@
+import activity from "../../quotation/activity";
+
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
 export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;
@@ -10,7 +12,7 @@ export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getInvoiceList = (state) => state.invoiceList;
 export const getPeople = (state) => state.professionals ? mapPeopleList(state.professionals) : undefined;
 export const getBaseModules = (state) => mapBaseModules(state.baseModules);
-export const getBudget = (state) => mapBudget(state.quotations);
+export const getBudget = (state) => mapBudget(state);
 
 const mapPeopleList = (people) => {
   const peopleList = [];
@@ -103,18 +105,21 @@ const mapBaseModules = (modules) => {
   return moduleList;
 }
 
-const mapBudget = (q) => {
+const mapBudget = (state) => {
   const budget = {
-    modules: {}
+    modules: {},
+    estimatedCost: 0,
+    sustainedCost: 0
   };
 
-  if (q) {
-    let quotations = JSON.parse(JSON.stringify(q));
+  if (state.quotations) {
+    let quotations = JSON.parse(JSON.stringify(state.quotations));
 
     if (quotations) {
       Object.keys(quotations).forEach((k) => {
         quotations[k].id = k;
-        const quotation = mapQuotationForBudget(quotations[k]);
+        let quotationInvoices = state.invoiceList.filter(i => i.quotationCode === quotations[k].code);
+        const quotation = mapQuotationForBudget(quotations[k], quotationInvoices);
 
         Object.keys(quotation.modules).forEach((j) => {
           addModuleToBudget(budget, quotation.modules[j]);
@@ -125,12 +130,13 @@ const mapBudget = (q) => {
   return mapBudgetWithData(budget);
 }
 
-const mapQuotationForBudget = (quotation) => {
+const mapQuotationForBudget = (quotation, invoices) => {
   const modules = {};
   if (quotation.modules) {
     Object.keys(quotation.modules).forEach((k) => {
+      let moduleInvoices = invoices.filter(i => i.moduleCode === quotation.modules[k].code);
       quotation.modules[k].id = k;
-      modules[quotation.modules[k].code] = mapModuleForBudget(quotation, quotation.modules[k])
+      modules[quotation.modules[k].code] = mapModuleForBudget(quotation, quotation.modules[k], moduleInvoices);
     });
   }
   quotation.modules = modules;
@@ -138,7 +144,7 @@ const mapQuotationForBudget = (quotation) => {
   return quotation;
 }
 
-const mapModuleForBudget = (quotation, module) => {
+const mapModuleForBudget = (quotation, module, invoices) => {
   const activities = {};
   if (module.activities) {
     Object.keys(module.activities).forEach((k) => {
@@ -146,6 +152,8 @@ const mapModuleForBudget = (quotation, module) => {
       activity.id = k;
       activity.quotation = { id: quotation.id, code: quotation.code };
       activity.module = { id: module.id, code: module.code, title: module.title };
+      let activityInvoices = invoices.filter(i => i.activityCode === activity.code);
+      activity.sustainedCost = activityInvoices.reduce((total, i) => (total + i.totalCost), 0);
       let resources = [];
       Object.keys(activity.resources).forEach((k) => {
         resources.push(activity.resources[k]);
@@ -186,14 +194,19 @@ const addActivityToBudget = (budgetModule, activity) => {
     };
   }
   budgetModule.activities[activity.code].estimatedCost += activity.activityCost;
+  budgetModule.activities[activity.code].sustainedCost += activity.sustainedCost;
   budgetModule.activities[activity.code].originalActivities.push(activity);
+
   budgetModule.estimatedCost += activity.activityCost;
+  budgetModule.sustainedCost += activity.sustainedCost;
 }
 
 const mapBudgetWithData = (budget) => {
   let modules = [];
   Object.keys(budget.modules).forEach((k) => {
     let module = budget.modules[k];
+    budget.estimatedCost += module.estimatedCost;
+    budget.sustainedCost += module.sustainedCost;
     let activities = [];
     Object.keys(module.activities).forEach((j) => {
       activities.push(module.activities[j]);

@@ -7,9 +7,9 @@ const InvoiceList = ({ invoices }) => {
     <div>
       { invoices.map(i => <div key={i.id}>
         <span> {i.date} - </span>
-        <span> {i.quotationId} - </span>
-        <span> {i.moduleId} - </span>
-        <span> {i.activityId} - </span>
+        <span> {i.quotationCode} - </span>
+        <span> {i.moduleCode} - </span>
+        <span> {i.activityCode} - </span>
         <span> {i.unitCost} - </span>
         <span> {i.unitNumber} - </span>
         <span> {i.totalCost} </span>
