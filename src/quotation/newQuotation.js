@@ -8,12 +8,13 @@ import {
 } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Module from "./module";
-import PersonCost from "../people/personCost";
+import Person from "../people/person";
 import {
   selectProject,
   loadProjectAction,
 } from "../store/actions/actionsCreator";
 import { history } from "../App";
+import personCost from "../people/personCost";
 
 const NewQuotation = ({
   baseModules,
@@ -43,6 +44,11 @@ const NewQuotation = ({
   const [availableActivities, setAvailableActivities] = useState();
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedGeo, setSelectedGeo] = useState("");
+  const [selectedResourceId, setSelectedResourceId] = useState("");
+  const [selectedResource, setSelectedResource] = useState("");
+  const [resourceHours, setResourceHours] = useState("");
+
+  const [persons, setPersons] = React.useState([]);
 
   React.useEffect(() => {
     if (!selectedProjectId) {
@@ -72,8 +78,6 @@ const NewQuotation = ({
       };
 
       if (baseModules) {
-        populateModuleSelect();
-
         const avGeo = {};
         baseModules.map((module) => {
           avGeo[module.id] = projectGeos;
@@ -83,6 +87,9 @@ const NewQuotation = ({
       }
     }
     setDates();
+
+    let modal = document.querySelectorAll(".modal");
+    M.Modal.init(modal);
   }, [project, people, baseModules]);
 
   React.useEffect(() => {
@@ -94,6 +101,8 @@ const NewQuotation = ({
   React.useEffect(() => {
     const geoSel = document.getElementById("availableGeo");
     M.FormSelect.init(geoSel);
+
+    populateModuleSelect();
   }, [availableGeos]);
 
   const setDates = () => {
@@ -124,12 +133,26 @@ const NewQuotation = ({
 
   const populateModuleSelect = () => {
     const moduleSelect = document.getElementById("availableModules");
+    if (!moduleSelect) return;
+    moduleSelect.options.length = 0;
+    moduleSelect.options[0] = new Option("", "", true, true);
     baseModules.map((module) => {
       let opt = new Option(`${module.title}`, module.id, false, false);
       opt.setAttribute("id", `module_option_${module.id}`);
+      if (
+        availableGeos &&
+        (!availableGeos.hasOwnProperty(module.id) ||
+          Object.keys(availableGeos[module.id]).length === 0)
+      ) {
+        opt.setAttribute("disabled", true);
+      }
       moduleSelect.options[moduleSelect.options.length] = opt;
     });
     M.FormSelect.init(moduleSelect);
+  };
+
+  const handlePersonsTableChange = (pArray) => {
+    setPersons(pArray);
   };
 
   const togglePeopleTable = (evt) => {
@@ -205,32 +228,6 @@ const NewQuotation = ({
     }
   };
 
-  const printPersonCost = (person) => {
-    let personC = [];
-    personC.push(
-      <PersonCost key={person.title} title={person.title} fee={person.fee} />
-    );
-    if (person.geobool) {
-      Object.keys(project.geo)
-        // .filter((nation) => {
-        //   return !/^general$/i.test(nation);
-        // })
-        .map((nation) => {
-          personC.push(
-            <PersonCost
-              key={person.title + " - " + nation}
-              title={person.title + " - " + project.geo[nation].description}
-              fee={person.fee}
-            />
-          );
-        });
-    }
-    return personC;
-  };
-
-  console.log(availableGeos)
-  console.log(baseModules)
-
   const setQuotationProp = (propName, propValue) => {
     setQuotation({
       ...quotation,
@@ -249,10 +246,15 @@ const NewQuotation = ({
     setMinDate(newDate);
   };
 
-  const checkAddModuleDisabled = selectedModule.length === 0 || selectedGeo.length === 0;
+  const checkAddModuleDisabled =
+    selectedModule.length === 0 || selectedGeo.length === 0;
+  const checkAddResourceDisabled =
+    selectedResourceId.length === 0 ||
+    resourceHours.length === 0 ||
+    resourceHours == 0;
 
   const addModule = (e) => {
-    if(checkAddModuleDisabled) return;
+    if (checkAddModuleDisabled) return;
 
     const moduleSelect = document.getElementById("availableModules");
     const geoSelect = document.getElementById("availableGeo");
@@ -271,7 +273,7 @@ const NewQuotation = ({
 
     if (availableGeos.hasOwnProperty(selectedModule)) {
       const geosByModule = availableGeos[selectedModule];
-      const {[selectedGeo]: geoToRemove, ...rest} = geosByModule;
+      const { [selectedGeo]: geoToRemove, ...rest } = geosByModule;
       setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
     }
     moduleSelect.selectedIndex = 0;
@@ -295,9 +297,127 @@ const NewQuotation = ({
         opt.setAttribute("id", `geo_option_${e}_${geoKey}`);
         geoSelect.options[geoSelect.options.length] = opt;
       });
-      setSelectedGeo(geoSelect.options.length > 0 ? geoSelect.options[0].value : "");
+      setSelectedGeo(
+        geoSelect.options.length > 0 ? geoSelect.options[0].value : ""
+      );
     }
     M.FormSelect.init(geoSelect);
+  };
+
+  const setModalResources = (
+    moduleId,
+    moduleTitle,
+    geo,
+    activityId,
+    activity
+  ) => {
+    const resourceModule = document.getElementById("resourceModule");
+    const resourceGeo = document.getElementById("resourceGeo");
+    const resourceActivity = document.getElementById("resourceActivity");
+
+    document.getElementById(
+      "resourceFor"
+    ).innerText = `${moduleTitle} - ${geo}: ${activity.title}`;
+    resourceModule.value = moduleId;
+    resourceGeo.value = geo;
+    resourceActivity.value = activityId;
+
+    initAvailableResourceSelect(
+      resourceModule.value,
+      resourceGeo.value,
+      resourceActivity.value
+    );
+  };
+
+  const initAvailableResourceSelect = (
+    resourceModule,
+    resourceGeo,
+    resourceActivity
+  ) => {
+    const resSelect = document.getElementById("availableResources");
+    if (!resSelect) return;
+    resSelect.options.length = 0;
+
+    const mods = quotation.modules;
+    const modIdx = mods.findIndex((mod) => {
+      return mod.id === resourceModule && mod.geo === resourceGeo;
+    });
+    if (modIdx != -1) {
+      const activities = mods[modIdx].activities;
+      if (activities && activities.hasOwnProperty(resourceActivity)) {
+        const resources = activities[resourceActivity].resources || [];
+        let avResources = [];
+        if (resources.length === 0) {
+          avResources = people;
+        } else {
+          console.log(resources);
+          console.log(people);
+          let resIdArray = resources.map(({ resourceId }) => resourceId);
+          console.log(resIdArray);
+          avResources = people.filter((p) => {
+            return !resIdArray.includes(p.id);
+          });
+        }
+        avResources.map((res) => {
+          let opt = new Option(`${res.title}`, res.id, false, false);
+          resSelect.options[resSelect.options.length] = opt;
+        });
+        M.FormSelect.init(resSelect);
+        let resId = "";
+        let res = "";
+        if (resSelect.options.length > 0) {
+          resId = resSelect.options[0].value;
+          res = resSelect.options[0].text;
+        }
+        setSelectedResourceId(resId);
+        setSelectedResource(res);
+      }
+    }
+  };
+
+  const resourceChange = (value) => {
+    const resSelect = document.getElementById("availableResources");
+    setSelectedResourceId(value);
+    setSelectedResource(resSelect.options[resSelect.selectedIndex].text);
+  };
+
+  console.log(quotation);
+  const addResource = (e) => {
+    if (checkAddResourceDisabled) return;
+
+    const resourceModule = document.getElementById("resourceModule").value;
+    const resourceGeo = document.getElementById("resourceGeo").value;
+    const resourceActivity = document.getElementById("resourceActivity").value;
+
+    let mods = quotation.modules;
+    const modIdx = mods.findIndex((mod) => {
+      return mod.id === resourceModule && mod.geo === resourceGeo;
+    });
+    if (modIdx != -1) {
+      let activities = mods[modIdx].activities;
+      if (activities && activities.hasOwnProperty(resourceActivity)) {
+        const resources = activities[resourceActivity].resources || [];
+        const personFee = persons.filter((p) => {
+          return p.id === selectedResourceId && p.geo === resourceGeo;
+        });
+        //Get first element in personFee beacuase resource-geo is key
+        resources.push({
+          resourceId: selectedResourceId,
+          resourceType: selectedResource,
+          resourceHourCost: personFee[0].fee,
+          hours: resourceHours,
+          resourceCost: personFee[0].fee * resourceHours,
+        });
+
+        activities[resourceActivity].resources = resources;
+        mods[modIdx].activities = activities;
+
+        setQuotation({
+          ...quotation,
+          modules: mods,
+        });
+      }
+    }
   };
 
   const saveQuotation = (e) => {
@@ -363,13 +483,14 @@ const NewQuotation = ({
                   <select
                     id="availableModules"
                     onChange={(e) => availableModulesChange(e.target.value)}
-                  >
-                    <option value="" defaultValue></option>
-                  </select>
+                  ></select>
                   <label>Module</label>
                 </div>
                 <div id="wrapper-select-geo" className="input-field col s6">
-                  <select id="availableGeo" onChange={(e) => setSelectedGeo(e.target.value)}></select>
+                  <select
+                    id="availableGeo"
+                    onChange={(e) => setSelectedGeo(e.target.value)}
+                  ></select>
                   <label>Geo</label>
                 </div>
                 <div className="col s2 offset-s5">
@@ -408,17 +529,21 @@ const NewQuotation = ({
               <div className="col s12" id="quotationGroup">
                 <ul className="collapsible">
                   {quotation.modules.map((module) => (
-                    <Module key={module.id+"_"+module.geo} module={module} />
+                    <Module
+                      key={module.id + "_" + module.geo}
+                      module={module}
+                      handleModalResources={setModalResources}
+                    />
                   ))}
                 </ul>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
                   <h6 className="bolder price center">
-                    Price without PT {quotation.quotationCost}
+                    Price without PT {quotation.quotationCostNoPt}
                   </h6>
                 </div>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
                   <h6 className="bolder price center">
-                    PT only {quotation.quotationCost}
+                    PT only {quotation.quotationCostPtOnly}
                   </h6>
                 </div>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
@@ -431,25 +556,82 @@ const NewQuotation = ({
                 className="col s4 m4 l3 scale-transition scale-out"
                 id="peopleTable"
               >
-                <div className="row">
-                  <div className="col s10 offset-s1 bolder center">
-                    Hourly cost
-                  </div>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Person</th>
-                        <th>Fee</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {people.map((person) => printPersonCost(person))}
-                    </tbody>
-                  </table>
-                </div>
+                <Person
+                  project={project}
+                  people={people}
+                  persons={persons}
+                  handleChange={handlePersonsTableChange}
+                />
               </div>
             </div>
           </form>
+
+          <div id="modal-resource" className="modal">
+            <div className="modal-content">
+              <h6 id="resourceFor"></h6>
+              <div className="section">
+                <div
+                  id="wrapper-select-resource"
+                  className="input-field col s12 m6"
+                >
+                  <select
+                    id="availableResources"
+                    onChange={(e) => resourceChange(e.target.value)}
+                  ></select>
+                  <label>Resource</label>
+                </div>
+                <div className="input-field col s12 m6">
+                  <label htmlFor="resourceHours">Hours</label>
+                  <input
+                    id="resourceHours"
+                    name="resourceHours"
+                    type="number"
+                    value={resourceHours}
+                    onChange={(e) => setResourceHours(e.target.value)}
+                  ></input>
+                </div>
+                <input
+                  id="resourceModule"
+                  type="text"
+                  className="hide"
+                  readOnly
+                ></input>
+                <input
+                  id="resourceGeo"
+                  type="text"
+                  className="hide"
+                  readOnly
+                ></input>
+                <input
+                  id="resourceActivity"
+                  type="text"
+                  className="hide"
+                  readOnly
+                ></input>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <a
+                href="#!"
+                className="modal-close waves-effect waves-indigo btn-flat"
+                onClick={(e) => {
+                  setSelectedResourceId("");
+                  setSelectedResource("");
+                  setResourceHours("");
+                }}
+              >
+                Cancel
+              </a>
+              <a
+                href="#!"
+                className="modal-close btn green darken-1 waves-effect waves-light"
+                disabled={checkAddResourceDisabled}
+                onClick={(e) => addResource()}
+              >
+                Add
+              </a>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="center valign-page-center">

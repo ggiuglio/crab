@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Resource from "./resource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Activity = ({ key, activity }) => {
+const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModalResources }) => {
   const iconTypeMap = {
     document: "folder",
     file: "file",
@@ -29,6 +29,7 @@ const Activity = ({ key, activity }) => {
     year: "dot-circle",
   };
   let rdm = Date.now();
+
   return (
     <li>
       <div className="collapsible-header block">
@@ -79,7 +80,6 @@ const Activity = ({ key, activity }) => {
               <input
                 type="checkbox"
                 checked={activity.responsibilityCRO}
-                disabled="disabled"
               />
               <span>Responsibility CRO</span>
             </label>
@@ -87,7 +87,6 @@ const Activity = ({ key, activity }) => {
               <input
                 type="checkbox"
                 checked={activity.responsibilityCRO}
-                disabled="disabled"
               />
               <span>Resp CRO</span>
             </label>
@@ -134,34 +133,54 @@ const Activity = ({ key, activity }) => {
         </div>
         <div className="container hide" id={"resources_" + rdm}>
           <div className="container">
-            <table className="centered responsive-table">
-              <thead>
-                <tr>
-                  <th className="hide-on-small-only">Type</th>
-                  <th className="hide-on-small-only">Resource hour cost</th>
-                  <th className="hide-on-small-only">Hours</th>
-                  <th className="hide-on-small-only">Resource cost</th>
-                  <th className="hide-on-med-and-up">Type</th>
-                  <th className="hide-on-med-and-up">Cost/h</th>
-                  <th className="hide-on-med-and-up">Hours</th>
-                  <th className="hide-on-med-and-up">Cost</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  activity.fixedCost ? ( <tr>
-                    <td>Fixed costs</td>
-                    <td> - </td>
-                    <td> - </td>
-                    <td>{activity.fixedCost}</td>
-                  </tr>) : ( null )
-                }
-                {activity.resources ?
-                  activity.resources.map((resource) => (
-                  <Resource key={resource.id} resource={resource} />
-                )) : null}
-              </tbody>
-            </table>
+            <div className="row centered">
+              <div className="col s11">
+                <table className="responsive-table">
+                  <thead>
+                    <tr>
+                      <th className="hide-on-small-only">Type</th>
+                      <th className="hide-on-small-only">Resource hour cost</th>
+                      <th className="hide-on-small-only">Hours</th>
+                      <th className="hide-on-small-only">Resource cost</th>
+                      <th className="hide-on-med-and-up">Type</th>
+                      <th className="hide-on-med-and-up">Cost/h</th>
+                      <th className="hide-on-med-and-up">Hours</th>
+                      <th className="hide-on-med-and-up">Cost</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activity.fixedCost ? (
+                      <tr>
+                        <td>Fixed costs</td>
+                        <td> - </td>
+                        <td> - </td>
+                        <td>{activity.fixedCost}</td>
+                      </tr>
+                    ) : null}
+                    {activity.resources
+                      ? activity.resources.map((resource) => (
+                          <Resource key={moduleId + geo + activityId + resource.resourceId} resource={resource} />
+                        ))
+                      : null}
+                  </tbody>
+                </table>
+              </div>
+              <div className="col s1">
+                <a
+                  className="modal-trigger"
+                  href="#modal-resource"
+                  title="Add resource"
+                  onClick={(e) => handleModalResources(moduleId, moduleTitle, geo, activityId, activity)}
+                >
+                  <i
+                    className="material-icons indigo-text"
+                    title="Add resource"
+                  >
+                    add_circle_outline
+                  </i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

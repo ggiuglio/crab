@@ -5,7 +5,7 @@ const PersonCost = ({ title, fee }) => {
   return (
     <tr>
       <td>{title}</td>
-      <td className="price">{fee}</td>
+      <td><span className="price people-fee right">{fee}</span></td>
     </tr>
   );
 };
