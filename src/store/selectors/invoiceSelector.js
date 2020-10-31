@@ -1,0 +1,1 @@
+export const getInvoiceList = (state) => state.invoiceList;

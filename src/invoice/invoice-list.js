@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getInvoiceList } from "../store/selectors/selector";
+import { getInvoiceList } from "../store/selectors/invoiceSelector";
 
 const InvoiceList = ({ invoices }) => {
+
   return (
     <div>
       { invoices.map(i => <div key={i.id}>
@@ -14,7 +15,6 @@ const InvoiceList = ({ invoices }) => {
         <span> {i.unitNumber} - </span>
         <span> {i.totalCost} </span>
       </div> )}
-      invoice list
     </div>
   );
 };

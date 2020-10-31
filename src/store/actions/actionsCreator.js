@@ -111,9 +111,6 @@ export const createNewInvoice = (invoice) => {
     const projectId = getSate().selectedProjectId;
 
     return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices`).push(invoice).then(() => {
-      dispatch({
-        type: HIDE_NEW_INVOICE,
-      });
     });
   }
 }

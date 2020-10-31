@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import styled from 'styled-components';
 import InvoiceList from './invoice-list';
@@ -22,7 +22,7 @@ const AddArticleImage = styled.img`
 `;
 
 const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project, chooseProject, loadProject }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { getQuotations, getProject, getSelectedProjectId } from "../store/selectors/selector";
+import { getProject, getSelectedProjectId } from "../store/selectors/selector";
+import { getQuotations } from "../store/selectors/quotationSelector";
 import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 import QuotationTile from "./quotationTile";

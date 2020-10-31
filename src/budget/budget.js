@@ -1,7 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { getBudget, getSelectedProjectId, getProject } from "../store/selectors/selector";
+import { getSelectedProjectId, getProject } from "../store/selectors/selector";
+import { getBudget } from "../store/selectors/budgetSelector";
 import { history } from "../App";
 import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
 

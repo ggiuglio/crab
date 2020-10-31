@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getPeople, getSelectedProjectId, getSelectedQuotationId, getQuotation, getProject } from "../store/selectors/selector";
+import { getPeople, getSelectedProjectId, getProject } from "../store/selectors/selector";
+import { getSelectedQuotationId, getQuotation } from "../store/selectors/quotationSelector";
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
 import PersonCost from "../people/personCost";
@@ -8,7 +9,7 @@ import { selectProject, selectQuotation, loadProjectAction } from "../store/acti
 import { history } from "../App";
 
 const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuotationId, chooseProject, chooseQuotation, loadProject }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (!selectedProjectId || !selectedQuotationId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project');
