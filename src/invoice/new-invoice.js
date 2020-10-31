@@ -49,7 +49,6 @@ const NewInvoice = ({ createInvoice, lists }) => {
   const [quotationList, setQuotationList] = useState(lists.quotations);
   const [moduleList, setModuleList] = useState(lists.modules);
   const [activityList, setActivityList] = useState(lists.activities);
-
   const [quotationId, setQuotationId] = useState(-1);
   const [moduleId, setModuleId] = useState(-1);
   const [activityId, setActivityId] = useState(-1);
