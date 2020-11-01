@@ -4,13 +4,11 @@ import {
   SET_USER,
   LOAD_PROJECTS,
   LOAD_PROJECT,
-  SHOW_NEW_INVOICE,
-  HIDE_NEW_INVOICE,
   SELECT_PROJECT,
   SELECT_QUOTATION,
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA
-} from './actionsTypes.js'
+} from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
 
@@ -83,35 +81,6 @@ export const loadProjectAction = (projectId) => {
         }
       )
     })
-  }
-}
-
-export const ShowNewInvoice = () => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: SHOW_NEW_INVOICE,
-      }
-    )
-  }
-}
-
-export const HideNewInvoice = () => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: HIDE_NEW_INVOICE,
-      }
-    )
-  }
-}
-
-export const createNewInvoice = (invoice) => {
-  return (dispatch, getSate) => {
-    const projectId = getSate().selectedProjectId;
-
-    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices`).push(invoice).then(() => {
-    });
   }
 }
 

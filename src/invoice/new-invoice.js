@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { createNewInvoice, selectQuotation } from "../store/actions/actionsCreator";
+import { createNewInvoice } from '../store/actions/invoiceActions';
+
 import { getQuotationsEntityList } from "../store/selectors/quotationSelector";
 
 const MainContainer = styled.div`
