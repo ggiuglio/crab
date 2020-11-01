@@ -37,7 +37,7 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
       <h3>Budget</h3>
       <div>Estimated cost: {budget.estimatedCost} </div>
       <div>Sustained cost: {budget.sustainedCost} </div>
-      aa{(budget.estimatedCost - budget.sustainedCost) > 0 ? "ff" : "ww" }aa
+      <div>Out of budget cost: {budget.outOfBudgetCost} </div>
       <div>Remainging budget: <Money positive={(budget.estimatedCost - budget.sustainedCost) > 0}>{budget.estimatedCost - budget.sustainedCost}</Money> </div>
       {
         budget.modules.map(m =>

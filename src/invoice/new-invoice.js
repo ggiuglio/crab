@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
-
 import { getQuotationsEntityList } from "../store/selectors/quotationSelector";
 
 const MainContainer = styled.div`
@@ -63,7 +62,12 @@ const NewInvoice = ({ createInvoice, lists }) => {
       setModuleList(lists.modules);
       let availableActivities = getAvailableActivities(qId);
       setActivityList(availableActivities);
-    } else {
+    }
+    if (qId === 0) {
+      setModuleId(-1);
+      setActivityId(-1);
+    }
+    if (qId !== -1 && qId !== 0) {
       let availableActivities = getAvailableActivities(qId);
       const availableModules = lists.modules.filter(m => m.quotationId === qId || m.id === -1);
       setModuleList(availableModules);
@@ -89,8 +93,8 @@ const NewInvoice = ({ createInvoice, lists }) => {
       a => (
         (a.quotationId === selectedQuotation || selectedQuotation === -1) &&
         (a.moduleId === selectedModule || selectedModule === -1)
-      ) || 
-      a.id === -1
+      ) ||
+        a.id === -1
     );
   };
 
@@ -108,7 +112,7 @@ const NewInvoice = ({ createInvoice, lists }) => {
     }
   };
 
-  const saveInoice = () => {
+  const saveInvoice = () => {
     if (quotationId !== -1 && moduleId !== -1 && activityId !== -1 && unitCost && unitNumber) {
       const invoice = {
         date: "12/12/1212",
@@ -116,6 +120,21 @@ const NewInvoice = ({ createInvoice, lists }) => {
         quotationCode: lists.quotations.find(q => q.id === quotationId).code,
         moduleCode: lists.modules.find(m => m.id === moduleId).code,
         activityCode: lists.activities.find(a => a.id === activityId).code,
+        unitCost: unitCost,
+        unitNumber: unitNumber,
+        totalCost: totalCost
+      }
+
+      createInvoice(invoice);
+    }
+
+    if (quotationId !== 0 && unitCost && unitNumber) {
+      const invoice = {
+        date: "12/12/1212",
+        type: 'cost',
+        quotationCode: 0,
+        moduleCode: 0,
+        activityCode: 0,
         unitCost: unitCost,
         unitNumber: unitNumber,
         totalCost: totalCost
@@ -139,26 +158,34 @@ const NewInvoice = ({ createInvoice, lists }) => {
               }
             </SelectEntity>
           </BodyItem>
-          <BodyItem type="text">
-            <label>Module</label>
-            <SelectEntity onChange={e => moduleChange(e.target.value)}>
-              {
-                moduleList.map(m =>
-                  <option key={m.id} value={m.id} >  {m.title} {m.geo} </option>
-                )
-              }
-            </SelectEntity>
-          </BodyItem>
-          <BodyItem type="text">
-            <label>Activity Code</label>
-            <SelectEntity onChange={e => setActivityId(e.target.value)}>
-              {
-                activityList.map(a =>
-                  <option key={a.id} value={a.id}>  {a.title} </option>
-                )
-              }
-            </SelectEntity>
-          </BodyItem>
+          {
+            quotationId != 0 ?
+                <BodyItem type="text">
+                  <label>Module</label>
+                  <SelectEntity onChange={e => moduleChange(e.target.value)}>
+                    {
+                      moduleList.map(m =>
+                        <option key={m.id} value={m.id} >  {m.title} {m.geo} </option>
+                      )
+                    }
+                  </SelectEntity>
+                </BodyItem>
+              : ''
+          }
+          {
+            quotationId != 0 ?
+              <BodyItem type="text">
+                <label>Activity Code</label>
+                <SelectEntity onChange={e => setActivityId(e.target.value)}>
+                  {
+                    activityList.map(a =>
+                      <option key={a.id} value={a.id}>  {a.title} </option>
+                    )
+                  }
+                </SelectEntity>
+              </BodyItem>
+              : ''
+          }
           <BodyItemSmall type="text">
             <label>Unit cost</label>
             <InvoiceInput type="number" min="0.00" step="0.01" value={unitCost} onChange={e => unitCostChange(e.target.value)} />
@@ -174,7 +201,7 @@ const NewInvoice = ({ createInvoice, lists }) => {
         </NewInvoiceBody>
 
       </NewInvoiceContainer>
-      <SaveButton onClick={() => saveInoice()}>Save Invoice</SaveButton>
+      <SaveButton onClick={() => saveInvoice()}>Save Invoice</SaveButton>
     </MainContainer>
   );
 };

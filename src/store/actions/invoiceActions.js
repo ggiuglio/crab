@@ -40,4 +40,3 @@ export const deleteInvoice = (invoiceId) => {
     return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/`).child(invoiceId).remove().then(() => {});
   }
 }
-
