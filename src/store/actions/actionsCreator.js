@@ -5,7 +5,6 @@ import {
   LOAD_PROJECTS,
   LOAD_PROJECT,
   SELECT_PROJECT,
-  SELECT_QUOTATION,
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA
 } from './actionsTypes.js';
@@ -90,17 +89,6 @@ export const selectProject = (projectId) => {
       {
         type: SELECT_PROJECT,
         project: projectId
-      }
-    )
-  }
-}
-
-export const selectQuotation = (quotationId) => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: SELECT_QUOTATION,
-        quotation: quotationId
       }
     )
   }

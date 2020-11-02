@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
-import { selectQuotation } from "../store/actions/actionsCreator";
+import { selectQuotation } from "../store/actions/quotationActions";
 
 const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
   const goToQuotationPage = () => {
