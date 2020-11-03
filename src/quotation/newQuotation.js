@@ -14,7 +14,6 @@ import {
   loadProjectAction,
 } from "../store/actions/actionsCreator";
 import { history } from "../App";
-import personCost from "../people/personCost";
 
 const NewQuotation = ({
   baseModules,
@@ -96,6 +95,7 @@ const NewQuotation = ({
     setDates();
     let collapsible = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsible, { accordion: false });
+    console.log(quotation)
   }, [quotation, minDate]);
 
   React.useEffect(() => {
@@ -151,8 +151,92 @@ const NewQuotation = ({
     M.FormSelect.init(moduleSelect);
   };
 
-  const handlePersonsTableChange = (pArray) => {
+  const handlePersonsTableCreate = (pArray) => {
     setPersons(pArray);
+  };
+
+  const handlePersonsTableChange = (geo, personId, value, isGeoBool) => {
+    const personsCopy = [...persons];
+    const pIdx = personsCopy.findIndex((p) => {
+      return p.id === personId && p.geo === geo;
+    });
+    if (pIdx != -1) {
+      personsCopy[pIdx] = {
+        ...personsCopy[pIdx],
+        fee: value,
+      };
+    }
+    setPersons(personsCopy);
+
+    const mods = [...quotation.modules];
+
+    if (isGeoBool) {
+      mods
+        .map((m, idx) => {
+          if (m.geo === geo) return idx;
+        })
+        .filter((idx) => idx !== undefined)
+        .map((idx) => {
+          const m = { ...mods[idx] };
+          recalculateResourcesCosts(m, personId, value);
+        });
+    } else {
+      mods.map((m) => {
+        recalculateResourcesCosts(m, personId, value);
+      });
+    }
+
+    setQuotation({
+      ...quotation,
+      modules: mods,
+    });
+  };
+
+  const recalculateResourcesCosts = (mod, personId, value) => {
+    const activities = { ...mod.activities };
+    Object.keys(activities).map((key) => {
+      if (!activities[key].hasOwnProperty("resources")) return;
+      const resources = activities[key].resources.map((res) => {
+        if (res.resourceId === personId) {
+          return {
+            ...res,
+            resourceHourCost: value,
+            resourceCost: value * res.hours,
+          };
+        } else {
+          return { ...res };
+        }
+      });
+      activities[key].resources = resources;
+    });
+    mod.activities = activities;
+  };
+
+  function getScrollTop() {
+    if (typeof window.pageYOffset !== "undefined" ) {
+        // Most browsers
+        return window.pageYOffset;
+    }
+  
+    var d = document.documentElement;
+    if (typeof d.clientHeight !== "undefined") {
+        // IE in standards mode
+        return d.scrollTop;
+    }
+  
+    // IE in quirks mode
+    return document.body.scrollTop;
+}
+
+  window.onscroll = () => {
+    const peopleTable = document.getElementById("peopleTable");
+    const quotationGroup = document.getElementById("quotationGroup");
+    const scroll = getScrollTop();
+    const groupOffset = quotationGroup.offsetTop;
+    if(scroll <= groupOffset)
+      peopleTable.setAttribute("style", "margin-top: 0");
+    else
+      peopleTable.setAttribute("style", `margin-top: ${scroll - groupOffset}px`);
   };
 
   const togglePeopleTable = (evt) => {
@@ -235,6 +319,28 @@ const NewQuotation = ({
     });
   };
 
+  const setActivityProp = (moduleId, geo, activityId, propName, propValue) => {
+    const mods = [...quotation.modules];
+    const modIdx = mods.findIndex((mod) => {
+      return mod.id === moduleId && mod.geo === geo;
+    });
+    if (modIdx != -1) {
+      const activities = mods[modIdx].activities;
+      if (activities && activities.hasOwnProperty(activityId)) {
+        activities[activityId] = {
+          ...activities[activityId],
+          [propName]: propValue,
+        };
+        mods[modIdx].activities = activities;
+
+        setQuotation({
+          ...quotation,
+          modules: mods,
+        });
+      }
+    }
+  };
+
   const quotationValidFromChange = (newDate) => {
     setQuotationProp("validFrom", newDate);
     let dpThru = M.Datepicker.getInstance(
@@ -260,12 +366,23 @@ const NewQuotation = ({
     const geoSelect = document.getElementById("availableGeo");
 
     const moduleIdx = +selectedModule - 1;
-    const mods = quotation.modules;
+    const mods = [...quotation.modules];
+
+    let acts = {};
+    Object.keys(baseModules[moduleIdx].activities).map((k) => {
+      acts = {
+        ...acts,
+        [k]: { ...baseModules[moduleIdx].activities[k] },
+      };
+    });
+
     const module = {
       ...baseModules[moduleIdx],
+      activities: acts,
       geo: geoSelect.options[geoSelect.selectedIndex].text,
     };
     mods.push(module);
+
     setQuotation({
       ...quotation,
       modules: mods,
@@ -282,6 +399,29 @@ const NewQuotation = ({
     M.FormSelect.init(geoSelect);
   };
 
+  const removeModule = (e, moduleId, geo) => {
+    e.preventDefault();
+
+    const mods = [...quotation.modules];
+    mods.splice(mods.findIndex((mod) => {
+      return mod.id === moduleId && mod.geo === geo;
+    }), 1);
+
+    setQuotation({
+      ...quotation,
+      modules: mods,
+    });
+
+    const avGeos = {
+      ...availableGeos,
+      moduleId: {
+        ...avGeos[moduleId],
+        
+      }
+    };
+  }
+console.log(availableGeos)
+console.log(project)
   const availableModulesChange = (e) => {
     setSelectedModule(e);
     const geoSelect = document.getElementById("availableGeo");
@@ -338,7 +478,7 @@ const NewQuotation = ({
     if (!resSelect) return;
     resSelect.options.length = 0;
 
-    const mods = quotation.modules;
+    const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
       return mod.id === resourceModule && mod.geo === resourceGeo;
     });
@@ -350,10 +490,7 @@ const NewQuotation = ({
         if (resources.length === 0) {
           avResources = people;
         } else {
-          console.log(resources);
-          console.log(people);
           let resIdArray = resources.map(({ resourceId }) => resourceId);
-          console.log(resIdArray);
           avResources = people.filter((p) => {
             return !resIdArray.includes(p.id);
           });
@@ -381,7 +518,6 @@ const NewQuotation = ({
     setSelectedResource(resSelect.options[resSelect.selectedIndex].text);
   };
 
-  console.log(quotation);
   const addResource = (e) => {
     if (checkAddResourceDisabled) return;
 
@@ -389,27 +525,87 @@ const NewQuotation = ({
     const resourceGeo = document.getElementById("resourceGeo").value;
     const resourceActivity = document.getElementById("resourceActivity").value;
 
-    let mods = quotation.modules;
+    handleResource(resourceModule, resourceGeo, resourceActivity);
+  };
+
+  const editResource = (
+    resourceModule,
+    resourceGeo,
+    resourceActivity,
+    resource,
+    value
+  ) => {
+    handleResource(
+      resourceModule,
+      resourceGeo,
+      resourceActivity,
+      resource,
+      value
+    );
+  };
+
+  const handleResource = (
+    resourceModule,
+    resourceGeo,
+    resourceActivity,
+    resource = undefined,
+    value
+  ) => {
+    let mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
       return mod.id === resourceModule && mod.geo === resourceGeo;
     });
+
     if (modIdx != -1) {
-      let activities = mods[modIdx].activities;
+      let activities = { ...mods[modIdx].activities };
+
       if (activities && activities.hasOwnProperty(resourceActivity)) {
-        const resources = activities[resourceActivity].resources || [];
-        const personFee = persons.filter((p) => {
-          return p.id === selectedResourceId && p.geo === resourceGeo;
-        });
-        //Get first element in personFee beacuase resource-geo is key
-        resources.push({
-          resourceId: selectedResourceId,
-          resourceType: selectedResource,
-          resourceHourCost: personFee[0].fee,
-          hours: resourceHours,
-          resourceCost: personFee[0].fee * resourceHours,
-        });
+        let resources = activities[resourceActivity].resources
+          ? [...activities[resourceActivity].resources]
+          : [];
+
+        if (resource) {
+          const resIdx = resources.findIndex((res) => {
+            return res.resourceId === resource.resourceId;
+          });
+          if (resIdx != -1) {
+            resources[resIdx] = {
+              ...resources[resIdx],
+              hours: value,
+              resourceCost: resource.resourceHourCost * value,
+            };
+          }
+        } else {
+          const personFee = persons.filter((p) => {
+            return (
+              (p.id === selectedResourceId && p.geo === resourceGeo) ||
+              (p.id === selectedResourceId && p.geo === "General")
+            );
+          });
+          let person;
+          switch (personFee.length) {
+            case 1:
+              person = personFee[0];
+              break;
+            case 2:
+              person = personFee.filter((p) => {
+                return p.geo === resourceGeo;
+              })[0];
+              break;
+            default:
+              return;
+          }
+          resources.push({
+            resourceId: selectedResourceId,
+            resourceType: selectedResource,
+            resourceHourCost: person.fee,
+            hours: resourceHours,
+            resourceCost: person.fee * resourceHours,
+          });
+        }
 
         activities[resourceActivity].resources = resources;
+
         mods[modIdx].activities = activities;
 
         setQuotation({
@@ -418,6 +614,10 @@ const NewQuotation = ({
         });
       }
     }
+
+    setSelectedResourceId("");
+    setSelectedResource("");
+    setResourceHours("");
   };
 
   const saveQuotation = (e) => {
@@ -533,6 +733,9 @@ const NewQuotation = ({
                       key={module.id + "_" + module.geo}
                       module={module}
                       handleModalResources={setModalResources}
+                      setActivityProp={setActivityProp}
+                      editResource={editResource}
+                      removeModule={removeModule}
                     />
                   ))}
                 </ul>
@@ -560,6 +763,7 @@ const NewQuotation = ({
                   project={project}
                   people={people}
                   persons={persons}
+                  handleCreate={handlePersonsTableCreate}
                   handleChange={handlePersonsTableChange}
                 />
               </div>
@@ -586,6 +790,8 @@ const NewQuotation = ({
                     id="resourceHours"
                     name="resourceHours"
                     type="number"
+                    min="0"
+                    max="9999"
                     value={resourceHours}
                     onChange={(e) => setResourceHours(e.target.value)}
                   ></input>

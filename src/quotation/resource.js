@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Resource = ({ resource }) => {
+const Resource = ({ resource, moduleId, geo, activityId, editResource }) => {
   return (
     <tr>
       <td>{resource.resourceType}</td>
-      <td>{resource.resourceHourCost}</td>
-      <td>{resource.hours}</td>
-      <td>{resource.resourceCost}</td>
+      <td className="text-right">{resource.resourceHourCost}</td>
+      <td className="text-right"><input className="text-right browser-default" type="number" name={moduleId+geo+activityId+resource.resourceId} min="0" max="9999" value={resource.hours} onChange={(e) => editResource(moduleId, geo, activityId, resource, e.target.value)}></input></td>
+      <td className="text-right">{resource.resourceCost}</td>
     </tr>
   );
 };

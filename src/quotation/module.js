@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Activity from "./activity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Module = ({ key, module, handleModalResources }) => {
+const Module = ({ key, module, handleModalResources, setActivityProp, editResource, removeModule }) => {
   return (
     <li>
       <div className="collapsible-header indigo lighten-2 white-text">
@@ -14,13 +14,27 @@ const Module = ({ key, module, handleModalResources }) => {
               className="white-text"
               fixedWidth
             />{" "}{module.geo}
-          <span className="right price">{module.moduleCost}</span>
+          <a
+            href="!#"
+            className="lateral-margin"
+            title="Remove"
+            onClick={(e) => {
+              removeModule(e, module.id, module.geo);
+            }}
+          >
+            <FontAwesomeIcon
+              icon="minus-circle"
+              className="red-text text-darken-2"
+              fixedWidth
+            />
+          </a>
         </div>
+          <span className="right price">{module.moduleCost}</span>
       </div>
       <div className="collapsible-body">
         <ul className="collapsible">
           {Object.keys(module.activities).map((key) => (
-            <Activity key={key+"_"+module.id+"_"+module.geo} activityId={key} activity={module.activities[key]} moduleId={module.id} moduleTitle={module.title} geo={module.geo} handleModalResources={handleModalResources} />
+            <Activity key={key+"_"+module.id+"_"+module.geo} activityId={key} activity={module.activities[key]} moduleId={module.id} moduleTitle={module.title} geo={module.geo} handleModalResources={handleModalResources} setActivityProp={setActivityProp} editResource={editResource} />
           ))}
         </ul>
       </div>

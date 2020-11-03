@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import PersonCost from "../people/personCost";
 
-const Person = ({ people, project, persons, handleChange }) => {
+const Person = ({ people, project, persons, handleCreate, handleChange }) => {
   React.useEffect(() => {
     if(people && people.length > 0) {
       const pArray = [];
       people.map((person) => pArray.push(...buildPersonArray(person)));
-      handleChange(pArray);
+      handleCreate(pArray);
     }
   }, [people]);
 
@@ -17,7 +17,8 @@ const Person = ({ people, project, persons, handleChange }) => {
       id: person.id,
       geo: 'General',
       title: person.title,
-      fee: person.fee
+      fee: person.fee,
+      geoBool: person.geobool
     });
     if (person.geobool) {
       Object.keys(project.geo)
@@ -26,7 +27,8 @@ const Person = ({ people, project, persons, handleChange }) => {
             id: person.id,
             geo: project.geo[nation].description,
             title: person.title + " - " + project.geo[nation].description,
-            fee: person.fee
+            fee: person.fee,
+            geoBool: person.geobool
           });
       });
     }
@@ -42,11 +44,11 @@ const Person = ({ people, project, persons, handleChange }) => {
         <thead>
           <tr>
             <th>Person</th>
-            <th className="center">Fee</th>
+            <th className="center">Fee €/h</th>
           </tr>
         </thead>
         <tbody>
-          {persons.map((person) => (<PersonCost key={person.title} title={person.title} fee={person.fee} />))}
+          {persons.map((person) => (<PersonCost key={person.title} person={person} handleChange={handleChange} />))}
         </tbody>
       </table>
     </div>

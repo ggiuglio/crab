@@ -38,6 +38,10 @@
     white-space: nowrap;
 }
 
+.text-right {
+    text-align: right;
+}
+
 .card .card-content {
     padding: 1rem !important;
 }
@@ -92,11 +96,7 @@
 }
 
 th, td {
-    padding: 0rem !important;
-}
-
-.people-fee {
-    padding-right: 1rem;
+    padding: 0.1rem !important;
 }
 
 #modal-resource {
@@ -116,6 +116,10 @@ th, td {
 
 .remove-site-icon {
     margin: 0 0.3rem;
+}
+
+.lateral-margin {
+    margin: 0 1rem;
 }
 
 .logo-footer {

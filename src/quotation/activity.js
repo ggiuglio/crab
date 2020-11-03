@@ -3,12 +3,22 @@ import { connect } from "react-redux";
 import Resource from "./resource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModalResources }) => {
+const Activity = ({
+  activityId,
+  activity,
+  moduleId,
+  moduleTitle,
+  geo,
+  handleModalResources,
+  setActivityProp,
+  editResource,
+}) => {
   const iconTypeMap = {
     document: "folder",
     file: "file",
     process: "project-diagram",
     visit: "eye",
+    contact: "phone-square-alt",
     hour: "clock",
     site: "location-arrow",
     month: "calendar-alt",
@@ -79,14 +89,32 @@ const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModa
             <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
-                checked={activity.responsibilityCRO}
+                checked={activity.responsibilityCRO === true}
+                onChange={e =>
+                  setActivityProp(
+                    moduleId,
+                    geo,
+                    activityId,
+                    "responsibilityCRO",
+                    !activity.responsibilityCRO
+                  )
+                }
               />
               <span>Responsibility CRO</span>
             </label>
             <label className="hide-on-large-only">
               <input
                 type="checkbox"
-                checked={activity.responsibilityCRO}
+                checked={activity.responsibilityCRO === true}
+                onChange={e =>
+                  setActivityProp(
+                    moduleId,
+                    geo,
+                    activityId,
+                    "responsibilityCRO",
+                    !activity.responsibilityCRO
+                  )
+                }
               />
               <span>Resp CRO</span>
             </label>
@@ -95,16 +123,32 @@ const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModa
             <label className="hide-on-med-and-down">
               <input
                 type="checkbox"
-                checked={activity.responsibilitySponsor}
-                disabled="disabled"
+                checked={activity.responsibilitySponsor === true}
+                onChange={(e) =>
+                  setActivityProp(
+                    moduleId,
+                    geo,
+                    activityId,
+                    "responsibilitySponsor",
+                    !activity.responsibilitySponsor
+                  )
+                }
               />
               <span>Responsibility SPONSOR</span>
             </label>
             <label className="hide-on-large-only">
               <input
                 type="checkbox"
-                checked={activity.responsibilitySponsor}
-                disabled="disabled"
+                checked={activity.responsibilitySponsor === true}
+                onChange={(e) =>
+                  setActivityProp(
+                    moduleId,
+                    geo,
+                    activityId,
+                    "responsibilitySponsor",
+                    !activity.responsibilitySponsor
+                  )
+                }
               />
               <span>Resp SPO</span>
             </label>
@@ -134,32 +178,63 @@ const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModa
         <div className="container hide" id={"resources_" + rdm}>
           <div className="container">
             <div className="row centered">
-              <div className="col s11">
+              <div className="col s10">
                 <table className="responsive-table">
                   <thead>
                     <tr>
                       <th className="hide-on-small-only">Type</th>
-                      <th className="hide-on-small-only">Resource hour cost</th>
-                      <th className="hide-on-small-only">Hours</th>
-                      <th className="hide-on-small-only">Resource cost</th>
+                      <th className="text-right hide-on-small-only">
+                        Resource cost E/h
+                      </th>
+                      <th className="text-right hide-on-small-only">Hours</th>
+                      <th className="text-right hide-on-small-only">
+                        Resource cost €
+                      </th>
                       <th className="hide-on-med-and-up">Type</th>
-                      <th className="hide-on-med-and-up">Cost/h</th>
-                      <th className="hide-on-med-and-up">Hours</th>
-                      <th className="hide-on-med-and-up">Cost</th>
+                      <th className="text-right hide-on-med-and-up">€/h</th>
+                      <th className="text-right hide-on-med-and-up">Hours</th>
+                      <th className="text-right hide-on-med-and-up">Cost €</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {activity.fixedCost ? (
+                    {activity.hasOwnProperty("fixedCost") ? (
                       <tr>
                         <td>Fixed costs</td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td>{activity.fixedCost}</td>
+                        <td></td>
+                        <td></td>
+                        <td className="text-right">
+                          <input
+                            className="text-right browser-default"
+                            type="number"
+                            name={moduleId + geo + activityId + "fixedCost"}
+                            min="0"
+                            max="999999"
+                            value={activity.fixedCost}
+                            onChange={(e) =>
+                              setActivityProp(
+                                moduleId,
+                                geo,
+                                activityId,
+                                "fixedCost",
+                                e.target.value
+                              )
+                            }
+                          ></input>
+                        </td>
                       </tr>
                     ) : null}
                     {activity.resources
                       ? activity.resources.map((resource) => (
-                          <Resource key={moduleId + geo + activityId + resource.resourceId} resource={resource} />
+                          <Resource
+                            key={
+                              moduleId + geo + activityId + resource.resourceId
+                            }
+                            resource={resource}
+                            moduleId={moduleId}
+                            geo={geo}
+                            activityId={activityId}
+                            editResource={editResource}
+                          />
                         ))
                       : null}
                   </tbody>
@@ -170,7 +245,15 @@ const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModa
                   className="modal-trigger"
                   href="#modal-resource"
                   title="Add resource"
-                  onClick={(e) => handleModalResources(moduleId, moduleTitle, geo, activityId, activity)}
+                  onClick={(e) =>
+                    handleModalResources(
+                      moduleId,
+                      moduleTitle,
+                      geo,
+                      activityId,
+                      activity
+                    )
+                  }
                 >
                   <i
                     className="material-icons indigo-text"
@@ -180,6 +263,31 @@ const Activity = ({ activityId, activity, moduleId, moduleTitle, geo, handleModa
                   </i>
                 </a>
               </div>
+              {activity.hasOwnProperty("fixedCost") ? null : (
+                <div className="col s1">
+                  <a
+                    href="!#"
+                    title="Add fixed costs"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActivityProp(
+                        moduleId,
+                        geo,
+                        activityId,
+                        "fixedCost",
+                        0
+                      );
+                    }}
+                  >
+                    <i
+                      className="material-icons amber-text text-accent-4"
+                      title="Add fixed costs"
+                    >
+                      attach_money
+                    </i>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>
