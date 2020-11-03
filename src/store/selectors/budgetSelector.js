@@ -4,8 +4,16 @@ const mapBudget = (state) => {
   const budget = {
     modules: {},
     estimatedCost: 0,
-    sustainedCost: 0
+    sustainedCost: 0,
+    outOfBudgetCost: 0
   };
+
+  let outOfBudgetInvoices = state.invoiceList.filter( i => i.quotationCode === 0);
+  outOfBudgetInvoices.forEach( i => {
+    budget.outOfBudgetCost += i.totalCost;
+    budget.sustainedCost += i.totalCost;
+  });
+
 
   if (state.quotations) {
     let quotations = JSON.parse(JSON.stringify(state.quotations));

@@ -1,19 +1,25 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { getInvoiceList } from "../store/selectors/invoiceSelector";
+import { deleteInvoice } from '../store/actions/invoiceActions';
 
-const InvoiceList = ({ invoices }) => {
+const InvoiceList = ({ invoices, deleteInvoiceAction }) => {
+
+  const deleteInvoiceClick = (invoiceId) => {
+    deleteInvoiceAction(invoiceId);
+  }
 
   return (
     <div>
       { invoices.map(i => <div key={i.id}>
-        <span> {i.date} - </span>
-        <span> {i.quotationCode} - </span>
+        <span> {i.date} - </span> 
+        <span> {i.quotationCode} - </span> 
         <span> {i.moduleCode} - </span>
         <span> {i.activityCode} - </span>
         <span> {i.unitCost} - </span>
         <span> {i.unitNumber} - </span>
         <span> {i.totalCost} </span>
+        <span onClick={ () => deleteInvoiceClick(i.id)}>X</span>
       </div> )}
     </div>
   );
@@ -26,7 +32,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    deleteInvoiceAction: (invoice) => dispatch(deleteInvoice(invoice))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceList);

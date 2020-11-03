@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import InvoiceList from './invoice-list';
 import NewInvoice from './new-invoice';
 import add from '../assets/images/add.png';
-import { ShowNewInvoice, selectProject, loadProjectAction } from '../store/actions/actionsCreator';
+import { selectProject, loadProjectAction } from '../store/actions/actionsCreator';
+import { ShowNewInvoice } from '../store/actions/invoiceActions';
 import { getShowNewInvoice, getSelectedProjectId, getProject } from '../store/selectors/selector';
 import { history } from "../App";
 

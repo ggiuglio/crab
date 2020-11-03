@@ -110,6 +110,10 @@ const mapQuotationsEntityList = (quotationsObj) => {
     title: "select a module"
   });
   quotations.unshift({
+    id: 0,
+    code: "Out of budget"
+  });
+  quotations.unshift({
     id: -1,
     code: "select a quotation"
   });

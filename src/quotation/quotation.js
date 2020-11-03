@@ -5,7 +5,8 @@ import { getSelectedQuotationId, getQuotation } from "../store/selectors/quotati
 import Module from "./module";
 import M from "materialize-css/dist/js/materialize.min.js";
 import PersonCost from "../people/personCost";
-import { selectProject, selectQuotation, loadProjectAction } from "../store/actions/actionsCreator";
+import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
+import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
 
 const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuotationId, chooseProject, chooseQuotation, loadProject }) => {
