@@ -95,7 +95,7 @@ const NewQuotation = ({
     setDates();
     let collapsible = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsible, { accordion: false });
-    console.log(quotation)
+    
   }, [quotation, minDate]);
 
   React.useEffect(() => {
@@ -173,7 +173,7 @@ const NewQuotation = ({
     if (isGeoBool) {
       mods
         .map((m, idx) => {
-          if (m.geo === geo) return idx;
+          if (m.geo[Object.keys(m.geo)[0]].description === geo) return idx;
         })
         .filter((idx) => idx !== undefined)
         .map((idx) => {
@@ -322,7 +322,7 @@ const NewQuotation = ({
   const setActivityProp = (moduleId, geo, activityId, propName, propValue) => {
     const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === moduleId && mod.geo === geo;
+      return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo;
     });
     if (modIdx != -1) {
       const activities = mods[modIdx].activities;
@@ -376,23 +376,44 @@ const NewQuotation = ({
       };
     });
 
-    const module = {
-      ...baseModules[moduleIdx],
-      activities: acts,
-      geo: geoSelect.options[geoSelect.selectedIndex].text,
-    };
-    mods.push(module);
-
-    setQuotation({
-      ...quotation,
-      modules: mods,
-    });
-
     if (availableGeos.hasOwnProperty(selectedModule)) {
       const geosByModule = availableGeos[selectedModule];
       const { [selectedGeo]: geoToRemove, ...rest } = geosByModule;
       setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
+
+      const module = {
+        ...baseModules[moduleIdx],
+        activities: acts,
+        geo: {
+          [selectedGeo]: geoToRemove
+        },
+      };
+      mods.push(module);
+  
+      setQuotation({
+        ...quotation,
+        modules: mods,
+      });
     }
+
+    // const module = {
+    //   ...baseModules[moduleIdx],
+    //   activities: acts,
+    //   geo: geoSelect.options[geoSelect.selectedIndex].text,
+    // };
+    // mods.push(module);
+
+    // setQuotation({
+    //   ...quotation,
+    //   modules: mods,
+    // });
+
+    // if (availableGeos.hasOwnProperty(selectedModule)) {
+    //   const geosByModule = availableGeos[selectedModule];
+    //   const { [selectedGeo]: geoToRemove, ...rest } = geosByModule;
+    //   setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
+    // }
+    
     moduleSelect.selectedIndex = 0;
     M.FormSelect.init(moduleSelect);
     availableModulesChange("");
@@ -400,11 +421,12 @@ const NewQuotation = ({
   };
 
   const removeModule = (e, moduleId, geo) => {
+    
     e.preventDefault();
 
     const mods = [...quotation.modules];
     mods.splice(mods.findIndex((mod) => {
-      return mod.id === moduleId && mod.geo === geo;
+      return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo[Object.keys(geo)[0]].description;
     }), 1);
 
     setQuotation({
@@ -414,14 +436,22 @@ const NewQuotation = ({
 
     const avGeos = {
       ...availableGeos,
-      moduleId: {
-        ...avGeos[moduleId],
-        
+      [moduleId]: {
+        ...availableGeos[moduleId],
+        ...geo
       }
     };
+    setAvailableGeos(avGeos);
+
+    const moduleSelect = document.getElementById("availableModules");
+    const geoSelect = document.getElementById("availableGeo");
+    moduleSelect.selectedIndex = 0;
+    M.FormSelect.init(moduleSelect);
+    availableModulesChange("");
+    M.FormSelect.init(geoSelect);
   }
-console.log(availableGeos)
-console.log(project)
+
+
   const availableModulesChange = (e) => {
     setSelectedModule(e);
     const geoSelect = document.getElementById("availableGeo");
@@ -480,7 +510,7 @@ console.log(project)
 
     const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === resourceModule && mod.geo === resourceGeo;
+      return mod.id === resourceModule && mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo;
     });
     if (modIdx != -1) {
       const activities = mods[modIdx].activities;
@@ -553,7 +583,7 @@ console.log(project)
   ) => {
     let mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === resourceModule && mod.geo === resourceGeo;
+      return mod.id === resourceModule && mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo;
     });
 
     if (modIdx != -1) {
@@ -730,8 +760,9 @@ console.log(project)
                 <ul className="collapsible">
                   {quotation.modules.map((module) => (
                     <Module
-                      key={module.id + "_" + module.geo}
+                      key={module.id + "_" + module.geo[Object.keys(module.geo)[0]].description}
                       module={module}
+                      geo={module.geo}
                       handleModalResources={setModalResources}
                       setActivityProp={setActivityProp}
                       editResource={editResource}

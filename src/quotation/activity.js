@@ -56,6 +56,21 @@ const Activity = ({
               />{" "}
               <span className="s-truncate">{activity.unit}</span>
             </span>
+            <a
+              href="!#"
+              className="lateral-margin"
+              title="Remove"
+              onClick={(e) => {
+                console.log('removed')
+                // removeModule(e, module.id, geo);
+              }}
+            >
+              <FontAwesomeIcon
+                icon="minus-circle"
+                className="red-text text-darken-2"
+                fixedWidth
+              />
+            </a>
           </div>
           <div className="col s2">
             <div className="center price">
