@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Activity from "./activity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Module = ({ key, module, geo, handleModalResources, setActivityProp, editResource, removeModule }) => {
+const Module = ({ key, module, geo, handleModalResources, setActivityProp, editResource, removeModule, removeActivity }) => {
   const geoDesc = geo[Object.keys(geo)[0]].description;
   return (
     <li>
@@ -35,8 +35,34 @@ const Module = ({ key, module, geo, handleModalResources, setActivityProp, editR
       <div className="collapsible-body">
         <ul className="collapsible">
           {Object.keys(module.activities).map((key) => (
-            <Activity key={key+"_"+module.id+"_"+geoDesc} activityId={key} activity={module.activities[key]} moduleId={module.id} moduleTitle={module.title} geo={geoDesc} handleModalResources={handleModalResources} setActivityProp={setActivityProp} editResource={editResource} />
+            <Activity key={key+"_"+module.id+"_"+geoDesc} activityId={key} activity={module.activities[key]} moduleId={module.id} moduleTitle={module.title} geo={geoDesc} handleModalResources={handleModalResources} setActivityProp={setActivityProp} editResource={editResource} removeActivity={removeActivity} />
           ))}
+          <li>
+            <div className="collapsible-header block">
+              <div className="row">
+                <div id={"wrapper-select-activity"+"_"+module.id} className="input-field col s7 offset-s1">
+                  <select
+                    id={"availableActivities"+"_"+module.id}
+                    onChange={(e) => console.log('changed')}
+                  ></select>
+                  <label>Activity</label>
+                </div>
+                <div className="col s2 offset-s1">
+                  <a
+                    className="waves-effect waves-light btn-small green darken-1"
+                    href="#!"
+                    disabled="false"
+                    onClick={(e) => console.log(e)}
+                  >
+                    Add activity
+                    <i className="left material-icons" title="Add activity">
+                      add
+                    </i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
     </li>

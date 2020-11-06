@@ -12,6 +12,7 @@ const Activity = ({
   handleModalResources,
   setActivityProp,
   editResource,
+  removeActivity
 }) => {
   const iconTypeMap = {
     document: "folder",
@@ -61,8 +62,7 @@ const Activity = ({
               className="lateral-margin"
               title="Remove"
               onClick={(e) => {
-                console.log('removed')
-                // removeModule(e, module.id, geo);
+                removeActivity(e, moduleId, geo, activityId, activity);
               }}
             >
               <FontAwesomeIcon
