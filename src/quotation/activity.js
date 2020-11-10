@@ -12,7 +12,8 @@ const Activity = ({
   handleModalResources,
   setActivityProp,
   editResource,
-  removeActivity
+  removeActivity,
+  removeResource,
 }) => {
   const iconTypeMap = {
     document: "folder",
@@ -77,7 +78,7 @@ const Activity = ({
               <span className="hide-on-med-and-up mbold">Unit c: </span>
               <span className="hide-on-small-only mbold">Unit cost: </span>
               <br className="hide-on-med-and-up" />
-              {activity.unitCost}
+              {activity.unitCost || 0}
             </div>
           </div>
           <div className="col s2">
@@ -85,7 +86,23 @@ const Activity = ({
               <span className="hide-on-med-and-up mbold">Unit n: </span>
               <span className="hide-on-small-only mbold">Unit number: </span>
               <br className="hide-on-med-and-up" />
-              {activity.unitNumber}
+              <input
+                className="text-right browser-default unit-number-input"
+                type="number"
+                name={"unitNumber" + moduleId + geo + activityId}
+                min="0"
+                max="99"
+                value={activity.unitNumber || 0}
+                onChange={(e) =>
+                  setActivityProp(
+                    moduleId,
+                    geo,
+                    activityId,
+                    "unitNumber",
+                    e.target.value
+                  )
+                }
+              ></input>
             </div>
           </div>
           <div className="col s2">
@@ -93,7 +110,7 @@ const Activity = ({
               <span className="hide-on-med-and-up mbold">Total: </span>
               <span className="hide-on-small-only mbold">Total cost: </span>
               <br className="hide-on-med-and-up" />
-              {activity.activityCost}
+              {activity.activityCost || 0}
             </div>
           </div>
         </div>
@@ -105,7 +122,7 @@ const Activity = ({
               <input
                 type="checkbox"
                 checked={activity.responsibilityCRO === true}
-                onChange={e =>
+                onChange={(e) =>
                   setActivityProp(
                     moduleId,
                     geo,
@@ -121,7 +138,7 @@ const Activity = ({
               <input
                 type="checkbox"
                 checked={activity.responsibilityCRO === true}
-                onChange={e =>
+                onChange={(e) =>
                   setActivityProp(
                     moduleId,
                     geo,
@@ -209,6 +226,7 @@ const Activity = ({
                       <th className="text-right hide-on-med-and-up">€/h</th>
                       <th className="text-right hide-on-med-and-up">Hours</th>
                       <th className="text-right hide-on-med-and-up">Cost €</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -236,6 +254,25 @@ const Activity = ({
                             }
                           ></input>
                         </td>
+                        <td className="text-right">
+                          <a
+                            href="#!"
+                            title="Remove fixed costs"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setActivityProp(
+                                moduleId,
+                                geo,
+                                activityId,
+                                "fixedCost"
+                              );
+                            }}
+                          >
+                            <i className="tiny material-icons red-text text-darken-2">
+                              clear
+                            </i>
+                          </a>
+                        </td>
                       </tr>
                     ) : null}
                     {activity.resources
@@ -249,6 +286,7 @@ const Activity = ({
                             geo={geo}
                             activityId={activityId}
                             editResource={editResource}
+                            removeResource={removeResource}
                           />
                         ))
                       : null}

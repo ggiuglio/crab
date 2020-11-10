@@ -41,6 +41,7 @@ const NewQuotation = ({
   */
   const [availableGeos, setAvailableGeos] = useState();
   const [availableActivities, setAvailableActivities] = useState({});
+  const [selectedActivity, setSelectedActivity] = useState({});
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedGeo, setSelectedGeo] = useState("");
   const [selectedResourceId, setSelectedResourceId] = useState("");
@@ -95,7 +96,32 @@ const NewQuotation = ({
     setDates();
     let collapsible = document.querySelectorAll(".collapsible");
     M.Collapsible.init(collapsible, { accordion: false });
-    
+
+    let unInputs = document.querySelectorAll(".unit-number-input");
+    Object.keys(unInputs).map((i) => {
+      unInputs[i].addEventListener(
+        "click",
+        (e) => {
+          e.stopImmediatePropagation();
+        },
+        true
+      );
+    });
+
+    let numberInputs = document.querySelectorAll("input[type=number]");
+    Object.keys(numberInputs).map((key) => {
+      numberInputs[key].onkeydown = function (e) {
+        if (
+          !(
+            (e.keyCode > 95 && e.keyCode < 106) ||
+            (e.keyCode > 47 && e.keyCode < 58) ||
+            e.keyCode == 8
+          )
+        ) {
+          return false;
+        }
+      };
+    });
   }, [quotation, minDate]);
 
   React.useEffect(() => {
@@ -105,12 +131,17 @@ const NewQuotation = ({
     populateModuleSelect();
   }, [availableGeos]);
 
+  React.useEffect(() => {
+    const actSel = document.querySelectorAll(".addActivitySelect");
+    M.FormSelect.init(actSel);
+  }, [availableActivities]);
+
   const setDates = () => {
     let dateFrom = document.getElementById("quotationValidFrom");
     M.Datepicker.init(dateFrom, {
       format: "dd/mm/yyyy",
       parse: () => {
-        return new Date(this.value);
+        return this ? new Date(this.value) : null;
       },
       defaultDate: quotation.validFrom,
       setDefaultDate: true,
@@ -121,7 +152,7 @@ const NewQuotation = ({
     M.Datepicker.init(dateThru, {
       format: "dd/mm/yyyy",
       parse: () => {
-        return new Date(this.value);
+        return this ? new Date(this.value) : null;
       },
       defaultDate: quotation.validThru,
       setDefaultDate: true,
@@ -213,30 +244,33 @@ const NewQuotation = ({
   };
 
   function getScrollTop() {
-    if (typeof window.pageYOffset !== "undefined" ) {
-        // Most browsers
-        return window.pageYOffset;
+    if (typeof window.pageYOffset !== "undefined") {
+      // Most browsers
+      return window.pageYOffset;
     }
-  
+
     var d = document.documentElement;
     if (typeof d.clientHeight !== "undefined") {
-        // IE in standards mode
-        return d.scrollTop;
+      // IE in standards mode
+      return d.scrollTop;
     }
-  
+
     // IE in quirks mode
     return document.body.scrollTop;
-}
+  }
 
   window.onscroll = () => {
     const peopleTable = document.getElementById("peopleTable");
     const quotationGroup = document.getElementById("quotationGroup");
     const scroll = getScrollTop();
     const groupOffset = quotationGroup.offsetTop;
-    if(scroll <= groupOffset)
+    if (scroll <= groupOffset)
       peopleTable.setAttribute("style", "margin-top: 0");
     else
-      peopleTable.setAttribute("style", `margin-top: ${scroll - groupOffset}px`);
+      peopleTable.setAttribute(
+        "style",
+        `margin-top: ${scroll - groupOffset}px`
+      );
   };
 
   const togglePeopleTable = (evt) => {
@@ -319,24 +353,44 @@ const NewQuotation = ({
     });
   };
 
-  const setActivityProp = (moduleId, geo, activityId, propName, propValue) => {
+  const setActivityProp = (
+    moduleId,
+    geo,
+    activityId,
+    propName,
+    propValue = undefined
+  ) => {
     const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo;
+      return (
+        mod.id === moduleId &&
+        mod.geo[Object.keys(mod.geo)[0]].description === geo
+      );
     });
     if (modIdx != -1) {
       const activities = { ...mods[modIdx].activities };
       if (activities && activities.hasOwnProperty(activityId)) {
-        activities[activityId] = {
-          ...activities[activityId],
-          [propName]: propValue,
-        };
+        if (propValue !== undefined) {
+          activities[activityId] = {
+            ...activities[activityId],
+            [propName]: propValue,
+          };
+        } else {
+          const { [propName]: propToRemove, ...rest } = activities[activityId];
+          activities[activityId] = {
+            ...rest,
+          };
+        }
+
         mods[modIdx].activities = activities;
 
         setQuotation({
           ...quotation,
           modules: mods,
         });
+
+        if(propName === "fixedCost" || propName === "unitNumber")
+          calculateTotals(moduleId, geo);
       }
     }
   };
@@ -385,11 +439,11 @@ const NewQuotation = ({
         ...baseModules[moduleIdx],
         activities: acts,
         geo: {
-          [selectedGeo]: geoToRemove
+          [selectedGeo]: geoToRemove,
         },
       };
       mods.push(module);
-  
+
       setQuotation({
         ...quotation,
         modules: mods,
@@ -413,7 +467,7 @@ const NewQuotation = ({
     //   const { [selectedGeo]: geoToRemove, ...rest } = geosByModule;
     //   setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
     // }
-    
+
     moduleSelect.selectedIndex = 0;
     M.FormSelect.init(moduleSelect);
     availableModulesChange("");
@@ -421,13 +475,19 @@ const NewQuotation = ({
   };
 
   const removeModule = (e, moduleId, geo) => {
-    
     e.preventDefault();
 
     const mods = [...quotation.modules];
-    mods.splice(mods.findIndex((mod) => {
-      return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo[Object.keys(geo)[0]].description;
-    }), 1);
+    mods.splice(
+      mods.findIndex((mod) => {
+        return (
+          mod.id === moduleId &&
+          mod.geo[Object.keys(mod.geo)[0]].description ===
+            geo[Object.keys(geo)[0]].description
+        );
+      }),
+      1
+    );
 
     setQuotation({
       ...quotation,
@@ -438,8 +498,8 @@ const NewQuotation = ({
       ...availableGeos,
       [moduleId]: {
         ...availableGeos[moduleId],
-        ...geo
-      }
+        ...geo,
+      },
     };
     setAvailableGeos(avGeos);
 
@@ -449,7 +509,7 @@ const NewQuotation = ({
     M.FormSelect.init(moduleSelect);
     availableModulesChange("");
     M.FormSelect.init(geoSelect);
-  }
+  };
 
   const availableModulesChange = (e) => {
     setSelectedModule(e);
@@ -473,107 +533,44 @@ const NewQuotation = ({
     M.FormSelect.init(geoSelect);
   };
 
-  console.log(quotation)
-  console.log(availableActivities)
-  // const addActivity = (e, moduleId, geo, activityId, activity) => {
-    
-  //   e.preventDefault();
-
-  //   const mods = [...quotation.modules];
-  //   const modIdx = mods.findIndex((mod) => {
-  //     return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo;
-  //   });
-  //   if (modIdx != -1) {
-  //     const activities = { ...mods[modIdx].activities };
-
-  //     const {[activityId]: activityToRemove, ...rest} = activities;
-
-  //     mods[modIdx] = {
-  //       ...mods[modIdx],
-  //       activities: {
-  //         ...rest
-  //       }
-  //     };
-
-  //       setQuotation({
-  //         ...quotation,
-  //         modules: mods,
-  //       });
-  //   }
-
-  //   const {code: code, title: title, unit: unit} = activity;
-  //   const removedActivity = {
-  //     [activityId]: {
-  //     code: code,
-  //     title: title,
-  //     unit: unit
-  //   }}
-
-  //   let avActivitiesModule = {};
-  //   let avActivitiesGeo = {};
-  //   if(availableActivities.hasOwnProperty(moduleId)) {
-  //     avActivitiesModule = {...availableActivities[moduleId]};
-  //     if(availableActivities[moduleId].hasOwnProperty(geo)) {
-  //       avActivitiesGeo =  {...availableActivities[moduleId][geo]};
-  //     }
-  //   }
-
-  //   setAvailableActivities({
-  //     ...availableActivities,
-  //     [moduleId]: {
-  //       ...avActivitiesModule,
-  //       [geo]: {
-  //         ...avActivitiesGeo,
-  //         [activityId]: {
-  //           code: code,
-  //           title: title,
-  //           unit: unit
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
+  console.log(quotation);
 
   const removeActivity = (e, moduleId, geo, activityId, activity) => {
-    
     e.preventDefault();
 
     const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === moduleId && mod.geo[Object.keys(mod.geo)[0]].description === geo;
+      return (
+        mod.id === moduleId &&
+        mod.geo[Object.keys(mod.geo)[0]].description === geo
+      );
     });
     if (modIdx != -1) {
       const activities = { ...mods[modIdx].activities };
 
-      const {[activityId]: activityToRemove, ...rest} = activities;
+      const { [activityId]: activityToRemove, ...rest } = activities;
 
       mods[modIdx] = {
         ...mods[modIdx],
         activities: {
-          ...rest
-        }
+          ...rest,
+        },
       };
 
-        setQuotation({
-          ...quotation,
-          modules: mods,
-        });
+      setQuotation({
+        ...quotation,
+        modules: mods,
+      });
     }
 
-    const {code: code, title: title, unit: unit} = activity;
-    const removedActivity = {
-      [activityId]: {
-      code: code,
-      title: title,
-      unit: unit
-    }}
+    const { code: code, title: title, unit: unit } = activity;
 
     let avActivitiesModule = {};
     let avActivitiesGeo = {};
-    if(availableActivities.hasOwnProperty(moduleId)) {
-      avActivitiesModule = {...availableActivities[moduleId]};
-      if(availableActivities[moduleId].hasOwnProperty(geo)) {
-        avActivitiesGeo =  {...availableActivities[moduleId][geo]};
+    if (availableActivities.hasOwnProperty(moduleId)) {
+      avActivitiesModule = { ...availableActivities[moduleId] };
+      if (availableActivities[moduleId].hasOwnProperty(geo)) {
+        avActivitiesGeo = { ...availableActivities[moduleId][geo] };
       }
     }
 
@@ -586,12 +583,96 @@ const NewQuotation = ({
           [activityId]: {
             code: code,
             title: title,
-            unit: unit
-          }
-        }
-      }
+            unit: unit,
+          },
+        },
+      },
     });
-  }
+  };
+
+  const activityChange = (moduleId, geo, value) => {
+    setSelectedActivity({
+      ...selectedActivity,
+      [moduleId]: {
+        [geo]: value,
+      },
+    });
+    const addActivityBtn = document.getElementById(
+      "availableActivitiesButton" + moduleId + geo
+    );
+    if (addActivityBtn)
+      value.length === 0
+        ? addActivityBtn.setAttribute("disabled", "true")
+        : addActivityBtn.removeAttribute("disabled");
+  };
+
+  const addActivity = (e, moduleId, geo) => {
+    e.preventDefault();
+    if (
+      !selectedActivity.hasOwnProperty(moduleId) ||
+      !selectedActivity[moduleId].hasOwnProperty(geo)
+    )
+      return;
+
+    const activityId = selectedActivity[moduleId][geo];
+
+    const mods = [...quotation.modules];
+    const modIdx = mods.findIndex((mod) => {
+      return (
+        mod.id === moduleId &&
+        mod.geo[Object.keys(mod.geo)[0]].description === geo
+      );
+    });
+    if (modIdx != -1) {
+      const activities = { ...mods[modIdx].activities };
+
+      const bmods = [...baseModules];
+      const bmodIdx = bmods.findIndex((mod) => {
+        return mod.id === moduleId;
+      });
+      const bactivities = { ...bmods[bmodIdx].activities };
+
+      mods[modIdx] = {
+        ...mods[modIdx],
+        activities: {
+          ...activities,
+          [activityId]: {
+            ...bactivities[activityId],
+          },
+        },
+      };
+
+      setQuotation({
+        ...quotation,
+        modules: mods,
+      });
+    }
+
+    if (
+      availableActivities.hasOwnProperty(moduleId) &&
+      availableActivities[moduleId].hasOwnProperty(geo)
+    ) {
+      const { [activityId]: activityToRemove, ...rest } = availableActivities[
+        moduleId
+      ][geo];
+      setAvailableActivities({
+        ...availableActivities,
+        [moduleId]: {
+          ...availableActivities[moduleId],
+          [geo]: {
+            ...rest,
+          },
+        },
+      });
+    }
+
+    setSelectedActivity({
+      ...selectedActivity,
+      [moduleId]: {
+        [geo]: "",
+      },
+    });
+  };
 
   const setModalResources = (
     moduleId,
@@ -629,7 +710,10 @@ const NewQuotation = ({
 
     const mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === resourceModule && mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo;
+      return (
+        mod.id === resourceModule &&
+        mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo
+      );
     });
     if (modIdx != -1) {
       const activities = { ...mods[modIdx].activities };
@@ -702,7 +786,10 @@ const NewQuotation = ({
   ) => {
     let mods = [...quotation.modules];
     const modIdx = mods.findIndex((mod) => {
-      return mod.id === resourceModule && mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo;
+      return (
+        mod.id === resourceModule &&
+        mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo
+      );
     });
 
     if (modIdx != -1) {
@@ -761,6 +848,8 @@ const NewQuotation = ({
           ...quotation,
           modules: mods,
         });
+
+        calculateTotals(resourceModule, resourceGeo);
       }
     }
 
@@ -768,6 +857,104 @@ const NewQuotation = ({
     setSelectedResource("");
     setResourceHours("");
   };
+
+  const removeResource = (
+    e,
+    resourceModule,
+    resourceGeo,
+    resourceActivity,
+    resourceId
+  ) => {
+    e.preventDefault();
+
+    let mods = [...quotation.modules];
+    const modIdx = mods.findIndex((mod) => {
+      return (
+        mod.id === resourceModule &&
+        mod.geo[Object.keys(mod.geo)[0]].description === resourceGeo
+      );
+    });
+
+    if (modIdx != -1) {
+      let activities = { ...mods[modIdx].activities };
+
+      if (activities && activities.hasOwnProperty(resourceActivity)) {
+        let resources = activities[resourceActivity].resources
+          ? [...activities[resourceActivity].resources]
+          : [];
+
+        const filteredResources = resources.filter((res) => {
+          return res.resourceId !== resourceId;
+        });
+
+        activities[resourceActivity].resources = filteredResources;
+
+        mods[modIdx].activities = activities;
+
+        setQuotation({
+          ...quotation,
+          modules: mods,
+        });
+
+        calculateTotals(resourceModule, resourceGeo);
+      }
+    }
+  };
+
+  const calculateTotals = (moduleId, geo) => {
+    let mods = [...quotation.modules];
+    const modIdx = mods.findIndex((mod) => {
+      return (
+        mod.id === moduleId &&
+        mod.geo[Object.keys(mod.geo)[0]].description === geo
+      );
+    });
+
+    if (modIdx != -1) {
+      let activities = { ...mods[modIdx].activities };
+      let total = 0;
+      Object.keys(activities).map((key) => {
+        let actTotal = activities[key].fixedCost || 0;
+        let resources = activities[key].resources
+          ? [...activities[key].resources]
+          : [];
+        resources.map((r) => {
+          actTotal = +actTotal + +r.resourceCost;
+        });
+        const activityCost = +actTotal * +activities[key].unitNumber || 0;
+        activities[key] = {
+          ...activities[key],
+          unitCost: actTotal,
+          activityCost: activityCost,
+        };
+        total += activityCost;
+      });
+
+      const prevModTotal = mods[modIdx].moduleCost || 0;
+      let ptOnly = quotation.quotationCostPtOnly || 0;
+      let noPt = quotation.quotationCostNoPt || 0;
+      if(mods[modIdx].boolpt)
+        ptOnly = +ptOnly -prevModTotal + +total;
+      else
+        noPt = +noPt -prevModTotal + +total;
+
+      mods[modIdx] = {
+        ...mods[modIdx],
+        activities: activities,
+        moduleCost: total,
+      };
+
+      setQuotation({
+        ...quotation,
+        modules: mods,
+        quotationCostPtOnly: ptOnly,
+        quotationCostNoPt: noPt,
+        quotationCost: +ptOnly + +noPt
+      });
+    }
+  };
+
+  // const calculateTotals = () => {};
 
   const saveQuotation = (e) => {
     e.preventDefault();
@@ -879,7 +1066,11 @@ const NewQuotation = ({
                 <ul className="collapsible">
                   {quotation.modules.map((module) => (
                     <Module
-                      key={module.id + "_" + module.geo[Object.keys(module.geo)[0]].description}
+                      key={
+                        module.id +
+                        "_" +
+                        module.geo[Object.keys(module.geo)[0]].description
+                      }
                       module={module}
                       geo={module.geo}
                       handleModalResources={setModalResources}
@@ -887,22 +1078,26 @@ const NewQuotation = ({
                       editResource={editResource}
                       removeModule={removeModule}
                       removeActivity={removeActivity}
+                      availableActivities={availableActivities}
+                      activityChange={activityChange}
+                      addActivity={addActivity}
+                      removeResource={removeResource}
                     />
                   ))}
                 </ul>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
                   <h6 className="bolder price center">
-                    Price without PT {quotation.quotationCostNoPt}
+                    Price without PT {quotation.quotationCostNoPt || 0}
                   </h6>
                 </div>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
                   <h6 className="bolder price center">
-                    PT only {quotation.quotationCostPtOnly}
+                    PT only {quotation.quotationCostPtOnly || 0}
                   </h6>
                 </div>
                 <div className="col s12 m4 l4 z-depth-1 qtCost">
                   <h6 className="bolder price center">
-                    Quotation cost {quotation.quotationCost}
+                    Quotation cost {quotation.quotationCost || 0}
                   </h6>
                 </div>
               </div>
