@@ -8,7 +8,7 @@ const mapBudget = (state) => {
     outOfBudgetCost: 0
   };
 
-  let outOfBudgetInvoices = state.invoiceList.filter( i => i.quotationCode === "0");
+  let outOfBudgetInvoices = state.invoiceList.filter( i => i.quotationCode === "Out of budget");
   outOfBudgetInvoices.forEach( i => {
     budget.outOfBudgetCost += i.totalCost;
     budget.sustainedCost += i.totalCost;
