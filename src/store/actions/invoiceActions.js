@@ -34,7 +34,7 @@ export const createNewInvoice = (invoice) => {
 }
 
 export const deleteInvoice = (invoiceId) => {
-  return (getSate) => {
+  return (dispatch, getSate) => {
     const projectId = getSate().selectedProjectId;
 
     return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/`).child(invoiceId).remove().then(() => {});

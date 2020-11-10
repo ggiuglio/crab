@@ -14,8 +14,10 @@ const InvoiceList = ({ invoices, deleteInvoiceAction }) => {
       { invoices.map(i => <div key={i.id}>
         <span> {i.date} - </span> 
         <span> {i.quotationCode} - </span> 
-        <span> {i.moduleCode} - </span>
-        <span> {i.activityCode} - </span>
+        <span> {i.moduleCode !== "N/A" ? i.moduleCode + " - " : ''} </span>
+        <span> {i.moduleTitle} </span>
+        <span> {i.activityCode + " - "} </span>
+        <span> {i.activityTitle + " - "} - </span>
         <span> {i.unitCost} - </span>
         <span> {i.unitNumber} - </span>
         <span> {i.totalCost} </span>
