@@ -217,10 +217,12 @@ const NewQuotation = ({
       });
     }
 
-    setQuotation({
+    const quot = {
       ...quotation,
       modules: mods,
-    });
+    };
+
+    calculateAllModulesTotals(quot);
   };
 
   const recalculateResourcesCosts = (mod, personId, value) => {
@@ -384,13 +386,13 @@ const NewQuotation = ({
 
         mods[modIdx].activities = activities;
 
-        setQuotation({
+        const quot = {
           ...quotation,
-          modules: mods,
-        });
+          modules: mods
+        }
 
         if(propName === "fixedCost" || propName === "unitNumber")
-          calculateTotals(moduleId, geo);
+          calculateChangedModuleTotals(quot, moduleId, geo);
       }
     }
   };
@@ -450,24 +452,6 @@ const NewQuotation = ({
       });
     }
 
-    // const module = {
-    //   ...baseModules[moduleIdx],
-    //   activities: acts,
-    //   geo: geoSelect.options[geoSelect.selectedIndex].text,
-    // };
-    // mods.push(module);
-
-    // setQuotation({
-    //   ...quotation,
-    //   modules: mods,
-    // });
-
-    // if (availableGeos.hasOwnProperty(selectedModule)) {
-    //   const geosByModule = availableGeos[selectedModule];
-    //   const { [selectedGeo]: geoToRemove, ...rest } = geosByModule;
-    //   setAvailableGeos({ ...availableGeos, [selectedModule]: rest });
-    // }
-
     moduleSelect.selectedIndex = 0;
     M.FormSelect.init(moduleSelect);
     availableModulesChange("");
@@ -489,10 +473,20 @@ const NewQuotation = ({
       1
     );
 
-    setQuotation({
-      ...quotation,
-      modules: mods,
-    });
+    // const mods = quotation.modules.filter(mod => {
+    //   return !(
+    //     mod.id === moduleId &&
+    //     mod.geo[Object.keys(mod.geo)[0]].description ===
+    //       geo[Object.keys(geo)[0]].description
+    //   );
+    // });
+
+        const quot = {
+          ...quotation,
+          modules: mods
+        };
+
+        calculateChangedModuleTotals(quot, moduleId, geo[Object.keys(geo)[0]].description);
 
     const avGeos = {
       ...availableGeos,
@@ -557,10 +551,12 @@ const NewQuotation = ({
         },
       };
 
-      setQuotation({
-        ...quotation,
-        modules: mods,
-      });
+        const quot = {
+          ...quotation,
+          modules: mods
+        };
+
+        calculateChangedModuleTotals(quot, moduleId, geo);
     }
 
     const { code: code, title: title, unit: unit } = activity;
@@ -844,12 +840,17 @@ const NewQuotation = ({
 
         mods[modIdx].activities = activities;
 
-        setQuotation({
-          ...quotation,
-          modules: mods,
-        });
+        // setQuotation({
+        //   ...quotation,
+        //   modules: mods,
+        // });
 
-        calculateTotals(resourceModule, resourceGeo);
+        const quot = {
+          ...quotation,
+          modules: mods
+        };
+
+        calculateChangedModuleTotals(quot, resourceModule, resourceGeo);
       }
     }
 
@@ -891,18 +892,23 @@ const NewQuotation = ({
 
         mods[modIdx].activities = activities;
 
-        setQuotation({
-          ...quotation,
-          modules: mods,
-        });
+        // setQuotation({
+        //   ...quotation,
+        //   modules: mods,
+        // });
 
-        calculateTotals(resourceModule, resourceGeo);
+        const quot = {
+          ...quotation,
+          modules: mods
+        };
+
+        calculateChangedModuleTotals(quot, resourceModule, resourceGeo);
       }
     }
   };
 
-  const calculateTotals = (moduleId, geo) => {
-    let mods = [...quotation.modules];
+  const calculateChangedModuleTotals = (quot, moduleId, geo) => {
+    let mods = [...quot.modules];
     const modIdx = mods.findIndex((mod) => {
       return (
         mod.id === moduleId &&
@@ -910,8 +916,54 @@ const NewQuotation = ({
       );
     });
 
+    let ptOnly = quot.quotationCostPtOnly || 0;
+    let noPt = quot.quotationCostNoPt || 0;
     if (modIdx != -1) {
-      let activities = { ...mods[modIdx].activities };
+      const prevModTotal = mods[modIdx].moduleCost || 0;
+
+      mods[modIdx] = calculateModuleTotals(mods[modIdx]);
+      
+      if(mods[modIdx].boolpt)
+        ptOnly = +ptOnly -prevModTotal + +mods[modIdx].moduleCost;
+      else
+        noPt = +noPt -prevModTotal + +mods[modIdx].moduleCost;
+    }
+      
+      setQuotation({
+        ...quot,
+        modules: mods,
+        quotationCostPtOnly: ptOnly,
+        quotationCostNoPt: noPt,
+        quotationCost: +ptOnly + +noPt
+      });
+  };
+
+  const calculateAllModulesTotals = (quot) => {
+    let ptOnly = quot.quotationCostPtOnly || 0;
+    let noPt = quot.quotationCostNoPt || 0;
+
+    const changedModules = quot.modules.map(m => {
+      const prevModTotal = m.moduleCost || 0;
+      const module = calculateModuleTotals(m);
+      if(module.boolpt)
+        ptOnly = +ptOnly -prevModTotal + +module.moduleCost;
+      else
+        noPt = +noPt -prevModTotal + +module.moduleCost;
+
+        return module;
+    });
+
+    setQuotation({
+      ...quot,
+      modules: changedModules,
+      quotationCostPtOnly: ptOnly,
+      quotationCostNoPt: noPt,
+      quotationCost: +ptOnly + +noPt
+    });
+  };
+
+  const calculateModuleTotals = (m) => {
+    let activities = { ...m.activities };
       let total = 0;
       Object.keys(activities).map((key) => {
         let actTotal = activities[key].fixedCost || 0;
@@ -930,31 +982,14 @@ const NewQuotation = ({
         total += activityCost;
       });
 
-      const prevModTotal = mods[modIdx].moduleCost || 0;
-      let ptOnly = quotation.quotationCostPtOnly || 0;
-      let noPt = quotation.quotationCostNoPt || 0;
-      if(mods[modIdx].boolpt)
-        ptOnly = +ptOnly -prevModTotal + +total;
-      else
-        noPt = +noPt -prevModTotal + +total;
-
-      mods[modIdx] = {
-        ...mods[modIdx],
+      m = {
+        ...m,
         activities: activities,
         moduleCost: total,
       };
 
-      setQuotation({
-        ...quotation,
-        modules: mods,
-        quotationCostPtOnly: ptOnly,
-        quotationCostNoPt: noPt,
-        quotationCost: +ptOnly + +noPt
-      });
-    }
+      return m;
   };
-
-  // const calculateTotals = () => {};
 
   const saveQuotation = (e) => {
     e.preventDefault();
