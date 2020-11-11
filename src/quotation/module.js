@@ -21,7 +21,7 @@ const Module = ({
   return (
     <li>
       <div className="collapsible-header indigo lighten-2 white-text">
-        <div className="center row">
+        <div className="center">
           <div className="col s11">
           <span className="bolder">{module.title}</span>{" "}
           <FontAwesomeIcon

@@ -393,6 +393,8 @@ const NewQuotation = ({
 
         if(propName === "fixedCost" || propName === "unitNumber")
           calculateChangedModuleTotals(quot, moduleId, geo);
+        else
+          setQuotation(quot);
       }
     }
   };
@@ -414,6 +416,9 @@ const NewQuotation = ({
     selectedResourceId.length === 0 ||
     resourceHours.length === 0 ||
     resourceHours == 0;
+
+  const checkCreateDisabled =
+    quotation.code.length === 0;
 
   const addModule = (e) => {
     if (checkAddModuleDisabled) return;
@@ -462,7 +467,7 @@ const NewQuotation = ({
     e.preventDefault();
 
     const mods = [...quotation.modules];
-    mods.splice(
+    const moduleToRemove = mods.splice(
       mods.findIndex((mod) => {
         return (
           mod.id === moduleId &&
@@ -481,12 +486,12 @@ const NewQuotation = ({
     //   );
     // });
 
-        const quot = {
-          ...quotation,
-          modules: mods
-        };
+    const quot = {
+      ...quotation,
+      modules: mods
+    };
 
-        calculateChangedModuleTotals(quot, moduleId, geo[Object.keys(geo)[0]].description);
+    calculateChangedModuleTotals(quot, moduleId, geo[Object.keys(geo)[0]].description, moduleToRemove[0]);
 
     const avGeos = {
       ...availableGeos,
@@ -526,8 +531,6 @@ const NewQuotation = ({
     }
     M.FormSelect.init(geoSelect);
   };
-
-  console.log(quotation);
 
   const removeActivity = (e, moduleId, geo, activityId, activity) => {
     e.preventDefault();
@@ -907,35 +910,49 @@ const NewQuotation = ({
     }
   };
 
-  const calculateChangedModuleTotals = (quot, moduleId, geo) => {
+  const calculateChangedModuleTotals = (quot, moduleId, geo, module = undefined) => {
     let mods = [...quot.modules];
-    const modIdx = mods.findIndex((mod) => {
-      return (
-        mod.id === moduleId &&
-        mod.geo[Object.keys(mod.geo)[0]].description === geo
-      );
-    });
+    let changedModule;
+    let modIdx = -1;
+    if(module){
+      //remove module case
+      //empty activities object to avoid unuseful calculateModuleTotals calculations
+      changedModule = module;
+      module.activities = {};
+    } else {
+      modIdx = mods.findIndex((mod) => {
+        return (
+          mod.id === moduleId &&
+          mod.geo[Object.keys(mod.geo)[0]].description === geo
+        );
+      });
+      if(modIdx != -1)
+        changedModule = mods[modIdx];
+    }
+
+    if(!changedModule) return;
 
     let ptOnly = quot.quotationCostPtOnly || 0;
     let noPt = quot.quotationCostNoPt || 0;
-    if (modIdx != -1) {
-      const prevModTotal = mods[modIdx].moduleCost || 0;
+    const prevModTotal = changedModule.moduleCost || 0;
+    
+    changedModule = calculateModuleTotals(changedModule);
+    
+    if(changedModule.boolpt)
+      ptOnly = +ptOnly -prevModTotal + +changedModule.moduleCost;
+    else
+      noPt = +noPt -prevModTotal + +changedModule.moduleCost;
 
-      mods[modIdx] = calculateModuleTotals(mods[modIdx]);
+    if(modIdx != -1)
+      mods[modIdx] = changedModule;
       
-      if(mods[modIdx].boolpt)
-        ptOnly = +ptOnly -prevModTotal + +mods[modIdx].moduleCost;
-      else
-        noPt = +noPt -prevModTotal + +mods[modIdx].moduleCost;
-    }
-      
-      setQuotation({
-        ...quot,
-        modules: mods,
-        quotationCostPtOnly: ptOnly,
-        quotationCostNoPt: noPt,
-        quotationCost: +ptOnly + +noPt
-      });
+    setQuotation({
+      ...quot,
+      modules: mods,
+      quotationCostPtOnly: ptOnly,
+      quotationCostNoPt: noPt,
+      quotationCost: +ptOnly + +noPt
+    });
   };
 
   const calculateAllModulesTotals = (quot) => {
@@ -964,35 +981,37 @@ const NewQuotation = ({
 
   const calculateModuleTotals = (m) => {
     let activities = { ...m.activities };
-      let total = 0;
-      Object.keys(activities).map((key) => {
-        let actTotal = activities[key].fixedCost || 0;
-        let resources = activities[key].resources
-          ? [...activities[key].resources]
-          : [];
-        resources.map((r) => {
-          actTotal = +actTotal + +r.resourceCost;
-        });
-        const activityCost = +actTotal * +activities[key].unitNumber || 0;
-        activities[key] = {
-          ...activities[key],
-          unitCost: actTotal,
-          activityCost: activityCost,
-        };
-        total += activityCost;
+    let total = 0;
+    Object.keys(activities).map((key) => {
+      let actTotal = activities[key].fixedCost || 0;
+      let resources = activities[key].resources
+        ? [...activities[key].resources]
+        : [];
+      resources.map((r) => {
+        actTotal = +actTotal + +r.resourceCost;
       });
-
-      m = {
-        ...m,
-        activities: activities,
-        moduleCost: total,
+      const activityCost = +actTotal * +activities[key].unitNumber || 0;
+      activities[key] = {
+        ...activities[key],
+        unitCost: actTotal,
+        activityCost: activityCost,
       };
+      total += activityCost;
+    });
 
-      return m;
+    m = {
+      ...m,
+      activities: activities,
+      moduleCost: total,
+    };
+
+    return m;
   };
 
   const saveQuotation = (e) => {
     e.preventDefault();
+
+    console.log(quotation);
   };
 
   return (
@@ -1135,6 +1154,15 @@ const NewQuotation = ({
                     Quotation cost {quotation.quotationCost || 0}
                   </h6>
                 </div>
+                <div className="input-field col s12 center">
+                <button
+                  className="btn indigo lighten-1 z-depth-0"
+                  type="submit"
+                  disabled={checkCreateDisabled}
+                >
+                  Create
+                </button>
+              </div>
               </div>
               <div
                 className="col s4 m4 l3 scale-transition scale-out"
