@@ -17,7 +17,7 @@ const Module = ({
   addActivity,
   removeResource
 }) => {
-  const geoDesc = geo[Object.keys(geo)[0]].description;
+  const geoDesc = geo ? geo[Object.keys(geo)[0]].description : "N/A";
   return (
     <li>
       <div className="collapsible-header indigo lighten-2 white-text">
@@ -49,7 +49,7 @@ const Module = ({
       </div>
       <div className="collapsible-body">
         <ul className="collapsible">
-          {Object.keys(module.activities).map((key) => (
+          {module.activities ? Object.keys(module.activities).map((key) => (
             <Activity
               key={key + "_" + module.id + "_" + geoDesc}
               activityId={key}
@@ -63,8 +63,8 @@ const Module = ({
               removeActivity={removeActivity}
               removeResource={removeResource}
             />
-          ))}
-          {availableActivities.hasOwnProperty(module.id) &&
+          )) : ''}
+          {availableActivities && availableActivities.hasOwnProperty(module.id) &&
           availableActivities[module.id].hasOwnProperty(geoDesc) &&
           Object.keys(availableActivities[module.id][geoDesc]).length > 0 ? (
             <li>

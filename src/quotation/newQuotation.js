@@ -14,6 +14,7 @@ import {
   loadProjectAction,
 } from "../store/actions/actionsCreator";
 import { history } from "../App";
+import { addQuotation } from "../store/actions/quotationActions";
 
 const NewQuotation = ({
   baseModules,
@@ -22,6 +23,7 @@ const NewQuotation = ({
   selectedProjectId,
   chooseProject,
   loadProject,
+  saveQuotationToDb
 }) => {
   //Effective state
   const [quotation, setQuotation] = useState({
@@ -1010,6 +1012,7 @@ const NewQuotation = ({
 
   const saveQuotation = (e) => {
     e.preventDefault();
+    saveQuotationToDb(quotation);
 
     console.log(quotation);
   };
@@ -1282,6 +1285,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
+    saveQuotationToDb: (quotation) => dispatch(addQuotation(quotation))
   };
 };
 

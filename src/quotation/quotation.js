@@ -90,7 +90,7 @@ const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuot
 
   const printPersonCost = (person) => {
     let personC = [];
-    personC.push(<PersonCost key={person.title} title={person.title} fee={person.fee} />);
+    personC.push(<PersonCost key={person.title} person={person}/>);
     if (person.geobool) {
       Object.keys(project.geo)
         // .filter((nation) => {
@@ -100,14 +100,15 @@ const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuot
           personC.push(
             <PersonCost
               key={person.title + " - " + nation}
-              title={person.title + " - " + project.geo[nation].description}
-              fee={person.fee}
+              person={person}
+              //title={person.title + " - " + project.geo[nation].description}
+              //fee={person.fee}
             />
           );
         });
     }
     return personC;
-  }
+  };
 
   return (
     <div id="quotation">
@@ -180,9 +181,11 @@ const Quotation = ({ quotation, project, people, selectedProjectId, selectedQuot
                       </tr>
                     </thead>
                     <tbody>
-                      {people.map((person) => (
-                        printPersonCost(person)
-                      ))}
+                      {
+                        people.map((person) => (
+                          printPersonCost(person)
+                        ))
+                      }
                     </tbody>
                   </table>
                 </div>
