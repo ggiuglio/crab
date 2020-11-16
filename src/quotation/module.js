@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Activity from "./activity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { VIEW_MODES } from "../store/constants/constants";
 
 const Module = ({
   key,
@@ -15,7 +16,9 @@ const Module = ({
   availableActivities,
   activityChange,
   addActivity,
-  removeResource
+  removeResource,
+  viewMode,
+  quotationType,
 }) => {
   const geoDesc = geo ? geo[Object.keys(geo)[0]].description : "N/A";
   return (
@@ -23,80 +26,95 @@ const Module = ({
       <div className="collapsible-header indigo lighten-2 white-text">
         <div className="center">
           <div className="col s11">
-          <span className="bolder">{module.title}</span>{" "}
-          <FontAwesomeIcon
-            icon={getGeoIcon(geoDesc)}
-            className="white-text"
-            fixedWidth
-          />{" "}
-          {geoDesc}
-          <a
-            href="!#"
-            className="lateral-margin"
-            title="Remove"
-            onClick={(e) => {
-              removeModule(e, module.id, geo);
-            }}
-          >
+            <span className="bolder">{module.title}</span>{" "}
             <FontAwesomeIcon
-              icon="minus-circle"
-              className="red-text text-darken-2"
+              icon={getGeoIcon(geoDesc)}
+              className="white-text"
               fixedWidth
-            />
-          </a></div><div className="col s1 text-right">
-          <span className="price">{module.moduleCost || 0}</span></div>
+            />{" "}
+            {geoDesc}
+            {viewMode !== VIEW_MODES.VIEW ? (
+              <a
+                href="!#"
+                className="lateral-margin"
+                title="Remove"
+                onClick={(e) => {
+                  removeModule(e, module.id, geo);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="minus-circle"
+                  className="red-text text-darken-2"
+                  fixedWidth
+                />
+              </a>
+            ) : null}
+          </div>
+          <div className="col s1 text-right">
+            <span className="price">{module.moduleCost || 0}</span>
+          </div>
         </div>
       </div>
       <div className="collapsible-body">
         <ul className="collapsible">
-          {module.activities ? Object.keys(module.activities).map((key) => (
-            <Activity
-              key={key + "_" + module.id + "_" + geoDesc}
-              activityId={key}
-              activity={module.activities[key]}
-              moduleId={module.id}
-              moduleTitle={module.title}
-              geo={geoDesc}
-              handleModalResources={handleModalResources}
-              setActivityProp={setActivityProp}
-              editResource={editResource}
-              removeActivity={removeActivity}
-              removeResource={removeResource}
-            />
-          )) : ''}
-          {availableActivities && availableActivities.hasOwnProperty(module.id) &&
+          {module.activities
+            ? Object.keys(module.activities).map((key) => (
+                <Activity
+                  key={key + "_" + module.id + "_" + geoDesc}
+                  activityId={key}
+                  activity={module.activities[key]}
+                  moduleId={module.id}
+                  moduleTitle={module.title}
+                  geo={geoDesc}
+                  handleModalResources={handleModalResources}
+                  setActivityProp={setActivityProp}
+                  editResource={editResource}
+                  removeActivity={removeActivity}
+                  removeResource={removeResource}
+                  viewMode={viewMode}
+                  quotationType={quotationType}
+                />
+              ))
+            : ""}
+          {viewMode !== VIEW_MODES.VIEW &&
+          availableActivities &&
+          availableActivities.hasOwnProperty(module.id) &&
           availableActivities[module.id].hasOwnProperty(geoDesc) &&
           Object.keys(availableActivities[module.id][geoDesc]).length > 0 ? (
             <li>
               <div className="collapsible-header block">
                 <div className="row">
                   <div
-                    id={"wrapper-select-activity" +module.id+geoDesc}
+                    id={"wrapper-select-activity" + module.id + geoDesc}
                     className="input-field col s7 offset-s1"
                   >
                     <select
-                      id={"availableActivities" +module.id+geoDesc}
+                      id={"availableActivities" + module.id + geoDesc}
                       className="addActivitySelect"
-                      onChange={(e) => activityChange(module.id, geoDesc, e.target.value)}
+                      onChange={(e) =>
+                        activityChange(module.id, geoDesc, e.target.value)
+                      }
                     >
-                      <option key={module.id+geoDesc} value="" defaultValue>
+                      <option key={module.id + geoDesc} value="" defaultValue>
                         Select activity
                       </option>
-                      {
-                        Object.keys(availableActivities[module.id][geoDesc]).map(key => (
-                          <option key={module.id+geoDesc+key} value={key}>{availableActivities[module.id][geoDesc][key].title}</option>
-                        ))
-                      }
+                      {Object.keys(availableActivities[module.id][geoDesc]).map(
+                        (key) => (
+                          <option key={module.id + geoDesc + key} value={key}>
+                            {availableActivities[module.id][geoDesc][key].title}
+                          </option>
+                        )
+                      )}
                     </select>
                     <label>Activity</label>
                   </div>
                   <div className="col s2 offset-s1">
                     <a
-                    id={"availableActivitiesButton" +module.id+geoDesc}
+                      id={"availableActivitiesButton" + module.id + geoDesc}
                       className="waves-effect waves-light btn-small green darken-1"
                       href="#!"
                       disabled
-                      onClick={e => addActivity(e, module.id, geoDesc)}
+                      onClick={(e) => addActivity(e, module.id, geoDesc)}
                     >
                       Add activity
                       <i className="left material-icons" title="Add activity">

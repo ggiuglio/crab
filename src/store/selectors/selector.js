@@ -6,6 +6,8 @@ export const getSelectedProjectId = (state) => state.selectedProjectId;
 export const getShowNewInvoice = (state) => state.showNewInvoice;
 export const getPeople = (state) => state.professionals ? mapPeopleList(state.professionals) : undefined;
 export const getBaseModules = (state) => mapBaseModules(state.baseModules);
+export const getViewMode = (state) => state.viewMode;
+export const getQuotationType = (state) => state.quotationType;
 
 const mapPeopleList = (people) => {
   const peopleList = [];

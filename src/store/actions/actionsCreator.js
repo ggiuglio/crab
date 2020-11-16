@@ -6,7 +6,9 @@ import {
   LOAD_PROJECT,
   SELECT_PROJECT,
   LOAD_STATIC_DATA,
-  CLEAR_USER_DATA
+  CLEAR_USER_DATA,
+  SET_QUOTATION_TYPE,
+  SET_VIEW_MODE
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -126,6 +128,24 @@ export const createNewProject = (project) => {
       return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
         history.push('/projects')
       });
+    });
+  }
+}
+
+export const setViewMode = (mode) => {
+  return dispatch => {
+    dispatch({
+      type: SET_VIEW_MODE,
+      mode: mode
+    });
+  }
+}
+
+export const setQuotationType = (type) => {
+  return dispatch => {
+    dispatch({
+      type: SET_QUOTATION_TYPE,
+      quotationType: type
     });
   }
 }

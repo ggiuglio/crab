@@ -6,7 +6,6 @@ import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
 import Quotations from "./quotation/quotations";
-import Quotation from "./quotation/quotation";
 import Projects from "./project/projects";
 import NewProject from "./project/newProject";
 import Invoice from "./invoice/invoice";
@@ -20,7 +19,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import "materialize-css/dist/css/materialize.min.css";
-import newQuotation from "./quotation/newQuotation";
+import Quotation from "./quotation/quotation";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
 
@@ -52,7 +51,7 @@ class App extends Component {
           <Route path={"/new-project"} component={NewProject} />
           <Route path={"/project/quotations"} component={Quotations} />
           <Route path={"/project/quotation"} component={Quotation} />
-          <Route path={"/project/new-quotation"} component={newQuotation} />
+          <Route path={"/project/new-quotation"} component={Quotation} />
           <Route path={"/project/dashboard"} component={Dashboard} />
           <Route path={"/project/invoices"} component={Invoice} />
           <Route path={"/project/budget"} component={Budget} />

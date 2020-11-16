@@ -3,7 +3,6 @@ import {
 } from './actionsTypes.js';
 
 import { FirebaseInstance } from '../../App';
-import module from '../../quotation/module.js';
 
 export const selectQuotation = (quotationId) => {
   return dispatch => {

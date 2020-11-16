@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getProject, getSelectedProjectId } from "../store/selectors/selector";
 import { getQuotations } from "../store/selectors/quotationSelector";
-import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
+import { selectProject, loadProjectAction, setQuotationType } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 import QuotationTile from "./quotationTile";
 import { history } from "../App";
+import {QUOTATION_TYPES} from "../store/constants/constants";
 
-const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject }) => {
+const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject, setQuotationType }) => {
   useEffect(() => {
     if(!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
@@ -42,6 +43,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
             <NavLink
               className="btn-floating btn-large waves-effect waves-light green darken-1"
               to={`/project/new-quotation?project=${selectedProjectId}`}
+              onClick={() => setQuotationType(QUOTATION_TYPES.SPONSOR)}
             >
               <i className="material-icons">add</i>
             </NavLink>
@@ -51,6 +53,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
             <NavLink
               className="btn-floating btn-large waves-effect waves-light red darken-1"
               to={`/project/new-quotation?project=${selectedProjectId}`}
+              onClick={() => setQuotationType(QUOTATION_TYPES.PROVIDER)}
             >
               <i className="material-icons">add</i>
             </NavLink>
@@ -118,7 +121,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
-    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
+    setQuotationType: (type) => dispatch(setQuotationType(type)),
   };
 };
 

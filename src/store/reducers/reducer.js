@@ -9,8 +9,12 @@ import {
   CLEAR_USER_DATA,
   SELECT_PROJECT,
   SELECT_QUOTATION,
-  LOAD_STATIC_DATA
+  LOAD_STATIC_DATA,
+  SET_QUOTATION_TYPE,
+  SET_VIEW_MODE
 } from "../actions/actionsTypes";
+
+import {VIEW_MODES} from "../constants/constants";
 
 export const INITIAL_STATE = {
   professionals: undefined,
@@ -22,6 +26,8 @@ export const INITIAL_STATE = {
   project: undefined,
   invoiceList: [],
   showNewInvoice: false,
+  viewMode: VIEW_MODES.VIEW,
+  qotationType: undefined
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
@@ -101,6 +107,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         professionals: action.professionals,
         baseModules: action.modules
+      }
+    }
+    case SET_VIEW_MODE: {
+      return {
+        ...state,
+        viewMode: action.viewMode
+      }
+    }
+    case SET_QUOTATION_TYPE: {
+      return {
+        ...state,
+        quotationType: action.quotationType,
+        viewMode: VIEW_MODES.CREATE
       }
     }
 

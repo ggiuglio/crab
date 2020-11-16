@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PersonCost from "../people/personCost";
 
-const Person = ({ people, project, persons, handleCreate, handleChange }) => {
+const Person = ({ people, project, persons, handleCreate, handleChange, viewMode }) => {
   React.useEffect(() => {
     if(people && people.length > 0) {
       const pArray = [];
@@ -48,7 +48,7 @@ const Person = ({ people, project, persons, handleCreate, handleChange }) => {
           </tr>
         </thead>
         <tbody>
-          {persons.map((person) => (<PersonCost key={person.title} person={person} handleChange={handleChange} />))}
+          {persons.map((person) => (<PersonCost key={person.title} person={person} handleChange={handleChange} viewMode={viewMode} />))}
         </tbody>
       </table>
     </div>

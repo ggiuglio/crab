@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import Resource from "./resource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 
 const Activity = ({
   activityId,
@@ -14,6 +15,8 @@ const Activity = ({
   editResource,
   removeActivity,
   removeResource,
+  viewMode,
+  quotationType,
 }) => {
   const iconTypeMap = {
     document: "folder",
@@ -58,20 +61,22 @@ const Activity = ({
               />{" "}
               <span className="s-truncate">{activity.unit}</span>
             </span>
-            <a
-              href="!#"
-              className="lateral-margin"
-              title="Remove"
-              onClick={(e) => {
-                removeActivity(e, moduleId, geo, activityId, activity);
-              }}
-            >
-              <FontAwesomeIcon
-                icon="minus-circle"
-                className="red-text text-darken-2"
-                fixedWidth
-              />
-            </a>
+            {viewMode !== VIEW_MODES.VIEW ? (
+              <a
+                href="!#"
+                className="lateral-margin"
+                title="Remove"
+                onClick={(e) => {
+                  removeActivity(e, moduleId, geo, activityId, activity);
+                }}
+              >
+                <FontAwesomeIcon
+                  icon="minus-circle"
+                  className="red-text text-darken-2"
+                  fixedWidth
+                />
+              </a>
+            ) : null}
           </div>
           <div className="col s2">
             <div className="center price">
@@ -102,6 +107,7 @@ const Activity = ({
                     e.target.value
                   )
                 }
+                disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               ></input>
             </div>
           </div>
@@ -131,6 +137,7 @@ const Activity = ({
                     !activity.responsibilityCRO
                   )
                 }
+                disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               />
               <span>Responsibility CRO</span>
             </label>
@@ -147,6 +154,7 @@ const Activity = ({
                     !activity.responsibilityCRO
                   )
                 }
+                disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               />
               <span>Resp CRO</span>
             </label>
@@ -165,6 +173,7 @@ const Activity = ({
                     !activity.responsibilitySponsor
                   )
                 }
+                disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               />
               <span>Responsibility SPONSOR</span>
             </label>
@@ -181,6 +190,7 @@ const Activity = ({
                     !activity.responsibilitySponsor
                   )
                 }
+                disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               />
               <span>Resp SPO</span>
             </label>
@@ -226,7 +236,7 @@ const Activity = ({
                       <th className="text-right hide-on-med-and-up">€/h</th>
                       <th className="text-right hide-on-med-and-up">Hours</th>
                       <th className="text-right hide-on-med-and-up">Cost €</th>
-                      <th></th>
+                      {viewMode !== VIEW_MODES.VIEW ? <th></th> : null}
                     </tr>
                   </thead>
                   <tbody>
@@ -252,30 +262,36 @@ const Activity = ({
                                 e.target.value
                               )
                             }
+                            disabled={
+                              viewMode === VIEW_MODES.VIEW ? true : null
+                            }
                           ></input>
                         </td>
-                        <td className="text-right">
-                          <a
-                            href="#!"
-                            title="Remove fixed costs"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setActivityProp(
-                                moduleId,
-                                geo,
-                                activityId,
-                                "fixedCost"
-                              );
-                            }}
-                          >
-                            <i className="tiny material-icons red-text text-darken-2">
-                              clear
-                            </i>
-                          </a>
-                        </td>
+                        {viewMode !== VIEW_MODES.VIEW ? (
+                          <td className="text-right">
+                            <a
+                              href="#!"
+                              title="Remove fixed costs"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setActivityProp(
+                                  moduleId,
+                                  geo,
+                                  activityId,
+                                  "fixedCost"
+                                );
+                              }}
+                            >
+                              <i className="tiny material-icons red-text text-darken-2">
+                                clear
+                              </i>
+                            </a>
+                          </td>
+                        ) : null}
                       </tr>
                     ) : null}
-                    {activity.resources
+                    {quotationType === QUOTATION_TYPES.SPONSOR &&
+                    activity.resources
                       ? activity.resources.map((resource) => (
                           <Resource
                             key={
@@ -287,35 +303,39 @@ const Activity = ({
                             activityId={activityId}
                             editResource={editResource}
                             removeResource={removeResource}
+                            viewMode={viewMode}
                           />
                         ))
                       : null}
                   </tbody>
                 </table>
               </div>
-              <div className="col s1">
-                <a
-                  className="modal-trigger"
-                  href="#modal-resource"
-                  title="Add resource"
-                  onClick={(e) =>
-                    handleModalResources(
-                      moduleId,
-                      moduleTitle,
-                      geo,
-                      activityId,
-                      activity
-                    )
-                  }
-                >
-                  <i
-                    className="material-icons indigo-text"
+              {quotationType === QUOTATION_TYPES.SPONSOR &&
+              viewMode !== VIEW_MODES.VIEW ? (
+                <div className="col s1">
+                  <a
+                    className="modal-trigger"
+                    href="#modal-resource"
                     title="Add resource"
+                    onClick={(e) =>
+                      handleModalResources(
+                        moduleId,
+                        moduleTitle,
+                        geo,
+                        activityId,
+                        activity
+                      )
+                    }
                   >
-                    add_circle_outline
-                  </i>
-                </a>
-              </div>
+                    <i
+                      className="material-icons indigo-text"
+                      title="Add resource"
+                    >
+                      add_circle_outline
+                    </i>
+                  </a>
+                </div>
+              ) : null}
               {activity.hasOwnProperty("fixedCost") ? null : (
                 <div className="col s1">
                   <a
