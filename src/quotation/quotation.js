@@ -41,15 +41,11 @@ const NewQuotation = ({
   //Effective state
   const [quotation, setQuotation] = useState({
     code: "",
-    status: "IP",
-    validFrom: Date.now(),
-    validThru: null,
     modules: [],
     type: quotationType,
   });
 
   //Only for utility use
-  const [minDate, setMinDate] = useState();
   /* Available geos per Module
     {
       module.code : [array of geo]
@@ -67,21 +63,6 @@ const NewQuotation = ({
   const [persons, setPersons] = React.useState([]);
 
   React.useEffect(() => {
-    // if (!selectedProjectId) {
-    //   const query = new URLSearchParams(history.location.search);
-    //   const queryProject = query.get("project");
-
-    //   if (queryProject) {
-    //     chooseProject(queryProject);
-    //   } else {
-    //     history.push("/");
-    //   }
-    // } else {
-    //   if (!project || project.id !== selectedProjectId) {
-    //     loadProject(selectedProjectId);
-    //   }
-    // }
-
     if (
       !selectedProjectId ||
       ((viewMode === VIEW_MODES.VIEW || viewMode === VIEW_MODES.EDIT) &&
@@ -113,9 +94,6 @@ const NewQuotation = ({
       }
     }
 
-    let statSel = document.getElementById("quotationStatus");
-    M.FormSelect.init(statSel);
-
     if (project) {
       const projectGeos = {
         General: {
@@ -133,8 +111,6 @@ const NewQuotation = ({
         setAvailableGeos(avGeo);
       }
     }
-    setDates();
-
     let modal = document.querySelectorAll(".modal");
     M.Modal.init(modal);
   }, [project, people, baseModules]);
@@ -157,8 +133,6 @@ const NewQuotation = ({
   };
 
   React.useEffect(() => {
-    setDates();
-
     let unInputs = document.querySelectorAll(".unit-number-input");
     Object.keys(unInputs).map((i) => {
       unInputs[i].addEventListener(
@@ -184,7 +158,7 @@ const NewQuotation = ({
         }
       };
     });
-  }, [quotation, minDate]);
+  }, [quotation]);
 
   React.useEffect(() => {
     const geoSel = document.getElementById("availableGeo");
@@ -197,32 +171,6 @@ const NewQuotation = ({
     const actSel = document.querySelectorAll(".addActivitySelect");
     M.FormSelect.init(actSel);
   }, [availableActivities]);
-
-  const setDates = () => {
-    let dateFrom = document.getElementById("quotationValidFrom");
-    M.Datepicker.init(dateFrom, {
-      format: "dd/mm/yyyy",
-      parse: () => {
-        return this ? new Date(this.value) : null;
-      },
-      defaultDate: quotation.validFrom,
-      setDefaultDate: true,
-      firstDay: 1,
-      onSelect: (newDate) => quotationValidFromChange(newDate),
-    });
-    let dateThru = document.getElementById("quotationValidThru");
-    M.Datepicker.init(dateThru, {
-      format: "dd/mm/yyyy",
-      parse: () => {
-        return this ? new Date(this.value) : null;
-      },
-      defaultDate: quotation.validThru,
-      setDefaultDate: true,
-      minDate: minDate,
-      firstDay: 1,
-      onSelect: (newDate) => setQuotationProp("validThru", newDate),
-    });
-  };
 
   const populateModuleSelect = () => {
     const moduleSelect = document.getElementById("availableModules");
@@ -459,17 +407,6 @@ const NewQuotation = ({
         else setQuotation(quot);
       }
     }
-  };
-
-  const quotationValidFromChange = (newDate) => {
-    setQuotationProp("validFrom", newDate);
-    let dpThru = M.Datepicker.getInstance(
-      document.getElementById("quotationValidThru")
-    );
-    if (dpThru.date && dpThru.date < newDate) {
-      setQuotationProp("validThru", newDate);
-    }
-    setMinDate(newDate);
   };
 
   const checkAddModuleDisabled =
@@ -1087,7 +1024,7 @@ const NewQuotation = ({
           <form className="white" onSubmit={(e) => saveQuotation(e)}>
             <div className="container">
               <div className="row">
-                <div className="input-field col s6">
+                <div className="input-field col s12">
                   <label className="active" htmlFor="quotationCode">
                     Quotation code
                   </label>
@@ -1099,51 +1036,8 @@ const NewQuotation = ({
                     disabled={viewMode === VIEW_MODES.VIEW ? true : null}
                   ></input>
                 </div>
-
-                <div className="input-field col s6">
-                  <select
-                    id="quotationStatus"
-                    value={quotation.status}
-                    onChange={(e) => setQuotationProp("status", e.target.value)}
-                    disabled={viewMode === VIEW_MODES.VIEW ? true : null}
-                  >
-                    <option value="IP" defaultValue>
-                      In progress
-                    </option>
-                    <option value="IE">In evaluation</option>
-                    <option value="AC">Accepted</option>
-                  </select>
-                  <label>Status</label>
-                </div>
               </div>
 
-              <div className="row">
-                <div className="input-field col s6">
-                  <label className="active" htmlFor="quotationValidFrom">
-                    Valid from
-                  </label>
-                  <input
-                    type="text"
-                    className="datepicker"
-                    id="quotationValidFrom"
-                    name="quotationValidFrom"
-                    disabled={viewMode === VIEW_MODES.VIEW ? true : null}
-                  ></input>
-                </div>
-
-                <div className="input-field col s6">
-                  <label className="active" htmlFor="quotationValidThru">
-                    Valid thru
-                  </label>
-                  <input
-                    type="text"
-                    className="datepicker"
-                    id="quotationValidThru"
-                    name="quotationValidThru"
-                    disabled={viewMode === VIEW_MODES.VIEW ? true : null}
-                  ></input>
-                </div>
-              </div>
               {viewMode === VIEW_MODES.VIEW ? null : (
                 <div className="row">
                   <div
@@ -1201,7 +1095,7 @@ const NewQuotation = ({
             <div className="row">
               <div className="col s12" id="quotationGroup">
                 <ul className="collapsible">
-                  {quotation.modules.map((module) => (
+                  {quotation.modules.sort((a, b) => a.index > b.index ? 1 : -1).map((module) => (
                     <Module
                       key={
                         module.id +

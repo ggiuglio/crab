@@ -58,24 +58,30 @@ const Module = ({
       <div className="collapsible-body">
         <ul className="collapsible">
           {module.activities
-            ? Object.keys(module.activities).map((key) => (
-                <Activity
-                  key={key + "_" + module.id + "_" + geoDesc}
-                  activityId={key}
-                  activity={module.activities[key]}
-                  moduleId={module.id}
-                  moduleTitle={module.title}
-                  geo={geoDesc}
-                  handleModalResources={handleModalResources}
-                  setActivityProp={setActivityProp}
-                  editResource={editResource}
-                  removeActivity={removeActivity}
-                  removeResource={removeResource}
-                  viewMode={viewMode}
-                  quotationType={quotationType}
-                />
-              ))
-            : ""}
+            ? Object.entries(module.activities)
+                .sort((a, b) => (a[1].index > b[1].index ? 1 : -1))
+                .map((objArray) => {
+                  const key = objArray[0];
+                  const value = objArray[1];
+                  return (
+                    <Activity
+                      key={key + "_" + module.id + "_" + geoDesc}
+                      activityId={key}
+                      activity={value}
+                      moduleId={module.id}
+                      moduleTitle={module.title}
+                      geo={geoDesc}
+                      handleModalResources={handleModalResources}
+                      setActivityProp={setActivityProp}
+                      editResource={editResource}
+                      removeActivity={removeActivity}
+                      removeResource={removeResource}
+                      viewMode={viewMode}
+                      quotationType={quotationType}
+                    />
+                  );
+                })
+            : null}
           {viewMode !== VIEW_MODES.VIEW &&
           availableActivities &&
           availableActivities.hasOwnProperty(module.id) &&
@@ -98,13 +104,17 @@ const Module = ({
                       <option key={module.id + geoDesc} value="" defaultValue>
                         Select activity
                       </option>
-                      {Object.keys(availableActivities[module.id][geoDesc]).map(
-                        (key) => (
-                          <option key={module.id + geoDesc + key} value={key}>
-                            {availableActivities[module.id][geoDesc][key].title}
-                          </option>
-                        )
-                      )}
+                      {Object.entries(availableActivities[module.id][geoDesc])
+                        .sort((a, b) => (a[1].index > b[1].index ? 1 : -1))
+                        .map((objArray) => {
+                          const key = objArray[0];
+                          const value = objArray[1];
+                          return (
+                            <option key={module.id + geoDesc + key} value={key}>
+                              {value.title}
+                            </option>
+                          );
+                        })}
                     </select>
                     <label>Activity</label>
                   </div>
