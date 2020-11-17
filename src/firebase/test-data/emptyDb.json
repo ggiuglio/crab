@@ -1,0 +1,1375 @@
+{
+  "projects": {},
+  "userProjects": {},
+  "staticData": {
+    "professionals": {
+      "001": {
+        "title": "PM",
+        "geobool": false,
+        "fee": 120
+      },
+      "002": {
+        "title": "CRA",
+        "geobool": true,
+        "fee": 100
+      },
+      "003": {
+        "title": "DM",
+        "geobool": false,
+        "fee": 90
+      },
+      "004": {
+        "title": "IT",
+        "geobool": false,
+        "fee": 60
+      },
+      "005": {
+        "title": "CTA",
+        "geobool": false,
+        "fee": 40
+      },
+      "006": {
+        "title": "LCRA",
+        "geobool": false,
+        "fee": 100
+      },
+      "007": {
+        "title": "MW",
+        "geobool": false,
+        "fee": 150
+      },
+      "008": {
+        "title": "PhV",
+        "geobool": false,
+        "fee": 150
+      },
+      "009": {
+        "title": "STAT",
+        "geobool": false,
+        "fee": 150
+      },
+      "010": {
+        "title": "DIR",
+        "geobool": false,
+        "fee": 120
+      }
+    },
+    "baseModules": {
+      "0001": {
+        "title": "Study set-up",
+        "boolpt": false,
+        "index": 1,
+        "code": "set",
+        "activities": {
+          "0001": {
+            "title": "Study Protocol preparation according to applicable guidelines",
+            "unit": "Document",
+            "code": "set-pro1",
+            "index": 1
+          },
+          "0002": {
+            "title": "Study Protocol review - up to 2 review cycles",
+            "unit": "Document",
+            "code": "set-pro3",
+            "index": 2
+          },
+          "0004": {
+            "title": "Study Protocol amendment preparation",
+            "unit": "Document",
+            "code": "set-pro4",
+            "index": 3
+          },
+          "0005": {
+            "title": "Study Synopsis preparation - master version          ",
+            "unit": "Document",
+            "code": "set-pro5",
+            "index": 4
+          },
+          "0006": {
+            "title": "Study Synopsis amendment preparation - master version",
+            "unit": "Document",
+            "code": "set-pro6",
+            "index": 5
+          },
+          "0008": {
+            "title": "Investigator's Brochure (IB) preparation according to applicable guidelines",
+            "unit": "Document",
+            "code": "set-ibr1",
+            "index": 6
+          },
+          "0009": {
+            "title": "Investigator's Brochure (IB) review - up to 2 review cycles",
+            "unit": "Document",
+            "code": "set-ibr2",
+            "index": 7
+          },
+          "0010": {
+            "title": "Investigator's Brochure (IB) review - additional review cycles",
+            "unit": "Document",
+            "code": "set-ibr3",
+            "index": 8
+          },
+          "0011": {
+            "title": "Investigator's Brochure (IB) amendment preparation",
+            "unit": "Document",
+            "code": "set-ibr4",
+            "index": 9
+          },
+          "0012": {
+            "title": "Subject Information Sheet / Informed Consent Form preparation (SIS/ICF) - master version",
+            "unit": "Document",
+            "code": "set-icf1",
+            "index": 10
+          },
+          "0013": {
+            "title": "Subject Information Sheet / Informed Consent Form (SIS/ICF) adaptation to local requirements",
+            "unit": "Document",
+            "code": "set-icf2",
+            "index": 11
+          },
+          "0014": {
+            "title": "Subject Information Sheet / Informed Consent Form (SIS/ICF) amendment preparation - master version",
+            "unit": "Document",
+            "code": "set-icf3",
+            "index": 12
+          },
+          "0015": {
+            "title": "Subject Information Sheet / Informed Consent Form (SIS/ICF) amendment adaptation to local requirements",
+            "unit": "Document",
+            "code": "set-icf4",
+            "index": 13
+          },
+          "0016": {
+            "title": "General Practitioner Letter preparation - master version",
+            "unit": "Document",
+            "code": "set-let1",
+            "index": 14
+          },
+          "0017": {
+            "title": "Project Plan & Risk Management Plan preparation & updates during study period",
+            "unit": "Document",
+            "code": "ìset-ppl1",
+            "index": 15
+          },
+          "0018": {
+            "title": "Monitoring Plan preparation & updates during study period",
+            "unit": "Document",
+            "code": "set-ppl2",
+            "index": 16
+          },
+          "0019": {
+            "title": "Laboratory Manual preparation & updates during study period",
+            "unit": "Document",
+            "code": "set-lab1",
+            "index": 17
+          },
+          "0021": {
+            "title": "Data Safety Monitoring Board (DSMB) organization (including charter & contracts design)",
+            "unit": "Process",
+            "code": "set-dsm1",
+            "index": 18
+          }
+        }
+      },
+      "0002": {
+        "title": "Feasibility",
+        "boolpt": false,
+        "index": 2,
+        "code": "fea",
+        "activities": {
+          "0022": {
+            "title": "Screening & pool of potential sites",
+            "unit": "Process",
+            "code": "fea-scr1",
+            "index": 1
+          },
+          "0022x": {
+            "title": "KOL meeting/TC",
+            "unit": "hour",
+            "code": "fea-kol1",
+            "index": 2
+          },
+          "0023": {
+            "title": "Feasibility Questionnaire preparation",
+            "unit": "Document",
+            "code": "fea-que1",
+            "index": 3
+          },
+          "0024": {
+            "title": "Feasibility Questionnaire collection from sites",
+            "unit": "Site",
+            "code": "fea-que2",
+            "index": 4
+          },
+          "0025": {
+            "title": "Site Qualification Visits (SQV) - onsite (travel / accommodation excluded)",
+            "unit": "Visit",
+            "code": "fea-sqv1",
+            "index": 5
+          },
+          "0026": {
+            "title": "Site Qualification Visits (SQV) - remote",
+            "unit": "Visit",
+            "code": "fea-sqv2",
+            "index": 6
+          },
+          "0027": {
+            "title": "Feasibility Report preparation",
+            "unit": "Document",
+            "code": "fea-rep1",
+            "index": 7
+          }
+        }
+      },
+      "0003": {
+        "title": "Regulatory",
+        "boolpt": false,
+        "index": 3,
+        "code": "reg",
+        "activities": {
+          "0027x": {
+            "title": "EudraCT code request",
+            "unit": "Study",
+            "code": "reg-cod1",
+            "index": 1
+          },
+          "0027x2": {
+            "title": "Study registration on clinicaltrials.gov",
+            "unit": "Study",
+            "code": "reg-cod2",
+            "index": 2
+          },
+          "0028": {
+            "title": "Documents collection from sites - remote",
+            "unit": "Site",
+            "code": "reg-doc1",
+            "index": 3
+          },
+          "0029": {
+            "title": "Competent Authority / Ministry of Health regulatory process (preparation, submissio & follow-up)",
+            "unit": "Process",
+            "code": "reg-sub1",
+            "index": 4
+          },
+          "0030": {
+            "title": "Ethics Committee regulatory process (preparation, submissio & follow-up)",
+            "unit": "Process",
+            "code": "reg-sub2",
+            "index": 5
+          },
+          "0031": {
+            "title": "Competent Authority / Ministry of Health amendment process (preparation, submissio & follow-up)",
+            "unit": "Process",
+            "code": "reg-sub3",
+            "index": 6
+          },
+          "0032": {
+            "title": "Ethics Committee amendment process (preparation, submissio & follow-up)",
+            "unit": "Process",
+            "code": "reg-sub4",
+            "index": 7
+          },
+          "0033": {
+            "title": "Budget negotation with site administration",
+            "unit": "Site",
+            "code": "reg-bud1",
+            "index": 8
+          },
+          "0034": {
+            "title": "Contract negotiation and finalization with site",
+            "unit": "Site",
+            "code": "reg-bud2",
+            "index": 9
+          },
+          "0035": {
+            "title": "Import License delivery process",
+            "unit": "Process",
+            "code": "reg-lic1",
+            "index": 10
+          },
+          "0035a": {
+            "title": "Interim or End of Trial notifications to CA / MoH / EC",
+            "unit": "Process",
+            "code": "reg-rep1",
+            "index": 11
+          },
+          "0036": {
+            "title": "EudraCT result pubblication",
+            "unit": "Process",
+            "code": "reg-rep2",
+            "index": 12
+          },
+          "0037": {
+            "title": "Study registration on clinicaltrials.gov - periodical update",
+            "unit": "Process",
+            "code": "reg-rep3",
+            "index": 13
+          },
+          "0038": {
+            "title": "Study registration on clinicaltrials.gov - result pubblication",
+            "unit": "Process",
+            "code": "reg-rep4",
+            "index": 14
+          }
+        }
+      },
+      "0004": {
+        "title": "Study documents filing",
+        "boolpt": false,
+        "index": 4,
+        "code": "fil",
+        "activities": {
+          "0039": {
+            "title": "Trial Master File set-up",
+            "unit": "File",
+            "code": "fil-fil1",
+            "index": 1
+          },
+          "0040": {
+            "title": "Investigator Study File & Pharmacy File set-up",
+            "unit": "File",
+            "code": "fil-fil2",
+            "index": 2
+          },
+          "0041": {
+            "title": "Subject Working File set-up",
+            "unit": "File",
+            "code": "fil-fil3",
+            "index": 3
+          },
+          "0042": {
+            "title": "Trial Master File maintenance during study period",
+            "unit": "Month",
+            "code": "fil-mai1",
+            "index": 4
+          },
+          "0043": {
+            "title": "Periodical Quality Control on Trial Master File during study period",
+            "unit": "Process",
+            "code": "fil-qua1",
+            "index": 5
+          },
+          "0044": {
+            "title": "Final Quality Control & reconciliation of Trial Master File before return to Sponsor",
+            "unit": "Process",
+            "code": "fil-qua2",
+            "index": 6
+          }
+        }
+      },
+      "0005": {
+        "title": "Study management",
+        "boolpt": false,
+        "index": 5,
+        "code": "man",
+        "activities": {
+          "0045": {
+            "title": "Project Manager fee - Feasibility",
+            "unit": "Month",
+            "code": "man-prm1",
+            "index": 1
+          },
+          "0046": {
+            "title": "Project Manager fee - Setup and Regulatory (until first SIV)",
+            "unit": "Month",
+            "code": "man-prm2",
+            "index": 2
+          },
+          "0047": {
+            "title": "Project Manager fee - Study Period (from first SIV to LPO)",
+            "unit": "Month",
+            "code": "man-prm3",
+            "index": 3
+          },
+          "0048": {
+            "title": "Project Manager fee - closure (after LPO)",
+            "unit": "Month",
+            "code": "man-prm4",
+            "index": 4
+          },
+          "0049": {
+            "title": "Lead CRA fee - Feasibility",
+            "unit": "Month",
+            "code": "man-lcr1",
+            "index": 5
+          },
+          "0050": {
+            "title": "Lead CRA fee - Study Period (from first SIV to LPO)",
+            "unit": "Month",
+            "code": "man-lcr2",
+            "index": 6
+          },
+          "0051": {
+            "title": "Lead CRA fee - Closure (after LPO)",
+            "unit": "Month",
+            "code": "man-lcr3",
+            "index": 7
+          },
+          "0052": {
+            "title": "Clinical Trial Assistant fee - Feasibility",
+            "unit": "Month",
+            "code": "man-cta1",
+            "index": 8
+          },
+          "0053": {
+            "title": "Clinical Trial Assistant fee - Setup and Regulatory (until first SIV)",
+            "unit": "Month",
+            "code": "man-cta2",
+            "index": 9
+          },
+          "0054": {
+            "title": "Clinical Trial Assistant fee - Study Period (from first SIV to LPO)",
+            "unit": "Month",
+            "code": "man-cta3",
+            "index": 10
+          },
+          "0055": {
+            "title": "Clinical Trial Assistant fee - Closure (after LPO)",
+            "unit": "Month",
+            "code": "man-cta4",
+            "index": 11
+          },
+          "0056": {
+            "title": "Investigational Product management set-up",
+            "unit": "Process",
+            "code": "man-imp1",
+            "index": 12
+          },
+          "0057": {
+            "title": "Investigational Product management - Study Period (from first SIV to LPO)",
+            "unit": "Month",
+            "code": "man-imp2",
+            "index": 13
+          },
+          "0057a": {
+            "title": "Biological Sample management set-up",
+            "unit": "Process",
+            "code": "man-bsa1",
+            "index": 14
+          },
+          "0057b": {
+            "title": "Biological Sample management - Study Period (from first SIV to LPO)",
+            "unit": "Month",
+            "code": "man-bsa2",
+            "index": 15
+          },
+          "0058": {
+            "title": "Patient fee management with sites (requesting invoices, payment tracking)",
+            "unit": "Site",
+            "code": "man-fee1",
+            "index": 16
+          }
+        }
+      },
+      "0006": {
+        "title": "Study meetings",
+        "boolpt": false,
+        "index": 6,
+        "code": "mee",
+        "activities": {
+          "0059": {
+            "title": "Study familiarization & kick-off meeting",
+            "unit": "Process",
+            "code": "mee-tra1",
+            "index": 1
+          },
+          "0060": {
+            "title": "CRA Training preparation",
+            "unit": "Process",
+            "code": "mee-tra2",
+            "index": 2
+          },
+          "0061": {
+            "title": "CRA Training partecipation (remote)",
+            "unit": "Process",
+            "code": "mee-tra3",
+            "index": 3
+          },
+          "0062": {
+            "title": "Investigators' Meeting preparation",
+            "unit": "Process",
+            "code": "mee-mee1",
+            "index": 4
+          },
+          "0063": {
+            "title": "Meeting with client - PM",
+            "unit": "Hour",
+            "code": "mee-mee2",
+            "index": 5
+          },
+          "0064": {
+            "title": "Meeting with client - CRA",
+            "unit": "Hour",
+            "code": "mee-mee2",
+            "index": 6
+          },
+          "0065": {
+            "title": "Meeting with client - DM",
+            "unit": "Hour",
+            "code": "mee-mee3",
+            "index": 7
+          },
+          "0066": {
+            "title": "Meeting with client - CTA",
+            "unit": "Hour",
+            "code": "mee-mee4",
+            "index": 8
+          },
+          "0067": {
+            "title": "Meeting with client - Medical writer/Scientific advisor",
+            "unit": "Hour",
+            "code": "mee-mee5",
+            "index": 9
+          },
+          "0068": {
+            "title": "Meeting with client - Statistician",
+            "unit": "Hour",
+            "code": "mee-mee6",
+            "index": 10
+          },
+          "0069": {
+            "title": "Meeting with client - Safety officer",
+            "unit": "Hour",
+            "code": "mee-mee7",
+            "index": 11
+          },
+          "0070": {
+            "title": "Teleconference with client - PM + CTA",
+            "unit": "Hour",
+            "code": "mee-mee8",
+            "index": 12
+          },
+          "0071": {
+            "title": "Teleconference with client - PM + CTA + CRA",
+            "unit": "Hour",
+            "code": "mee-mee9",
+            "index": 13
+          },
+          "0072": {
+            "title": "Teleconference with client - PM + CTA + DM",
+            "unit": "Hour",
+            "code": "mee-mee10",
+            "index": 14
+          },
+          "0073": {
+            "title": "Periodical internal Study Team updates - Meeting",
+            "unit": "Hour",
+            "code": "mee-mee11",
+            "index": 15
+          },
+          "0074": {
+            "title": "Periodical internal Study Team updates - Teleconference",
+            "unit": "Hour",
+            "code": "mee-mee12",
+            "index": 16
+          },
+          "0075": {
+            "title": "Data Safety Monitoring Board (DSMB) meeting preparation",
+            "unit": "Hour",
+            "code": "mee-mee13",
+            "index": 17
+          },
+          "0076": {
+            "title": "Data Safety Monitoring Board (DSMB) meeting partecipation - PM + CTA + DM",
+            "unit": "Hour",
+            "code": "mee-mee14",
+            "index": 18
+          }
+        }
+      },
+      "0007": {
+        "title": "Monitoring",
+        "boolpt": false,
+        "index": 7,
+        "code": "mon",
+        "activities": {
+          "0077": {
+            "title": "Pre-Study Visits (PSV) - onsite (travel time and expenses excluded",
+            "unit": "Visit",
+            "code": "mon-mon1",
+            "index": 1
+          },
+          "0078": {
+            "title": "Site Initiation Visits (SIV) - onsite (travel time and expenses excluded",
+            "unit": "Visit",
+            "code": "mon-mon2",
+            "index": 2
+          },
+          "0079": {
+            "title": "Interim Monitoring Visits (IMV) - onsite (travel time and expenses excluded",
+            "unit": "Visit",
+            "code": "mon-mon3",
+            "index": 3
+          },
+          "0080": {
+            "title": "Close-Out Visits (COV) - onsite (travel time and expenses excluded",
+            "unit": "Visit",
+            "code": "mon-mon4",
+            "index": 4
+          },
+          "0081": {
+            "title": "Additional Onsite Visits - onsite (travel time and expenses excluded ",
+            "unit": "Visit",
+            "code": "mon-mon5",
+            "index": 5
+          },
+          "0082": {
+            "title": "Remote Monitoring",
+            "unit": "Visit",
+            "code": "mon-mon6",
+            "index": 6
+          },
+          "0083": {
+            "title": "Phone contacts with sites",
+            "unit": "Contact",
+            "code": "mon-con1",
+            "index": 7
+          },
+          "0084": {
+            "title": "In-House sites management - Study Period (First Patient In - Last Patient Out)",
+            "unit": "Month",
+            "code": "mon-man1",
+            "index": 8
+          },
+          "0085": {
+            "title": "Medical monitoring",
+            "unit": "Month",
+            "code": "mon-mon7",
+            "index": 9
+          }
+        }
+      },
+      "0008": {
+        "title": "Data management",
+        "boolpt": false,
+        "index": 8,
+        "code": "dat",
+        "activities": {
+          "0086": {
+            "title": "Case Report Form (CRF) design",
+            "unit": "Document",
+            "code": "dat-crf1",
+            "index": 1
+          },
+          "0087": {
+            "title": "Case Report Form (CRF) review - up to 2 review cycles",
+            "unit": "Document",
+            "code": "dat-crf2",
+            "index": 2
+          },
+          "0088": {
+            "title": "Case Report Form (CRF) review - additional review cycles",
+            "unit": "Document",
+            "code": "dat-crf3",
+            "index": 3
+          },
+          "0089": {
+            "title": "Case Report Form amendment design",
+            "unit": "Document",
+            "code": "dat-crf4",
+            "index": 4
+          },
+          "0090": {
+            "title": "Case Report Form amendment review",
+            "unit": "Document",
+            "code": "dat-crf5",
+            "index": 5
+          },
+          "0091": {
+            "title": "Subject Diary design - master version",
+            "unit": "Document",
+            "code": "dat-dia1",
+            "index": 6
+          },
+          "0092": {
+            "title": "CRF Guidelines preparation",
+            "unit": "Document",
+            "code": "dat-crf6",
+            "index": 7
+          },
+          "0093": {
+            "title": "CRF Guidelines review",
+            "unit": "Document",
+            "code": "dat-crf7",
+            "index": 8
+          },
+          "0094": {
+            "title": "CRF Guidelines amendment distribution to sites",
+            "unit": "Site",
+            "code": "dat-crf8",
+            "index": 9
+          },
+          "0095": {
+            "title": "Data Management Plan preparation",
+            "unit": "Document",
+            "code": "dat-ppl1",
+            "index": 10
+          },
+          "0096": {
+            "title": "Data Management Plan amendment preparation",
+            "unit": "Document",
+            "code": "dat-ppl2",
+            "index": 11
+          },
+          "0097": {
+            "title": "Edit Check Plan preparation",
+            "unit": "Document",
+            "code": "dat-edi1",
+            "index": 12
+          },
+          "0098": {
+            "title": "Edit Check Plan amendment preparation",
+            "unit": "Document",
+            "code": "dat-edi2",
+            "index": 13
+          },
+          "0099": {
+            "title": "Study database set-up",
+            "unit": "Database",
+            "code": "dat-dbs1",
+            "index": 14
+          },
+          "0100": {
+            "title": "Edit checks programming & testing",
+            "unit": "Database",
+            "code": "dat-edi3",
+            "index": 15
+          },
+          "0101": {
+            "title": "Study database validation",
+            "unit": "Document",
+            "code": "dat-dbs2",
+            "index": 16
+          },
+          "0102": {
+            "title": "Study database amendment set-up",
+            "unit": "Database",
+            "code": "dat-dbs3",
+            "index": 17
+          },
+          "0103": {
+            "title": "Edit checks programming & testing for amended database",
+            "unit": "Database",
+            "code": "dat-edi4",
+            "index": 18
+          },
+          "0104": {
+            "title": "Study database amendment validation",
+            "unit": "Database",
+            "code": "dat-dbs4",
+            "index": 19
+          },
+          "0105": {
+            "title": "Annotated CRF preparation",
+            "unit": "Document",
+            "code": "dat-crf9",
+            "index": 20
+          },
+          "0106": {
+            "title": "Annotated CRF amendment preparation",
+            "unit": "Document",
+            "code": "dat-crf9",
+            "index": 21
+          },
+          "0107": {
+            "title": "Database users configuration",
+            "unit": "User",
+            "code": "dat-usr1",
+            "index": 22
+          },
+          "0108": {
+            "title": "Database metrics programming",
+            "unit": "Process",
+            "code": "dat-met1",
+            "index": 23
+          },
+          "0109": {
+            "title": "Database metrics preparation & distribution during study period",
+            "unit": "Process",
+            "code": "dat-met2",
+            "index": 24
+          },
+          "0110": {
+            "title": "Management of local laboratory normal ranges",
+            "unit": "Laboratory",
+            "code": "dat-lab1",
+            "index": 25
+          },
+          "0111": {
+            "title": "Management of central laboratory normal ranges",
+            "unit": "Laboratory",
+            "code": "dat-lab2",
+            "index": 26
+          },
+          "0112": {
+            "title": "Loading & reconciliation of centralized data",
+            "unit": "Process",
+            "code": "dat-lab3",
+            "index": 27
+          },
+          "0113": {
+            "title": "Data entry & quality control",
+            "unit": "Subject",
+            "code": "dat-ent1",
+            "index": 28
+          },
+          "0114": {
+            "title": "Data cleaning & queries processing",
+            "unit": "Subject",
+            "code": "dat-cle1",
+            "index": 29
+          },
+          "0115": {
+            "title": "Medical Coding (medical history, concomitant medications, adverse events)",
+            "unit": "Subject",
+            "code": "dat-cle2",
+            "index": 30
+          },
+          "0116": {
+            "title": "SAE Reconciliation versus Safety Database",
+            "unit": "Process",
+            "code": "dat-cle3",
+            "index": 31
+          },
+          "0117": {
+            "title": "Database extraction, programming & validation (SAS format) for interim analysis",
+            "unit": "Process",
+            "code": "dat-clo1",
+            "index": 32
+          },
+          "0118": {
+            "title": "Database closure for interim analysis",
+            "unit": "Process",
+            "code": "dat-clo2",
+            "index": 33
+          },
+          "0119": {
+            "title": "Database transfer for interim analysis",
+            "unit": "Process",
+            "code": "dat-clo3",
+            "index": 34
+          },
+          "0120": {
+            "title": "Database extraction, programming & validation (SAS format) for final analysis",
+            "unit": "Process",
+            "code": "dat-clo4",
+            "index": 35
+          },
+          "0121": {
+            "title": "Database closure for final analysis",
+            "unit": "Process",
+            "code": "dat-clo5",
+            "index": 36
+          },
+          "0122": {
+            "title": "Database transfer for final analysis",
+            "unit": "Process",
+            "code": "dat-clo6",
+            "index": 37
+          },
+          "0123": {
+            "title": "Data listings generation for review",
+            "unit": "Process",
+            "code": "dat-met3",
+            "index": 38
+          },
+          "0124": {
+            "title": "Preparation & delivery of CD including PDF of the CRFs",
+            "unit": "Database",
+            "code": "dat-clo7",
+            "index": 39
+          },
+          "0125": {
+            "title": "Database and documentation of database structure transfer",
+            "unit": "Process",
+            "code": "dat-clo8",
+            "index": 40
+          },
+          "0126": {
+            "title": "Database management during study period",
+            "unit": "Month",
+            "code": "dat-man1",
+            "index": 41
+          },
+          "0127": {
+            "title": "Database helpdesk service during study period",
+            "unit": "Month",
+            "code": "dat-man2",
+            "index": 42
+          }
+        }
+      },
+      "0009": {
+        "title": "Safety reporting",
+        "boolpt": false,
+        "index": 9,
+        "code": "saf",
+        "activities": {
+          "0128": {
+            "title": "Registration of Safety Officer in EudraVigilance (EV) (Sponsor already registered)",
+            "unit": "Process",
+            "code": "saf-reg1",
+            "index": 1
+          },
+          "0129": {
+            "title": "Registration of Safety Officer in EudraVigilance (EV) (Sponsor not registered)",
+            "unit": "Process",
+            "code": "saf-reg2",
+            "index": 2
+          },
+          "0130": {
+            "title": "Dear Doctor Letter (DDL) distribution to sites",
+            "unit": "Site",
+            "code": "saf-let1",
+            "index": 3
+          },
+          "0131": {
+            "title": "Development of Safety Management Plan (SMP)",
+            "unit": "Document",
+            "code": "saf-spl1",
+            "index": 4
+          },
+          "0132": {
+            "title": "Serious Adverse Event (SAE) processing (including medical assessment and up to two follow-ups)",
+            "unit": "SAE",
+            "code": "saf-pro1",
+            "index": 5
+          },
+          "0133": {
+            "title": "SAE recording in to tracking sheets",
+            "unit": "SAE",
+            "code": "saf-pro2",
+            "index": 6
+          },
+          "0134": {
+            "title": "SAE reporting to sponsor",
+            "unit": "SAE",
+            "code": "saf-pro3",
+            "index": 7
+          },
+          "0135": {
+            "title": "Generation of safety listings for Investigators",
+            "unit": "Process",
+            "code": "saf-pro4",
+            "index": 8
+          },
+          "0136": {
+            "title": "SAE Reconciliation versus Clinical Database (CRF)",
+            "unit": "Process",
+            "code": "saf-rec1",
+            "index": 9
+          },
+          "0137": {
+            "title": "Safety notifications to EudraVigilance (EV)",
+            "unit": "Event",
+            "code": "saf-pro5",
+            "index": 10
+          },
+          "0138": {
+            "title": "Safety notifications to Ethic Commitees (IEC) and independent review board (IRV)",
+            "unit": "Event",
+            "code": "saf-pro6",
+            "index": 11
+          },
+          "0139": {
+            "title": "Annual Safety Report (ASR) / Development Safety Update Report (DSUR) preparation",
+            "unit": "Document",
+            "code": "saf-rep1",
+            "index": 12
+          },
+          "0140": {
+            "title": "ASR / DSUR submission to C.A.",
+            "unit": "Process",
+            "code": "saf-rep2",
+            "index": 13
+          },
+          "0140a": {
+            "title": "ASR / DSUR submission to I.E.C.",
+            "unit": "Process",
+            "code": "saf-rep3",
+            "index": 14
+          },
+          "0140b": {
+            "title": "Safety Officer Governance during study period",
+            "unit": "Month",
+            "code": "saf-man1",
+            "index": 15
+          },
+          "0140c": {
+            "title": "Safety Office Governance (Archive) during study period",
+            "unit": "Month",
+            "code": "saf-man2",
+            "index": 16
+          },
+          "0140d": {
+            "title": "Transfer of PhV documents to sponsor",
+            "unit": "Process",
+            "code": "saf-rep4",
+            "index": 17
+          }
+        }
+      },
+      "0010": {
+        "title": "Statistics",
+        "boolpt": false,
+        "index": 10,
+        "code": "sta",
+        "activities": {
+          "0141": {
+            "title": "Statistical Analysis Plan (SAP) preparation",
+            "unit": "Document",
+            "code": "sta-sap1",
+            "index": 1
+          },
+          "0143": {
+            "title": "Statistical Analysis Plan (SAP) amendment preparation",
+            "unit": "Document",
+            "code": "sta-sap2",
+            "index": 2
+          },
+          "0144": {
+            "title": "Set-up of SAS programs for database analysis",
+            "unit": "Database",
+            "code": "sta-pro1",
+            "index": 3
+          },
+          "0145": {
+            "title": "Randomization list generation",
+            "unit": "Process",
+            "code": "sta-ran1",
+            "index": 4
+          },
+          "0146": {
+            "title": "Randomization list amendment generation",
+            "unit": "Process",
+            "code": "sta-ran3",
+            "index": 5
+          },
+          "0147": {
+            "title": "Statistical Analysis - interim results (including listings & tables)",
+            "unit": "Process",
+            "code": "sta-res1",
+            "index": 6
+          },
+          "0148": {
+            "title": "Statistical Analysis - final results (including listings & tables)",
+            "unit": "Process",
+            "code": "sta-res2",
+            "index": 7
+          },
+          "0149": {
+            "title": "Statistical Report preparation",
+            "unit": "Document",
+            "code": "sta-res3",
+            "index": 8
+          },
+          "0150": {
+            "title": "Statistical Report review - up to 2 review cycles",
+            "unit": "Document",
+            "code": "sta-res4",
+            "index": 9
+          },
+          "0151": {
+            "title": "Statistical Report review - additional review cycles",
+            "unit": "Document",
+            "code": "sta-res5",
+            "index": 10
+          },
+          "0152": {
+            "title": "Statistical Results (SAS Datasets) transfer",
+            "unit": "Process",
+            "code": "sta-res6",
+            "index": 11
+          }
+        }
+      },
+      "0011": {
+        "title": "Clinical reporting",
+        "boolpt": false,
+        "index": 11,
+        "code": "rep",
+        "activities": {
+          "0157": {
+            "title": "Clinical Study Report (CSR) preparation according to applicable guidelines",
+            "unit": "Document",
+            "code": "rep-csr1",
+            "index": 1
+          },
+          "0158": {
+            "title": "Clinical Study Report (CSR) review - up to 2 review cycles",
+            "unit": "Document",
+            "code": "rep-csr2",
+            "index": 2
+          },
+          "0159": {
+            "title": "Clinical Study Report (CSR) review - additional review cycles",
+            "unit": "Document",
+            "code": "rep-csr3",
+            "index": 3
+          },
+          "0160": {
+            "title": "Clinical Study Report (CSR) integration with appendixes",
+            "unit": "Process",
+            "code": "rep-csr4",
+            "index": 4
+          },
+          "0161": {
+            "title": "Integrated Clinical Study Report (CSR) delivery",
+            "unit": "Process",
+            "code": "rep-csr5",
+            "index": 5
+          }
+        }
+      },
+      "0012": {
+        "title": "GENERAL Pass through costs [7% overheaded]",
+        "boolpt": true,
+        "index": 12,
+        "code": "gpt",
+        "activities": {
+          "0162": {
+            "title": "Documents translation",
+            "unit": "Page",
+            "code": "gpt-tra1",
+            "index": 1
+          },
+          "0163": {
+            "title": "Competent Authority / Ministry of Health evaluation fees",
+            "unit": "Submission",
+            "code": "gpt-fee1",
+            "index": 2
+          },
+          "0164": {
+            "title": "Ethics Committee evaluation fees",
+            "unit": "Submission",
+            "code": "gpt-fee2",
+            "index": 3
+          },
+          "0165": {
+            "title": "Investigational Product management (provider fees) - import, storage, labeling, packaging, destruction",
+            "unit": "Process",
+            "code": "gpt-fee3",
+            "index": 4
+          },
+          "0166": {
+            "title": "Investigational Product Import License fees",
+            "unit": "License",
+            "code": "gpt-fee4",
+            "index": 5
+          },
+          "0167": {
+            "title": "Investigational Product shipments",
+            "unit": "Shipment",
+            "code": "gpt-shi1",
+            "index": 6
+          },
+          "0168": {
+            "title": "Study documents shipments",
+            "unit": "Shipment",
+            "code": "gpt-shi2",
+            "index": 7
+          },
+          "0169": {
+            "title": "Travel expenses - Onsite visit ",
+            "unit": "Visit",
+            "code": "gpt-tra1",
+            "index": 8
+          },
+          "0170": {
+            "title": "Travel expenses - CRA Training",
+            "unit": "Meeting",
+            "code": "gpt-tra2",
+            "index": 9
+          },
+          "0171": {
+            "title": "Travel expenses - Investigators' Meeting",
+            "unit": "Meeting",
+            "code": "gpt-tra3",
+            "index": 10
+          },
+          "0172": {
+            "title": "Travel expenses - meetings",
+            "unit": "Meeting",
+            "code": "gpt-tra4",
+            "index": 11
+          },
+          "0172a": {
+            "title": "Travel time (CRA or other staff traveling hours",
+            "unit": "hour",
+            "code": "gpt-tra5",
+            "index": 12
+          },
+          "0173": {
+            "title": "Telephone & fax expenses",
+            "unit": "Month",
+            "code": "gpt-con1",
+            "index": 13
+          },
+          "0174": {
+            "title": "Copies & stationery expenses",
+            "unit": "Month",
+            "code": "gpt-con2",
+            "index": 14
+          },
+          "0174a": {
+            "title": "Data Safety Monitoring Board Feed",
+            "unit": "Member",
+            "code": "gpt-dsm1",
+            "index": 15
+          },
+          "0174b": {
+            "title": "Investigator fees",
+            "unit": "Patient",
+            "code": "gpt-Inv1",
+            "index": 16
+          }
+        }
+      },
+      "0013": {
+        "title": "INFORMATION TECHNOLOGY Pass through costs [7% overheaded]",
+        "boolpt": true,
+        "index": 13,
+        "code": "ipt",
+        "activities": {
+          "0175": {
+            "title": "SIDOX hosting (TMF/ISF electronic archive)",
+            "unit": "Year",
+            "code": "ipt-arc1",
+            "index": 1
+          },
+          "0176": {
+            "title": "Clinical database license",
+            "unit": "Database",
+            "code": "ipt-crf1",
+            "index": 2
+          },
+          "0176a": {
+            "title": "Clinical database supplemetary module - Randomizer",
+            "unit": "Database",
+            "code": "ipt-crf1",
+            "index": 3
+          },
+          "0176b": {
+            "title": "Clinical database supplemetary module - Randomizer",
+            "unit": "Database",
+            "code": "ipt-crf2",
+            "index": 4
+          },
+          "0176c": {
+            "title": "Clinical database supplemetary module - Central Lab",
+            "unit": "Database",
+            "code": "ipt-crf3",
+            "index": 5
+          },
+          "0176d": {
+            "title": "Clinical database supplemetary module - Custom Profile",
+            "unit": "Database",
+            "code": "ipt-crf4",
+            "index": 6
+          },
+          "0176e": {
+            "title": "Clinical database supplemetary module - ePRO (eDiary)",
+            "unit": "Database",
+            "code": "ipt-crf5",
+            "index": 7
+          },
+          "0176f": {
+            "title": "Clinical database supplemetary module - IMP management",
+            "unit": "Database",
+            "code": "ipt-crf6",
+            "index": 8
+          },
+          "0176g": {
+            "title": "Clinical database supplemetary module - Images uploading",
+            "unit": "Database",
+            "code": "ipt-crf7",
+            "index": 9
+          },
+          "0176h": {
+            "title": "Clinical database supplemetary module - alert management",
+            "unit": "Database",
+            "code": "ipt-crf8",
+            "index": 10
+          },
+          "0176i": {
+            "title": "Clinical database hosting - first year",
+            "unit": "Year",
+            "code": "ipt-hos1",
+            "index": 11
+          },
+          "0177": {
+            "title": "Clinical database hosting - from second year",
+            "unit": "Month",
+            "code": "ipt-hos2",
+            "index": 12
+          },
+          "0178": {
+            "title": "Safety Database hosting",
+            "unit": "Year",
+            "code": "ipt-hos3",
+            "index": 13
+          },
+          "0179": {
+            "title": "Study dedicated website - set-up",
+            "unit": "Study",
+            "code": "ipt-sit1",
+            "index": 14
+          },
+          "0180": {
+            "title": "Study dedicated website - maintenance",
+            "unit": "Month",
+            "code": "ipt-sit2",
+            "index": 15
+          },
+          "0181": {
+            "title": "Study dedicated website - technical changes",
+            "unit": "Process",
+            "code": "ipt-sit3",
+            "index": 16
+          },
+          "0182": {
+            "title": "Study dedicated website - helpdesk",
+            "unit": "Month",
+            "code": "ipt-sit4",
+            "index": 17
+          },
+          "0183": {
+            "title": "Study dedicated website - hosting service (first year)",
+            "unit": "Year",
+            "code": "ipt-sit5",
+            "index": 18
+          },
+          "0184": {
+            "title": "Study dedicated website - hosting service (from second year)",
+            "unit": "Year",
+            "code": "ipt-sit6",
+            "index": 19
+          },
+          "0185": {
+            "title": "Video streaming for Investigators' Meeting",
+            "unit": "Event",
+            "code": "ipt-sit7",
+            "index": 20
+          },
+          "0186": {
+            "title": "Video streaming for Investigators' Meeting - switch to other languages",
+            "unit": "Event",
+            "code": "ipt-sit8",
+            "index": 21
+          }
+        }
+      },
+      "0014": {
+        "title": "Other",
+        "index": 14,
+        "code": "oth",
+        "activities": {
+          "0189": {
+            "title": "Other",
+            "unit": "None"
+          }
+        }
+      }
+    }
+  }
+}

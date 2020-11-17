@@ -4,6 +4,7 @@
       "title": "Study set-up",
       "boolpt": false,
       "index": 1,
+      "code":"set",
       "activities": {
         "0001": {
           "title": "Study Protocol preparation according to applicable guidelines",
@@ -119,6 +120,7 @@
       "title": "Feasibility",
       "boolpt": false,
       "index": 2,
+      "code":"fea",
       "activities": {
         "0022": {
           "title": "Screening & pool of potential sites",
@@ -168,6 +170,7 @@
       "title": "Regulatory",
       "boolpt": false,
       "index": 3,
+      "code":"reg",
       "activities": {
         "0027x": {
           "title": "EudraCT code request",
@@ -259,6 +262,7 @@
       "title": "Study documents filing",
       "boolpt": false,
       "index": 4,
+      "code":"fil",
       "activities": {
         "0039": {
           "title": "Trial Master File set-up",
@@ -302,6 +306,7 @@
       "title": "Study management",
       "boolpt": false,
       "index": 5,
+      "code":"man",
       "activities": {
         "0045": {
           "title": "Project Manager fee - Feasibility",
@@ -405,6 +410,7 @@
       "title": "Study meetings",
       "boolpt": false,
       "index": 6,
+      "code":"mee",
       "activities": {
         "0059": {
           "title": "Study familiarization & kick-off meeting",
@@ -520,6 +526,7 @@
       "title": "Monitoring",
       "boolpt": false,
       "index": 7,
+      "code":"mon",
       "activities": {
         "0077": {
           "title": "Pre-Study Visits (PSV) - onsite (travel time and expenses excluded",
@@ -581,6 +588,7 @@
       "title": "Data management",
       "boolpt": false,
       "index": 8,
+      "code":"dat",
       "activities": {
         "0086": {
           "title": "Case Report Form (CRF) design",
@@ -840,6 +848,7 @@
       "title": "Safety reporting",
       "boolpt": false,
       "index": 9,
+      "code":"saf",
       "activities": {
         "0128": {
           "title": "Registration of Safety Officer in EudraVigilance (EV) (Sponsor already registered)",
@@ -949,6 +958,7 @@
       "title": "Statistics",
       "boolpt": false,
       "index": 10,
+      "code":"sta",
       "activities": {
         "0141": {
           "title": "Statistical Analysis Plan (SAP) preparation",
@@ -1022,6 +1032,7 @@
       "title": "Clinical reporting",
       "boolpt": false,
       "index": 11,
+      "code":"rep",
       "activities": {
         "0157": {
           "title": "Clinical Study Report (CSR) preparation according to applicable guidelines",
@@ -1059,6 +1070,7 @@
       "title": "GENERAL Pass through costs [7% overheaded]",
       "boolpt": true,
       "index": 12,
+      "code":"gpt",
       "activities": {
         "0162": {
           "title": "Documents translation",
@@ -1162,6 +1174,7 @@
       "title": "INFORMATION TECHNOLOGY Pass through costs [7% overheaded]",
       "boolpt": true,
       "index": 13,
+      "code":"ipt",
       "activities": {
         "0175": {
           "title": "SIDOX hosting (TMF/ISF electronic archive)",
@@ -1294,6 +1307,7 @@
     "0014": {
       "title": "Other",
       "index": 14,
+      "code":"oth",
       "activities": {
         "0189": {
           "title": "Other",

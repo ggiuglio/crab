@@ -150,7 +150,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
             <SelectEntity onChange={e => quotationChange(e.target.value)}>
               {
                 quotationList.map(q =>
-                  <option key={q.id} value={q.id} >  {q.code} </option>
+                  <option key={q.id} value={q.id}>  {q.code} </option>
                 )
               }
             </SelectEntity>
@@ -160,7 +160,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
             <SelectEntity disabled={quotationId === "-1"} onChange={e => moduleChange(e.target.value)}>
               {
                 moduleList.map(m =>
-                  <option key={m.id} value={m.id} >  {m.title} {m.geo} </option>
+                  <option key={m.id} value={m.id} >  {m.title} {m.geo ? m.geo[Object.keys(m.geo)[0]].description : ''} </option>
                 )
               }
             </SelectEntity>

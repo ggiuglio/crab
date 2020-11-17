@@ -8,13 +8,16 @@ export const geAllModulesAndActivities = (state) => mapAllBaseEntities(state.bas
 
 const mapQuotation = (quotation) => {
   const modules = [];
-  if (quotation.modules) {
-    Object.keys(quotation.modules).forEach((k) => {
-      quotation.modules[k].id = k;
-      modules.push(mapModule(quotation.modules[k]));
-    });
+  if (quotation) {
+    if (quotation.modules) {
+      Object.keys(quotation.modules).forEach((k) => {
+        quotation.modules[k].id = k;
+        modules.push(mapModule(quotation.modules[k]));
+      });
+
+    }
+    quotation.modules = modules;
   }
-  quotation.modules = modules;
 
   return quotation;
 };
@@ -33,8 +36,9 @@ const mapQuotationList = (quotations) => {
 
 const getSingleQuotation = (quotations, id) => {
   const quotation = mapQuotation(quotations[id]);
-  quotation.id = id;
-
+  if (quotation) {
+    quotation.id = id;
+  }
   return quotation;
 }
 
@@ -151,7 +155,6 @@ const mapAllBaseEntities = (modules) => {
 
   activityList.sort((a, b) => a.index > b.index ? 1 : -1);
   moduleList.sort((a, b) => a.index > b.index ? 1 : -1);
-
 
   moduleList.unshift({
     id: "-1",
