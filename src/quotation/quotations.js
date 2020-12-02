@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { getProject, getSelectedProjectId } from "../store/selectors/selector";
 import { getQuotations } from "../store/selectors/quotationSelector";
-import { selectProject, loadProjectAction, setQuotationType } from "../store/actions/actionsCreator";
+import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
 import QuotationTile from "./quotationTile";
 import { history } from "../App";
 import {QUOTATION_TYPES} from "../store/constants/constants";
+import { startNewQuotation } from "../store/actions/quotationActions";
 
-const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject, setQuotationType }) => {
+const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject, startNewQuotation }) => {
   useEffect(() => {
     if(!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
@@ -42,8 +43,8 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
           <div className="col s6 center">
             <NavLink
               className="btn-floating btn-large waves-effect waves-light green darken-1"
-              to={`/project/new-quotation?project=${selectedProjectId}`}
-              onClick={() => setQuotationType(QUOTATION_TYPES.SPONSOR)}
+              to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
+              onClick={() => startNewQuotation(QUOTATION_TYPES.SPONSOR)}
             >
               <i className="material-icons">add</i>
             </NavLink>
@@ -52,8 +53,8 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
           <div className="col s6 center">
             <NavLink
               className="btn-floating btn-large waves-effect waves-light red darken-1"
-              to={`/project/new-quotation?project=${selectedProjectId}`}
-              onClick={() => setQuotationType(QUOTATION_TYPES.PROVIDER)}
+              to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
+              onClick={() => startNewQuotation(QUOTATION_TYPES.PROVIDER)}
             >
               <i className="material-icons">add</i>
             </NavLink>
@@ -122,7 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
-    setQuotationType: (type) => dispatch(setQuotationType(type)),
+    startNewQuotation: (type) => dispatch(startNewQuotation(type)),
   };
 };
 

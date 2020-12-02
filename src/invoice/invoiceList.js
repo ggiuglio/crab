@@ -7,7 +7,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction }) => {
 
   const deleteInvoiceClick = (invoiceId) => {
     deleteInvoiceAction(invoiceId);
-  }
+  };
 
   return (
     <div>

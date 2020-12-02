@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
-import { getQuotationsEntityList, geAllModulesAndActivities } from "../store/selectors/quotationSelector";
+import { getQuotationsEntityList, getAllModulesAndActivities } from "../store/selectors/quotationSelector";
 
 const MainContainer = styled.div`
   margin: 20px;
@@ -199,7 +199,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
 const mapStateToProps = (state) => {
   return {
     lists: getQuotationsEntityList(state),
-    completeList: geAllModulesAndActivities(state)
+    completeList: getAllModulesAndActivities(state)
   };
 };
 

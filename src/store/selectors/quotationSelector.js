@@ -1,69 +1,80 @@
-import activity from "../../quotation/activity";
-
 export const getSelectedQuotationId = (state) => state.selectedQuotationId;
 export const getQuotations = (state) => mapQuotationList(state.quotations);
-export const getQuotation = (state) => state.quotations ? getSingleQuotation(state.quotations, state.selectedQuotationId) : undefined;
+export const getQuotation = (state) => state.selectedQuotationData ? getSingleQuotation(state.selectedQuotationData) : undefined;
 export const getQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations);
-export const geAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules)
-
-const mapQuotation = (quotation) => {
-  const modules = [];
-  if (quotation) {
-    if (quotation.modules) {
-      Object.keys(quotation.modules).forEach((k) => {
-        quotation.modules[k].id = k;
-        modules.push(mapModule(quotation.modules[k]));
-      });
-
-    }
-    quotation.modules = modules;
-  }
-
-  return quotation;
-};
+export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules);
+export const getAllModulesAsList = (state) => mapAllModules(state.baseModules);
+export const getModalResourceData = (state) => state.resourceModalData; 
 
 const mapQuotationList = (quotations) => {
   const quotationList = [];
   if (quotations) {
     Object.keys(quotations).forEach((k) => {
-      quotations[k].id = k;
-      quotationList.push(mapQuotation(quotations[k]));
+      const quotation = {
+        id: k,
+        type: quotations[k].type,
+        code: quotations[k].code,
+        status: quotations[k].status,
+        quotationCost: quotations[k].quotationCost
+      }
+      quotationList.push(mapQuotation(quotation));
     });
   }
 
   return quotationList.reverse();
 };
 
-const getSingleQuotation = (quotations, id) => {
-  const quotation = mapQuotation(quotations[id]);
-  if (quotation) {
-    quotation.id = id;
-  }
-  return quotation;
+const getSingleQuotation = (selectedQuotation) => {
+  return mapQuotation(JSON.parse(JSON.stringify(selectedQuotation)));
 }
+
+const mapQuotation = (quotation) => {
+  const modules = [];
+  if (quotation) {
+    quotation.quotationCost = 0;
+    if (quotation.modules) {
+      Object.keys(quotation.modules).forEach((k) => {
+        quotation.modules[k].id = k;
+        quotation.quotationCost += quotation.modules[k].moduleCost;
+        modules.push(mapModule(quotation.modules[k]));
+      });
+    }
+    quotation.modules = modules.sort((a, b) => a.index > b.index ? 1 : -1);
+  }
+
+  return quotation;
+};
 
 const mapModule = (module) => {
   const activities = [];
+  module.moduleCost = 0;
   if (module.activities) {
     Object.keys(module.activities).forEach((k) => {
-      module.activities[k].id = k;
-      activities.push(mapActivity(module.activities[k]));
+      let activity = mapActivity(module.activities[k])
+      activity.id = k;
+      module.moduleCost += activity.activityCost;
+      activities.push(activity);
     });
   }
-  module.activities = activities;
+  module.activities = activities.sort((a, b) => a.index > b.index ? 1 : -1);
 
   return module;
 };
 
 const mapActivity = (activity) => {
   const resources = [];
+  activity.unitCost = 0;
+  activity.unitNumber = activity.unitNumber ? activity.unitNumber : 0;
   if (activity.resources) {
     Object.keys(activity.resources).forEach((k) => {
       activity.resources[k].id = k;
+      activity.resources[k].id = k;
+      activity.unitCost += activity.resources[k].resourceCost;
       resources.push(activity.resources[k]);
     });
   }
   activity.resources = resources;
+  activity.activityCost = activity.unitCost * activity.unitNumber;
 
   return activity;
 };
@@ -134,7 +145,7 @@ const mapQuotationsEntityList = (quotationsObj) => {
     modules: modules,
     quotations: quotations
   }
-}
+};
 
 const mapAllBaseEntities = (modules) => {
   const moduleList = [];
@@ -169,4 +180,24 @@ const mapAllBaseEntities = (modules) => {
   });
 
   return { modules: moduleList, activities: activityList };
+};
+
+const mapAllModules = (modules) => {
+  const moduleList = [];
+  if (modules) {
+    Object.keys(modules).forEach((k) => {
+      modules[k].id = k;
+      const activityList = [];
+      if (modules[k].activities) {
+        Object.keys(modules[k].activities).forEach((j) => {
+          modules[k].activities[j].id = j;
+          modules[k].activities[j].moduleId = modules[k].id;
+          activityList.push(modules[k].activities[j]);
+        });
+      }
+      modules[k].activities = activityList;
+      moduleList.push(modules[k]);
+    });
+  }
+  return moduleList;
 }

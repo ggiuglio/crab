@@ -1,7 +1,14 @@
 import {
-  SELECT_QUOTATION
+  SELECT_QUOTATION,
+  INITIALIZE_NEW_QUOTATION,
+  EDIT_SELECTED_QUOTATION,
+  ADD_MODULE_TO_SELECTED_QUOTATION,
+  REMOVE_MODULE_FROM_SELECTED_QUOTATION,
+  ADD_ACTIVITY_TO_SELECTED_QUOTATION,
+  REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION,
+  EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
+  SHOW_ACTIVITY_RESOURCE_MODAL
 } from './actionsTypes.js';
-
 import { FirebaseInstance } from '../../App';
 
 export const selectQuotation = (quotationId) => {
@@ -75,5 +82,80 @@ export const addResource = (resource, activityId, moduleId, quotationId, project
   }
 };
 
+export const startNewQuotation = (type) => {
+  return dispatch => {
+    return dispatch({
+      type: INITIALIZE_NEW_QUOTATION,
+      quotationType: type
+    });
+  }
+}
+
+export const editSelectedQuotation = (quotationCode) => {
+  return dispatch => {
+    return dispatch({
+      type: EDIT_SELECTED_QUOTATION,
+      code: quotationCode
+    })
+  }
+}
+
+export const addModuleToSelectedQuotation = (module) => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_MODULE_TO_SELECTED_QUOTATION,
+      module: module
+    })
+  }
+}
+
+export const removeModuleFromSelectedQuotation = (moduleId) => {
+  return dispatch => {
+    return dispatch({
+      type: REMOVE_MODULE_FROM_SELECTED_QUOTATION,
+      moduleId: moduleId
+    })
+  }
+}
+
+export const addActivityToSelectedQuotation = (moduleId, activity) => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_ACTIVITY_TO_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activity: activity
+    })
+  }
+}
+
+export const removeActivityFromSelectedQuotation = (moduleId, activityId) => {
+  return dispatch => {
+    return dispatch({
+      type: REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activityId: activityId
+    })
+  }
+}
+
+export const editActivityInSelectedQuotation = (moduleId, activity) => {
+  return dispatch => {
+    return dispatch({
+      type: EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activity: activity
+    })
+  }
+}
+
+export const showActivityResourceModal = (moduleId, activityId) => {
+  return dispatch => {
+    return dispatch({
+      type: SHOW_ACTIVITY_RESOURCE_MODAL,
+      moduleId: moduleId,
+      activityId: activityId
+    })
+  }
+} 
 
 

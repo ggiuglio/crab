@@ -10,11 +10,18 @@ import {
   SELECT_PROJECT,
   SELECT_QUOTATION,
   LOAD_STATIC_DATA,
-  SET_QUOTATION_TYPE,
-  SET_VIEW_MODE
+  SET_VIEW_MODE,
+  INITIALIZE_NEW_QUOTATION,
+  EDIT_SELECTED_QUOTATION,
+  ADD_MODULE_TO_SELECTED_QUOTATION,
+  REMOVE_MODULE_FROM_SELECTED_QUOTATION,
+  ADD_ACTIVITY_TO_SELECTED_QUOTATION,
+  REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION,
+  EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
+  SHOW_ACTIVITY_RESOURCE_MODAL
 } from "../actions/actionsTypes";
-
-import {VIEW_MODES} from "../constants/constants";
+import { VIEW_MODES } from "../constants/constants";
+import { v4 as uuid } from "uuid";
 
 export const INITIAL_STATE = {
   professionals: undefined,
@@ -27,7 +34,8 @@ export const INITIAL_STATE = {
   invoiceList: [],
   showNewInvoice: false,
   viewMode: VIEW_MODES.VIEW,
-  qotationType: undefined
+  qotationType: undefined,
+  resourceModalData: undefined
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
@@ -58,7 +66,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case LOAD_PROJECT: {
       const quotations = action.project ? action.project.quotations : undefined;
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
-      const project = action.project ? {...action.project.project, id: action.projectId} : undefined;
+      const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
 
       return {
         ...state,
@@ -85,7 +93,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedProjectId: null,
         selectedQuotationId: null,
         quotations: null,
-        invoiceList: [],
+        invoiceList: null,
         projects: null,
         project: null
       };
@@ -97,9 +105,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
       };
     }
     case SELECT_QUOTATION: {
+      const quotation = state.quotations ? JSON.parse(JSON.stringify(state.quotations[action.quotation])) : undefined
+      if (quotation) {
+        quotation.id = action.quotation
+      }
       return {
         ...state,
         selectedQuotationId: action.quotation,
+        selectedQuotationData: quotation
       };
     }
     case LOAD_STATIC_DATA: {
@@ -115,11 +128,80 @@ const Reducer = (state = INITIAL_STATE, action) => {
         viewMode: action.viewMode
       }
     }
-    case SET_QUOTATION_TYPE: {
+    case INITIALIZE_NEW_QUOTATION: {
+      const emptyQuotation = {
+        id: '0',
+        code: '',
+        status: 'IP',
+        quotationCost: 0,
+        quotationType: action.quotationType,
+        modules: {},
+      }
       return {
         ...state,
-        quotationType: action.quotationType,
+        selectedQuotationData: emptyQuotation,
+        selectedQuotationId: '0',
         viewMode: VIEW_MODES.CREATE
+      }
+    }
+    case EDIT_SELECTED_QUOTATION: {
+      const quotation = state.selectedQuotationData;
+      quotation.code = action.code;
+      return {
+        ...state,
+        selectedQuotationData: quotation
+      }
+    }
+    case ADD_MODULE_TO_SELECTED_QUOTATION: {
+      return {
+        ...state,
+        selectedQuotationData: addModuleToSelectedQuotation(state.selectedQuotationData, action.module)
+      }
+    }
+    case REMOVE_MODULE_FROM_SELECTED_QUOTATION: {
+      let updatedQuotation = state.selectedQuotationData;
+      delete updatedQuotation.modules[action.moduleId];
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case ADD_ACTIVITY_TO_SELECTED_QUOTATION: {
+      return {
+        ...state,
+        selectedQuotationData: addActivityToSelectedQuotation(state.selectedQuotationData, action.moduleId, action.activity)
+      }
+    }
+    case REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION: {
+      let updatedQuotation = state.selectedQuotationData;
+      delete updatedQuotation.modules[action.moduleId].activities[action.activityId];
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case EDIT_ACTIVITY_IN_SELECTED_QUOTATION: {
+      let updatedQuotation = state.selectedQuotationData;
+      let updatedActivity = state.selectedQuotationData.modules[action.moduleId].activities[action.activity.id];
+      updatedActivity.responsibilityCRO = action.activity.responsibilityCRO;
+      updatedActivity.responsibilitySponsor = action.activity.responsibilitySponsor;
+      updatedActivity.unitNumber = action.activity.unitNumber;
+
+      updatedQuotation.modules[action.moduleId].activities[action.activity.id] = updatedActivity;
+
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation,
+      }
+    }
+    case SHOW_ACTIVITY_RESOURCE_MODAL: {
+      let modal = {
+        activityId: action.activityId,
+        moduleId: action.moduleId
+      }
+      return {
+        ...state,
+        resourceModalData: modal
       }
     }
 
@@ -141,3 +223,16 @@ const mapInvoiceList = (invoices) => {
 
   return invoiceList;
 };
+
+const addModuleToSelectedQuotation = (quotation, module) => {
+  const id = uuid();
+  quotation.modules[id] = module;
+  return quotation;
+}
+
+const addActivityToSelectedQuotation = (quotation, moduleId, activity) => {
+  const id = uuid();
+  quotation.modules[moduleId].activities[id] = activity
+
+  return quotation;
+}

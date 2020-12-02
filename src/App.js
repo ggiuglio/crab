@@ -18,15 +18,17 @@ import { setUserAction, loadProjectsAction, loadStaticData } from "./store/actio
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
-import "materialize-css/dist/css/materialize.min.css";
+import M from "materialize-css/dist/js/materialize.min.js";
 import Quotation from "./quotation/quotation";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
+
 
 library.add(fab, fas);
 
 class App extends Component {
   componentDidMount() {
+    M.AutoInit();
     FirebaseInstance.auth.onAuthStateChanged((user) => {
       this.props.setUser(user);
 

@@ -1,23 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Resource from "./resource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
+import { removeActivityFromSelectedQuotation, editActivityInSelectedQuotation, showActivityResourceModal } from "../store/actions/quotationActions";
 
 const Activity = ({
-  activityId,
   activity,
   moduleId,
-  moduleTitle,
   geo,
-  handleModalResources,
-  setActivityProp,
-  editResource,
-  removeActivity,
-  removeResource,
   viewMode,
   quotationType,
+  removeActivity,
+  editActivity,
+  showResourceModal
 }) => {
+
   const iconTypeMap = {
     document: "folder",
     file: "file",
@@ -45,6 +43,44 @@ const Activity = ({
   };
   let rdm = Date.now();
 
+  const deleteActivity = (e) => {
+    removeActivity(moduleId, activity.id);
+  };
+
+  const editActivityNumber = (e) => {
+    activity.unitNumber = e.target.value;
+    editActivity(moduleId, activity);
+  };
+
+  const editActivityRespCRO = (active) => {
+    activity.responsibilityCRO = active;
+    editActivity(moduleId, activity);
+  };
+
+  const editActivityRespSPO = (active) => {
+    activity.responsibilitySponsor = active;
+    editActivity(moduleId, activity);
+  };
+
+  const addFixedCost = () => { };
+  const removeFixedCost = () => { };
+  const setFixedCost = (cost) => { };
+
+  const removeResource = () => { };
+  const editResource = () => { };
+
+  const showResource = (e) => {
+    showResourceModal(moduleId, activity.id);
+  }
+
+  const toggleResources = (id, event) => {
+    event.preventDefault();
+    let res = document.getElementById("resources_" + id);
+    res.classList.contains("hide")
+      ? res.classList.remove("hide")
+      : res.classList.add("hide");
+  };
+
   return (
     <li>
       <div className="collapsible-header block">
@@ -63,12 +99,9 @@ const Activity = ({
             </span>
             {viewMode !== VIEW_MODES.VIEW ? (
               <a
-                href="!#"
                 className="lateral-margin"
                 title="Remove"
-                onClick={(e) => {
-                  removeActivity(e, moduleId, geo, activityId, activity);
-                }}
+                onClick={(e) => deleteActivity(e)}
               >
                 <FontAwesomeIcon
                   icon="minus-circle"
@@ -94,19 +127,11 @@ const Activity = ({
               <input
                 className="text-right browser-default unit-number-input"
                 type="number"
-                name={"unitNumber" + moduleId + geo + activityId}
+                name={"unitNumber" + moduleId + geo + activity.id}
                 min="0"
                 max="99"
                 value={activity.unitNumber || 0}
-                onChange={(e) =>
-                  setActivityProp(
-                    moduleId,
-                    geo,
-                    activityId,
-                    "unitNumber",
-                    e.target.value
-                  )
-                }
+                onChange={(e) => editActivityNumber(e)}
                 disabled={viewMode === VIEW_MODES.VIEW ? true : null}
               ></input>
             </div>
@@ -129,11 +154,7 @@ const Activity = ({
                 type="checkbox"
                 checked={activity.responsibilityCRO === true}
                 onChange={(e) =>
-                  setActivityProp(
-                    moduleId,
-                    geo,
-                    activityId,
-                    "responsibilityCRO",
+                  editActivityRespCRO(
                     !activity.responsibilityCRO
                   )
                 }
@@ -146,11 +167,7 @@ const Activity = ({
                 type="checkbox"
                 checked={activity.responsibilityCRO === true}
                 onChange={(e) =>
-                  setActivityProp(
-                    moduleId,
-                    geo,
-                    activityId,
-                    "responsibilityCRO",
+                  editActivityRespCRO(
                     !activity.responsibilityCRO
                   )
                 }
@@ -165,11 +182,7 @@ const Activity = ({
                 type="checkbox"
                 checked={activity.responsibilitySponsor === true}
                 onChange={(e) =>
-                  setActivityProp(
-                    moduleId,
-                    geo,
-                    activityId,
-                    "responsibilitySponsor",
+                  editActivityRespSPO(
                     !activity.responsibilitySponsor
                   )
                 }
@@ -182,11 +195,7 @@ const Activity = ({
                 type="checkbox"
                 checked={activity.responsibilitySponsor === true}
                 onChange={(e) =>
-                  setActivityProp(
-                    moduleId,
-                    geo,
-                    activityId,
-                    "responsibilitySponsor",
+                  editActivityRespSPO(
                     !activity.responsibilitySponsor
                   )
                 }
@@ -196,7 +205,7 @@ const Activity = ({
             </label>
           </div>
           <div className="col s2 side-by-side resourcesTrigger">
-            <a href="!#" onClick={(e) => toggleResources(rdm, e)}>
+            <a onClick={(e) => toggleResources(rdm, e)}>
               <FontAwesomeIcon
                 icon="user-tie"
                 className="indigo-text"
@@ -240,7 +249,7 @@ const Activity = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {activity.hasOwnProperty("fixedCost") ? (
+                    {activity.fixedCost ? (
                       <tr>
                         <td>Fixed costs</td>
                         <td></td>
@@ -249,18 +258,12 @@ const Activity = ({
                           <input
                             className="text-right browser-default"
                             type="number"
-                            name={moduleId + geo + activityId + "fixedCost"}
+                            name={moduleId + geo + activity.id + "fixedCost"}
                             min="0"
                             max="999999"
                             value={activity.fixedCost}
                             onChange={(e) =>
-                              setActivityProp(
-                                moduleId,
-                                geo,
-                                activityId,
-                                "fixedCost",
-                                e.target.value
-                              )
+                              setFixedCost(e.target.value)
                             }
                             disabled={
                               viewMode === VIEW_MODES.VIEW ? true : null
@@ -270,16 +273,10 @@ const Activity = ({
                         {viewMode !== VIEW_MODES.VIEW ? (
                           <td className="text-right">
                             <a
-                              href="#!"
                               title="Remove fixed costs"
                               onClick={(e) => {
                                 e.preventDefault();
-                                setActivityProp(
-                                  moduleId,
-                                  geo,
-                                  activityId,
-                                  "fixedCost"
-                                );
+                                removeFixedCost();
                               }}
                             >
                               <i className="tiny material-icons red-text text-darken-2">
@@ -291,65 +288,54 @@ const Activity = ({
                       </tr>
                     ) : null}
                     {quotationType === QUOTATION_TYPES.SPONSOR &&
-                    activity.resources
+                      activity.resources
                       ? activity.resources.map((resource) => (
-                          <Resource
-                            key={
-                              moduleId + geo + activityId + resource.resourceId
-                            }
-                            resource={resource}
-                            moduleId={moduleId}
-                            geo={geo}
-                            activityId={activityId}
-                            editResource={editResource}
-                            removeResource={removeResource}
-                            viewMode={viewMode}
-                          />
-                        ))
+                        <Resource
+                          key={
+                            moduleId + geo + activity.id + resource.resourceId
+                          }
+                          resource={resource}
+                          moduleId={moduleId}
+                          geo={geo}
+                          activityId={activity.id}
+                          editResource={editResource}
+                          removeResource={removeResource}
+                          viewMode={viewMode}
+                        />
+                      ))
                       : null}
                   </tbody>
                 </table>
               </div>
               {quotationType === QUOTATION_TYPES.SPONSOR &&
-              viewMode !== VIEW_MODES.VIEW ? (
-                <div className="col s1">
-                  <a
-                    className="modal-trigger"
-                    href="#modal-resource"
-                    title="Add resource"
-                    onClick={(e) =>
-                      handleModalResources(
-                        moduleId,
-                        moduleTitle,
-                        geo,
-                        activityId,
-                        activity
-                      )
-                    }
-                  >
-                    <i
-                      className="material-icons indigo-text"
+                viewMode !== VIEW_MODES.VIEW ? (
+                  <div className="col s1">
+                    <a
                       title="Add resource"
+                      className="modal-trigger"
+                    href="#modal-resource"
+                      onClick={() => {
+                        //showResource()
+                        //se lascio questa line che fa il dispatch dell'azione il merdosissimo popup non si apre
+                        console.log('porcamadonna');
+                      }}
                     >
-                      add_circle_outline
+                      <i
+                        className="material-icons indigo-text"
+                        title="Add resource"
+                      >
+                        add_circle_outline
                     </i>
-                  </a>
-                </div>
-              ) : null}
-              {activity.hasOwnProperty("fixedCost") ? null : (
+                    </a>
+                  </div>
+                ) : null}
+              {viewMode !== VIEW_MODES.VIEW  && !activity.fixedCost ? (
                 <div className="col s1">
                   <a
-                    href="!#"
                     title="Add fixed costs"
                     onClick={(e) => {
                       e.preventDefault();
-                      setActivityProp(
-                        moduleId,
-                        geo,
-                        activityId,
-                        "fixedCost",
-                        0
-                      );
+                      addFixedCost();
                     }}
                   >
                     <i
@@ -360,7 +346,7 @@ const Activity = ({
                     </i>
                   </a>
                 </div>
-              )}
+              ) : '' }
             </div>
           </div>
         </div>
@@ -369,20 +355,16 @@ const Activity = ({
   );
 };
 
-const toggleResources = (id, event) => {
-  event.preventDefault();
-  let res = document.getElementById("resources_" + id);
-  res.classList.contains("hide")
-    ? res.classList.remove("hide")
-    : res.classList.add("hide");
-};
-
 const mapStateToProps = (state) => {
   return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    removeActivity: (moduleId, activityId) => dispatch(removeActivityFromSelectedQuotation(moduleId, activityId)),
+    editActivity: (moduleId, activity) => dispatch(editActivityInSelectedQuotation(moduleId, activity)),
+    showResourceModal: (moduleId, activityId) => dispatch(showActivityResourceModal(moduleId, activityId)) 
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Activity);

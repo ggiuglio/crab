@@ -140,12 +140,3 @@ export const setViewMode = (mode) => {
     });
   }
 }
-
-export const setQuotationType = (type) => {
-  return dispatch => {
-    dispatch({
-      type: SET_QUOTATION_TYPE,
-      quotationType: type
-    });
-  }
-}
