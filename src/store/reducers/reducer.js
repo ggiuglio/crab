@@ -18,7 +18,10 @@ import {
   ADD_ACTIVITY_TO_SELECTED_QUOTATION,
   REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION,
   EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
-  SHOW_ACTIVITY_RESOURCE_MODAL
+  SHOW_ACTIVITY_RESOURCE_MODAL,
+  ADD_RESOURCE_TO_SELECTED_QUOTATION,
+  REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
+  EDIT_RESOURCE_IN_SELECTED_QUOTATION
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -186,7 +189,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       updatedActivity.responsibilityCRO = action.activity.responsibilityCRO;
       updatedActivity.responsibilitySponsor = action.activity.responsibilitySponsor;
       updatedActivity.unitNumber = action.activity.unitNumber;
-
+      updatedActivity.fixedCost = action.activity.fixedCost;
       updatedQuotation.modules[action.moduleId].activities[action.activity.id] = updatedActivity;
 
       return {
@@ -202,6 +205,33 @@ const Reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         resourceModalData: modal
+      }
+    }
+    case ADD_RESOURCE_TO_SELECTED_QUOTATION: {
+      let updatedQuotation = addResourceSelectedQuotation(state.selectedQuotationData, action.moduleId, action.activityId, action.resource);
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case REMOVE_RESOURCE_FROM_SELECTED_QUOTATION: {
+      const updatedQuotation = state.selectedQuotationData;
+      const updatedActivity = state.selectedQuotationData.modules[action.moduleId].activities[action.activityId];
+      delete updatedActivity.resources[action.resourceId];
+
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case EDIT_RESOURCE_IN_SELECTED_QUOTATION: {
+      const updatedQuotation = state.selectedQuotationData;
+      const updatedResource = state.selectedQuotationData.modules[action.moduleId].activities[action.activityId].resources[action.resource.id];
+      updatedResource.hours = action.resource.hours;
+
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
       }
     }
 
@@ -233,6 +263,14 @@ const addModuleToSelectedQuotation = (quotation, module) => {
 const addActivityToSelectedQuotation = (quotation, moduleId, activity) => {
   const id = uuid();
   quotation.modules[moduleId].activities[id] = activity
+  return quotation;
+}
 
+const addResourceSelectedQuotation = (quotation, moduleId, activityId, resource) => {
+  const id = uuid();
+  if(!quotation.modules[moduleId].activities[activityId].resources) {
+    quotation.modules[moduleId].activities[activityId].resources = {};
+  }
+  quotation.modules[moduleId].activities[activityId].resources[id] = resource;
   return quotation;
 }

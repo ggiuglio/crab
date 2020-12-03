@@ -7,9 +7,13 @@ import {
   ADD_ACTIVITY_TO_SELECTED_QUOTATION,
   REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION,
   EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
-  SHOW_ACTIVITY_RESOURCE_MODAL
+  SHOW_ACTIVITY_RESOURCE_MODAL,
+  ADD_RESOURCE_TO_SELECTED_QUOTATION,
+  REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
+  EDIT_RESOURCE_IN_SELECTED_QUOTATION
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
+import resource from '../../quotation/resource.js';
 
 export const selectQuotation = (quotationId) => {
   return dispatch => {
@@ -22,17 +26,19 @@ export const selectQuotation = (quotationId) => {
   }
 };
 
-export const addQuotation = (quotation) => {
+export const addQuotation = () => {
   return (dispatch, getSate) => {
+    const projectId = getSate().selectedProjectId;
+    const quotation = JSON.parse(JSON.stringify(getSate().selectedQuotationData));
+
     const modules = quotation.modules;
     delete quotation.modules;
-
-    const projectId = getSate().selectedProjectId;
+    delete quotation.id;
     FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations`).push(quotation).then((res) => {
       const id = res.path.pieces_[3];
 
-      modules.forEach(m => {
-        dispatch(addModule(m, id, projectId));
+      Object.keys(modules).forEach((k) => {
+        dispatch(addModule(modules[k], id, projectId));
       });
     });
   }
@@ -65,8 +71,8 @@ export const addActivity = (activity, moduleId, quotationId, projectId) => {
     FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules/${moduleId}/activities`).push(activity).then((res) => {
       const activityId = res.path.pieces_[7];
       if (resources) {
-        resources.forEach(r => {
-          dispatch(addResource(r, activityId, moduleId, quotationId, projectId));
+        Object.keys(resources).forEach((k) => {
+          dispatch(addResource(resources[k], activityId, moduleId, quotationId, projectId));
         });
       }
     });
@@ -144,6 +150,39 @@ export const editActivityInSelectedQuotation = (moduleId, activity) => {
       type: EDIT_ACTIVITY_IN_SELECTED_QUOTATION,
       moduleId: moduleId,
       activity: activity
+    })
+  }
+}
+
+export const addResourceToSelectedQuotation = (moduleId, activityId, resource) =>{
+  return dispatch => {
+    return dispatch ({
+      type: ADD_RESOURCE_TO_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activityId: activityId,
+      resource: resource
+    })
+  }
+}
+
+export const removeResourceFromSelectedQuotation = (moduleId, activityId, resourceId) => {
+  return dispatch => {
+    return dispatch ({
+      type: REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activityId: activityId,
+      resourceId: resourceId
+    })
+  }
+}
+
+export const editResourceInSelectedQuotation = (moduleId, activityId, resource) =>{
+  return dispatch => {
+    return dispatch ({
+      type: EDIT_RESOURCE_IN_SELECTED_QUOTATION,
+      moduleId: moduleId,
+      activityId: activityId,
+      resource: resource
     })
   }
 }

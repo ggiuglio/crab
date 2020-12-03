@@ -23,7 +23,7 @@ import { history } from "../App";
 import { addQuotation, startNewQuotation, editSelectedQuotation } from "../store/actions/quotationActions";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import QuotationNewModule from "./quotationNewModule";
-import ResourceModal from "./resourceModal";
+import NewResource from "./newResource";
 
 const NewQuotation = ({
   selectedQuotation,
@@ -82,7 +82,6 @@ const NewQuotation = ({
       setQuotationCode(selectedQuotation.code);
     }
   }, [project, people, baseModules, selectedQuotation]);
-
   React.useEffect(() => {
     let collapsible = document.querySelectorAll(".collapsible");
     if (collapsible)
@@ -223,7 +222,8 @@ const NewQuotation = ({
 
   const saveQuotation = (e) => {
     e.preventDefault();
-    saveQuotationToDb(selectedQuotation);
+    saveQuotationToDb();
+    history.push(`/project/quotations/?project=${project.id}`)
   };
 
   // *********************
@@ -998,7 +998,6 @@ const NewQuotation = ({
 
   const handlePersonsTableChange = () => { }
 
-  console.log('sl', selectedQuotation);
   return (
     <div>
       {selectedQuotation ?
@@ -1104,8 +1103,7 @@ const NewQuotation = ({
               {selectedQuotation.quotationType === QUOTATION_TYPES.SPONSOR &&
                 viewMode !== VIEW_MODES.VIEW ? (
                   <div>
-                    ooo
-                  <ResourceModal />
+                  <NewResource />
                   </div>
                 ) : null}
             </div>

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Resource from "./resource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import { removeActivityFromSelectedQuotation, editActivityInSelectedQuotation, showActivityResourceModal } from "../store/actions/quotationActions";
+import ActivityFixedCost from "./activityFixedCost";
 
 const Activity = ({
   activity,
@@ -15,6 +16,7 @@ const Activity = ({
   editActivity,
   showResourceModal
 }) => {
+  const [modalInstance, setModalInstance] = useState([]);
 
   const iconTypeMap = {
     document: "folder",
@@ -62,14 +64,12 @@ const Activity = ({
     editActivity(moduleId, activity);
   };
 
-  const addFixedCost = () => { };
-  const removeFixedCost = () => { };
-  const setFixedCost = (cost) => { };
+  const addFixedCost = () => { 
+    activity.fixedCost = 0;
+    editActivity(moduleId, activity);
+  };
 
-  const removeResource = () => { };
-  const editResource = () => { };
-
-  const showResource = (e) => {
+  const openResourceModal = (e) => {
     showResourceModal(moduleId, activity.id);
   }
 
@@ -249,43 +249,8 @@ const Activity = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {activity.fixedCost ? (
-                      <tr>
-                        <td>Fixed costs</td>
-                        <td></td>
-                        <td></td>
-                        <td className="text-right">
-                          <input
-                            className="text-right browser-default"
-                            type="number"
-                            name={moduleId + geo + activity.id + "fixedCost"}
-                            min="0"
-                            max="999999"
-                            value={activity.fixedCost}
-                            onChange={(e) =>
-                              setFixedCost(e.target.value)
-                            }
-                            disabled={
-                              viewMode === VIEW_MODES.VIEW ? true : null
-                            }
-                          ></input>
-                        </td>
-                        {viewMode !== VIEW_MODES.VIEW ? (
-                          <td className="text-right">
-                            <a
-                              title="Remove fixed costs"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                removeFixedCost();
-                              }}
-                            >
-                              <i className="tiny material-icons red-text text-darken-2">
-                                clear
-                              </i>
-                            </a>
-                          </td>
-                        ) : null}
-                      </tr>
+                    {activity.fixedCost || activity.fixedCost === 0 ? (
+                        <ActivityFixedCost moduleId={moduleId} activity={activity} viewMode={viewMode} />
                     ) : null}
                     {quotationType === QUOTATION_TYPES.SPONSOR &&
                       activity.resources
@@ -294,12 +259,9 @@ const Activity = ({
                           key={
                             moduleId + geo + activity.id + resource.resourceId
                           }
-                          resource={resource}
                           moduleId={moduleId}
-                          geo={geo}
                           activityId={activity.id}
-                          editResource={editResource}
-                          removeResource={removeResource}
+                          resource={resource}
                           viewMode={viewMode}
                         />
                       ))
@@ -311,13 +273,8 @@ const Activity = ({
                 viewMode !== VIEW_MODES.VIEW ? (
                   <div className="col s1">
                     <a
-                      title="Add resource"
-                      className="modal-trigger"
-                    href="#modal-resource"
                       onClick={() => {
-                        //showResource()
-                        //se lascio questa line che fa il dispatch dell'azione il merdosissimo popup non si apre
-                        console.log('porcamadonna');
+                        openResourceModal()
                       }}
                     >
                       <i
@@ -329,7 +286,7 @@ const Activity = ({
                     </a>
                   </div>
                 ) : null}
-              {viewMode !== VIEW_MODES.VIEW  && !activity.fixedCost ? (
+              {viewMode !== VIEW_MODES.VIEW && !activity.fixedCost ? (
                 <div className="col s1">
                   <a
                     title="Add fixed costs"
@@ -346,7 +303,7 @@ const Activity = ({
                     </i>
                   </a>
                 </div>
-              ) : '' }
+              ) : ''}
             </div>
           </div>
         </div>
@@ -363,7 +320,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeActivity: (moduleId, activityId) => dispatch(removeActivityFromSelectedQuotation(moduleId, activityId)),
     editActivity: (moduleId, activity) => dispatch(editActivityInSelectedQuotation(moduleId, activity)),
-    showResourceModal: (moduleId, activityId) => dispatch(showActivityResourceModal(moduleId, activityId)) 
+    showResourceModal: (moduleId, activityId) => dispatch(showActivityResourceModal(moduleId, activityId))
   };
 };
 

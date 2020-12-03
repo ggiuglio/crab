@@ -69,7 +69,7 @@ const mapActivity = (activity) => {
     Object.keys(activity.resources).forEach((k) => {
       activity.resources[k].id = k;
       activity.resources[k].id = k;
-      activity.unitCost += activity.resources[k].resourceCost;
+      activity.unitCost += activity.resources[k].cost;
       resources.push(activity.resources[k]);
     });
   }

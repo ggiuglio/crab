@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { VIEW_MODES } from "../store/constants/constants";
+import {
+  editResourceInSelectedQuotation,
+  removeResourceFromSelectedQuotation
+} from "../store/actions/quotationActions";
 
-const Resource = ({ resource, moduleId, geo, activityId, editResource, removeResource, viewMode }) => {
+const Resource = ({ resource, moduleId, activityId, editResource, removeResource, viewMode }) => {
+  const [resourceHours, setResourceHours] = useState(0);
+
+  useEffect(() => {
+    setResourceHours(resource.hours)
+  }, [resource]);
+
+  const resourceHoursChanged = (hours) => {
+    setResourceHours(hours);
+    resource.hours = hours;
+    editResource(moduleId, activityId, resource);
+  }
+
   return (
     <tr>
-      <td>{resource.resourceType}</td>
-      <td className="text-right">{resource.resourceHourCost}</td>
-      <td className="text-right"><input className="text-right browser-default" type="number" name={moduleId+geo+activityId+resource.resourceId} min="0" max="9999" value={resource.hours} onChange={(e) => editResource(moduleId, geo, activityId, resource, e.target.value)} disabled={viewMode === VIEW_MODES.VIEW ? true : null}></input></td>
-      <td className="text-right">{resource.resourceCost}</td>
-      {viewMode !== VIEW_MODES.VIEW ? (
+      <td>{resource.title}</td>
+      <td className="text-right">{resource.hourCost}</td>
       <td className="text-right">
-        <a href="#!" title="Remove resource" onClick={e => removeResource(e, moduleId, geo, activityId, resource.resourceId)}>
-          <i className="tiny material-icons red-text text-darken-2">clear</i>
-        </a>
-      </td>) : null}
+        <input className="text-right browser-default" type="number" min="0" max="9999"
+          value={resourceHours}
+          onChange={(e) => resourceHoursChanged(e.target.value)}
+          disabled={viewMode === VIEW_MODES.VIEW} />
+      </td>
+      <td className="text-right">{resource.cost}</td>
+      {viewMode !== VIEW_MODES.VIEW ? (
+        <td className="text-right">
+          <a title="Remove resource" onClick={() => removeResource(moduleId, activityId, resource.id)}>
+            <i className="tiny material-icons red-text text-darken-2">clear</i>
+          </a>
+        </td>) : null}
     </tr>
   );
 };
@@ -24,7 +45,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    removeResource: (moduleId, activityId, resourceId) => dispatch(removeResourceFromSelectedQuotation(moduleId, activityId, resourceId)),
+    editResource: (moduleId, activityId, resource) => dispatch(editResourceInSelectedQuotation(moduleId, activityId, resource))
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Resource);
