@@ -10,7 +10,7 @@ import {
 } from "../store/selectors/selector";
 import { addModuleToSelectedQuotation } from "../store/actions/quotationActions";
 
-const QuotationNewModule = ({ quotation, baseModules, project, addModuleToQuotation }) => {
+const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) => {
   const [availableModules, setAvailableModules] = useState([]);
   const [availableGeos, setAvailableGeos] = useState([]);
 
@@ -167,4 +167,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QuotationNewModule);
+export default connect(mapStateToProps, mapDispatchToProps)(NewModule);
