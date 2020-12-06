@@ -256,9 +256,7 @@ const Activity = ({
                       activity.resources
                       ? activity.resources.map((resource) => (
                         <Resource
-                          key={
-                            moduleId + geo + activity.id + resource.resourceId
-                          }
+                          key={resource.id}
                           moduleId={moduleId}
                           activityId={activity.id}
                           resource={resource}

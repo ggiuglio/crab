@@ -6,17 +6,24 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import { addResourceToSelectedQuotation } from "../store/actions/quotationActions";
 
 const NewResource = ({ modalData, resources, createResource }) => {
-  const [resourceHours, setResourceHours] = useState("");
-  const [selectedResource, setSelectedResource] = useState("");
+  const [resourceHours, setResourceHours] = useState(0);
+  const [selectedResource, setSelectedResource] = useState({id: "-1", titile: "Select resource"});
+  const [resourceList, selectResourceList] = useState([]);
+
+  useEffect(() => {
+    selectResourceList([{id: 1, title: "Select resource"}, ...resources]);
+  }, [resources])
 
   useEffect(() => {
     const modal = document.querySelectorAll("#modal-resource");
     const modalInstance = M.Modal.getInstance(modal[0]);
-    setSelectedResource(undefined);
-    setResourceHours(undefined);
+    const dropwon = document.querySelectorAll("#select-reource");
+    setSelectedResource({id: "-1", title: "Select resource"});
+    setResourceHours(0);
     if (modalData) {
       modalInstance.open();
     }
+  
   }, [modalData]);
 
   const resourceChange = (resourceId) => {
@@ -34,8 +41,6 @@ const NewResource = ({ modalData, resources, createResource }) => {
       title: selectedResource.title
     }
     createResource(modalData.moduleId, modalData.activityId, resource);
-    setSelectedResource(undefined);
-    setResourceHours(undefined);
   };
 
   const canAddResource = () => {
@@ -52,11 +57,10 @@ const NewResource = ({ modalData, resources, createResource }) => {
               id="wrapper-select-resource"
               className="input-field col s12 m6"
             >
-              <select
+              <select id="select-resource" value={selectedResource}
                 onChange={(e) => resourceChange(e.target.value)}
               >
-                <option value="-1">Select a resource</option>
-                {resources.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
+                {resourceList.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
               </select>
               <label className="active">Resource</label>
             </div>

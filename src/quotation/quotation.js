@@ -22,7 +22,7 @@ import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
 import { addQuotation, startNewQuotation, editSelectedQuotation } from "../store/actions/quotationActions";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
-import QuotationNewModule from "./newModule";
+import NewModule from "./newModule";
 import NewResource from "./newResource";
 
 const NewQuotation = ({
