@@ -33,9 +33,11 @@ const mapQuotation = (quotation) => {
     quotation.quotationCost = 0;
     if (quotation.modules) {
       Object.keys(quotation.modules).forEach((k) => {
-        quotation.modules[k].id = k;
-        quotation.quotationCost += quotation.modules[k].moduleCost;
-        modules.push(mapModule(quotation.modules[k]));
+        let module = quotation.modules[k]
+        module.id = k;
+        module = mapModule(quotation.modules[k])
+        quotation.quotationCost += module.moduleCost;
+        modules.push(module);
       });
     }
     quotation.modules = modules.sort((a, b) => a.index > b.index ? 1 : -1);
@@ -67,8 +69,10 @@ const mapActivity = (activity) => {
   if (activity.resources) {
     Object.keys(activity.resources).forEach((k) => {
       activity.resources[k].id = k;
-      activity.resources[k].id = k;
       activity.unitCost += activity.resources[k].cost;
+      if (activity.fixedCost) {
+        activity.unitCost += activity.fixedCost;
+      }
       resources.push(activity.resources[k]);
     });
   }

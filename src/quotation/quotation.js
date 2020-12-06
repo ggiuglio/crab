@@ -191,10 +191,9 @@ const NewQuotation = ({
     history.push(`/project/quotations/?project=${project.id}`)
   };
 
-
   const checkCreateDisabled = () => {
     return !selectedQuotation || !selectedQuotation.code
-  } 
+  };
 
   const editQuotationCodeInput = (code) => {
     setQuotationCode(code);
@@ -353,7 +352,7 @@ const NewQuotation = ({
                     </div>
                     <div className="col s12 m4 l4 z-depth-1 qtCost">
                       <h6 className="bolder price center">
-                        selectedQuotation cost {selectedQuotation.quotationCost || 0}
+                        Quotation cost {selectedQuotation.quotationCost || 0}
                       </h6>
                     </div>
                     {viewMode === VIEW_MODES.VIEW ? null : (
