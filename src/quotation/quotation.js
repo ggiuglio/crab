@@ -342,12 +342,12 @@ const NewQuotation = ({
                     </ul>
                     <div className="col s12 m4 l4 z-depth-1 qtCost">
                       <h6 className="bolder price center">
-                        Price without PT {selectedQuotation.quotationCostNoPt || 0}
+                        Price without PT {selectedQuotation.quotationNotPTCost || 0}
                       </h6>
                     </div>
                     <div className="col s12 m4 l4 z-depth-1 qtCost">
                       <h6 className="bolder price center">
-                        PT only {selectedQuotation.quotationCostPtOnly || 0}
+                        PT only {selectedQuotation.quotationPTCost || 0}
                       </h6>
                     </div>
                     <div className="col s12 m4 l4 z-depth-1 qtCost">

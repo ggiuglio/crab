@@ -31,12 +31,20 @@ const mapQuotation = (quotation) => {
   const modules = [];
   if (quotation) {
     quotation.quotationCost = 0;
+    quotation.quotationPTCost = 0;
+    quotation.quotationNotPTCost = 0;
+
     if (quotation.modules) {
       Object.keys(quotation.modules).forEach((k) => {
         let module = quotation.modules[k]
         module.id = k;
         module = mapModule(quotation.modules[k])
         quotation.quotationCost += module.moduleCost;
+        if(module.boolpt) {
+          quotation.quotationPTCost += module.moduleCost;
+        } else {
+          quotation.quotationNotPTCost += module.moduleCost;
+        } 
         modules.push(module);
       });
     }
@@ -70,11 +78,11 @@ const mapActivity = (activity) => {
     Object.keys(activity.resources).forEach((k) => {
       activity.resources[k].id = k;
       activity.unitCost += activity.resources[k].cost;
-      if (activity.fixedCost) {
-        activity.unitCost += activity.fixedCost;
-      }
       resources.push(activity.resources[k]);
     });
+  }
+  if (activity.fixedCost) {
+    activity.unitCost += activity.fixedCost;
   }
   activity.resources = resources;
   activity.activityCost = activity.unitCost * activity.unitNumber;

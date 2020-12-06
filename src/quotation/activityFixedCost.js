@@ -12,7 +12,7 @@ const ActivityFixedCost = ({ moduleId, activity, editActivity, viewMode }) => {
 
   const fixedCostChanged = (cost) => {
     setFixedCost(cost);
-    activity.fixedCost = cost;
+    activity.fixedCost = parseInt(cost);
     editActivity(moduleId, activity);
   }
 
@@ -24,7 +24,7 @@ const ActivityFixedCost = ({ moduleId, activity, editActivity, viewMode }) => {
 
   return (
     <tr>
-      <td>FixedCost</td>
+      <td>Fixed cost</td>
       <td className="text-right"></td>
       <td className="text-right">
       </td>
