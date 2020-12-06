@@ -28,19 +28,21 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
         geos.push({ code: k, description: project.geo[k].description });
       });
 
-      baseModules.map(bm => {
+      let modules = JSON.parse(JSON.stringify(baseModules));
+
+      modules.map(bm => {
         let geosNotInUse = geos.filter(g => (quotation.modules.filter(qm => qm.code === bm.code+g.code)).length == 0)
 
         bm.availableGeos = geosNotInUse;
       });
 
-      baseModules.unshift({
+      modules.unshift({
         code: '-1',
         title: "Select module",
         availableGeos: ['']
       });
 
-      setAvailableModules(baseModules);
+      setAvailableModules(modules);
       setAvailableGeos([]);
       setSelectedModule({
         code: "-1",
@@ -77,7 +79,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
 
   const changeSelectModuleInput = (code) => {
     if (code != '-1') {
-      const module = baseModules.find(m => m.code === code);
+      const module = availableModules.find(m => m.code === code);
       setSelectedModule(module);
 
       const gs = [...module.availableGeos];

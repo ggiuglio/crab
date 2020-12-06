@@ -3,7 +3,6 @@ export const getQuotations = (state) => mapQuotationList(state.quotations);
 export const getQuotation = (state) => state.selectedQuotationData ? getSingleQuotation(state.selectedQuotationData) : undefined;
 export const getQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations);
 export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules);
-export const getAllModulesAsList = (state) => mapAllModules(state.baseModules);
 export const getModalResourceData = (state) => state.resourceModalData; 
 
 const mapQuotationList = (quotations) => {
@@ -181,23 +180,3 @@ const mapAllBaseEntities = (modules) => {
 
   return { modules: moduleList, activities: activityList };
 };
-
-const mapAllModules = (modules) => {
-  const moduleList = [];
-  if (modules) {
-    Object.keys(modules).forEach((k) => {
-      modules[k].id = k;
-      const activityList = [];
-      if (modules[k].activities) {
-        Object.keys(modules[k].activities).forEach((j) => {
-          modules[k].activities[j].id = j;
-          modules[k].activities[j].moduleId = modules[k].id;
-          activityList.push(modules[k].activities[j]);
-        });
-      }
-      modules[k].activities = activityList;
-      moduleList.push(modules[k]);
-    });
-  }
-  return moduleList;
-}

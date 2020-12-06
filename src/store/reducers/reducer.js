@@ -156,13 +156,16 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case ADD_MODULE_TO_SELECTED_QUOTATION: {
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      addModuleToSelectedQuotation(updatedQuotation, action.module)
+
       return {
         ...state,
-        selectedQuotationData: addModuleToSelectedQuotation(state.selectedQuotationData, action.module)
+        selectedQuotationData: updatedQuotation
       }
     }
     case REMOVE_MODULE_FROM_SELECTED_QUOTATION: {
-      let updatedQuotation = state.selectedQuotationData;
+      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
       delete updatedQuotation.modules[action.moduleId];
       return {
         ...state,
@@ -176,7 +179,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION: {
-      let updatedQuotation = state.selectedQuotationData;
+      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
       delete updatedQuotation.modules[action.moduleId].activities[action.activityId];
       return {
         ...state,
@@ -184,8 +187,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case EDIT_ACTIVITY_IN_SELECTED_QUOTATION: {
-      let updatedQuotation = state.selectedQuotationData;
-      let updatedActivity = state.selectedQuotationData.modules[action.moduleId].activities[action.activity.id];
+      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedActivity = updatedQuotation.modules[action.moduleId].activities[action.activity.id];
       updatedActivity.responsibilityCRO = action.activity.responsibilityCRO;
       updatedActivity.responsibilitySponsor = action.activity.responsibilitySponsor;
       updatedActivity.unitNumber = action.activity.unitNumber;
@@ -208,7 +211,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case ADD_RESOURCE_TO_SELECTED_QUOTATION: {
-      let updatedQuotation = addResourceSelectedQuotation(state.selectedQuotationData, action.moduleId, action.activityId, action.resource);
+      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      updatedQuotation = addResourceSelectedQuotation(updatedQuotation, action.moduleId, action.activityId, action.resource);
       return {
         ...state,
         selectedQuotationData: updatedQuotation

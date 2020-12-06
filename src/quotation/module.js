@@ -4,7 +4,7 @@ import Activity from "./activity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { VIEW_MODES } from "../store/constants/constants";
 import { removeModuleFromSelectedQuotation, addActivityToSelectedQuotation } from "../store/actions/quotationActions";
-import { getAllModulesAsList } from "../store/selectors/quotationSelector";
+import { getBaseModulesWithActivitiesAsList } from "../store/selectors/selector";
 
 const Module = ({
   module,
@@ -157,7 +157,7 @@ const Module = ({
 
 const mapStateToProps = (state) => {
   return {
-    baseModules: getAllModulesAsList(state)
+    baseModules: getBaseModulesWithActivitiesAsList(state)
   };
 };
 
