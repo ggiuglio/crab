@@ -5,6 +5,7 @@ import { getProjects } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import ProjectTile from "./projectTile";
 import { selectProject } from "../store/actions/actionsCreator";
+import Preloader from "../common/preloader";
 
 const Projects = ({ projects, clearSelectedProject }) => {
   React.useEffect(() => {
@@ -62,19 +63,7 @@ const Projects = ({ projects, clearSelectedProject }) => {
         </div>
       ) : (
         <div className="center valign-page-center">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div>
-              <div className="gap-patch">
-                <div className="circle"></div>
-              </div>
-              <div className="circle-clipper right">
-                <div className="circle"></div>
-              </div>
-            </div>
-          </div>
+          <Preloader classes="preloader-wrapper big active" />
         </div>
       )}
     </div>

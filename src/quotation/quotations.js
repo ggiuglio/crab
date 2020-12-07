@@ -9,6 +9,7 @@ import QuotationTile from "./quotationTile";
 import { history } from "../App";
 import {QUOTATION_TYPES} from "../store/constants/constants";
 import { startNewQuotation } from "../store/actions/quotationActions";
+import Preloader from "../common/preloader";
 
 const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loadProject, startNewQuotation }) => {
   useEffect(() => {
@@ -92,19 +93,7 @@ const Quotations = ({ selectedProjectId, project, quotations, chooseProject, loa
         </div>
         : (
         <div className="center valign-page-center">
-          <div className="preloader-wrapper big active">
-            <div className="spinner-layer spinner-blue-only">
-              <div className="circle-clipper left">
-                <div className="circle"></div>
-              </div>
-              <div className="gap-patch">
-                <div className="circle"></div>
-              </div>
-              <div className="circle-clipper right">
-                <div className="circle"></div>
-              </div>
-            </div>
-          </div>
+          <Preloader classes="preloader-wrapper big active" />
         </div>
       )}
     </div>
