@@ -76,7 +76,7 @@ const NewQuotation = ({
       setQuotationCode(selectedQuotation.code);
     }
   }, [project, people, baseModules, selectedQuotation]);
-  
+
   React.useEffect(() => {
     let collapsible = document.querySelectorAll(".collapsible");
     if (collapsible)
@@ -110,7 +110,6 @@ const NewQuotation = ({
       };
     });
   }, [selectedQuotation]);
-
 
   const togglePeopleTable = (evt) => {
     evt.preventDefault();
@@ -238,9 +237,9 @@ const NewQuotation = ({
        );
    }; */
 
-   /* const handlePersonsTableCreate = (pArray) => {
-    setPersons(pArray);
-  }; */
+  /* const handlePersonsTableCreate = (pArray) => {
+   setPersons(pArray);
+ }; */
 
   /* const handlePersonsTableChange = (geo, personId, value, isGeoBool) => {
     const personsCopy = [...persons];
@@ -309,7 +308,6 @@ const NewQuotation = ({
                     <NewModule />
                     : ''}
                 </div>
-                {selectedQuotation.type === QUOTATION_TYPES.SPONSOR ? (
                   <div className="row">
                     <div className="col s1 offset-s11">
                       <a
@@ -326,7 +324,6 @@ const NewQuotation = ({
                       </a>
                     </div>
                   </div>
-                ) : null}
 
                 <div className="row">
                   <div className="col s12" id="quotationGroup">
@@ -367,30 +364,27 @@ const NewQuotation = ({
                       </div>
                     )}
                   </div>
-                  {selectedQuotation.type === QUOTATION_TYPES.SPONSOR ? (
-                    <div
-                      className="col s4 m4 l3 scale-transition scale-out"
-                      id="peopleTable"
-                    >
-                      <Person
-                        project={project}
-                        people={people}
-                        persons={persons}
-                        handleCreate={handlePersonsTableCreate}
-                        handleChange={handlePersonsTableChange}
-                        viewMode={viewMode}
-                      />
-                    </div>
-                  ) : null}
+                  <div
+                    className="col s4 m4 l3 scale-transition scale-out"
+                    id="peopleTable"
+                  >
+                    <Person
+                      project={project}
+                      people={people}
+                      persons={persons}
+                      handleCreate={handlePersonsTableCreate}
+                      handleChange={handlePersonsTableChange}
+                      viewMode={viewMode}
+                    />
+                  </div>
                 </div>
               </form>
 
-              {selectedQuotation.quotationType === QUOTATION_TYPES.SPONSOR &&
-                viewMode !== VIEW_MODES.VIEW ? (
-                  <div>
+              { viewMode !== VIEW_MODES.VIEW ? (
+                <div>
                   <NewResource />
-                  </div>
-                ) : null}
+                </div>
+              ) : null}
             </div>
           ) : (
               <div className="center valign-page-center">

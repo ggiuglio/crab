@@ -15,8 +15,15 @@ const Resource = ({ resource, moduleId, activityId, editResource, removeResource
 
   const resourceHoursChanged = (hours) => {
     setResourceHours(hours);
-    resource.hours = hours;
-    editResource(moduleId, activityId, resource);
+    const newResource = {
+      id: resource.id,
+      hours: hours,
+      cost: parseFloat(resource.hourCost) * parseInt(hours),
+      hourCost: parseFloat(resource.hourCost),
+      title: resource.title
+    };
+
+    editResource(moduleId, activityId, newResource);
   }
 
   return (

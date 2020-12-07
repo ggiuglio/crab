@@ -10,10 +10,10 @@ import {
   SHOW_ACTIVITY_RESOURCE_MODAL,
   ADD_RESOURCE_TO_SELECTED_QUOTATION,
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
-  EDIT_RESOURCE_IN_SELECTED_QUOTATION
+  EDIT_RESOURCE_IN_SELECTED_QUOTATION,
+  HYDE_ACTIVITY_RESOURCE_MODAL
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
-import resource from '../../quotation/resource.js';
 
 export const selectQuotation = (quotationId) => {
   return dispatch => {
@@ -197,4 +197,10 @@ export const showActivityResourceModal = (moduleId, activityId) => {
   }
 } 
 
-
+export const hideActivityResourceModal = () => {
+  return dispatch => {
+    return {
+      type: HYDE_ACTIVITY_RESOURCE_MODAL
+    }
+  }
+}

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { getModalResourceData } from "../store/selectors/quotationSelector";
 import { getPeople } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
-import { addResourceToSelectedQuotation } from "../store/actions/quotationActions";
+import { addResourceToSelectedQuotation, hideActivityResourceModal } from "../store/actions/quotationActions";
 
 const NewResource = ({ modalData, resources, createResource }) => {
   const [resourceHours, setResourceHours] = useState(0);
@@ -17,10 +17,9 @@ const NewResource = ({ modalData, resources, createResource }) => {
   useEffect(() => {
     const modal = document.querySelectorAll("#modal-resource");
     const modalInstance = M.Modal.getInstance(modal[0]);
-    const dropwon = document.querySelectorAll("#select-reource");
     setSelectedResource({id: "-1", title: "Select resource"});
     setResourceHours(0);
-    if (modalData) {
+    if (modalData.showModal) {
       modalInstance.open();
     }
   
@@ -41,11 +40,21 @@ const NewResource = ({ modalData, resources, createResource }) => {
       title: selectedResource.title
     }
     createResource(modalData.moduleId, modalData.activityId, resource);
+    const modal = document.querySelectorAll("#modal-resource");
+    const modalInstance = M.Modal.getInstance(modal[0]);
+    modalInstance.close();
   };
 
   const canAddResource = () => {
     return selectedResource && resourceHours && resourceHours > 0
-  }
+  };
+
+  const closeModal = () => {
+    hideActivityResourceModal();
+    const modal = document.querySelectorAll("#modal-resource");
+    const modalInstance = M.Modal.getInstance(modal[0]);
+    modalInstance.close();
+  };
 
   return (
     <div id="modal-resource" className="modal">
@@ -101,16 +110,13 @@ const NewResource = ({ modalData, resources, createResource }) => {
         : ''}
       <div className="modal-footer">
         <a
-          className="modal-close waves-effect waves-indigo btn-flat"
-          onClick={() => {
-            setSelectedResource(undefined);
-            setResourceHours(0);
-          }}
+          className="waves-indigo btn-flat"
+          onClick={() => closeModal()}
         >
           Cancel
                  </a>
         <a
-          className="modal-close btn green darken-1 waves-effect waves-light"
+          className="btn green darken-1 waves-effect waves-light"
           disabled={!canAddResource()}
           onClick={() => addResource()}
         >
@@ -120,7 +126,6 @@ const NewResource = ({ modalData, resources, createResource }) => {
     </div>
   )
 }
-
 
 const mapStateToProps = (state) => {
   return {

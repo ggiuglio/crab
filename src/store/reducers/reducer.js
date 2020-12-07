@@ -21,7 +21,8 @@ import {
   SHOW_ACTIVITY_RESOURCE_MODAL,
   ADD_RESOURCE_TO_SELECTED_QUOTATION,
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
-  EDIT_RESOURCE_IN_SELECTED_QUOTATION
+  EDIT_RESOURCE_IN_SELECTED_QUOTATION,
+  HYDE_ACTIVITY_RESOURCE_MODAL
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -38,7 +39,9 @@ export const INITIAL_STATE = {
   showNewInvoice: false,
   viewMode: VIEW_MODES.VIEW,
   qotationType: undefined,
-  resourceModalData: undefined
+  resourceModalData: {
+    showModal: false
+  }
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
@@ -114,6 +117,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
       return {
         ...state,
+        viewMode: VIEW_MODES.VIEW,
         selectedQuotationId: action.quotation,
         selectedQuotationData: quotation
       };
@@ -201,13 +205,23 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case SHOW_ACTIVITY_RESOURCE_MODAL: {
-      let modal = {
-        activityId: action.activityId,
-        moduleId: action.moduleId
-      }
       return {
         ...state,
-        resourceModalData: modal
+        resourceModalData: {
+          activityId: action.activityId,
+          moduleId: action.moduleId,
+          showModal: true
+        }
+      }
+    }
+    case HYDE_ACTIVITY_RESOURCE_MODAL: {
+      return {
+        ...state,
+        resourceModalData: {
+          activityId: undefined,
+          moduleId: undefined,
+          showModal: false
+        }
       }
     }
     case ADD_RESOURCE_TO_SELECTED_QUOTATION: {
@@ -215,7 +229,12 @@ const Reducer = (state = INITIAL_STATE, action) => {
       updatedQuotation = addResourceSelectedQuotation(updatedQuotation, action.moduleId, action.activityId, action.resource);
       return {
         ...state,
-        selectedQuotationData: updatedQuotation
+        selectedQuotationData: updatedQuotation,
+        resourceModalData: {
+          activityId: action.activityId,
+          moduleId: action.moduleId,
+          showModal: false
+        }
       }
     }
     case REMOVE_RESOURCE_FROM_SELECTED_QUOTATION: {
@@ -229,9 +248,10 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case EDIT_RESOURCE_IN_SELECTED_QUOTATION: {
-      const updatedQuotation = state.selectedQuotationData;
-      const updatedResource = state.selectedQuotationData.modules[action.moduleId].activities[action.activityId].resources[action.resource.id];
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedResource = updatedQuotation.modules[action.moduleId].activities[action.activityId].resources[action.resource.id];
       updatedResource.hours = action.resource.hours;
+      updatedResource.cost = parseFloat(updatedResource.hourCost) * parseInt(updatedResource.hours);
 
       return {
         ...state,
