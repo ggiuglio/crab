@@ -4,6 +4,7 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site/site";
 import { createNewProject } from "../store/actions/actionsCreator";
+import Preloader from "../common/preloader";
 
 const NewProject = ({ createProject }) => {
   //MATERIALIZE GEO SELECT INSTANCE
@@ -237,11 +238,22 @@ const NewProject = ({ createProject }) => {
         ...geo[subregion],
         [nation]: {
           sites: [...siteList],
-          name: document.getElementById(`geo_option_${nation}`).text,
+          name: getNationName(subregion, nation),
         },
       },
     });
     setSiteName("");
+  };
+
+  const getNationName = (subregion, nation) => {
+    if(subregionList.hasOwnProperty(subregion)) {
+      subregionList[subregion].map(n => {
+        if(n.cca3 === nation)
+        return n.name;
+      });
+    }
+
+    return '';
   };
 
   const removeSite = (subregion, nation, idx) => {
@@ -272,7 +284,7 @@ const NewProject = ({ createProject }) => {
           ...geo[subregion],
           [nation]: {
             sites: sitesCopy,
-            name: document.getElementById(`geo_option_${nation}`).text,
+            name: getNationName(subregion, nation),
           },
         },
       });
@@ -343,19 +355,7 @@ const NewProject = ({ createProject }) => {
           <select multiple id="geo" onChange={(e) => geoChange()}></select>
           <label>Geo</label>
           <div className="center">
-            <div className="preloader-wrapper small active hide">
-              <div className="spinner-layer spinner-blue-only">
-                <div className="circle-clipper left">
-                  <div className="circle"></div>
-                </div>
-                <div className="gap-patch">
-                  <div className="circle"></div>
-                </div>
-                <div className="circle-clipper right">
-                  <div className="circle"></div>
-                </div>
-              </div>
-            </div>
+            <Preloader classes="preloader-wrapper small active hide" />
           </div>
         </div>
 
