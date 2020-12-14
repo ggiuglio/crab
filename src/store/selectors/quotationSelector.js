@@ -40,7 +40,7 @@ const mapQuotation = (quotation) => {
         module.id = k;
         module = mapModule(quotation.modules[k])
         quotation.quotationCost += module.moduleCost;
-        if(module.boolpt) {
+        if(module.isPassthrough) {
           quotation.quotationPTCost += module.moduleCost;
         } else {
           quotation.quotationNotPTCost += module.moduleCost;
