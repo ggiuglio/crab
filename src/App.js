@@ -28,7 +28,6 @@ library.add(fab, fas);
 
 class App extends Component {
   componentDidMount() {
-    M.AutoInit();
     FirebaseInstance.auth.onAuthStateChanged((user) => {
       this.props.setUser(user);
 

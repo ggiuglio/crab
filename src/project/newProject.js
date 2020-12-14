@@ -218,7 +218,7 @@ const NewProject = ({ createProject }) => {
       !geo.hasOwnProperty(subregion) ||
       !geo[subregion].hasOwnProperty(nation)
     ) {
-      console.log("errore");
+      console.log("error");
       return;
     }
 

@@ -5,59 +5,59 @@
     "professionals": {
       "001": {
         "title": "PM",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 120
       },
       "002": {
         "title": "CRA",
-        "geobool": true,
+        "isFeeGeoBased": true,
         "fee": 100
       },
       "003": {
         "title": "DM",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 90
       },
       "004": {
         "title": "IT",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 60
       },
       "005": {
         "title": "CTA",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 40
       },
       "006": {
         "title": "LCRA",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 100
       },
       "007": {
         "title": "MW",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 150
       },
       "008": {
         "title": "PhV",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 150
       },
       "009": {
         "title": "STAT",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 150
       },
       "010": {
         "title": "DIR",
-        "geobool": false,
+        "isFeeGeoBased": false,
         "fee": 120
       }
     },
     "baseModules": {
       "0001": {
         "title": "Study set-up",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 1,
         "code": "set",
         "activities": {
@@ -173,7 +173,7 @@
       },
       "0002": {
         "title": "Feasibility",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 2,
         "code": "fea",
         "activities": {
@@ -223,7 +223,7 @@
       },
       "0003": {
         "title": "Regulatory",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 3,
         "code": "reg",
         "activities": {
@@ -315,7 +315,7 @@
       },
       "0004": {
         "title": "Study documents filing",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 4,
         "code": "fil",
         "activities": {
@@ -359,7 +359,7 @@
       },
       "0005": {
         "title": "Study management",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 5,
         "code": "man",
         "activities": {
@@ -463,7 +463,7 @@
       },
       "0006": {
         "title": "Study meetings",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 6,
         "code": "mee",
         "activities": {
@@ -579,7 +579,7 @@
       },
       "0007": {
         "title": "Monitoring",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 7,
         "code": "mon",
         "activities": {
@@ -641,7 +641,7 @@
       },
       "0008": {
         "title": "Data management",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 8,
         "code": "dat",
         "activities": {
@@ -901,7 +901,7 @@
       },
       "0009": {
         "title": "Safety reporting",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 9,
         "code": "saf",
         "activities": {
@@ -1011,7 +1011,7 @@
       },
       "0010": {
         "title": "Statistics",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 10,
         "code": "sta",
         "activities": {
@@ -1085,7 +1085,7 @@
       },
       "0011": {
         "title": "Clinical reporting",
-        "boolpt": false,
+        "isPassthrough": false,
         "index": 11,
         "code": "rep",
         "activities": {
@@ -1123,7 +1123,7 @@
       },
       "0012": {
         "title": "GENERAL Pass through costs [7% overheaded]",
-        "boolpt": true,
+        "isPassthrough": true,
         "index": 12,
         "code": "gpt",
         "activities": {
@@ -1227,7 +1227,7 @@
       },
       "0013": {
         "title": "INFORMATION TECHNOLOGY Pass through costs [7% overheaded]",
-        "boolpt": true,
+        "isPassthrough": true,
         "index": 13,
         "code": "ipt",
         "activities": {

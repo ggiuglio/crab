@@ -11,7 +11,8 @@ import {
   ADD_RESOURCE_TO_SELECTED_QUOTATION,
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
-  HYDE_ACTIVITY_RESOURCE_MODAL
+  HYDE_ACTIVITY_RESOURCE_MODAL,
+  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 
@@ -154,9 +155,9 @@ export const editActivityInSelectedQuotation = (moduleId, activity) => {
   }
 }
 
-export const addResourceToSelectedQuotation = (moduleId, activityId, resource) =>{
+export const addResourceToSelectedQuotation = (moduleId, activityId, resource) => {
   return dispatch => {
-    return dispatch ({
+    return dispatch({
       type: ADD_RESOURCE_TO_SELECTED_QUOTATION,
       moduleId: moduleId,
       activityId: activityId,
@@ -167,7 +168,7 @@ export const addResourceToSelectedQuotation = (moduleId, activityId, resource) =
 
 export const removeResourceFromSelectedQuotation = (moduleId, activityId, resourceId) => {
   return dispatch => {
-    return dispatch ({
+    return dispatch({
       type: REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
       moduleId: moduleId,
       activityId: activityId,
@@ -176,9 +177,9 @@ export const removeResourceFromSelectedQuotation = (moduleId, activityId, resour
   }
 }
 
-export const editResourceInSelectedQuotation = (moduleId, activityId, resource) =>{
+export const editResourceInSelectedQuotation = (moduleId, activityId, resource) => {
   return dispatch => {
-    return dispatch ({
+    return dispatch({
       type: EDIT_RESOURCE_IN_SELECTED_QUOTATION,
       moduleId: moduleId,
       activityId: activityId,
@@ -187,15 +188,16 @@ export const editResourceInSelectedQuotation = (moduleId, activityId, resource) 
   }
 }
 
-export const showActivityResourceModal = (moduleId, activityId) => {
+export const showActivityResourceModal = (moduleId, moduleGeo, activityId) => {
   return dispatch => {
     return dispatch({
       type: SHOW_ACTIVITY_RESOURCE_MODAL,
       moduleId: moduleId,
+      moduleGeo: moduleGeo,
       activityId: activityId
     })
   }
-} 
+}
 
 export const hideActivityResourceModal = () => {
   return dispatch => {
@@ -203,4 +205,14 @@ export const hideActivityResourceModal = () => {
       type: HYDE_ACTIVITY_RESOURCE_MODAL
     }
   }
+}
+export const editDefaultResourceCostInSelectedQuotation = (resourceId, resourceFee) => {
+  return dispatch => {
+    return dispatch({
+      type: EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
+      resourceId: resourceId,
+      resourceFee: resourceFee
+    })
+  }
+
 }

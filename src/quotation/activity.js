@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import Resource from "./resource";
+import ActivityResource from "./activityResource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
-import { removeActivityFromSelectedQuotation, editActivityInSelectedQuotation, showActivityResourceModal } from "../store/actions/quotationActions";
+import {
+  QUOTATION_TYPES,
+  VIEW_MODES
+} from "../store/constants/constants";
+import {
+  removeActivityFromSelectedQuotation,
+  editActivityInSelectedQuotation,
+  showActivityResourceModal
+} from "../store/actions/quotationActions";
 import ActivityFixedCost from "./activityFixedCost";
 
 const Activity = ({
@@ -64,13 +71,13 @@ const Activity = ({
     editActivity(moduleId, activity);
   };
 
-  const addFixedCost = () => { 
+  const addFixedCost = () => {
     activity.fixedCost = 0;
     editActivity(moduleId, activity);
   };
 
   const openResourceModal = (e) => {
-    showResourceModal(moduleId, activity.id);
+    showResourceModal(moduleId, geo, activity.id);
   }
 
   const toggleResources = (id, event) => {
@@ -250,12 +257,12 @@ const Activity = ({
                   </thead>
                   <tbody>
                     {activity.fixedCost || activity.fixedCost === 0 ? (
-                        <ActivityFixedCost moduleId={moduleId} activity={activity} viewMode={viewMode} />
+                      <ActivityFixedCost moduleId={moduleId} activity={activity} viewMode={viewMode} />
                     ) : null}
                     {quotationType === QUOTATION_TYPES.SPONSOR &&
                       activity.resources
                       ? activity.resources.map((resource) => (
-                        <Resource
+                        <ActivityResource
                           key={resource.id}
                           moduleId={moduleId}
                           activityId={activity.id}
@@ -318,7 +325,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeActivity: (moduleId, activityId) => dispatch(removeActivityFromSelectedQuotation(moduleId, activityId)),
     editActivity: (moduleId, activity) => dispatch(editActivityInSelectedQuotation(moduleId, activity)),
-    showResourceModal: (moduleId, activityId) => dispatch(showActivityResourceModal(moduleId, activityId))
+    showResourceModal: (moduleId, moduleGeo, activityId) => dispatch(showActivityResourceModal(moduleId, moduleGeo, activityId))
   };
 };
 

@@ -6,7 +6,7 @@ import {
   removeResourceFromSelectedQuotation
 } from "../store/actions/quotationActions";
 
-const Resource = ({ resource, moduleId, activityId, editResource, removeResource, viewMode }) => {
+const ActivityResource = ({ resource, moduleId, activityId, editResource, removeResource, viewMode }) => {
   const [resourceHours, setResourceHours] = useState(0);
 
   useEffect(() => {
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Resource);
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityResource);

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   getBaseModules,
-  getPeople,
   getSelectedProjectId,
   getProject,
-  getViewMode
+  getViewMode,
+  getResources,
+  getProfessionals
 } from "../store/selectors/selector";
 import {
   getSelectedQuotationId,
@@ -13,7 +14,7 @@ import {
 } from "../store/selectors/quotationSelector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Module from "./module";
-import Person from "../people/person";
+import ResourceList from "../resource/resourceList";
 import {
   selectProject,
   loadProjectAction,
@@ -30,7 +31,7 @@ const NewQuotation = ({
   selectedQuotation,
   baseModules,
   project,
-  people,
+  resources,
   selectedProjectId,
   selectedQuotationId,
   chooseProject,
@@ -39,7 +40,8 @@ const NewQuotation = ({
   saveQuotationToDb,
   viewMode,
   editQuotationCode,
-  startNewQuotation
+  startNewQuotation,
+  professionals
 }) => {
 
   const [quotationCode, setQuotationCode] = useState('');
@@ -63,7 +65,7 @@ const NewQuotation = ({
     } else {
       if (!project || project.id !== selectedProjectId) {
         loadProject(selectedProjectId);
-      } else {
+      } else if (professionals) {
         if (!selectedQuotationId && location !== "new-quotation") {
           chooseQuotation(queryQuotation);
         }
@@ -76,7 +78,7 @@ const NewQuotation = ({
     if (selectedQuotation) {
       setQuotationCode(selectedQuotation.code);
     }
-  }, [project, people, baseModules, selectedQuotation]);
+  }, [project, baseModules, selectedQuotation, professionals]);
 
   React.useEffect(() => {
     let collapsible = document.querySelectorAll(".collapsible");
@@ -201,12 +203,6 @@ const NewQuotation = ({
   };
 
 
-  // do we need this stuff?
-
-  const handlePersonsTableCreate = () => { }
-
-  const handlePersonsTableChange = () => { }
-
   /*  function getScrollTop() {
      if (typeof window.pageYOffset !== "undefined") {
        // Most browsers
@@ -285,9 +281,9 @@ const NewQuotation = ({
 
   return (
     <div>
-      {selectedQuotation ?
-        <div id="selectedQuotation" className="section">
-          {people ? (
+      {
+        selectedQuotation ?
+          <div id="selectedQuotation" className="section">
             <div>
               <form className="white" onSubmit={(e) => saveQuotation(e)}>
                 <div className="container">
@@ -309,22 +305,22 @@ const NewQuotation = ({
                     <NewModule />
                     : ''}
                 </div>
-                  <div className="row">
-                    <div className="col s1 offset-s11">
-                      <a
-                        href="#"
-                        id="peopleTableTrigger"
-                        onClick={(evt) => togglePeopleTable(evt)}
+                <div className="row">
+                  <div className="col s1 offset-s11">
+                    <a
+                      href="#"
+                      id="peopleTableTrigger"
+                      onClick={(evt) => togglePeopleTable(evt)}
+                    >
+                      <i
+                        className="material-icons indigo-text right"
+                        title="People Fees Table"
                       >
-                        <i
-                          className="material-icons indigo-text right"
-                          title="People Fees Table"
-                        >
-                          assignment_ind
+                        assignment_ind
                     </i>
-                      </a>
-                    </div>
+                    </a>
                   </div>
+                </div>
 
                 <div className="row">
                   <div className="col s12" id="quotationGroup">
@@ -369,44 +365,36 @@ const NewQuotation = ({
                     className="col s4 m4 l3 scale-transition scale-out"
                     id="peopleTable"
                   >
-                    <Person
-                      project={project}
-                      people={people}
-                      persons={persons}
-                      handleCreate={handlePersonsTableCreate}
-                      handleChange={handlePersonsTableChange}
-                      viewMode={viewMode}
-                    />
+                    <ResourceList resources={resources} />
                   </div>
                 </div>
               </form>
 
-              { viewMode !== VIEW_MODES.VIEW ? (
+              {viewMode !== VIEW_MODES.VIEW ? (
                 <div>
                   <NewResource />
                 </div>
               ) : null}
             </div>
-          ) : (
-              <div className="center valign-page-center">
-                <Preloader classes="preloader-wrapper big active" />
-              </div>
-            )}
-        </div>
-        : ''}
+          </div>
+          : <div className="center valign-page-center">
+            <Preloader classes="preloader-wrapper big active" />
+          </div>
+      }
     </div>
   );
-};
+}
 
 const mapStateToProps = (state) => {
   return {
     selectedQuotation: getQuotation(state),
     baseModules: getBaseModules(state),
     project: getProject(state),
-    people: getPeople(state),
     selectedProjectId: getSelectedProjectId(state),
     selectedQuotationId: getSelectedQuotationId(state),
     viewMode: getViewMode(state),
+    resources: getResources(state),
+    professionals: getProfessionals(state)
   };
 };
 

@@ -22,7 +22,8 @@ import {
   ADD_RESOURCE_TO_SELECTED_QUOTATION,
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
-  HYDE_ACTIVITY_RESOURCE_MODAL
+  HYDE_ACTIVITY_RESOURCE_MODAL,
+  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -143,6 +144,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         quotationCost: 0,
         quotationType: action.quotationType,
         modules: {},
+        resources: mapProfessionalAndGeosToResources(state.professionals, state.project.geo)
       }
       return {
         ...state,
@@ -210,7 +212,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         resourceModalData: {
           activityId: action.activityId,
           moduleId: action.moduleId,
-          showModal: true
+          showModal: true,
+          moduleGeo: action.moduleGeo
         }
       }
     }
@@ -220,6 +223,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         resourceModalData: {
           activityId: undefined,
           moduleId: undefined,
+          moduleGeo: undefined,
           showModal: false
         }
       }
@@ -253,6 +257,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
       updatedResource.hours = action.resource.hours;
       updatedResource.cost = parseFloat(updatedResource.hourCost) * parseInt(updatedResource.hours);
 
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION: {
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      updatedQuotation.resources[action.resourceId].fee = action.resourceFee;
       return {
         ...state,
         selectedQuotationData: updatedQuotation
@@ -298,3 +310,35 @@ const addResourceSelectedQuotation = (quotation, moduleId, activityId, resource)
   quotation.modules[moduleId].activities[activityId].resources[id] = resource;
   return quotation;
 }
+
+const mapProfessionalAndGeosToResources = (professionals, geos) => {
+  const resources = {};
+  if (professionals) {
+    Object.keys(professionals).forEach((j) => {
+      const resource = professionals[j];
+      if (resource.isFeeGeoBased) {
+        Object.keys(geos).forEach((k) => {
+          const id = uuid();
+          resources[id] = {
+            id: id,
+            fee: resource.fee,
+            geo: geos[k].description,
+            title: resource.title,
+            isFeeGeoBased: resource.isFeeGeoBased
+          };
+        });
+      } else {
+        const id = uuid();
+        resources[id] = {
+          id: id,
+          fee: resource.fee,
+          geo: "",
+          title: resource.title,
+          isFeeGeoBased: resource.isFeeGeoBased
+        };
+      }
+    });
+  }
+
+  return resources;
+};

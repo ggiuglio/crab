@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getModalResourceData } from "../store/selectors/quotationSelector";
-import { getPeople } from "../store/selectors/selector";
+import { getResources } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { addResourceToSelectedQuotation, hideActivityResourceModal } from "../store/actions/quotationActions";
 
 const NewResource = ({ modalData, resources, createResource }) => {
   const [resourceHours, setResourceHours] = useState(0);
   const [selectedResource, setSelectedResource] = useState({id: "-1", titile: "Select resource"});
-  const [resourceList, selectResourceList] = useState([]);
+  const [resourceList, setResourceList] = useState([]);
 
   useEffect(() => {
-    selectResourceList([{id: 1, title: "Select resource"}, ...resources]);
-  }, [resources])
+    const filteredResources = resources.filter(r => r.geo === modalData.moduleGeo || r.geo === "");
+    setResourceList([{id: 1, title: "Select resource"}, ...filteredResources]);
+  }, [resources, modalData])
 
   useEffect(() => {
     const modal = document.querySelectorAll("#modal-resource");
@@ -66,10 +67,10 @@ const NewResource = ({ modalData, resources, createResource }) => {
               id="wrapper-select-resource"
               className="input-field col s12 m6"
             >
-              <select id="select-resource" value={selectedResource}
+              <select className="browser-default" id="modal-resource-dropdown" value={selectedResource}
                 onChange={(e) => resourceChange(e.target.value)}
               >
-                {resourceList.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
+                {resourceList.map(r => <option key={r.id} value={r.id}>{`${r.title} ${r.geo ? r.geo : ''}`}</option>)}
               </select>
               <label className="active">Resource</label>
             </div>
@@ -130,7 +131,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
 const mapStateToProps = (state) => {
   return {
     modalData: getModalResourceData(state),
-    resources: getPeople(state)
+    resources: getResources(state)
   };
 };
 

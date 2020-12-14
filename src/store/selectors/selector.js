@@ -4,13 +4,11 @@ export const getProjects = (state) => state.projects ? mapProjectList(state.proj
 export const getProject = (state) => state.project ? state.project : undefined;
 export const getSelectedProjectId = (state) => state.selectedProjectId;
 export const getShowNewInvoice = (state) => state.showNewInvoice;
-export const getPeople = (state) => state.professionals ? mapPeopleList(state.professionals) : undefined;
 export const getBaseModules = (state) => mapBaseModules(state.baseModules);
 export const getBaseModulesWithActivitiesAsList = (state) => mapBaseModulesWithActivitiesAsList(state.baseModules);
-
-
 export const getViewMode = (state) => state.viewMode;
-export const getQuotationType = (state) => state.quotationType;
+export const getResources = (state) => state.selectedQuotationData ? mapResourcesToList(state.selectedQuotationData) : [];
+export const getProfessionals = (state) => state.professionals;
 
 const mapPeopleList = (people) => {
   const peopleList = [];
@@ -44,7 +42,7 @@ const mapBaseModules = (modules) => {
   }
 
   return moduleList;
-}
+};
 
 const mapBaseModulesWithActivitiesAsList = (modules) => {
   const moduleList = [];
@@ -65,4 +63,21 @@ const mapBaseModulesWithActivitiesAsList = (modules) => {
     });
   }
   return moduleList;
-}
+};
+
+const mapResourcesToList = (quotation) => {
+  const resources = [];
+  if (quotation.resources) {
+    Object.keys(quotation.resources).forEach((j) => {
+      resources.push({
+        id: j,
+        fee: quotation.resources[j].fee,
+        geo: quotation.resources[j].geo,
+        title: quotation.resources[j].title,
+        isFeeGeoBased: quotation.resources[j].isFeeGeoBased
+      })
+    });
+  }
+
+  return resources;
+};
