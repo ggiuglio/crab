@@ -26,6 +26,7 @@ import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import NewModule from "./newModule";
 import NewResource from "./newResource";
 import Preloader from "../common/preloader";
+import Provider from "./provider";
 
 const NewQuotation = ({
   selectedQuotation,
@@ -202,83 +203,6 @@ const NewQuotation = ({
     editQuotationCode(code);
   };
 
-
-  /*  function getScrollTop() {
-     if (typeof window.pageYOffset !== "undefined") {
-       // Most browsers
-       return window.pageYOffset;
-     }
- 
-     var d = document.documentElement;
-     if (typeof d.clientHeight !== "undefined") {
-       // IE in standards mode
-       return d.scrollTop;
-     }
- 
-     // IE in quirks mode
-     return document.body.scrollTop;
-   } */
-
-  /*  window.onscroll = () => {
-     const peopleTable = document.getElementById("peopleTable");
-     const quotationGroup = document.getElementById("quotationGroup");
-     if (!peopleTable || !quotationGroup) return;
-     const scroll = getScrollTop();
-     const groupOffset = quotationGroup.offsetTop;
-     if (scroll <= groupOffset)
-       peopleTable.setAttribute("style", "margin-top: 0");
-     else
-       peopleTable.setAttribute(
-         "style",
-         `margin-top: ${scroll - groupOffset}px`
-       );
-   }; */
-
-  /* const handlePersonsTableCreate = (pArray) => {
-   setPersons(pArray);
- }; */
-
-  /* const handlePersonsTableChange = (geo, personId, value, isGeoBool) => {
-    const personsCopy = [...persons];
-    const pIdx = personsCopy.findIndex((p) => {
-      return p.id === personId && p.geo === geo;
-    });
-    if (pIdx != -1) {
-      personsCopy[pIdx] = {
-        ...personsCopy[pIdx],
-        fee: value,
-      };
-    }
-    setPersons(personsCopy);
-
-    const mods = [...selectedQuotation.modules];
-
-    if (isGeoBool) {
-      mods
-        .map((m, idx) => {
-          if (m.geo[Object.keys(m.geo)[0]].description === geo) return idx;
-        })
-        .filter((idx) => idx !== undefined)
-        .map((idx) => {
-          const m = { ...mods[idx] };
-          recalculateResourcesCosts(m, personId, value);
-        });
-    } else {
-      mods.map((m) => {
-        recalculateResourcesCosts(m, personId, value);
-      });
-    }
-
-    const quot = {
-      ...selectedQuotation,
-      modules: mods,
-    };
-
-    //calculateAllModulesTotals(quot);
-  }; */
-
-  // end of stuff I am not sure if we need
-
   return (
     <div>
       {
@@ -300,6 +224,16 @@ const NewQuotation = ({
                         disabled={viewMode === VIEW_MODES.VIEW ? true : null}
                       ></input>
                     </div>
+                  </div>
+                  <div className="row">
+                    {
+                      selectedQuotation.quotationType === "PROVIDER" ?
+                        <div>
+                          <Provider />
+                        </div> :
+                        <div>
+                        </div>
+                    }
                   </div>
                   {viewMode === VIEW_MODES.CREATE || viewMode === VIEW_MODES.EDIT ?
                     <NewModule />

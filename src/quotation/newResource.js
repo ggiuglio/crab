@@ -35,8 +35,6 @@ const NewResource = ({ modalData, resources, createResource }) => {
   const addResource = () => {
     const resource = {
       hours: resourceHours,
-      cost: parseFloat(selectedResource.fee) * parseInt(resourceHours),
-      hourCost: parseFloat(selectedResource.fee),
       code: selectedResource.id,
       title: selectedResource.title
     }
@@ -70,7 +68,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
               <select className="browser-default" id="modal-resource-dropdown" value={selectedResource}
                 onChange={(e) => resourceChange(e.target.value)}
               >
-                {resourceList.map(r => <option key={r.id} value={r.id}>{`${r.title} ${r.geo ? r.geo : ''}`}</option>)}
+                {resourceList.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
               </select>
               <label className="active">Resource</label>
             </div>

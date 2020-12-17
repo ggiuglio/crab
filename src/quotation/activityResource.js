@@ -18,8 +18,6 @@ const ActivityResource = ({ resource, moduleId, activityId, editResource, remove
     const newResource = {
       id: resource.id,
       hours: hours,
-      cost: parseFloat(resource.hourCost) * parseInt(hours),
-      hourCost: parseFloat(resource.hourCost),
       title: resource.title
     };
 

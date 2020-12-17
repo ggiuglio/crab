@@ -259,22 +259,23 @@ const Activity = ({
                     {activity.fixedCost || activity.fixedCost === 0 ? (
                       <ActivityFixedCost moduleId={moduleId} activity={activity} viewMode={viewMode} />
                     ) : null}
-                    {quotationType === QUOTATION_TYPES.SPONSOR &&
+                    {
                       activity.resources
-                      ? activity.resources.map((resource) => (
-                        <ActivityResource
-                          key={resource.id}
-                          moduleId={moduleId}
-                          activityId={activity.id}
-                          resource={resource}
-                          viewMode={viewMode}
-                        />
-                      ))
-                      : null}
+                        ? activity.resources.map((resource) => (
+                          <ActivityResource
+                            key={resource.id}
+                            moduleId={moduleId}
+                            activityId={activity.id}
+                            resource={resource}
+                            viewMode={viewMode}
+                          />
+                        ))
+                        : null
+                    }
                   </tbody>
                 </table>
               </div>
-              {quotationType === QUOTATION_TYPES.SPONSOR &&
+              {
                 viewMode !== VIEW_MODES.VIEW ? (
                   <div className="col s1">
                     <a
@@ -290,25 +291,28 @@ const Activity = ({
                     </i>
                     </a>
                   </div>
-                ) : null}
-              {viewMode !== VIEW_MODES.VIEW && !activity.fixedCost ? (
-                <div className="col s1">
-                  <a
-                    title="Add fixed costs"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      addFixedCost();
-                    }}
-                  >
-                    <i
-                      className="material-icons amber-text text-accent-4"
+                ) : null
+              }
+              {
+                viewMode !== VIEW_MODES.VIEW && !activity.fixedCost ? (
+                  <div className="col s1">
+                    <a
                       title="Add fixed costs"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addFixedCost();
+                      }}
                     >
-                      attach_money
+                      <i
+                        className="material-icons amber-text text-accent-4"
+                        title="Add fixed costs"
+                      >
+                        attach_money
                     </i>
-                  </a>
-                </div>
-              ) : ''}
+                    </a>
+                  </div>
+                ) : ''
+              }
             </div>
           </div>
         </div>

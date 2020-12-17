@@ -38,7 +38,7 @@ const mapQuotation = (quotation) => {
       Object.keys(quotation.modules).forEach((k) => {
         let module = quotation.modules[k]
         module.id = k;
-        module = mapModule(quotation.modules[k])
+        module = mapModule(quotation.modules[k], quotation)
         quotation.quotationCost += module.moduleCost;
         if(module.isPassthrough) {
           quotation.quotationPTCost += module.moduleCost;
@@ -54,12 +54,12 @@ const mapQuotation = (quotation) => {
   return quotation;
 };
 
-const mapModule = (module) => {
+const mapModule = (module, quotation) => {
   const activities = [];
   module.moduleCost = 0;
   if (module.activities) {
     Object.keys(module.activities).forEach((k) => {
-      let activity = mapActivity(module.activities[k])
+      let activity = mapActivity(module.activities[k], quotation)
       activity.id = k;
       module.moduleCost += activity.activityCost;
       activities.push(activity);
@@ -70,12 +70,17 @@ const mapModule = (module) => {
   return module;
 };
 
-const mapActivity = (activity) => {
+const mapActivity = (activity, quotation) => {
   const resources = [];
   activity.unitCost = 0;
   activity.unitNumber = activity.unitNumber ? activity.unitNumber : 0;
   if (activity.resources) {
     Object.keys(activity.resources).forEach((k) => {
+      const resource = activity.resources[k];
+      const quotationResource =  quotation.resources[resource.code];
+      resource.id = k;
+      resource.hourCost = quotationResource.fee;
+      resource.cost = resource.hourCost * resource.hours;
       activity.resources[k].id = k;
       activity.unitCost += activity.resources[k].cost;
       resources.push(activity.resources[k]);

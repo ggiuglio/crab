@@ -10,18 +10,6 @@ export const getViewMode = (state) => state.viewMode;
 export const getResources = (state) => state.selectedQuotationData ? mapResourcesToList(state.selectedQuotationData) : [];
 export const getProfessionals = (state) => state.professionals;
 
-const mapPeopleList = (people) => {
-  const peopleList = [];
-  if (people) {
-    Object.keys(people).forEach((k) => {
-      people[k].id = k;
-      peopleList.push(people[k]);
-    });
-  }
-
-  return peopleList;
-};
-
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {
