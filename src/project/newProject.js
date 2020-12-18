@@ -293,13 +293,22 @@ const NewProject = ({ createProject }) => {
 
   const saveProject = (e) => {
     e.preventDefault();
+    const providerObjects = [];
+
+    for(let i = 0; i < providers.length; i++) {
+      providerObjects.push({
+        id: i.toString(),
+        title: providers[i]
+      });
+    };
+
     const project = {
       title: projectName,
       geo: geo,
       creationDate: new Date().toLocaleString("It-it").split(",")[0],
       PM: pmName,
       status: "Open",
-      providers: providers,
+      providers: providerObjects
     };
     createProject(project);
   };

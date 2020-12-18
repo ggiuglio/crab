@@ -7,7 +7,6 @@ import {
   SELECT_PROJECT,
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA,
-  SET_QUOTATION_TYPE,
   SET_VIEW_MODE
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
@@ -81,7 +80,7 @@ export const loadProjectAction = (projectId) => {
           projectId: projectId
         }
       )
-    })
+    });
   }
 }
 

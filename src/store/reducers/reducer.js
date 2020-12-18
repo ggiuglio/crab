@@ -12,7 +12,7 @@ import {
   LOAD_STATIC_DATA,
   SET_VIEW_MODE,
   INITIALIZE_NEW_QUOTATION,
-  EDIT_SELECTED_QUOTATION,
+  SET_SELECTED_QUOTATION_CODE,
   ADD_MODULE_TO_SELECTED_QUOTATION,
   REMOVE_MODULE_FROM_SELECTED_QUOTATION,
   ADD_ACTIVITY_TO_SELECTED_QUOTATION,
@@ -23,7 +23,8 @@ import {
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
   HYDE_ACTIVITY_RESOURCE_MODAL,
-  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION
+  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
+  SET_SELECTED_QUOTATION_PROVIDER
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -153,7 +154,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         viewMode: VIEW_MODES.CREATE
       }
     }
-    case EDIT_SELECTED_QUOTATION: {
+    case SET_SELECTED_QUOTATION_CODE: {
       const quotation = state.selectedQuotationData;
       quotation.code = action.code;
       return {
@@ -252,8 +253,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case EDIT_RESOURCE_IN_SELECTED_QUOTATION: {
-      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
-      let updatedResource = updatedQuotation.modules[action.moduleId].activities[action.activityId].resources[action.resource.id];
+      const updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      const updatedResource = updatedQuotation.modules[action.moduleId].activities[action.activityId].resources[action.resource.id];
       updatedResource.hours = action.resource.hours;
       updatedResource.cost = parseFloat(updatedResource.hourCost) * parseInt(updatedResource.hours);
 
@@ -263,8 +264,16 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION: {
-      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      const updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
       updatedQuotation.resources[action.resourceId].fee = action.resourceFee;
+      return {
+        ...state,
+        selectedQuotationData: updatedQuotation
+      }
+    }
+    case SET_SELECTED_QUOTATION_PROVIDER: {
+      const updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
+      updatedQuotation.provider = action.provider;
       return {
         ...state,
         selectedQuotationData: updatedQuotation

@@ -54,9 +54,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
 
   }, [baseModules, project])
 
-  const addModule = () => {
-    //selectedModule.availableGeos = selectedModule.availableGeos.filter(ag => ag.code !== selectedGeo.code);
-    
+  const addModule = () => {    
     const newModule = JSON.parse(JSON.stringify(selectedModule));
     newModule.type = selectedModule.code;
     newModule.code += selectedGeo.code;

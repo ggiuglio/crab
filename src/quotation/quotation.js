@@ -21,7 +21,7 @@ import {
 } from "../store/actions/actionsCreator";
 import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
-import { addQuotation, startNewQuotation, editSelectedQuotation } from "../store/actions/quotationActions";
+import { addQuotation, startNewQuotation, editSelectedQuotationCode } from "../store/actions/quotationActions";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import NewModule from "./newModule";
 import NewResource from "./newResource";
@@ -48,7 +48,7 @@ const NewQuotation = ({
   const [quotationCode, setQuotationCode] = useState('');
   const [persons, setPersons] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const query = new URLSearchParams(history.location.search);
     const locationToken = history.location.pathname.split('/');
     const location = locationToken[locationToken.length - 1];
@@ -81,13 +81,13 @@ const NewQuotation = ({
     }
   }, [project, baseModules, selectedQuotation, professionals]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let collapsible = document.querySelectorAll(".collapsible");
     if (collapsible)
       M.Collapsible.init(collapsible, { accordion: false });
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     let unInputs = document.querySelectorAll(".unit-number-input");
     Object.keys(unInputs).map((i) => {
       unInputs[i].addEventListener(
@@ -339,7 +339,7 @@ const mapDispatchToProps = (dispatch) => {
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
     saveQuotationToDb: (selectedQuotation) => dispatch(addQuotation(selectedQuotation)),
     startNewQuotation: (type) => dispatch(startNewQuotation(type)),
-    editQuotationCode: (quotationCode) => dispatch(editSelectedQuotation(quotationCode))
+    editQuotationCode: (quotationCode) => dispatch(editSelectedQuotationCode(quotationCode))
   };
 };
 

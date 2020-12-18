@@ -1,7 +1,8 @@
 import {
   SELECT_QUOTATION,
   INITIALIZE_NEW_QUOTATION,
-  EDIT_SELECTED_QUOTATION,
+  SET_SELECTED_QUOTATION_CODE,
+  SET_SELECTED_QUOTATION_PROVIDER,
   ADD_MODULE_TO_SELECTED_QUOTATION,
   REMOVE_MODULE_FROM_SELECTED_QUOTATION,
   ADD_ACTIVITY_TO_SELECTED_QUOTATION,
@@ -12,7 +13,7 @@ import {
   REMOVE_RESOURCE_FROM_SELECTED_QUOTATION,
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
   HYDE_ACTIVITY_RESOURCE_MODAL,
-  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION
+  EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 
@@ -98,10 +99,10 @@ export const startNewQuotation = (type) => {
   }
 }
 
-export const editSelectedQuotation = (quotationCode) => {
+export const editSelectedQuotationCode = (quotationCode) => {
   return dispatch => {
     return dispatch({
-      type: EDIT_SELECTED_QUOTATION,
+      type: SET_SELECTED_QUOTATION_CODE,
       code: quotationCode
     })
   }
@@ -201,11 +202,12 @@ export const showActivityResourceModal = (moduleId, moduleGeo, activityId) => {
 
 export const hideActivityResourceModal = () => {
   return dispatch => {
-    return {
+    return dispatch({
       type: HYDE_ACTIVITY_RESOURCE_MODAL
-    }
+    });
   }
 }
+
 export const editDefaultResourceCostInSelectedQuotation = (resourceId, resourceFee) => {
   return dispatch => {
     return dispatch({
@@ -215,4 +217,13 @@ export const editDefaultResourceCostInSelectedQuotation = (resourceId, resourceF
     })
   }
 
+}
+
+export const setSelectedQuotationProvider = (provider) => {
+  return dispatch => {
+    return dispatch({
+      type: SET_SELECTED_QUOTATION_PROVIDER,
+      provider: provider
+    })
+  }
 }

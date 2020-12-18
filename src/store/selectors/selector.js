@@ -1,3 +1,5 @@
+import provider from "../../quotation/provider";
+
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
 export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;
@@ -9,6 +11,12 @@ export const getBaseModulesWithActivitiesAsList = (state) => mapBaseModulesWithA
 export const getViewMode = (state) => state.viewMode;
 export const getResources = (state) => state.selectedQuotationData ? mapResourcesToList(state.selectedQuotationData) : [];
 export const getProfessionals = (state) => state.professionals;
+export const getProviders = (state) => mapProviders(state.project);
+
+const mapProviders = (project) => {
+  const providers = project ? project.providers : [];
+  return providers;
+};
 
 const mapProjectList = (projects) => {
   const projectList = [];
