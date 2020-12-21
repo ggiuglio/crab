@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import ActivityResource from "./activityResource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  QUOTATION_TYPES,
   VIEW_MODES
 } from "../store/constants/constants";
 import {
@@ -18,12 +17,10 @@ const Activity = ({
   moduleId,
   geo,
   viewMode,
-  quotationType,
   removeActivity,
   editActivity,
   showResourceModal
 }) => {
-  const [modalInstance, setModalInstance] = useState([]);
 
   const iconTypeMap = {
     document: "folder",
@@ -106,6 +103,7 @@ const Activity = ({
             </span>
             {viewMode !== VIEW_MODES.VIEW ? (
               <a
+                href="#!"
                 className="lateral-margin"
                 title="Remove"
                 onClick={(e) => deleteActivity(e)}
@@ -212,7 +210,7 @@ const Activity = ({
             </label>
           </div>
           <div className="col s2 side-by-side resourcesTrigger">
-            <a onClick={(e) => toggleResources(rdm, e)}>
+            <a href="#!" onClick={(e) => toggleResources(rdm, e)}>
               <FontAwesomeIcon
                 icon="user-tie"
                 className="indigo-text"
@@ -279,6 +277,7 @@ const Activity = ({
                 viewMode !== VIEW_MODES.VIEW ? (
                   <div className="col s1">
                     <a
+                      href="#!"
                       onClick={() => {
                         openResourceModal()
                       }}
@@ -297,6 +296,7 @@ const Activity = ({
                 viewMode !== VIEW_MODES.VIEW && !activity.fixedCost ? (
                   <div className="col s1">
                     <a
+                      href="#!"
                       title="Add fixed costs"
                       onClick={(e) => {
                         e.preventDefault();

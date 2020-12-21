@@ -37,7 +37,7 @@ const ActivityResource = ({ resource, moduleId, activityId, editResource, remove
       <td className="text-right">{resource.cost}</td>
       {viewMode !== VIEW_MODES.VIEW ? (
         <td className="text-right">
-          <a title="Remove resource" onClick={() => removeResource(moduleId, activityId, resource.id)}>
+          <a href="#!" title="Remove resource" onClick={() => removeResource(moduleId, activityId, resource.id)}>
             <i className="tiny material-icons red-text text-darken-2">clear</i>
           </a>
         </td>) : null}

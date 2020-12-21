@@ -8,7 +8,7 @@ const Site = ({ subregion, nation, sites, classes, removeFunction }) => {
 ;
   return (
     <div className={classes}>
-    <img src={`https://restcountries.eu/data/${nation.toLowerCase()}.svg`} className="flag-small z-depth-1" />
+    <img src={`https://restcountries.eu/data/${nation.toLowerCase()}.svg`} alt="" className="flag-small z-depth-1" />
       <span>{nation + ": "}</span>
       {sites.map((site, idx) => (
         <span key={nation + idx}>

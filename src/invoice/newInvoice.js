@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
@@ -46,7 +46,6 @@ const SelectEntity = styled.select`
 `;
 
 const NewInvoice = ({ createInvoice, lists, completeList }) => {
-  const [quotationList, setQuotationList] = useState(lists.quotations);
   const [moduleList, setModuleList] = useState(lists.modules);
   const [activityList, setActivityList] = useState(lists.activities);
   const [quotationId, setQuotationId] = useState("-1");
@@ -149,7 +148,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
             <label htmlFor="quotation">Quotation</label>
             <SelectEntity onChange={e => quotationChange(e.target.value)}>
               {
-                quotationList.map(q =>
+                lists.quotations.map(q =>
                   <option key={q.id} value={q.id}>  {q.code} </option>
                 )
               }

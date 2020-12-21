@@ -31,9 +31,10 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
       let modules = JSON.parse(JSON.stringify(baseModules));
 
       modules.map(bm => {
-        let geosNotInUse = geos.filter(g => (quotation.modules.filter(qm => qm.code === bm.code+g.code)).length == 0)
+        let geosNotInUse = geos.filter(g => (quotation.modules.filter(qm => qm.code === bm.code + g.code)).length === 0)
 
         bm.availableGeos = geosNotInUse;
+        return bm;
       });
 
       modules.unshift({
@@ -54,7 +55,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
 
   }, [baseModules, project])
 
-  const addModule = () => {    
+  const addModule = () => {
     const newModule = JSON.parse(JSON.stringify(selectedModule));
     newModule.type = selectedModule.code;
     newModule.code += selectedGeo.code;
@@ -76,7 +77,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
   };
 
   const changeSelectModuleInput = (code) => {
-    if (code != '-1') {
+    if (code !== '-1') {
       const module = availableModules.find(m => m.code === code);
       setSelectedModule(module);
 
@@ -98,7 +99,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
   }
 
   const canCreate = () => {
-    return selectedModule && selectedGeo && selectedGeo.code !== "-1" && selectedModule.code != '-1';
+    return selectedModule && selectedGeo && selectedGeo.code !== "-1" && selectedModule.code !== '-1';
   };
 
   return (
@@ -139,6 +140,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
       </div>
       <div className="col s2 offset-s5">
         <a
+          href="#!"
           className="waves-effect waves-light btn indigo"
           disabled={!canCreate()}
           onClick={(e) => addModule()}

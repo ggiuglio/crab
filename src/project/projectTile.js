@@ -31,7 +31,7 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
         </div>
         <div className="card-action clear-flow">
           <div className="fixed-action-btn static right">
-            <a className="btn-floating orange darken-4">
+            <a className="btn-floating orange darken-4"  href="#!">
               <i className="material-icons">menu</i>
             </a>
             <ul>

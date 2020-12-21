@@ -20,9 +20,9 @@ const Module = ({
 
   useEffect(() => {
     if (module) {
-      const selectedBaseModule = baseModules.find(m => m.code == module.type);
+      const selectedBaseModule = baseModules.find(m => m.code === module.type);
       setBaseModule(selectedBaseModule);
-      const notSelectedActivities = selectedBaseModule ? JSON.parse(JSON.stringify(selectedBaseModule.activities.filter(ba => !module.activities.find(a => a.code == ba.code)))) : [];
+      const notSelectedActivities = selectedBaseModule ? JSON.parse(JSON.stringify(selectedBaseModule.activities.filter(ba => !module.activities.find(a => a.code === ba.code)))) : [];
       setAvailableActivities(notSelectedActivities);
     }
   }, [module])
@@ -49,7 +49,7 @@ const Module = ({
   }
 
   const activityChange = (activityCode) => {
-    if(activityCode != "-1") {
+    if (activityCode !== "-1") {
       const activity = baseModule.activities.find(a => a.code === activityCode);
       setSelectedActivity(activity);
     }
@@ -70,6 +70,7 @@ const Module = ({
             {module.geo.description}
             {viewMode !== VIEW_MODES.VIEW ? (
               <a
+                href="#!"
                 className="lateral-margin"
                 title="Remove"
                 onClick={() => removeModule(module.id)}
@@ -124,7 +125,7 @@ const Module = ({
                       </option>
                         {availableActivities.map((activity) => {
                           return (
-                            <option key={activity.code} value={activity.code}>
+                            <option key={activity.id} value={activity.code}>
                               {activity.title}
                             </option>
                           );
@@ -134,6 +135,7 @@ const Module = ({
                     </div>
                     <div className="col s2 offset-s1">
                       <a
+                        href="#!"
                         id={"availableActivitiesButton" + module.id}
                         className="waves-effect waves-light btn-small green darken-1"
                         disabled={!selectedActivity}

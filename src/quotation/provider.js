@@ -4,7 +4,7 @@ import { getProviders } from "../store/selectors/selector";
 import { setSelectedQuotationProvider } from "../store/actions/quotationActions";
 import { getViewMode } from "../store/selectors/selector";
 import { getQuotation } from "../store/selectors/quotationSelector";
-import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
+import { VIEW_MODES } from "../store/constants/constants";
 
 const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
   const [availableProviders, setAvailableProviders] = useState([]);
@@ -22,7 +22,7 @@ const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
   }, [providers, quotation]);
 
   const changeSelectedProvider = (providerId) => {
-    if (providerId != "-1") {
+    if (providerId !== "-1") {
       const provider = availableProviders.find(p => p.id === providerId);
       setSelectedProvider(provider);
       setQuotationProvider(provider);

@@ -71,7 +71,7 @@ const NewQuotation = ({
         if (!selectedQuotationId && location !== "new-quotation") {
           chooseQuotation(queryQuotation);
         }
-        if (!selectedQuotationId && location == "new-quotation") {
+        if (!selectedQuotationId && location === "new-quotation") {
           startNewQuotation(queryQuotationType);
         }
       }
@@ -90,7 +90,7 @@ const NewQuotation = ({
 
   useEffect(() => {
     let unInputs = document.querySelectorAll(".unit-number-input");
-    Object.keys(unInputs).map((i) => {
+    Object.keys(unInputs).forEach((i) => {
       unInputs[i].addEventListener(
         "click",
         (e) => {
@@ -101,13 +101,13 @@ const NewQuotation = ({
     });
 
     let numberInputs = document.querySelectorAll("input[type=number]");
-    Object.keys(numberInputs).map((key) => {
+    Object.keys(numberInputs).forEach((key) => {
       numberInputs[key].onkeydown = function (e) {
         if (
           !(
             (e.keyCode > 95 && e.keyCode < 106) ||
             (e.keyCode > 47 && e.keyCode < 58) ||
-            e.keyCode == 8
+            e.keyCode === 8
           )
         ) {
           return false;
@@ -255,7 +255,7 @@ const NewQuotation = ({
                 <div className="row">
                   <div className="col s1 offset-s11">
                     <a
-                      href="#"
+                      href="#!"
                       id="peopleTableTrigger"
                       onClick={(evt) => togglePeopleTable(evt)}
                     >

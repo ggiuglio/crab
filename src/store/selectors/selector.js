@@ -1,5 +1,3 @@
-import provider from "../../quotation/provider";
-
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
 export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;

@@ -28,7 +28,7 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
           </div>
           <div className="card-action clear-flow">
             <div className="fixed-action-btn static right">
-              <a className="btn-floating orange darken-4">
+              <a href="#!" className="btn-floating orange darken-4">
                 <i className="material-icons">menu</i>
               </a>
               <ul>

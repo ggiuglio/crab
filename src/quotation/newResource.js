@@ -7,23 +7,23 @@ import { addResourceToSelectedQuotation, hideActivityResourceModal } from "../st
 
 const NewResource = ({ modalData, resources, createResource }) => {
   const [resourceHours, setResourceHours] = useState(0);
-  const [selectedResource, setSelectedResource] = useState({id: "-1", titile: "Select resource"});
+  const [selectedResource, setSelectedResource] = useState({ id: "-1", titile: "Select resource" });
   const [resourceList, setResourceList] = useState([]);
 
   useEffect(() => {
     const filteredResources = resources.filter(r => r.geo === modalData.moduleGeo || r.geo === "");
-    setResourceList([{id: 1, title: "Select resource"}, ...filteredResources]);
+    setResourceList([{ id: 1, title: "Select resource" }, ...filteredResources]);
   }, [resources, modalData])
 
   useEffect(() => {
     const modal = document.querySelectorAll("#modal-resource");
     const modalInstance = M.Modal.getInstance(modal[0]);
-    setSelectedResource({id: "-1", title: "Select resource"});
+    setSelectedResource({ id: "-1", title: "Select resource" });
     setResourceHours(0);
     if (modalData.showModal) {
       modalInstance.open();
     }
-  
+
   }, [modalData]);
 
   const resourceChange = (resourceId) => {
@@ -57,9 +57,9 @@ const NewResource = ({ modalData, resources, createResource }) => {
 
   return (
     <div id="modal-resource" className="modal">
-      { resources ?
+      {resources ?
         <div className="modal-content">
-          <h6 id="resourceFor"></h6>
+          <h6 id="resourceFor">Resources</h6>
           <div className="section">
             <div
               id="wrapper-select-resource"
@@ -70,7 +70,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
               >
                 {resourceList.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
               </select>
-              <label className="active">Resource</label>
+              <label className="active">Add reource to activity</label>
             </div>
             <div className="input-field col s12 m6">
               <label className="active" htmlFor="resourceHours">
@@ -109,12 +109,14 @@ const NewResource = ({ modalData, resources, createResource }) => {
         : ''}
       <div className="modal-footer">
         <a
+          href="#!"
           className="waves-indigo btn-flat"
           onClick={() => closeModal()}
         >
           Cancel
                  </a>
         <a
+          href="#!"
           className="btn green darken-1 waves-effect waves-light"
           disabled={!canAddResource()}
           onClick={() => addResource()}

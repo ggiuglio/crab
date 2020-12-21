@@ -10,7 +10,7 @@ const Menu = ({ user }) => {
   return (
     <div>
       {user ? (
-        <a href="#" className="sidenav-trigger" data-target="mobile-links">
+        <a href="#!" className="sidenav-trigger" data-target="mobile-links">
           <i className="material-icons">menu</i>
         </a>
       ) : null}

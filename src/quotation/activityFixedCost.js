@@ -36,7 +36,7 @@ const ActivityFixedCost = ({ moduleId, activity, editActivity, viewMode }) => {
       </td>
       {viewMode !== VIEW_MODES.VIEW ? (
         <td className="text-right">
-          <a title="Remove resource" onClick={() => removeFixedCost()}>
+          <a href="#!" title="Remove resource" onClick={() => removeFixedCost()}>
             <i className="tiny material-icons red-text text-darken-2">clear</i>
           </a>
         </td>) : null}

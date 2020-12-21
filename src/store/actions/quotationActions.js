@@ -110,9 +110,7 @@ export const addActivity = (activity, moduleId, quotationId, projectId) => {
 export const addResource = (resource, activityId, moduleId, quotationId, projectId) => {
 
   return (dispatch) => {
-    FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules/${moduleId}/activities/${activityId}/resources`).push(resource).then((res) => {
-      const resourceId = res.path.pieces_[9];
-    });
+    FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules/${moduleId}/activities/${activityId}/resources`).push(resource).then((res) => {});
   }
 };
 

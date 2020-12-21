@@ -29,7 +29,7 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
         <li className="no-padding">
           <ul className="collapsible collapsible-accordion">
             <li>
-              <a className="collapsible-header">
+              <a href="#!" className="collapsible-header">
                 Operations
                 <i className="material-icons">arrow_drop_down</i>
               </a>
@@ -97,7 +97,7 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
         </NavLink>
       </li>
       <li className="indigo lighten-2">
-        <a>
+        <a href="#!">
           <FontAwesomeIcon icon="user-circle" fixedWidth /> {user.email}
         </a>
       </li>

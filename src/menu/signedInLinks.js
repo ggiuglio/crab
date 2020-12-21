@@ -27,7 +27,7 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
         </li>
         <li>
           <a
-            href="#"
+            href="#!"
             className="dropdown-trigger"
             data-target="menu-project-dd"
           >
@@ -44,6 +44,7 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
       </li>
       <li>
         <a
+          href="#!"
           className="btn btn-floating indigo darken-4 z-depth-0 tooltipped"
           data-position="bottom"
           data-tooltip={user.email}
