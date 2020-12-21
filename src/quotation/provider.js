@@ -13,9 +13,13 @@ const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
   useEffect(() => {
     if (providers) {
       setAvailableProviders([{ title: "Select a provider", id: "-1" }, ...providers]);
+      if (quotation) {
+        setSelectedProvider(quotation.provider);
+      } else {
       setSelectedProvider({ title: "Select a provider", id: "-1" });
+      }
     }
-  }, [providers]);
+  }, [providers, quotation]);
 
   const changeSelectedProvider = (providerId) => {
     if (providerId != "-1") {

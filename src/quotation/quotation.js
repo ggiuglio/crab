@@ -21,7 +21,7 @@ import {
 } from "../store/actions/actionsCreator";
 import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
-import { addQuotation, startNewQuotation, editSelectedQuotationCode, saveQuotationEdit } from "../store/actions/quotationActions";
+import { addQuotation, startNewQuotation, editSelectedQuotationCode, editQuotation } from "../store/actions/quotationActions";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import NewModule from "./newModule";
 import NewResource from "./newResource";
@@ -43,7 +43,8 @@ const NewQuotation = ({
   viewMode,
   editQuotationCode,
   startNewQuotation,
-  professionals
+  professionals,
+  saveQuotationEdit
 }) => {
 
   const [quotationCode, setQuotationCode] = useState('');
@@ -190,12 +191,23 @@ const NewQuotation = ({
 
   const saveQuotation = (e) => {
     e.preventDefault();
-    saveQuotationToDb();
-    history.push(`/project/quotations/?project=${project.id}`)
+    if(viewMode === VIEW_MODES.CREATE) {
+      saveQuotationToDb();
+      history.push(`/project/quotations/?project=${project.id}`)
+    } else 
+    {
+      saveQuotationEdit();
+    }
+    
   };
 
   const checkCreateDisabled = () => {
-    return !selectedQuotation || !selectedQuotation.code
+    if (!selectedQuotation) return true;
+    if (!selectedQuotation.code) return true;
+    if (!selectedQuotation.modules || selectedQuotation.modules.length === 0) return true;
+    if (selectedQuotation.quotationType === QUOTATION_TYPES.PROVIDER && !selectedQuotation.provider) return true
+
+    return false;
   };
 
   const editQuotationCodeInput = (code) => {
@@ -291,8 +303,8 @@ const NewQuotation = ({
                           type="submit"
                           disabled={checkCreateDisabled()}
                         >
-                          Create
-                    </button>
+                          { viewMode === VIEW_MODES.CREATE ? "Create" : "Save" }
+                        </button>
                       </div>
                     )}
                   </div>
@@ -341,7 +353,7 @@ const mapDispatchToProps = (dispatch) => {
     saveQuotationToDb: (selectedQuotation) => dispatch(addQuotation(selectedQuotation)),
     startNewQuotation: (type) => dispatch(startNewQuotation(type)),
     editQuotationCode: (quotationCode) => dispatch(editSelectedQuotationCode(quotationCode)),
-    saveEditQuotation: () => dispatch(saveQuotationEdit())
+    saveQuotationEdit: () => dispatch(editQuotation())
   };
 };
 

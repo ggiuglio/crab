@@ -18,6 +18,7 @@ import {
   CANCEL_QUOTATION_EDIT
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
+import { VIEW_MODES } from '../constants/constants.js';
 
 export const selectQuotation = (quotationId) => {
   return dispatch => {
@@ -29,6 +30,29 @@ export const selectQuotation = (quotationId) => {
     )
   }
 };
+
+export const editQuotation = () => {
+  return (dispatch, getSate) => {
+    const projectId = getSate().selectedProjectId;
+    const quotationId = getSate().selectedQuotationId;
+    const quotation = JSON.parse(JSON.stringify(getSate().selectedQuotationData));
+
+    const modules = quotation.modules;
+    delete quotation.modules;
+    delete quotation.id;
+
+    FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}`).set(quotation).then((res) => {
+      Object.keys(modules).forEach((k) => {
+        dispatch(addModule(modules[k], quotationId, projectId));
+      });
+    });
+
+    dispatch({
+      type: SET_QUOTATION_VIEW_MODE,
+      viewMode: VIEW_MODES.VIEW
+    })
+  }
+} 
 
 export const addQuotation = () => {
   return (dispatch, getSate) => {
@@ -244,11 +268,5 @@ export const cancelQuotationEdit = () => {
     return dispatch({
       type: CANCEL_QUOTATION_EDIT
     })
-  }
-}
-
-export const saveQuotationEdit = () => {
-  return dispatch => {
-    
   }
 }
