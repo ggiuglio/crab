@@ -21,12 +21,13 @@ import {
 } from "../store/actions/actionsCreator";
 import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
-import { addQuotation, startNewQuotation, editSelectedQuotationCode } from "../store/actions/quotationActions";
+import { addQuotation, startNewQuotation, editSelectedQuotationCode, saveQuotationEdit } from "../store/actions/quotationActions";
 import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
 import NewModule from "./newModule";
 import NewResource from "./newResource";
 import Preloader from "../common/preloader";
 import Provider from "./provider";
+import QuotationActions from "./quotationActions";
 
 const NewQuotation = ({
   selectedQuotation,
@@ -46,7 +47,6 @@ const NewQuotation = ({
 }) => {
 
   const [quotationCode, setQuotationCode] = useState('');
-  const [persons, setPersons] = useState([]);
 
   useEffect(() => {
     const query = new URLSearchParams(history.location.search);
@@ -209,6 +209,7 @@ const NewQuotation = ({
         selectedQuotation ?
           <div id="selectedQuotation" className="section">
             <div>
+              <QuotationActions />
               <form className="white" onSubmit={(e) => saveQuotation(e)}>
                 <div className="container">
                   <div className="row">
@@ -339,7 +340,8 @@ const mapDispatchToProps = (dispatch) => {
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
     saveQuotationToDb: (selectedQuotation) => dispatch(addQuotation(selectedQuotation)),
     startNewQuotation: (type) => dispatch(startNewQuotation(type)),
-    editQuotationCode: (quotationCode) => dispatch(editSelectedQuotationCode(quotationCode))
+    editQuotationCode: (quotationCode) => dispatch(editSelectedQuotationCode(quotationCode)),
+    saveEditQuotation: () => dispatch(saveQuotationEdit())
   };
 };
 

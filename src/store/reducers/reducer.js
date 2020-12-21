@@ -10,7 +10,7 @@ import {
   SELECT_PROJECT,
   SELECT_QUOTATION,
   LOAD_STATIC_DATA,
-  SET_VIEW_MODE,
+  SET_QUOTATION_VIEW_MODE,
   INITIALIZE_NEW_QUOTATION,
   SET_SELECTED_QUOTATION_CODE,
   ADD_MODULE_TO_SELECTED_QUOTATION,
@@ -24,7 +24,8 @@ import {
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
   HYDE_ACTIVITY_RESOURCE_MODAL,
   EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
-  SET_SELECTED_QUOTATION_PROVIDER
+  SET_SELECTED_QUOTATION_PROVIDER,
+  CANCEL_QUOTATION_EDIT
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -131,7 +132,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         baseModules: action.modules
       }
     }
-    case SET_VIEW_MODE: {
+    case SET_QUOTATION_VIEW_MODE: {
       return {
         ...state,
         viewMode: action.viewMode
@@ -172,7 +173,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case REMOVE_MODULE_FROM_SELECTED_QUOTATION: {
-      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
       delete updatedQuotation.modules[action.moduleId];
       return {
         ...state,
@@ -186,7 +187,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case REMOVE_ACTIVITY_FROM_SELECTED_QUOTATION: {
-      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
       delete updatedQuotation.modules[action.moduleId].activities[action.activityId];
       return {
         ...state,
@@ -194,7 +195,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case EDIT_ACTIVITY_IN_SELECTED_QUOTATION: {
-      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
       let updatedActivity = updatedQuotation.modules[action.moduleId].activities[action.activity.id];
       updatedActivity.responsibilityCRO = action.activity.responsibilityCRO;
       updatedActivity.responsibilitySponsor = action.activity.responsibilitySponsor;
@@ -230,7 +231,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case ADD_RESOURCE_TO_SELECTED_QUOTATION: {
-      let updatedQuotation =  JSON.parse(JSON.stringify(state.selectedQuotationData));
+      let updatedQuotation = JSON.parse(JSON.stringify(state.selectedQuotationData));
       updatedQuotation = addResourceSelectedQuotation(updatedQuotation, action.moduleId, action.activityId, action.resource);
       return {
         ...state,
@@ -280,6 +281,15 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
 
+    case CANCEL_QUOTATION_EDIT: {
+      const quotation = state.quotations ? JSON.parse(JSON.stringify(state.quotations[state.selectedQuotationId])) : undefined
+      return {
+        ...state,
+        selectedQuotationData: quotation,
+        viewMode: VIEW_MODES.VIEW
+      }
+    }
+
     default:
       return state;
   }
@@ -313,7 +323,7 @@ const addActivityToSelectedQuotation = (quotation, moduleId, activity) => {
 
 const addResourceSelectedQuotation = (quotation, moduleId, activityId, resource) => {
   const id = uuid();
-  if(!quotation.modules[moduleId].activities[activityId].resources) {
+  if (!quotation.modules[moduleId].activities[activityId].resources) {
     quotation.modules[moduleId].activities[activityId].resources = {};
   }
   quotation.modules[moduleId].activities[activityId].resources[id] = resource;

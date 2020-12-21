@@ -7,7 +7,6 @@ import {
   SELECT_PROJECT,
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA,
-  SET_VIEW_MODE
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 import { history } from '../../App';
@@ -131,11 +130,4 @@ export const createNewProject = (project) => {
   }
 }
 
-export const setViewMode = (mode) => {
-  return dispatch => {
-    dispatch({
-      type: SET_VIEW_MODE,
-      mode: mode
-    });
-  }
-}
+

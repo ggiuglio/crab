@@ -14,6 +14,8 @@ import {
   EDIT_RESOURCE_IN_SELECTED_QUOTATION,
   HYDE_ACTIVITY_RESOURCE_MODAL,
   EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
+  SET_QUOTATION_VIEW_MODE,
+  CANCEL_QUOTATION_EDIT
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 
@@ -225,5 +227,28 @@ export const setSelectedQuotationProvider = (provider) => {
       type: SET_SELECTED_QUOTATION_PROVIDER,
       provider: provider
     })
+  }
+}
+
+export const setQuotationViewMode = (mode) => {
+  return dispatch => {
+    dispatch({
+      type: SET_QUOTATION_VIEW_MODE,
+      viewMode: mode
+    });
+  }
+}
+
+export const cancelQuotationEdit = () => {
+  return dispatch => {
+    return dispatch({
+      type: CANCEL_QUOTATION_EDIT
+    })
+  }
+}
+
+export const saveQuotationEdit = () => {
+  return dispatch => {
+    
   }
 }
