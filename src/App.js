@@ -19,6 +19,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Quotation from "./quotation/quotation";
+import Project from "./project/project";
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
 
@@ -48,7 +49,7 @@ class App extends Component {
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
           <Route path={"/new-project"} component={NewProject} />
-          <Route path={"/project/quotations"} component={Quotations} />
+          <Route exact path={"/project"} component={Project} />
           <Route path={"/project/quotation"} component={Quotation} />
           <Route path={"/project/new-quotation"} component={Quotation} />
           <Route path={"/project/dashboard"} component={Dashboard} />
