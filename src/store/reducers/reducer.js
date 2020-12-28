@@ -25,7 +25,9 @@ import {
   HYDE_ACTIVITY_RESOURCE_MODAL,
   EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
   SET_SELECTED_QUOTATION_PROVIDER,
-  CANCEL_QUOTATION_EDIT
+  CANCEL_QUOTATION_EDIT,
+  INITIALIZE_NEW_PROJECT,
+  SET_PROJECT_GEOS
 } from "../actions/actionsTypes";
 import { VIEW_MODES } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -136,6 +138,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         viewMode: action.viewMode
+      }
+    }
+    case INITIALIZE_NEW_PROJECT: {
+      const emptyProject = {
+        id: '0',
+        title: '',
+        geos: []
+      }
+      return {
+        ...state,
+        selectedProjectData: emptyProject,
+        selectedProjectId: '0',
+        viewMode: VIEW_MODES.CREATE
       }
     }
     case INITIALIZE_NEW_QUOTATION: {
@@ -287,6 +302,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         selectedQuotationData: quotation,
         viewMode: VIEW_MODES.VIEW
+      }
+    }
+
+    case SET_PROJECT_GEOS: {
+      const project = state.quotations ? JSON.parse(JSON.stringify(state.selectedProjectData)) : undefined;
+      return {
+        ...state,
+        selectedProjectData: project
       }
     }
 
