@@ -27,7 +27,9 @@ import {
   SET_SELECTED_QUOTATION_PROVIDER,
   CANCEL_QUOTATION_EDIT,
   SET_BREADCRUMB_CODE,
-  SET_BREADCRUMB
+  SET_BREADCRUMB,
+  INITIALIZE_NEW_PROJECT,
+  SET_PROJECT_GEOS
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -189,6 +191,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         viewMode: action.viewMode
+      }
+    }
+    case INITIALIZE_NEW_PROJECT: {
+      const emptyProject = {
+        id: '0',
+        title: '',
+        geos: []
+      }
+      return {
+        ...state,
+        selectedProjectData: emptyProject,
+        selectedProjectId: '0',
+        viewMode: VIEW_MODES.CREATE
       }
     }
     case INITIALIZE_NEW_QUOTATION: {
@@ -356,6 +371,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
         breadcrumbCode: undefined,
         breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, state.project, state.selectedQuotationData),
       };
+
+    case SET_PROJECT_GEOS: {
+      const project = state.quotations ? JSON.parse(JSON.stringify(state.selectedProjectData)) : undefined;
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
 
     default:
       return state;

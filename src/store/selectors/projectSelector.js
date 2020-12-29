@@ -1,0 +1,1 @@
+export const getSelectedProject = (state) => state.selectedProjectData;
