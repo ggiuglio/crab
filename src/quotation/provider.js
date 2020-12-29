@@ -35,7 +35,7 @@ const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
       {
         viewMode === VIEW_MODES.VIEW ?
           <div>
-            {quotation.provider.title}
+            {quotation.provider ? quotation.provider.title : ''}
           </div> :
           <div>
             <select

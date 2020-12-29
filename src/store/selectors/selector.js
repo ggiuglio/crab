@@ -10,6 +10,8 @@ export const getViewMode = (state) => state.viewMode;
 export const getResources = (state) => state.selectedQuotationData ? mapResourcesToList(state.selectedQuotationData) : [];
 export const getProfessionals = (state) => state.professionals;
 export const getProviders = (state) => mapProviders(state.project);
+export const getBreadcrumbCode = (state) => state.breadcrumbCode;
+export const getBreadcrumb = (state) => state.breadcrumb;
 
 const mapProviders = (project) => {
   const providers = project ? project.providers : [];

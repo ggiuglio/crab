@@ -1,7 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { getSelectedProjectId } from "../store/selectors/selector";
+import CustomNavLink from "../common/customNavLink";
 
 const ProjectMenu = ({selectedProjectId}) => {
 
@@ -9,33 +9,33 @@ const ProjectMenu = ({selectedProjectId}) => {
     <div>
       <ul id="menu-project-dd" className="dropdown-content dd-padding">
         <li>
-          <NavLink to={`/project/dashboard?project=${selectedProjectId}`} className="black-text">
+          <CustomNavLink to={`/project/dashboard?project=${selectedProjectId}`} className="black-text" code="DSB">
             <span>Dashboard</span>
-          </NavLink>
+          </CustomNavLink>
         </li>
         <li className="divider" tabIndex="-1"></li>
         <li>
-          <NavLink to={`/project/quotations?project=${selectedProjectId}`} className="black-text">
+          <CustomNavLink to={`/project?project=${selectedProjectId}`} className="black-text" code="QTS">
             <span>Quotations</span>
-          </NavLink>
+          </CustomNavLink>
         </li>
         <li className="divider" tabIndex="-1"></li>
         <li>
-          <NavLink to={`/project/invoices?project=${selectedProjectId}`} className="black-text">
+          <CustomNavLink to={`/project/invoices?project=${selectedProjectId}`} className="black-text" code="INV">
             <span>Invoicing</span>
-          </NavLink>
+          </CustomNavLink>
         </li>
         <li className="divider" tabIndex="-1"></li>
         <li>
-          <NavLink to={`/project/budget?project=${selectedProjectId}`} className="black-text">
+          <CustomNavLink to={`/project/budget?project=${selectedProjectId}`} className="black-text" code="BDG">
             <span>Budget</span>
-          </NavLink>
+          </CustomNavLink>
         </li>
         <li className="divider" tabIndex="-1"></li>
         <li>
-          <NavLink to={`/project/analytics?project=${selectedProjectId}`} className="black-text">
+          <CustomNavLink to={`/project/analytics?project=${selectedProjectId}`} className="black-text" code="ADA">
             <span>Advanced Analytics</span>
-          </NavLink>
+          </CustomNavLink>
         </li>
       </ul>
     </div>

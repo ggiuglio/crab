@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getUser, getSelectedProjectId } from "../../store/selectors/selector";
 import { logoutAction } from "../../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
+import CustomNavLink from "../../common/customNavLink";
 
 const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
   React.useEffect(() => {
@@ -17,14 +18,20 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
   const projectLinks =
     useLocation().pathname === "/new-project" ? (
       <li>
-        <NavLink to="/projects">Projects</NavLink>
+        <CustomNavLink to="/projects" code="PJS">Projects</CustomNavLink>
       </li>
     ) : selectedProjectId ? (
       <div>
         <li>
-          <NavLink to="/projects" className="sidenav-close">
-            <FontAwesomeIcon icon="tasks" fixedWidth /> Projects
-          </NavLink>
+          <CustomNavLink
+            to="/projects"
+            className="sidenav-close"
+            iconType="AWESOME"
+            iconName="tasks"
+            code="PJS"
+          >
+            Projects
+          </CustomNavLink>
         </li>
         <li className="no-padding">
           <ul className="collapsible collapsible-accordion">
@@ -36,48 +43,59 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
               <div className="collapsible-body">
                 <ul>
                   <li>
-                    <NavLink
+                    <CustomNavLink
                       to={`/project/dashboard?project=${selectedProjectId}`}
                       className="sidenav-close"
+                      iconType="AWESOME"
+                      iconName="grip-horizontal"
+                      code="DSB"
                     >
-                      <FontAwesomeIcon icon="grip-horizontal" fixedWidth />{" "}
-                      DashBoard
-                    </NavLink>
+                      Dashboard
+                    </CustomNavLink>
                   </li>
                   <li>
-                    <NavLink
-                      to={`/project/quotations?project=${selectedProjectId}`}
+                    <CustomNavLink
+                      to={`/project?project=${selectedProjectId}`}
                       className="sidenav-close"
+                      iconType="AWESOME"
+                      iconName="search-dollar"
+                      code="QTS"
                     >
-                      <FontAwesomeIcon icon="search-dollar" fixedWidth />{" "}
                       Quotations
-                    </NavLink>
+                    </CustomNavLink>
                   </li>
                   <li>
-                    <NavLink
+                    <CustomNavLink
                       to={`/project/invoices?project=${selectedProjectId}`}
                       className="sidenav-close"
+                      iconType="AWESOME"
+                      iconName="file-invoice-dollar"
+                      code="INV"
                     >
-                      <FontAwesomeIcon icon="file-invoice-dollar" fixedWidth />{" "}
                       Invoicing
-                    </NavLink>
+                    </CustomNavLink>
                   </li>
                   <li>
-                    <NavLink
+                    <CustomNavLink
                       to={`/project/budget?project=${selectedProjectId}`}
                       className="sidenav-close"
+                      iconType="AWESOME"
+                      iconName="piggy-bank"
+                      code="BDG"
                     >
-                      <FontAwesomeIcon icon="piggy-bank" fixedWidth /> Budget
-                    </NavLink>
+                      Budget
+                    </CustomNavLink>
                   </li>
                   <li>
-                    <NavLink
+                    <CustomNavLink
                       to={`/project/analytics?project=${selectedProjectId}`}
                       className="sidenav-close"
+                      iconType="AWESOME"
+                      iconName="chart-line"
+                      code="ADA"
                     >
-                      <FontAwesomeIcon icon="chart-line" fixedWidth /> Advanced
-                      Analytics
-                    </NavLink>
+                      Advanced Analytics
+                    </CustomNavLink>
                   </li>
                 </ul>
               </div>
@@ -92,9 +110,15 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
     <div>
       {projectLinks}
       <li>
-        <NavLink to="/" className="sidenav-close">
-          <FontAwesomeIcon icon="users" fixedWidth /> Administration
-        </NavLink>
+        <CustomNavLink
+          to="/"
+          className="sidenav-close"
+          iconType="AWESOME"
+          iconName="users"
+          code="ADM"
+        >
+          Administration
+        </CustomNavLink>
       </li>
       <li className="indigo lighten-2">
         <a href="#!">
@@ -102,9 +126,15 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
         </a>
       </li>
       <li>
-        <NavLink to="/login" onClick={() => logout()} className="sidenav-close">
-          <FontAwesomeIcon icon="sign-out-alt" fixedWidth /> Log Out
-        </NavLink>
+        <CustomNavLink
+          to="/login"
+          onClick={() => logout()}
+          className="sidenav-close"
+          iconType="AWESOME"
+          iconName="sign-out-alt"
+        >
+          Log Out
+        </CustomNavLink>
       </li>
     </div>
   );
