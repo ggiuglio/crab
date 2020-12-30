@@ -38,7 +38,7 @@ const Project = ({ selectedProjectId, project, chooseProject, loadProject, start
               onClick={() => startNewQuotation(QUOTATION_TYPES.SPONSOR)}
               iconType="MATERIAL"
               iconName="add"
-              code="QTN"
+              code="NQT"
             />
             <p>CREATE NEW SPONSOR QUOTATION</p>
           </div>
@@ -49,7 +49,7 @@ const Project = ({ selectedProjectId, project, chooseProject, loadProject, start
               onClick={() => startNewQuotation(QUOTATION_TYPES.PROVIDER)}
               iconType="MATERIAL"
               iconName="add"
-              code="QTN"
+              code="NQT"
             />
             <p>CREATE NEW PROVIDER QUOTATION</p>
           </div>

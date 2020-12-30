@@ -29,7 +29,7 @@ const Projects = ({ projects, clearSelectedProject }) => {
             to="/new-project"
             iconType="MATERIAL"
             iconName="add"
-            code="PJS"
+            code="NPJ"
           />
           <p>CREATE NEW PROJECTS</p>
         </div>

@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setBreadcrumbCodeAction } from "../store/actions/actionsCreator";
 
 const CustomNavLink = (par) => {
-  console.log(par)
   const onNavClick = () => {
     if(typeof(par.onClick) === 'function') par.onClick();
     par.setBreadcrumbCode(par.code);

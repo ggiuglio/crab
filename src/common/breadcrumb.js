@@ -1,43 +1,57 @@
 import React, {useEffect} from "react";
 import { connect } from "react-redux";
+import { history } from "../App";
+import { getUser } from "../store/selectors/selector";
 import { getBreadcrumbCode, getBreadcrumb, getProject } from "../store/selectors/selector";
 import { getQuotation } from "../store/selectors/quotationSelector";
 import { setBreadcrumbAction } from "../store/actions/actionsCreator";
 import CustomNavLink from "./customNavLink";
 import "./breadcrumb.css";
 
-const Breadcrumb = ({ breadcrumbCode, breadcrumb, project, selectedQuotation, setBreadcrumb }) => {
+const Breadcrumb = ({ breadcrumbCode, breadcrumb, project, selectedQuotation, setBreadcrumb, user }) => {
   useEffect(() => {
-    // const query = new URLSearchParams(history.location.search);
-    // const locationToken = history.location.pathname.split("/");
-    // const location = locationToken[locationToken.length - 1];
-    // const queryProject = query.get("project");
-    // const queryQuotation = query.get("quotation");
-    // const queryQuotationType = query.get("quotation-type");
+    if(!breadcrumbCode) {
+      const locationToken = history.location.pathname.split('/');
+      const location = locationToken[locationToken.length - 1];
 
-    // if (!selectedProjectId) {
-    //   if (queryProject) {
-    //     chooseProject(queryProject);
-    //   } else {
-    //     history.push("/");
-    //   }
-    // } else {
-    //   if (!project || project.id !== selectedProjectId) {
-    //     loadProject(selectedProjectId);
-    //   } else if (professionals) {
-    //     if (!selectedQuotationId && location !== "new-quotation") {
-    //       chooseQuotation(queryQuotation);
-    //     }
-    //     if (!selectedQuotationId && location === "new-quotation") {
-    //       startNewQuotation(queryQuotationType);
-    //     }
-    //   }
-    // }
+      let code;
 
-    // if (selectedQuotation) {
-    //   setQuotationCode(selectedQuotation.code);
-    // }
-    console.log(breadcrumbCode)
+      if(user) {
+        switch (location) {
+          case "new-project":
+            code = "NPJ";
+            break;
+          case "project":
+            code = "QTS";
+            break;
+          case "dashboard":
+            code = "DSB";
+            break;
+          case "invoices":
+            code = "INV";
+            break;
+          case "budget":
+            code = "BDG";
+            break;
+          case "analytics":
+            code = "ADA";
+            break;
+          case "quotation":
+            code = "QTN";
+            break;
+          case "new-quotation":
+            code = "NQT";
+            break;
+          default:
+            code = "PJS";
+        }
+      }
+      
+      setBreadcrumb(code);
+    }
+  }, [user]);
+
+  useEffect(() => {
     if(breadcrumbCode)
       setBreadcrumb();
   }, [project, selectedQuotation]);
@@ -64,12 +78,13 @@ const mapStateToProps = (state) => {
     breadcrumb: getBreadcrumb(state),
     selectedQuotation: getQuotation(state),
     project: getProject(state),
+    user: getUser(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setBreadcrumb: () => dispatch(setBreadcrumbAction()),
+    setBreadcrumb: (code) => dispatch(setBreadcrumbAction(code)),
   };
 };
 

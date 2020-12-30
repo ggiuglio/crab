@@ -64,6 +64,12 @@ const NAVIGATION_CODES = {
     url: `/projects`,
     order: 1
   },
+  "NPJ" : {
+    title: "New project",
+    url: `/new-project`,
+    parent: "PJS",
+    order: 2
+  },
   "QTS" : {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
     url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
@@ -93,6 +99,13 @@ const NAVIGATION_CODES = {
     url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
+  },
+  "NQT" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - New quotation`,
+    // url: `/project/new-quotation`,
+    url: `#!`,
+    parent: "QTS",
+    order: 3
   },
   "QTN" : {
     title: `Quotation ${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE}`,
@@ -359,7 +372,6 @@ const Reducer = (state = INITIAL_STATE, action) => {
     }
 
     case SET_BREADCRUMB_CODE:
-      console.log(action.code)
       return {
         ...state,
         breadcrumbCode: action.code,
@@ -368,8 +380,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case SET_BREADCRUMB:
       return {
         ...state,
-        breadcrumbCode: undefined,
-        breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, state.project, state.selectedQuotationData),
+        breadcrumbCode: action.code,
+        breadcrumb: mapBreadcrumb(action.code, state.breadcrumbCode, state.project, state.selectedQuotationData),
       };
 
     case SET_PROJECT_GEOS: {
@@ -453,8 +465,6 @@ const mapProfessionalAndGeosToResources = (professionals, geos) => {
 };
 
 const mapBreadcrumb = (par_code, stateCode, project, quotation, breadcrumb = []) => {
-  console.log(stateCode)
-  console.log(par_code)
   let code = stateCode;
   if(par_code) {
     code = par_code;

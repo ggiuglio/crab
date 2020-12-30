@@ -140,10 +140,11 @@ export const setBreadcrumbCodeAction = (code) => {
     });
   }
 }
-export const setBreadcrumbAction = () => {
+export const setBreadcrumbAction = (code = undefined) => {
   return dispatch => {
     dispatch({
-      type: SET_BREADCRUMB
+      type: SET_BREADCRUMB,
+      code: code
     });
   }
 }

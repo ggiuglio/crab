@@ -20,7 +20,7 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
     M.Modal.init(modal);
 
     if (!project) {
-      initializeProject();
+      // initializeProject();
     }
   }, []);
 
@@ -384,7 +384,7 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
 
 const mapStateToProps = (state) => {
   return {
-    project: getSelectedProject(state)
+    // project: getSelectedProject(state)
   };
 };
 
