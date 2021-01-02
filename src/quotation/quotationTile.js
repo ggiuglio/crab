@@ -1,7 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectQuotation } from "../store/actions/quotationActions";
+import CustomNavLink from "../common/customNavLink";
 
 const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
   const goToQuotationPage = () => {
@@ -12,7 +12,8 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
       <div className="col s12 l6">
         <div className="card indigo lighten-2">
           <div className="card-content" onClick={() => goToQuotationPage()}>
-          <NavLink to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`}>              <div className="white-text">
+          <CustomNavLink to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`} code="QTN">
+            <div className="white-text">
                 <div className="row card-title">
                   <span className="bolder col s12 m6 s-center truncate" title={quotation.code}>{quotation.code}</span>
                   <span className="col s12 m6 s-center truncate" title={quotation.status}>{quotation.status}</span>
@@ -24,7 +25,7 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                   </span>
                 </div>
               </div>
-            </NavLink>
+            </CustomNavLink>
           </div>
           <div className="card-action clear-flow">
             <div className="fixed-action-btn static right">
@@ -42,12 +43,13 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                   </a>
                 </li>
                 <li>
-                  <NavLink
+                  <CustomNavLink
                     className="btn-floating btn-small green darken-1"
                     to="#"
-                  >
-                    <i className="material-icons">edit</i>
-                  </NavLink>
+                    iconType="MATERIAL"
+                    iconName="edit"
+                    code="QTN"
+                  />
                 </li>
               </ul>
             </div>

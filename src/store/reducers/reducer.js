@@ -26,10 +26,12 @@ import {
   EDIT_DEFAULT_RESOURCE_COST_IN_SELECTED_QUOTATION,
   SET_SELECTED_QUOTATION_PROVIDER,
   CANCEL_QUOTATION_EDIT,
+  SET_BREADCRUMB_CODE,
+  SET_BREADCRUMB,
   INITIALIZE_NEW_PROJECT,
   SET_PROJECT_GEOS
 } from "../actions/actionsTypes";
-import { VIEW_MODES } from "../constants/constants";
+import { VIEW_MODES, NAVIGATION_REPLACERS } from "../constants/constants";
 import { v4 as uuid } from "uuid";
 
 export const INITIAL_STATE = {
@@ -46,7 +48,71 @@ export const INITIAL_STATE = {
   qotationType: undefined,
   resourceModalData: {
     showModal: false
-  }
+  },
+  breadcrumbCode: undefined,
+  breadcrumb: []
+};
+
+const NAVIGATION_CODES = {
+  "ADM" : {
+    title: "Administration",
+    url: `#!`,
+    order: 1
+  },
+  "PJS" : {
+    title: "Projects",
+    url: `/projects`,
+    order: 1
+  },
+  "NPJ" : {
+    title: "New project",
+    url: `/new-project`,
+    parent: "PJS",
+    order: 2
+  },
+  "QTS" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
+    url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "PJS",
+    order: 2
+  },
+  "DSB" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Dashboard`,
+    url: `/project/dashboard?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "PJS",
+    order: 2
+  },
+  "INV" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Invoicing`,
+    url: `/project/invoices?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "PJS",
+    order: 2
+  },
+  "BDG" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Budget`,
+    url: `/project/budget?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "PJS",
+    order: 2
+  },
+  "ADA" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Advanced analytics`,
+    url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "PJS",
+    order: 2
+  },
+  "NQT" : {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - New quotation`,
+    // url: `/project/new-quotation`,
+    url: `#!`,
+    parent: "QTS",
+    order: 3
+  },
+  "QTN" : {
+    title: `Quotation ${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE}`,
+    url: `/project/quotation?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}&quotation=${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_ID}`,
+    parent: "QTS",
+    order: 3
+  },
 };
 
 const Reducer = (state = INITIAL_STATE, action) => {
@@ -305,6 +371,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
 
+    case SET_BREADCRUMB_CODE:
+      return {
+        ...state,
+        breadcrumbCode: action.code,
+      };
+
+    case SET_BREADCRUMB:
+      return {
+        ...state,
+        breadcrumbCode: action.code,
+        breadcrumb: mapBreadcrumb(action.code, state.breadcrumbCode, state.project, state.selectedQuotationData),
+      };
+
     case SET_PROJECT_GEOS: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
       project.geos = action.geos;
@@ -384,4 +463,39 @@ const mapProfessionalAndGeosToResources = (professionals, geos) => {
   }
 
   return resources;
+};
+
+const mapBreadcrumb = (par_code, stateCode, project, quotation, breadcrumb = []) => {
+  let code = stateCode;
+  if(par_code) {
+    code = par_code;
+  }
+  if(NAVIGATION_CODES.hasOwnProperty(code)) {
+    let title = NAVIGATION_CODES[code].title;
+    let url = NAVIGATION_CODES[code].url;
+
+    if(project) {
+      title = title.replace(NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE, project.title);
+      url = url.replace(NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID, project.id);
+    }
+
+    if(quotation) {
+      title = title.replace(NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE, quotation.code);
+      url = url.replace(NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_ID, quotation.id);
+    }
+
+    let bdItem = {
+      ...NAVIGATION_CODES[code],
+      id: code,
+      title: title,
+      url: url
+    };
+
+    breadcrumb.splice(0, 0, bdItem);
+    
+    if(NAVIGATION_CODES[code].hasOwnProperty("parent")) {
+      mapBreadcrumb(NAVIGATION_CODES[code].parent, stateCode, project, quotation, breadcrumb);
+    }
+  }
+  return breadcrumb;
 };

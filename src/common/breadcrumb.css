@@ -1,0 +1,16 @@
+.custom-breadcrumb:before {
+    content: '\E5CC';
+    color: #3f51b5;
+    vertical-align: top;
+    display: inline-block;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.3rem;
+    margin: 0 10px 0 8px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.custom-breadcrumb {
+    font-size: 1.2rem;
+}

@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { getProjects } from "../store/selectors/selector";
 import M from "materialize-css/dist/js/materialize.min.js";
 import ProjectTile from "./projectTile";
 import { selectProject } from "../store/actions/actionsCreator";
 import Preloader from "../common/preloader";
+import CustomNavLink from "../common/customNavLink";
 
 const Projects = ({ projects, clearSelectedProject }) => {
   React.useEffect(() => {
@@ -24,12 +24,13 @@ const Projects = ({ projects, clearSelectedProject }) => {
       <h4 className="center page-title"></h4>
       <div className="row">
         <div className="col s12 center">
-          <NavLink
+          <CustomNavLink
             className="btn-floating btn-large waves-effect waves-light indigo"
             to="/new-project"
-          >
-            <i className="material-icons">add</i>
-          </NavLink>
+            iconType="MATERIAL"
+            iconName="add"
+            code="NPJ"
+          />
           <p>CREATE NEW PROJECTS</p>
         </div>
       </div>

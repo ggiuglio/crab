@@ -1,9 +1,10 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { getUser, getSelectedProjectId } from "../store/selectors/selector";
 import { logoutAction } from "../store/actions/actionsCreator";
 import M from "materialize-css/dist/js/materialize.min.js";
+import CustomNavLink from "../common/customNavLink";
 
 const SignedInLinks = ({ user, selectedProjectId, logout }) => {
   React.useEffect(() => {
@@ -18,12 +19,12 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
   const projectLinks =
     useLocation().pathname === "/new-project" ? (
       <li>
-        <NavLink to="/projects">Projects</NavLink>
+        <CustomNavLink to="/projects" code="PJS">Projects</CustomNavLink>
       </li>
     ) : selectedProjectId ? (
       <div className="inline">
         <li>
-          <NavLink to="/projects">Projects</NavLink>
+          <CustomNavLink to="/projects" code="PJS">Projects</CustomNavLink>
         </li>
         <li>
           <a
@@ -40,7 +41,7 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
     <div>
       {projectLinks}
       <li>
-        <NavLink to="#">Administration</NavLink>
+        <CustomNavLink to="#" code="ADM">Administration</CustomNavLink>
       </li>
       <li>
         <a
@@ -53,9 +54,9 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
         </a>
       </li>
       <li>
-        <NavLink to="/login" onClick={() => logout()}>
+        <CustomNavLink to="/login" onClick={() => logout()}>
           Log Out
-        </NavLink>
+        </CustomNavLink>
       </li>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { selectProject } from "../store/actions/actionsCreator";
+import CustomNavLink from "../common/customNavLink";
 
 const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
   const goToProjectPage = () => {
@@ -12,7 +12,7 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
     <div className="col s12 l6">
       <div className="card indigo lighten-2">
         <div className="card-content" onClick={() => goToProjectPage()}>
-          <NavLink to={`/project?project=${project.id}`}>
+          <CustomNavLink to={`/project?project=${project.id}`} code="QTS">
             <div className="white-text">
                 <div className="row card-title">
                   <span className="bolder col s12 m6 s-center truncate" title={project.title}>{project.title}</span>
@@ -27,7 +27,7 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
                 <span className="col s12 m6 s-center truncate" title={project.endDate}>End date: {project.endDate}</span>
               </div>
             </div>
-          </NavLink>
+          </CustomNavLink>
         </div>
         <div className="card-action clear-flow">
           <div className="fixed-action-btn static right">
@@ -45,12 +45,13 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
                 </a>
               </li>
               <li key={"liedit_" + project.id}>
-                <NavLink
+                <CustomNavLink
                   className="btn-floating btn-small green darken-1"
                   to="#"
-                >
-                  <i className="material-icons">edit</i>
-                </NavLink>
+                  iconType="MATERIAL"
+                  iconName="edit"
+                  code="PJS"
+                />
               </li>
             </ul>
           </div>
