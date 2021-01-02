@@ -306,7 +306,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
     }
 
     case SET_PROJECT_GEOS: {
-      const project = state.quotations ? JSON.parse(JSON.stringify(state.selectedProjectData)) : undefined;
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.geos = action.geos;
       return {
         ...state,
         selectedProjectData: project

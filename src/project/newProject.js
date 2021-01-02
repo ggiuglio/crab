@@ -6,6 +6,7 @@ import Site from "../geo/site/site";
 import { createNewProject } from "../store/actions/actionsCreator";
 import CountrySelector from "./countrySelector";
 import { InitializeProject } from "../store/actions/projectActions";
+import { getSelectedProject } from "../store/selectors/projectSelector";
 
 const NewProject = ({ createProject, project, initializeNewProject }) => {
   //MATERIALIZE GEO SELECT INSTANCE
@@ -20,7 +21,7 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
     M.Modal.init(modal);
 
     if (!project) {
-      initializeProject();
+      initializeNewProject();
     }
   }, []);
 
@@ -84,7 +85,7 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
   const checkAddSiteDisabled = !siteName || siteName.length === 0;
   const checkCreateDisabled =
     projectName.length === 0 ||
-    Object.keys(geo).length === 0 ||
+    Object.keys(project.geos).length === 0 ||
     providers.length === 0 ||
     pmName.length === 0;
 
@@ -180,15 +181,15 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
       });
     };
 
-    const project = {
+    const newProject = {
       title: projectName,
-      geo: geo,
+      geo: project.geos,
       creationDate: new Date().toLocaleString("It-it").split(",")[0],
       PM: pmName,
       status: "Open",
       providers: providerObjects
     };
-    createProject(project);
+    createProject(newProject);
   };
 
   const cleanUpGeoName = (name) => {
@@ -223,11 +224,12 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
                     </div>
                     <div className="collapsible-body">
                       <div className="row">
-                        {Object.keys(geo).map((k) => (
+
+                        {Object.keys(project.geos).map((k) => (
                           <Geo
                             key={k}
                             subregion={k}
-                            nations={geo[k]}
+                            nations={project.geos[k]}
                             classes="col s12 m6 l4"
                             cleanUpNameFunction={cleanUpGeoName}
                           />
@@ -390,7 +392,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    intializeNewProject: () => dispatch(InitializeProject()),
+    initializeNewProject: () => dispatch(InitializeProject()),
     createProject: (project) => dispatch(createNewProject(project)),
   };
 };

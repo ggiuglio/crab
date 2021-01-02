@@ -33,7 +33,7 @@ export const setProjectGeos = (geos) => {
     return dispatch(
       {
         type: SET_PROJECT_GEOS,
-        geo: geos
+        geos: geos
       }
     )
   }

@@ -5,15 +5,17 @@ import Preloader from "../common/preloader";
 import { getSelectedProject } from "../store/selectors/projectSelector";
 import { setProjectGeos } from "../store/actions/projectActions";
 
-const CountrySelector = ({ project, setGeos }) => {
+const CountrySelector = ({ project, setNewProjectGeos }) => {
+ 
   useEffect(() => {
     let subSel = document.getElementById("subregion");
     M.FormSelect.init(subSel);
+
+    const geoSelect = document.getElementById("geo");
+    M.FormSelect.init(geoSelect);
   });
 
-  useEffect(() => {
-    console.log(project)
-  });
+
 
   // SUBREGION LIST OBJECT
   const [subregionList, setSubregionList] = useState({
@@ -151,17 +153,20 @@ const CountrySelector = ({ project, setGeos }) => {
       geoDesc += ` ${k}${list.length === idx + 1 ? "" : ","}`;
     });
 
+    let currentGeos = geo;
     if (Object.keys(geoObj).length > 0) {
       geoObj.description = geoDesc;
 
-      setGeo({
-        ...geo,
-        [subregion]: geoObj,
-      });
+    currentGeos = {
+      ...geo,
+      [subregion]: geoObj,
+    };
+
     } else {
-      delete geo[subregion];
-      setGeo({ ...geo });
+      delete currentGeos[subregion];
     }
+    setGeo(currentGeos);
+    setNewProjectGeos(currentGeos);
 
     sitesKeysArray.map((k) => {
       delete sites[k];
@@ -226,7 +231,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setGeos: (geos) => dispatch(setProjectGeos(geos)) 
+    setNewProjectGeos: (geos) => dispatch(setProjectGeos(geos)) 
   };
 };
 
