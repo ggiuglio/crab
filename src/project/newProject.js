@@ -5,25 +5,28 @@ import Geo from "../geo/geo";
 import Site from "../geo/site/site";
 import { createNewProject } from "../store/actions/actionsCreator";
 import CountrySelector from "./countrySelector";
-import { InitializeProject } from "../store/actions/projectActions";
+import { InitializeProject, setProjectGeos } from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelector";
 
-const NewProject = ({ createProject, project, initializeNewProject }) => {
+const NewProject = ({ createProject, project, initializeNewProject, setNewProjectGeos }) => {
   //MATERIALIZE GEO SELECT INSTANCE
   useEffect(() => {
-    const geoSelect = document.getElementById("geo");
-    M.FormSelect.init(geoSelect);
+    if (project) {
+      const geoSelect = document.getElementById("geo");
+      M.FormSelect.init(geoSelect);
 
-    let collapsible = document.querySelectorAll(".collapsible");
-    M.Collapsible.init(collapsible);
+      let collapsible = document.querySelectorAll(".collapsible");
+      M.Collapsible.init(collapsible);
 
-    let modal = document.querySelector(".modal");
-    M.Modal.init(modal);
+      let modal = document.querySelector(".modal");
+      M.Modal.init(modal);
 
+
+    }
     if (!project) {
       initializeNewProject();
     }
-  }, []);
+  }, [project]);
 
   // SUBREGION LIST OBJECT
   const [subregionList, setSubregionList] = useState({
@@ -63,6 +66,25 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
   const [sites, setSites] = useState({});
   const [provider, setProvider] = useState("");
 
+  useEffect(() => {
+    const selectedSites = {};
+    if (project) {
+      Object.keys(project.geos).forEach(regionKey => {
+        const region = project.geos[regionKey];
+        Object.keys(region).forEach(geoKey => {
+          const nation = region[geoKey];
+          if (nation.sites && nation.sites.length > 0) {
+            selectedSites[geoKey] = {
+              subregion: regionKey,
+              sites: nation.sites
+            }
+          }
+        });
+      })
+    }
+    setSites(selectedSites);
+  }, [project])
+
   // ADD PROVIDER TO LIST
   const addProvider = (event) => {
     event.preventDefault();
@@ -93,34 +115,10 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
     let subregion = document.getElementById("siteSubregion").value;
     let nation = document.getElementById("siteNation").value;
 
-    if (
-      !geo.hasOwnProperty(subregion) ||
-      !geo[subregion].hasOwnProperty(nation)
-    ) {
-      console.log("error");
-      return;
-    }
+    const currentGeos = project.geos;
+    currentGeos[subregion][nation].sites.push({ name: siteName });
+    setNewProjectGeos(currentGeos);
 
-    const siteList = sites.hasOwnProperty(nation) ? sites[nation].sites : [];
-    siteList.push({ name: siteName });
-    setSites({
-      ...sites,
-      [nation]: {
-        subregion: subregion,
-        sites: siteList,
-      },
-    });
-
-    setGeo({
-      ...geo,
-      [subregion]: {
-        ...geo[subregion],
-        [nation]: {
-          sites: [...siteList],
-          name: getNationName(subregion, nation),
-        },
-      },
-    });
     setSiteName("");
   };
 
@@ -136,38 +134,10 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
   };
 
   const removeSite = (subregion, nation, idx) => {
-    let sitesCopy = sites[nation].sites.slice();
-    sitesCopy.splice(idx, 1);
-    if (sitesCopy.length === 0) {
-      delete sites[nation];
-      setSites({
-        ...sites,
-      });
-    } else {
-      setSites({
-        ...sites,
-        [nation]: {
-          sites: sitesCopy,
-          subregion: subregion,
-        },
-      });
-    }
+    const currentGeos = project.geos;
+    currentGeos[subregion][nation].sites.splice(idx, 1);
 
-    if (
-      geo.hasOwnProperty(subregion) &&
-      geo[subregion].hasOwnProperty(nation)
-    ) {
-      setGeo({
-        ...geo,
-        [subregion]: {
-          ...geo[subregion],
-          [nation]: {
-            sites: sitesCopy,
-            name: getNationName(subregion, nation),
-          },
-        },
-      });
-    }
+    setProjectGeos(currentGeos);
   };
 
   const saveProject = (e) => {
@@ -213,7 +183,6 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
             </div>
 
             <CountrySelector />
-
 
             <div className="row">
               <div className="col s12">
@@ -337,49 +306,49 @@ const NewProject = ({ createProject, project, initializeNewProject }) => {
             </div>
           </form>
 
-          <div id="modal-site" className="modal">
-            <div className="modal-content">
-              <h4>
-                Insert site for <span id="siteNationTitle"></span>
-              </h4>
-              <div className="input-field">
-                <label htmlFor="siteName">Site name</label>
-                <input
-                  name="siteName"
-                  value={siteName}
-                  type="text"
-                  onChange={(e) => setSiteName(e.target.value)}
-                ></input>
-              </div>
-              <input id="siteNation" type="text" className="hide" readOnly></input>
-              <input
-                id="siteSubregion"
-                type="text"
-                className="hide"
-                readOnly
-              ></input>
-            </div>
-            <div className="modal-footer">
-              <a
-                href="#!"
-                className="modal-close waves-effect waves-indigo btn-flat"
-                onClick={(e) => setSiteName("")}
-              >
-                Cancel
-          </a>
-              <a
-                href="#!"
-                className="modal-close btn green darken-1 waves-effect waves-light"
-                disabled={checkAddSiteDisabled}
-                onClick={(e) => addSite()}
-              >
-                Add
-          </a>
-            </div>
-          </div>
         </div>
         : ''
       }
+      <div id="modal-site" className="modal">
+        <div className="modal-content">
+          <h4>
+            Insert site for <span id="siteNationTitle"></span>
+          </h4>
+          <div className="input-field">
+            <label htmlFor="siteName">Site name</label>
+            <input
+              name="siteName"
+              value={siteName}
+              type="text"
+              onChange={(e) => setSiteName(e.target.value)}
+            ></input>
+          </div>
+          <input id="siteNation" type="text" className="hide" readOnly></input>
+          <input
+            id="siteSubregion"
+            type="text"
+            className="hide"
+            readOnly
+          ></input>
+        </div>
+        <div className="modal-footer">
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-indigo btn-flat"
+            onClick={(e) => setSiteName("")}
+          >
+            Cancel
+          </a>
+          <a
+            href="#!"
+            className="modal-close btn green darken-1 waves-effect waves-light"
+            disabled={checkAddSiteDisabled}
+            onClick={(e) => addSite()}
+          >
+            Add
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
@@ -394,6 +363,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initializeNewProject: () => dispatch(InitializeProject()),
     createProject: (project) => dispatch(createNewProject(project)),
+    setNewProjectGeos: (geos) => dispatch(setProjectGeos(geos))
   };
 };
 
