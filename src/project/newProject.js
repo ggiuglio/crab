@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
-import Site from "../geo/site/site";
+import Site from "../geo/site";
 import { createNewProject } from "../store/actions/actionsCreator";
 import CountrySelector from "./countrySelector";
-import { InitializeProject, setProjectGeos } from "../store/actions/projectActions";
+import {
+  InitializeProject,
+  setProjectGeos,
+  setProjectTitle,
+  setProjectPM,
+  addProjectProvider,
+  removeProjectProvider
+} from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelector";
 
-const NewProject = ({ createProject, project, initializeNewProject, setNewProjectGeos }) => {
-  //MATERIALIZE GEO SELECT INSTANCE
+const NewProject = ({ createProject, project, initializeNewProject, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
     if (project) {
       const geoSelect = document.getElementById("geo");
@@ -21,54 +27,7 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
 
-
-    }
-    if (!project) {
-      initializeNewProject();
-    }
-  }, [project]);
-
-  // SUBREGION LIST OBJECT
-  const [subregionList, setSubregionList] = useState({
-    "Northern%20Africa": [],
-    "Western%20Africa": [],
-    "Middle%20Africa": [],
-    "Eastern%20Africa": [],
-    "Southern%20Africa": [],
-    "Northern%20America": [],
-    "Central%20America": [],
-    Caribbean: [],
-    "South%20America": [],
-    "Western%20Asia": [],
-    "Central%20Asia": [],
-    "Eastern%20Asia": [],
-    "South-Eastern%20Asia": [],
-    "Southern%20Asia": [],
-    "Australia%20and%20New%20Zealand": [],
-    "Northern%20Europe": [],
-    "Western%20Europe": [],
-    "Eastern%20Europe": [],
-    "Southern%20Europe": [],
-    Melanesia: [],
-    // Micronesia: [],
-    // Polynesia: [],
-  });
-
-  //Effective state
-  const [projectName, setProjectName] = useState("");
-  const [geo, setGeo] = useState({});
-  const [providers, setProviders] = useState([]);
-  const [pmName, setPmName] = useState("");
-
-  //Only for utility use
-  const [subregion, setSubregion] = useState("");
-  const [siteName, setSiteName] = useState("");
-  const [sites, setSites] = useState({});
-  const [provider, setProvider] = useState("");
-
-  useEffect(() => {
-    const selectedSites = {};
-    if (project) {
+      const selectedSites = {};
       Object.keys(project.geos).forEach(regionKey => {
         const region = project.geos[regionKey];
         Object.keys(region).forEach(geoKey => {
@@ -81,35 +40,47 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
           }
         });
       })
+
+      setSites(selectedSites);
     }
-    setSites(selectedSites);
+    if (!project) {
+      initializeNewProject();
+    }
+  }, [project]);
+  useEffect(() => {
+
   }, [project])
 
-  // ADD PROVIDER TO LIST
-  const addProvider = (event) => {
-    event.preventDefault();
-
-    if (provider.length === 0 || providers.includes(provider)) return;
-
-    setProviders([...providers, provider]);
-    setProvider("");
-  };
-
-  const removeProvider = (event) => {
-    event.preventDefault();
-    let icnId = event.target.id;
-    let idx = icnId.substring(icnId.lastIndexOf("_") + 1);
-    let providersCopy = providers.slice();
-    providersCopy.splice(idx, 1);
-    setProviders(providersCopy);
-  };
+  const [siteName, setSiteName] = useState("");
+  const [sites, setSites] = useState({});
+  const [provider, setProvider] = useState("");
 
   const checkAddSiteDisabled = !siteName || siteName.length === 0;
   const checkCreateDisabled =
-    projectName.length === 0 ||
+    !project ||
+    !project.title ||
+    !project.pm ||
     Object.keys(project.geos).length === 0 ||
-    providers.length === 0 ||
-    pmName.length === 0;
+    project.providers.length === 0;
+
+  const setTitle = (title) => {
+    setProjectTitle(title)
+  }
+
+  const setPM = (pm) => {
+    setProjectPM(pm);
+  }
+
+  const addProvider = (event) => {
+    event.preventDefault();
+    addProjectProvider(provider);
+    setProvider("");
+  };
+
+  const removeProvider = (event, id) => {
+    event.preventDefault();
+    removeProjectProvider(id);
+  };
 
   const addSite = () => {
     let subregion = document.getElementById("siteSubregion").value;
@@ -117,20 +88,9 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
 
     const currentGeos = project.geos;
     currentGeos[subregion][nation].sites.push({ name: siteName });
-    setNewProjectGeos(currentGeos);
+    setProjectGeos(currentGeos);
 
     setSiteName("");
-  };
-
-  const getNationName = (subregion, nation) => {
-    if (subregionList.hasOwnProperty(subregion)) {
-      subregionList[subregion].map(n => {
-        if (n.cca3 === nation)
-          return n.name;
-      });
-    }
-
-    return '';
   };
 
   const removeSite = (subregion, nation, idx) => {
@@ -142,29 +102,17 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
 
   const saveProject = (e) => {
     e.preventDefault();
-    const providerObjects = [];
-
-    for (let i = 0; i < providers.length; i++) {
-      providerObjects.push({
-        id: i.toString(),
-        title: providers[i]
-      });
-    };
+   
 
     const newProject = {
-      title: projectName,
+      title: project.title,
       geo: project.geos,
       creationDate: new Date().toLocaleString("It-it").split(",")[0],
-      PM: pmName,
+      pm: project.pm,
       status: "Open",
-      providers: providerObjects
+      providers: project.providers
     };
     createProject(newProject);
-  };
-
-  const cleanUpGeoName = (name) => {
-    const regex = /%20/g;
-    return name.replaceAll(regex, " ");
   };
 
   return (
@@ -177,8 +125,8 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
               <input
                 type="text"
                 name="projectName"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
+                value={project.title}
+                onChange={(e) => setTitle(e.target.value)}
               ></input>
             </div>
 
@@ -200,7 +148,6 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
                             subregion={k}
                             nations={project.geos[k]}
                             classes="col s12 m6 l4"
-                            cleanUpNameFunction={cleanUpGeoName}
                           />
                         ))}
                       </div>
@@ -263,17 +210,17 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
                     </tr>
                   </thead>
                   <tbody>
-                    {providers.map((provider, idx) => (
-                      <tr key={provider + "_" + idx}>
-                        <td>{provider}</td>
+                    {project.providers.map((provider) => (
+                      <tr key={provider.id}>
+                        <td>{provider.title}</td>
                         <td>
                           <a
                             href="#!"
                             className="right btn-floating btn-small red darken-2 waves-effect waves-light"
-                            onClick={(e) => removeProvider(e)}
+                            onClick={(e) => removeProvider(e, provider.id)}
                           >
                             <i
-                              id={"cancelProvider_" + idx}
+                              id={"cancelProvider_" + provider.id}
                               className="material-icons"
                             >
                               clear
@@ -291,8 +238,8 @@ const NewProject = ({ createProject, project, initializeNewProject, setNewProjec
               <input
                 type="text"
                 id="pmName"
-                value={pmName}
-                onChange={(e) => setPmName(e.target.value)}
+                value={project.pm}
+                onChange={(e) => setPM(e.target.value)}
               ></input>
             </div>
             <div className="input-field col s12 center">
@@ -363,7 +310,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     initializeNewProject: () => dispatch(InitializeProject()),
     createProject: (project) => dispatch(createNewProject(project)),
-    setNewProjectGeos: (geos) => dispatch(setProjectGeos(geos))
+    setProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
+    setProjectTitle: (title) => dispatch(setProjectTitle(title)),
+    setProjectPM: (pm) => dispatch(setProjectPM(pm)),
+    addProjectProvider: (provider) => dispatch(addProjectProvider(provider)),
+    removeProjectProvider: (providerId) => dispatch(removeProjectProvider(providerId))
   };
 };
 

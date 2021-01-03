@@ -29,7 +29,11 @@ import {
   SET_BREADCRUMB_CODE,
   SET_BREADCRUMB,
   INITIALIZE_NEW_PROJECT,
-  SET_PROJECT_GEOS
+  SET_PROJECT_GEOS,
+  SET_PROJECT_TITLE,
+  SET_PROJECT_PM,
+  ADD_PROJECT_PROVIDER,
+  REMOVE_PROJECT_PROVIDER
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -210,6 +214,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const emptyProject = {
         id: '0',
         title: '',
+        pm: '',
+        providers: [],
         geos: []
       }
       return {
@@ -387,6 +393,48 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case SET_PROJECT_GEOS: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
       project.geos = action.geos;
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+
+    case SET_PROJECT_TITLE: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.title = action.title;
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+
+    case SET_PROJECT_PM: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.pm = action.pm;
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+
+    case ADD_PROJECT_PROVIDER: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      const provider = {
+        id: uuid(),
+        title: action.provider
+      };
+      project.providers.push(provider);
+
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+
+    case REMOVE_PROJECT_PROVIDER: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.providers = project.providers.filter(p => p.id != action.providerId);
+
       return {
         ...state,
         selectedProjectData: project

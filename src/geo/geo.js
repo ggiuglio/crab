@@ -1,18 +1,23 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-const Geo = ({ subregion, nations, classes, cleanUpNameFunction }) => {
+const Geo = ({ subregion, nations, classes }) => {
   const setModalValues = (nation, subregion) => {
     document.getElementById("siteNationTitle").innerText = nation.toUpperCase();
     document.getElementById("siteNation").value = nation.toUpperCase();
     document.getElementById("siteSubregion").value = subregion;
   };
 
+  const cleanUpGeoName = (name) => {
+    const regex = /%20/g;
+    return name.replaceAll(regex, " ");
+  };
+
   const showAddSite = useLocation().pathname === "/new-project";
 
   return (
     <div className={classes}>
-      <span>{cleanUpNameFunction(subregion) + " - "}</span>
+      <span>{cleanUpGeoName(subregion) + " - "}</span>
       {Object.keys(nations).filter((k) => {
         return !/^description$/i.test(k)
       }).map((nation, idx, list) => (
