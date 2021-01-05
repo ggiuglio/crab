@@ -2,19 +2,20 @@ import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import { history } from "../App";
 import { getUser } from "../store/selectors/selector";
-import { getBreadcrumbCode, getBreadcrumb, getProject } from "../store/selectors/selector";
-import { getQuotation } from "../store/selectors/quotationSelector";
+import { getBreadcrumbCode, getBreadcrumb } from "../store/selectors/selector";
 import { setBreadcrumbAction } from "../store/actions/actionsCreator";
 import CustomNavLink from "./customNavLink";
 import "./breadcrumb.css";
 
-const Breadcrumb = ({ breadcrumbCode, breadcrumb, project, selectedQuotation, setBreadcrumb, user }) => {
+const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
   useEffect(() => {
+    console.log("breadcrumb-user")
+    console.log(breadcrumbCode)
     if(!breadcrumbCode) {
       const locationToken = history.location.pathname.split('/');
       const location = locationToken[locationToken.length - 1];
 
-      let code;
+      let code = "";
 
       if(user) {
         switch (location) {
@@ -46,15 +47,17 @@ const Breadcrumb = ({ breadcrumbCode, breadcrumb, project, selectedQuotation, se
             code = "PJS";
         }
       }
-      
-      setBreadcrumb(code);
+      console.log(code)
+
+      if(breadcrumbCode !== code) setBreadcrumb(code);
     }
   }, [user]);
 
   useEffect(() => {
-    if(breadcrumbCode)
-      setBreadcrumb();
-  }, [project, selectedQuotation]);
+    console.log("breadcrumb")
+    console.log(breadcrumbCode)
+    if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
+  }, [breadcrumbCode]);
 
   return (
     <div className="section col s12">
@@ -76,8 +79,6 @@ const mapStateToProps = (state) => {
   return {
     breadcrumbCode: getBreadcrumbCode(state),
     breadcrumb: getBreadcrumb(state),
-    selectedQuotation: getQuotation(state),
-    project: getProject(state),
     user: getUser(state),
   };
 };

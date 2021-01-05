@@ -13,7 +13,7 @@ import Budget from "./budget/budget";
 import Analytics from "./analytics/analytics";
 import Login from "./login/login";
 import { getProjects } from "./store/selectors/selector";
-import { setUserAction, loadProjectsAction, loadStaticData, setBreadcrumbCodeAction } from "./store/actions/actionsCreator";
+import { setUserAction, loadProjectsAction, loadStaticData } from "./store/actions/actionsCreator";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -72,7 +72,6 @@ const mapDispatchToProps = (dispatch) => {
     setUser: (user) => dispatch(setUserAction(user)),
     loadProjects: () => dispatch(loadProjectsAction()),
     loadData: () => dispatch(loadStaticData()),
-    setBreadcrumbCode: (code) => dispatch(setBreadcrumbCodeAction(code)),
   };
 };
 

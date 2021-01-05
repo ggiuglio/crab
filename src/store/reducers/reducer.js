@@ -105,7 +105,7 @@ const NAVIGATION_CODES = {
     order: 2
   },
   "NQT" : {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - New quotation`,
+    title: `New quotation`,
     // url: `/project/new-quotation`,
     url: `#!`,
     parent: "QTS",
@@ -153,7 +153,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         quotations: quotations,
         invoiceList: invoices,
-        project: project
+        project: project,
+        breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, project)
       };
     }
     case SHOW_NEW_INVOICE: {
@@ -194,7 +195,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         viewMode: VIEW_MODES.VIEW,
         selectedQuotationId: action.quotation,
-        selectedQuotationData: quotation
+        selectedQuotationData: quotation,
+        breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, state.project, quotation)
       };
     }
     case LOAD_STATIC_DATA: {
@@ -377,18 +379,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
 
-    case SET_BREADCRUMB_CODE:
+    case SET_BREADCRUMB_CODE: {
       return {
         ...state,
         breadcrumbCode: action.code,
-      };
+      }
+    }
 
-    case SET_BREADCRUMB:
+    case SET_BREADCRUMB: {
       return {
         ...state,
-        breadcrumbCode: action.code,
         breadcrumb: mapBreadcrumb(action.code, state.breadcrumbCode, state.project, state.selectedQuotationData),
-      };
+      }
+    }
 
     case SET_PROJECT_GEOS: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
@@ -513,7 +516,11 @@ const mapProfessionalAndGeosToResources = (professionals, geos) => {
   return resources;
 };
 
-const mapBreadcrumb = (par_code, stateCode, project, quotation, breadcrumb = []) => {
+const mapBreadcrumb = (par_code, stateCode, project, quotation = undefined, breadcrumb = []) => {
+  console.log("reducer")
+  console.log(`PAR ${par_code}`)
+  console.log(`STATE ${stateCode}`)
+  console.log(`BREAD ${breadcrumb}`)
   let code = stateCode;
   if(par_code) {
     code = par_code;

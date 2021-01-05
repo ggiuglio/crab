@@ -11,7 +11,7 @@ const mapQuotationList = (quotations) => {
     Object.keys(quotations).forEach((k) => {
       const quotation = {
         id: k,
-        type: quotations[k].type,
+        type: quotations[k].quotationType,
         code: quotations[k].code,
         status: quotations[k].status,
         quotationCost: quotations[k].quotationCost
