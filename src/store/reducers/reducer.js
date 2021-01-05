@@ -517,10 +517,6 @@ const mapProfessionalAndGeosToResources = (professionals, geos) => {
 };
 
 const mapBreadcrumb = (par_code, stateCode, project, quotation = undefined, breadcrumb = []) => {
-  console.log("reducer")
-  console.log(`PAR ${par_code}`)
-  console.log(`STATE ${stateCode}`)
-  console.log(`BREAD ${breadcrumb}`)
   let code = stateCode;
   if(par_code) {
     code = par_code;

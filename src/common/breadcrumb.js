@@ -9,8 +9,6 @@ import "./breadcrumb.css";
 
 const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
   useEffect(() => {
-    console.log("breadcrumb-user")
-    console.log(breadcrumbCode)
     if(!breadcrumbCode) {
       const locationToken = history.location.pathname.split('/');
       const location = locationToken[locationToken.length - 1];
@@ -47,15 +45,12 @@ const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
             code = "PJS";
         }
       }
-      console.log(code)
 
       if(breadcrumbCode !== code) setBreadcrumb(code);
     }
   }, [user]);
 
   useEffect(() => {
-    console.log("breadcrumb")
-    console.log(breadcrumbCode)
     if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
   }, [breadcrumbCode]);
 

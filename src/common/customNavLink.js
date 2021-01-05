@@ -6,8 +6,6 @@ import { setBreadcrumbCodeAction } from "../store/actions/actionsCreator";
 
 const CustomNavLink = (par) => {
   const onNavClick = () => {
-    console.log("CustomNavLink")
-    console.log(par)
     if(typeof(par.onClick) === 'function') par.onClick();
     par.setBreadcrumbCode(par.code);
   };
