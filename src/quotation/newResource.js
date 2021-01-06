@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getModalResourceData } from "../store/selectors/quotationSelector";
-import { getResources } from "../store/selectors/selector";
+import { getModalResourceData } from "../store/selectors/quotationSelectors";
+import { getResources } from "../store/selectors/genericSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { addResourceToSelectedQuotation, hideActivityResourceModal } from "../store/actions/quotationActions";
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getProviders } from "../store/selectors/selector";
+import { getProviders } from "../store/selectors/genericSelectors";
 import { setSelectedQuotationProvider } from "../store/actions/quotationActions";
-import { getViewMode } from "../store/selectors/selector";
-import { getQuotation } from "../store/selectors/quotationSelector";
-import { VIEW_MODES } from "../store/constants/constants";
+import { getViewMode } from "../store/selectors/genericSelectors";
+import { getQuotation } from "../store/selectors/quotationSelectors";
+import { VIEW_MODES } from "../constants/constants";
 
 const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
   const [availableProviders, setAvailableProviders] = useState([]);

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { selectProject } from "../store/actions/actionsCreator";
+import { selectProject } from "../store/actions/projectActions";
 import CustomNavLink from "../common/customNavLink";
 
 const ProjectTile = ({ project, chooseProject, clearOldProject }) => {

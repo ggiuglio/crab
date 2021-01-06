@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Activity from "./activity";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { VIEW_MODES } from "../store/constants/constants";
+import { VIEW_MODES } from "../constants/constants";
 import { removeModuleFromSelectedQuotation, addActivityToSelectedQuotation } from "../store/actions/quotationActions";
-import { getBaseModulesWithActivitiesAsList } from "../store/selectors/selector";
+import { getBaseModulesWithActivitiesAsList } from "../store/selectors/genericSelectors";
 
 const Module = ({
   module,

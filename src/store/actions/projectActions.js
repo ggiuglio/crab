@@ -1,5 +1,8 @@
 import { FirebaseInstance } from '../../App';
 import {
+  LOAD_PROJECTS,
+  LOAD_PROJECT,
+  SELECT_PROJECT,
   INITIALIZE_NEW_PROJECT,
   SET_PROJECT_TITLE,
   SET_PROJECT_GEOS,
@@ -7,6 +10,51 @@ import {
   REMOVE_PROJECT_PROVIDER,
   SET_PROJECT_PM
 } from './actionsTypes.js';
+
+
+export const loadProjectsAction = () => {
+  return (dispatch, getSate) => {
+
+    const uid = getSate().user.uid;
+    return FirebaseInstance.dataRef.ref(`userProjects/${uid}/projects`).on('value', snapshot => {
+      const projects = JSON.parse(JSON.stringify(snapshot.val()));
+
+      return dispatch(
+        {
+          type: LOAD_PROJECTS,
+          projects: projects
+        }
+      )
+    });
+  }
+}
+
+export const loadProjectAction = (projectId) => {
+  return (dispatch) => {
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
+      const project = JSON.parse(JSON.stringify(snapshot.val()));
+
+      return dispatch(
+        {
+          type: LOAD_PROJECT,
+          project: project,
+          projectId: projectId
+        }
+      )
+    });
+  }
+}
+
+export const selectProject = (projectId) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SELECT_PROJECT,
+        project: projectId
+      }
+    )
+  }
+}
 
 export const InitializeProject = () => {
   return dispatch => {

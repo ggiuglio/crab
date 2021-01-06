@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUser } from "../../store/selectors/selector";
+import { getUser } from "../../store/selectors/genericSelectors";
 import SignedInSideLinks from './signedInSideLinks'
 import SignedOutSideLinks from './signedOutSideLinks'
 import M from  'materialize-css/dist/js/materialize.min.js';

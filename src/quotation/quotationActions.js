@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { VIEW_MODES } from "../store/constants/constants";
-import { getViewMode } from "../store/selectors/selector";
+import { VIEW_MODES } from "../constants/constants";
+import { getViewMode } from "../store/selectors/genericSelectors";
 import { setQuotationViewMode, cancelQuotationEdit } from "../store/actions/quotationActions";
 
 const QuotationActions = ({ viewMode, startEditQuotation, cancelEditQuotation }) => {

@@ -1,10 +1,10 @@
 import React from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
-import { getSelectedProjectId, getProject } from "../store/selectors/selector";
-import { getBudget } from "../store/selectors/budgetSelector";
+import { getSelectedProjectId, getProject } from "../store/selectors/projectSelectors";
+import { getBudget } from "../store/selectors/budgetSelectors";
 import { history } from "../App";
-import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
+import { selectProject, loadProjectAction } from "../store/actions/projectActions";
 
 const Act = styled.div`{
   margin-left: 30px;

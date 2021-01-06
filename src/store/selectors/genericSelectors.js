@@ -1,9 +1,6 @@
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
-export const getProjects = (state) => state.projects ? mapProjectList(state.projects) : undefined;
-export const getProject = (state) => state.project ? state.project : undefined;
-export const getSelectedProjectId = (state) => state.selectedProjectId;
-export const getShowNewInvoice = (state) => state.showNewInvoice;
+
 export const getBaseModules = (state) => mapBaseModules(state.baseModules);
 export const getBaseModulesWithActivitiesAsList = (state) => mapBaseModulesWithActivitiesAsList(state.baseModules);
 export const getViewMode = (state) => state.viewMode;
@@ -16,15 +13,6 @@ export const getBreadcrumb = (state) => state.breadcrumb;
 const mapProviders = (project) => {
   const providers = project ? project.providers : [];
   return providers;
-};
-
-const mapProjectList = (projects) => {
-  const projectList = [];
-  Object.keys(projects).forEach((k) => {
-    projectList.push(projects[k]);
-  });
-
-  return projectList.reverse();
 };
 
 const mapBaseModules = (modules) => {

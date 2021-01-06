@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getSelectedProjectId } from "../store/selectors/selector";
+import { getSelectedProjectId } from "../store/selectors/projectSelectors";
 import CustomNavLink from "../common/customNavLink";
 
 const ProjectMenu = ({selectedProjectId}) => {

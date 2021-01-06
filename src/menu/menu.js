@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getUser } from "../store/selectors/selector";
+import { getUser } from "../store/selectors/genericSelectors";
 import SignedInLinks from "./signedInLinks";
 import SignedOutLinks from "./signedOutLinks";
 

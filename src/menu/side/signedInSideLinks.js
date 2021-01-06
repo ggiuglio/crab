@@ -2,8 +2,9 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getUser, getSelectedProjectId } from "../../store/selectors/selector";
-import { logoutAction } from "../../store/actions/actionsCreator";
+import { getUser } from "../../store/selectors/genericSelectors";
+import { getSelectedProjectId } from "../../store/selectors/projectSelectors";
+import { logoutAction } from "../../store/actions/genericActions";
 import M from "materialize-css/dist/js/materialize.min.js";
 import CustomNavLink from "../../common/customNavLink";
 

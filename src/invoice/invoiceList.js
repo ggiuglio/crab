@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getInvoiceList } from "../store/selectors/invoiceSelector";
+import { getInvoiceList } from "../store/selectors/invoiceSelectors";
 import { deleteInvoice } from '../store/actions/invoiceActions';
 
 const InvoiceList = ({ invoices, deleteInvoiceAction }) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getProject } from "../store/selectors/selector";
-import { getQuotations } from "../store/selectors/quotationSelector";
+import { getProject } from "../store/selectors/projectSelectors";
+import { getQuotations } from "../store/selectors/quotationSelectors";
 import QuotationTile from "./quotationTile";
 import Preloader from "../common/preloader";
 import M from "materialize-css/dist/js/materialize.min.js";

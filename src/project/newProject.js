@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site";
-import { createNewProject } from "../store/actions/actionsCreator";
+import { createNewProject } from "../store/actions/genericActions";
 import CountrySelector from "./countrySelector";
 import {
   InitializeProject,
@@ -13,7 +13,7 @@ import {
   addProjectProvider,
   removeProjectProvider
 } from "../store/actions/projectActions";
-import { getSelectedProject } from "../store/selectors/projectSelector";
+import { getSelectedProject } from "../store/selectors/projectSelectors";
 
 const NewProject = ({ createProject, project, initializeNewProject, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {

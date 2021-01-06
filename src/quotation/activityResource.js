@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { VIEW_MODES } from "../store/constants/constants";
+import { VIEW_MODES } from "../constants/constants";
 import {
   editResourceInSelectedQuotation,
   removeResourceFromSelectedQuotation

@@ -18,7 +18,7 @@ import {
   CANCEL_QUOTATION_EDIT
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
-import { VIEW_MODES } from '../constants/constants.js';
+import { VIEW_MODES } from '../../constants/constants.js';
 
 export const selectQuotation = (quotationId) => {
   return dispatch => {

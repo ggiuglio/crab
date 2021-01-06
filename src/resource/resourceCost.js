@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { VIEW_MODES } from "../store/constants/constants";
+import { VIEW_MODES } from "../constants/constants";
 import { editDefaultResourceCostInSelectedQuotation } from "../store/actions/quotationActions";
 
 const ResourceCost = ({ resource, viewMode, editResourceCost }) => {

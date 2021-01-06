@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { setBreadcrumbCodeAction } from "../store/actions/actionsCreator";
+import { setBreadcrumbCodeAction } from "../store/actions/genericActions";
 
 const CustomNavLink = (par) => {
   const onNavClick = () => {

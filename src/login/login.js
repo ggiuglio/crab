@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import {
   loginAction,
   resetLoginErrorAction,
-} from "../store/actions/actionsCreator";
-import { getUser, getLoginError } from "../store/selectors/selector";
+} from "../store/actions/genericActions";
+import { getUser, getLoginError } from "../store/selectors/genericSelectors";
 import { history } from "../App";
 
 const Login = ({ login, loginError, resetLoginError, user }) => {

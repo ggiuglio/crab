@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getProject, getSelectedProjectId } from "../store/selectors/selector";
-import { selectProject, loadProjectAction } from "../store/actions/actionsCreator";
+import { getProject, getSelectedProjectId } from "../store/selectors/projectSelectors";
+import { selectProject, loadProjectAction } from "../store/actions/projectActions";
 import Quotations from "../quotation/quotations";
 import { history } from "../App";
-import { QUOTATION_TYPES } from "../store/constants/constants";
+import { QUOTATION_TYPES } from "../constants/constants";
 import { startNewQuotation } from "../store/actions/quotationActions";
 import CustomNavLink from "../common/customNavLink";
 

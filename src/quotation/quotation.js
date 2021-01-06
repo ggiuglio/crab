@@ -2,27 +2,35 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   getBaseModules,
-  getSelectedProjectId,
-  getProject,
   getViewMode,
   getResources,
   getProfessionals
-} from "../store/selectors/selector";
+} from "../store/selectors/genericSelectors";
 import {
   getSelectedQuotationId,
   getQuotation,
-} from "../store/selectors/quotationSelector";
-import M from "materialize-css/dist/js/materialize.min.js";
-import Module from "./module";
-import ResourceList from "../resource/resourceList";
+} from "../store/selectors/quotationSelectors";
+import {
+  getSelectedProjectId,
+  getProject
+} from "../store/selectors/projectSelectors";
 import {
   selectProject,
   loadProjectAction,
-} from "../store/actions/actionsCreator";
+} from "../store/actions/projectActions";
+import { 
+  addQuotation, 
+  startNewQuotation, 
+  editSelectedQuotationCode, 
+  editQuotation 
+} from "../store/actions/quotationActions";
+
+import M from "materialize-css/dist/js/materialize.min.js";
+import Module from "./module";
+import ResourceList from "../resource/resourceList";
 import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
-import { addQuotation, startNewQuotation, editSelectedQuotationCode, editQuotation } from "../store/actions/quotationActions";
-import { QUOTATION_TYPES, VIEW_MODES } from "../store/constants/constants";
+import { QUOTATION_TYPES, VIEW_MODES } from "../constants/constants";
 import NewModule from "./newModule";
 import NewResource from "./newResource";
 import Preloader from "../common/preloader";

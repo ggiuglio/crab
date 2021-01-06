@@ -35,7 +35,7 @@ import {
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER
 } from "../actions/actionsTypes";
-import { VIEW_MODES, NAVIGATION_REPLACERS } from "../constants/constants";
+import { VIEW_MODES, NAVIGATION_REPLACERS } from "../../constants/constants";
 import { v4 as uuid } from "uuid";
 
 export const INITIAL_STATE = {

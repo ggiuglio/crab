@@ -2,9 +2,6 @@ import {
   LOGIN_ERROR,
   RESET_LOGIN_ERROR,
   SET_USER,
-  LOAD_PROJECTS,
-  LOAD_PROJECT,
-  SELECT_PROJECT,
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA,
   SET_BREADCRUMB,
@@ -49,50 +46,6 @@ export const setUserAction = (user) => {
       type: SET_USER,
       user: user ? { email: user.email, uid: user.uid } : null
     });
-  }
-}
-
-export const loadProjectsAction = () => {
-  return (dispatch, getSate) => {
-
-    const uid = getSate().user.uid;
-    return FirebaseInstance.dataRef.ref(`userProjects/${uid}/projects`).on('value', snapshot => {
-      const projects = JSON.parse(JSON.stringify(snapshot.val()));
-
-      return dispatch(
-        {
-          type: LOAD_PROJECTS,
-          projects: projects
-        }
-      )
-    });
-  }
-}
-
-export const loadProjectAction = (projectId) => {
-  return (dispatch) => {
-    return FirebaseInstance.dataRef.ref(`projects/${projectId}`).on('value', snapshot => {
-      const project = JSON.parse(JSON.stringify(snapshot.val()));
-
-      return dispatch(
-        {
-          type: LOAD_PROJECT,
-          project: project,
-          projectId: projectId
-        }
-      )
-    });
-  }
-}
-
-export const selectProject = (projectId) => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: SELECT_PROJECT,
-        project: projectId
-      }
-    )
   }
 }
 

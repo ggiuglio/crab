@@ -1,12 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import styled from 'styled-components';
-import InvoiceList from './invoiceList';
-import NewInvoice from './newInvoice';
-import add from '../assets/images/add.png';
-import { selectProject, loadProjectAction } from '../store/actions/actionsCreator';
-import { ShowNewInvoice } from '../store/actions/invoiceActions';
-import { getShowNewInvoice, getSelectedProjectId, getProject } from '../store/selectors/selector';
+import styled from "styled-components";
+import InvoiceList from "./invoiceList";
+import NewInvoice from "./newInvoice";
+import add from "../assets/images/add.png";
+import { selectProject, loadProjectAction } from "../store/actions/projectActions";
+import { ShowNewInvoice } from "../store/actions/invoiceActions";
+import { getShowNewInvoice } from "../store/selectors/invoiceSelectors";
+import { getSelectedProjectId, getProject } from "../store/selectors/projectSelectors";
 import { history } from "../App";
 
 const AddInvoice = styled.div`

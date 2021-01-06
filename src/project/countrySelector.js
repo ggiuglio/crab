@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Preloader from "../common/preloader";
-import { getSelectedProject } from "../store/selectors/projectSelector";
+import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { setProjectGeos } from "../store/actions/projectActions";
 
 const CountrySelector = ({ project, setNewProjectGeos }) => {

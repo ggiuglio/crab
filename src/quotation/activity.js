@@ -4,7 +4,7 @@ import ActivityResource from "./activityResource";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   VIEW_MODES
-} from "../store/constants/constants";
+} from "../constants/constants";
 import {
   removeActivityFromSelectedQuotation,
   editActivityInSelectedQuotation,

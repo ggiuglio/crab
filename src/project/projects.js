@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getProjects } from "../store/selectors/selector";
+import { getProjects } from "../store/selectors/projectSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 import ProjectTile from "./projectTile";
-import { selectProject } from "../store/actions/actionsCreator";
+import { selectProject } from "../store/actions/projectActions";
 import Preloader from "../common/preloader";
 import CustomNavLink from "../common/customNavLink";
 

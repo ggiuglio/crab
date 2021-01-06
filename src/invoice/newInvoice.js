@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
-import { getQuotationsEntityList, getAllModulesAndActivities } from "../store/selectors/quotationSelector";
+import { getQuotationsEntityList, getAllModulesAndActivities } from "../store/selectors/quotationSelectors";
 
 const MainContainer = styled.div`
   margin: 20px;

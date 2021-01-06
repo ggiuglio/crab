@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   getQuotation,
-} from "../store/selectors/quotationSelector";
-import M from "materialize-css/dist/js/materialize.min.js";
+} from "../store/selectors/quotationSelectors";
 import {
-  getBaseModules,
-  getProject,
-} from "../store/selectors/selector";
+  getBaseModules
+} from "../store/selectors/genericSelectors";
+import { getProject } from "../store/selectors/projectSelectors";
 import { addModuleToSelectedQuotation } from "../store/actions/quotationActions";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) => {
   const [availableModules, setAvailableModules] = useState([]);
