@@ -65,7 +65,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
               id="wrapper-select-resource"
               className="input-field col s12 m6"
             >
-              <select className="browser-default" id="modal-resource-dropdown" value={selectedResource}
+              <select className="browser-default" id="modal-resource-dropdown" value={selectedResource.id}
                 onChange={(e) => resourceChange(e.target.value)}
               >
                 {resourceList.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}

@@ -32,7 +32,7 @@ import { selectQuotation } from "../store/actions/quotationActions";
 import { history } from "../App";
 import { QUOTATION_TYPES, VIEW_MODES } from "../constants/constants";
 import NewModule from "./newModule";
-import NewResource from "./newResource";
+import NewResource from "../resource/newResource";
 import Preloader from "../common/preloader";
 import Provider from "./provider";
 import QuotationActions from "./quotationActions";
