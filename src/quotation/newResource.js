@@ -45,7 +45,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
   };
 
   const canAddResource = () => {
-    return selectedResource && resourceHours && resourceHours > 0
+    return selectedResource.id !== "-1" && resourceHours && resourceHours > 0
   };
 
   const closeModal = () => {
