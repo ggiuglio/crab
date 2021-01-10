@@ -1,21 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getSelectedProjectId } from "../store/selectors/projectSelectors";
-import { history } from "../App";
 
-const Dahsboard = ({selectedProject, chooseProject}) => {
-  React.useEffect(() => {
-    if(!selectedProject) {
-      const query = new URLSearchParams(history.location.search);
-      const queryProject = query.get('project')
-      if(queryProject) {
-        chooseProject(queryProject);
-      }
-      else {
-        history.push('/');
-      }
-    }
-  });
+const Dahsboard = () => {
 
   return (
     <div>

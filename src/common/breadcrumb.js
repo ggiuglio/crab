@@ -21,10 +21,10 @@ const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
             code = "NPJ";
             break;
           case "project":
-            code = "QTS";
-            break;
-          case "dashboard":
             code = "DSB";
+            break;
+          case "quotations":
+            code = "QTS";
             break;
           case "invoices":
             code = "INV";
@@ -45,13 +45,12 @@ const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
             code = "PJS";
         }
       }
-
       if(breadcrumbCode !== code) setBreadcrumb(code);
     }
   }, [user]);
 
   useEffect(() => {
-    if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
+if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
   }, [breadcrumbCode]);
 
   return (

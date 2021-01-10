@@ -62,6 +62,7 @@ const NewProject = ({ createProject, project, initializeNewProject, setProjectGe
     !project.pm ||
     Object.keys(project.geos).length === 0 ||
     project.providers.length === 0;
+  const checkAddProviderDisabled = !provider || provider.length === 0;
 
   const setTitle = (title) => {
     setProjectTitle(title)
@@ -197,6 +198,7 @@ const NewProject = ({ createProject, project, initializeNewProject, setProjectGe
                   href="#!"
                   className="right btn-floating btn-small waves-effect waves-light indigo"
                   onClick={(e) => addProvider(e)}
+                  disabled={checkAddProviderDisabled}
                 >
                   <i className="material-icons">add</i>
                 </a>

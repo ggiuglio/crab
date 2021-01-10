@@ -12,7 +12,7 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
     <div className="col s12 l6">
       <div className="card indigo lighten-2">
         <div className="card-content" onClick={() => goToProjectPage()}>
-          <CustomNavLink to={`/project?project=${project.id}`} code="QTS">
+          <CustomNavLink to={`/project?project=${project.id}`} code="DSB">
             <div className="white-text">
                 <div className="row card-title">
                   <span className="bolder col s12 m6 s-center truncate" title={project.title}>{project.title}</span>

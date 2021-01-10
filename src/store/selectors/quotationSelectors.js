@@ -1,5 +1,9 @@
+import { QUOTATION_TYPES } from "../../constants/constants";
+
 export const getSelectedQuotationId = (state) => state.selectedQuotationId;
 export const getQuotations = (state) => mapQuotationList(state.quotations);
+export const getProviderQuotations = (state) => filterProviderQuotations(mapQuotationList(state.quotations));
+export const getSponsorQuotations = (state) => filterSponsorQuotations(mapQuotationList(state.quotations));
 export const getQuotation = (state) => state.selectedQuotationData ? getSingleQuotation(state.selectedQuotationData) : undefined;
 export const getQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations);
 export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules);
@@ -21,6 +25,14 @@ const mapQuotationList = (quotations) => {
   }
 
   return quotationList.reverse();
+};
+
+const filterProviderQuotations = (quotations) => {
+    return quotations.filter(q => q.type === QUOTATION_TYPES.PROVIDER);
+};
+
+const filterSponsorQuotations = (quotations) => {
+  return quotations.filter(q => q.type === QUOTATION_TYPES.SPONSOR);
 };
 
 const getSingleQuotation = (selectedQuotation) => {

@@ -36,6 +36,7 @@ import NewResource from "../resource/newResource";
 import Preloader from "../common/preloader";
 import Provider from "./provider";
 import QuotationActions from "./quotationActions";
+import "./css/quotation.css";
 
 const NewQuotation = ({
   selectedQuotation,
@@ -94,6 +95,10 @@ const NewQuotation = ({
     let collapsible = document.querySelectorAll(".collapsible");
     if (collapsible)
       M.Collapsible.init(collapsible, { accordion: false });
+    
+    // let allSelect = document.querySelectorAll("select");
+    // if(allSelect)
+    //   M.FormSelect.init(allSelect);
   });
 
   useEffect(() => {
@@ -229,14 +234,16 @@ const NewQuotation = ({
         selectedQuotation ?
           <div id="selectedQuotation" className="section">
             <div>
-              <QuotationActions />
               <form className="white" onSubmit={(e) => saveQuotation(e)}>
                 <div className="container">
                   <div className="row">
-                    <div className="input-field col s12">
+                    <div className="col s1">
+                      <QuotationActions />
+                    </div>
+                    <div className="input-field col s10">
                       <label className="active" htmlFor="quotationCode">
                         quotation code
-                  </label>
+                      </label>
                       <input
                         type="text"
                         name="quotationCode"

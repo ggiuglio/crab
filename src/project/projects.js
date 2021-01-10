@@ -31,7 +31,7 @@ const Projects = ({ projects, clearSelectedProject }) => {
             iconName="add"
             code="NPJ"
           />
-          <p>CREATE NEW PROJECTS</p>
+          <p>CREATE NEW PROJECT</p>
         </div>
       </div>
 
