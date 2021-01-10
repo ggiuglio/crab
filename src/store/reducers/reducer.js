@@ -76,13 +76,13 @@ const NAVIGATION_CODES = {
   },
   "QTS" : {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
-    url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    url: `/project/quotations?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
   "DSB" : {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Dashboard`,
-    url: `/project/dashboard?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
@@ -149,12 +149,14 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
       const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
 
+      const bc = mapBreadcrumb(undefined, state.breadcrumbCode, project);
       return {
         ...state,
         quotations: quotations,
         invoiceList: invoices,
         project: project,
-        breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, project)
+        breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
+        breadcrumb: bc
       };
     }
     case SHOW_NEW_INVOICE: {
@@ -191,12 +193,16 @@ const Reducer = (state = INITIAL_STATE, action) => {
       if (quotation) {
         quotation.id = action.quotation
       }
+
+      const bc = mapBreadcrumb(undefined, state.breadcrumbCode, state.project, quotation);
+
       return {
         ...state,
         viewMode: VIEW_MODES.VIEW,
         selectedQuotationId: action.quotation,
         selectedQuotationData: quotation,
-        breadcrumb: mapBreadcrumb(undefined, state.breadcrumbCode, state.project, quotation)
+        breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
+        breadcrumb: bc
       };
     }
     case LOAD_STATIC_DATA: {
@@ -387,9 +393,11 @@ const Reducer = (state = INITIAL_STATE, action) => {
     }
 
     case SET_BREADCRUMB: {
+      const bc = mapBreadcrumb(action.code, state.breadcrumbCode, state.project, state.selectedQuotationData);
       return {
         ...state,
-        breadcrumb: mapBreadcrumb(action.code, state.breadcrumbCode, state.project, state.selectedQuotationData),
+        breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
+        breadcrumb: bc,
       }
     }
 

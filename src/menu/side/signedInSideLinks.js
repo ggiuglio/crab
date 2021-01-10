@@ -45,7 +45,7 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
                 <ul>
                   <li>
                     <CustomNavLink
-                      to={`/project/dashboard?project=${selectedProjectId}`}
+                      to={`/project?project=${selectedProjectId}`}
                       className="sidenav-close"
                       iconType="AWESOME"
                       iconName="grip-horizontal"
@@ -56,7 +56,7 @@ const SignedInSideLinks = ({ user, selectedProjectId, logout }) => {
                   </li>
                   <li>
                     <CustomNavLink
-                      to={`/project?project=${selectedProjectId}`}
+                      to={`/project/quotations?project=${selectedProjectId}`}
                       className="sidenav-close"
                       iconType="AWESOME"
                       iconName="search-dollar"

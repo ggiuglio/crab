@@ -9,13 +9,13 @@ const ProjectMenu = ({selectedProjectId}) => {
     <div>
       <ul id="menu-project-dd" className="dropdown-content dd-padding">
         <li>
-          <CustomNavLink to={`/project/dashboard?project=${selectedProjectId}`} className="black-text" code="DSB">
+          <CustomNavLink to={`/project?project=${selectedProjectId}`} className="black-text" code="DSB">
             <span>Dashboard</span>
           </CustomNavLink>
         </li>
         <li className="divider" tabIndex="-1"></li>
         <li>
-          <CustomNavLink to={`/project?project=${selectedProjectId}`} className="black-text" code="QTS">
+          <CustomNavLink to={`/project/quotations?project=${selectedProjectId}`} className="black-text" code="QTS">
             <span>Quotations</span>
           </CustomNavLink>
         </li>
