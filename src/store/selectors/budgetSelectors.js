@@ -8,8 +8,8 @@ const mapBudget = (state) => {
     outOfBudgetCost: 0
   };
 
-  let outOfBudgetInvoices = state.invoiceList.filter( i => i.quotationCode === "Out of budget");
-  outOfBudgetInvoices.forEach( i => {
+  let outOfBudgetInvoices = state.invoiceList.filter(i => i.quotationCode === "Out of budget");
+  outOfBudgetInvoices.forEach(i => {
     budget.outOfBudgetCost += i.totalCost;
     budget.sustainedCost += i.totalCost;
   });
@@ -53,14 +53,25 @@ const mapModuleForBudget = (quotation, module, invoices) => {
     Object.keys(module.activities).forEach((k) => {
       let activity = module.activities[k];
       activity.id = k;
+      activity.unitCost = activity.fixedCost ? parseInt(activity.fixedCost) : 0;
+      activity.unitNumber = activity.unitNumber ? parseInt(activity.unitNumber) : 0;
       activity.quotation = { id: quotation.id, code: quotation.code };
       activity.module = { id: module.id, code: module.code, title: module.title };
       let activityInvoices = invoices.filter(i => i.activityCode === activity.code);
       activity.sustainedCost = activityInvoices.reduce((total, i) => (total + i.totalCost), 0);
       let resources = [];
-      Object.keys(activity.resources).forEach((k) => {
-        resources.push(activity.resources[k]);
-      });
+      if (activity.resources) {
+        Object.keys(activity.resources).forEach((i) => {
+          const resource = activity.resources[i];
+          const quotationResource = quotation.resources[resource.code];
+          resource.id = i;
+          resource.hourCost = quotationResource.fee;
+          resource.cost = resource.hourCost * resource.hours;
+          activity.unitCost += activity.resources[i].cost;
+          resources.push(activity.resources[i]);
+        });
+      }
+      activity.activityCost = activity.unitCost * activity.unitNumber;
       activity.resources = resources;
       activities[activity.code] = activity;
     });

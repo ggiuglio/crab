@@ -84,7 +84,7 @@ const mapModule = (module, quotation) => {
 
 const mapActivity = (activity, quotation) => {
   const resources = [];
-  activity.unitCost = 0;
+  activity.unitCost = activity.fixedCost ? parseInt(activity.fixedCost) : 0;
   activity.unitNumber = activity.unitNumber ? activity.unitNumber : 0;
   if (activity.resources) {
     Object.keys(activity.resources).forEach((k) => {
