@@ -12,7 +12,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
 
   useEffect(() => {
     const filteredResources = resources.filter(r => r.geo === modalData.moduleGeo || r.geo === "");
-    setResourceList([{ id: 1, title: "Select resource" }, ...filteredResources]);
+    setResourceList([{ id: "-1", title: "Select resource" }, ...filteredResources]);
   }, [resources, modalData])
 
   useEffect(() => {
