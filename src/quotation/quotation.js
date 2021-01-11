@@ -80,7 +80,7 @@ const NewQuotation = ({
         if (!selectedQuotationId && location !== "new-quotation") {
           chooseQuotation(queryQuotation);
         }
-        if (!selectedQuotationId && location === "new-quotation") {
+        if (selectedQuotationId !== '0' && location === "new-quotation") {
           startNewQuotation(queryQuotationType);
         }
       }
