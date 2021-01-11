@@ -95,10 +95,6 @@ const NewQuotation = ({
     let collapsible = document.querySelectorAll(".collapsible");
     if (collapsible)
       M.Collapsible.init(collapsible, { accordion: false });
-    
-    // let allSelect = document.querySelectorAll("select");
-    // if(allSelect)
-    //   M.FormSelect.init(allSelect);
   });
 
   useEffect(() => {

@@ -49,10 +49,11 @@ const Module = ({
   }
 
   const activityChange = (activityCode) => {
+    let activity = undefined;
     if (activityCode !== "-1") {
-      const activity = baseModule.activities.find(a => a.code === activityCode);
-      setSelectedActivity(activity);
+      activity = baseModule.activities.find(a => a.code === activityCode);
     }
+    setSelectedActivity(activity);
   };
 
 
@@ -115,7 +116,7 @@ const Module = ({
                     >
                       <select
                         id={"availableActivities" + module.id}
-                        className="addActivitySelect"
+                        className="browser-default"
                         onChange={(e) =>
                           activityChange(e.target.value)
                         }
@@ -131,7 +132,7 @@ const Module = ({
                           );
                         })}
                       </select>
-                      <label>Activity</label>
+                      <label className="active">Activity</label>
                     </div>
                     <div className="col s2 offset-s1">
                       <a

@@ -109,6 +109,61 @@ th, td {
     border: solid black;
 }
 
+select.browser-default {
+  position: relative !important;
+  cursor: pointer !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #9e9e9e !important;
+  outline: none !important;
+  height: 3rem !important;
+  line-height: 3rem !important;
+  width: 100% !important;
+  font-size: 16px !important;
+  margin: 0 0 8px !important;
+  padding: 0 !important;
+  display: block !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  z-index: 1 !important;
+}
+
+select.browser-default + label {
+  top: -.75rem !important;
+  font-size: .8rem !important;
+}
+
+select.browser-default + label:not(.label-icon).active {
+  transform: inherit !important;
+    transform-origin: 0 0 !important;
+}
+
+select.browser-default > option {
+  cursor: pointer !important;
+  text-align: left !important;
+  font-size: 1.3rem !important;
+  color: #000;
+  background-color: #d1c4e9;
+}
+
+.multi-select-wrapper > label {
+  top: -0.75rem !important;
+  font-size: .8rem !important;
+}
+
+select.browser-default > option:checked {
+  background-color: indigo;
+  color: white;
+}
+
+.select-wrapper > svg > path {
+  d: path("M 10 10 L 14 14 L 18 10");
+  fill: none;
+  stroke: black;
+}
+
 .flag-small {
     width: 1.5rem;
     margin: 0 0.5rem;

@@ -18,9 +18,6 @@ import { getSelectedProject } from "../store/selectors/projectSelectors";
 const NewProject = ({ createProject, project, initializeNewProject, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
     if (project) {
-      const geoSelect = document.getElementById("geo");
-      M.FormSelect.init(geoSelect);
-
       let collapsible = document.querySelectorAll(".collapsible");
       M.Collapsible.init(collapsible);
 
