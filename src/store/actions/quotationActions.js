@@ -75,11 +75,6 @@ export const addQuotation = () => {
 export const addModule = (module, quotationId, projectId) => {
   const activities = module.activities;
   delete module.activities;
-
-  let moduleCode = module.code + '-' + Object.keys(module.geo)[0];
-  moduleCode = moduleCode.replace(/\s+/g, "");
-  module.code = moduleCode;
-
   return (dispatch) => {
     FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules`).push(module).then((res) => {
       const moduleId = res.path.pieces_[5];
