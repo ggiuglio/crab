@@ -26,7 +26,7 @@ const CountrySelector = ({ project, setNewProjectGeos }) => {
     "Southern%20Africa": [],
     "Northern%20America": [],
     "Central%20America": [],
-    Caribbean: [],
+    "Caribbean": [],
     "South%20America": [],
     "Western%20Asia": [],
     "Central%20Asia": [],
@@ -38,7 +38,7 @@ const CountrySelector = ({ project, setNewProjectGeos }) => {
     "Western%20Europe": [],
     "Eastern%20Europe": [],
     "Southern%20Europe": [],
-    Melanesia: [],
+    "Melanesia": []
     // Micronesia: [],
     // Polynesia: [],
   });

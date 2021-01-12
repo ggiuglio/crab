@@ -1,0 +1,559 @@
+{
+  "Northern%20Africa": [
+    {
+      "common": "Algeria",
+      "cca3": "DZA"
+    },
+    {
+      "common": "Egypt",
+      "cca3": "EGY"
+    },
+    {
+      "common": "Libya",
+      "cca3": "LBY"
+    },
+    {
+      "common": "Morocco",
+      "cca3": "MAR"
+    },
+    {
+      "common": "Sudan",
+      "cca3": "SDN"
+    },
+    {
+      "common": "Tunisia",
+      "cca3": "TUN"
+    },
+    {
+      "common": "Western Sahara",
+      "cca3": "ESH"
+    }
+  ],
+  "Western%20Africa": [
+    {
+      "common": "Benin",
+      "cca3": "BEN"
+    },
+    {
+      "common": "Burkina Faso",
+      "cca3": "BFA"
+    },
+    {
+      "common": "Cape Verde",
+      "cca3": "CPV"
+    },
+    {
+      "common": "Gambia",
+      "cca3": "GMB"
+    },
+    {
+      "common": "Ghana",
+      "cca3": "GHA"
+    },
+    {
+      "common": "Guinea",
+      "cca3": "GIN"
+    },
+    {
+      "common": "Guinea-Bissau",
+      "cca3": "GNB"
+    },
+    {
+      "common": "Ivory Coast",
+      "cca3": "CIV"
+    },
+    {
+      "common": "Liberia",
+      "cca3": "LBR"
+    },
+    {
+      "common": "Mali",
+      "cca3": "MLI"
+    },
+    {
+      "common": "Mauritania",
+      "cca3": "MRT"
+    },
+    {
+      "common": "Niger",
+      "cca3": "NER"
+    },
+    {
+      "common": "Nigeria",
+      "cca3": "NGA"
+    },
+    {
+      "common": "Saint Helena, Ascension and Tristan da Cunha",
+      "cca3": "SHN"
+    },
+    {
+      "common": "Senegal",
+      "cca3": "SEN"
+    },
+    {
+      "common": "Sierra Leone",
+      "cca3": "SLE"
+    },
+    {
+      "common": "Togo",
+      "cca3": "TGO"
+    }
+  ],
+  "Middle%20Africa": [
+    {
+      "common": "Angola",
+      "cca3": "AGO"
+    },
+    {
+      "common": "Cameroon",
+      "cca3": "CMR"
+    },
+    {
+      "common": "Central African Republic",
+      "cca3": "CAF"
+    },
+    {
+      "common": "Chad",
+      "cca3": "TCD"
+    },
+    {
+      "common": "Republic of the Congo",
+      "cca3": "COG"
+    },
+    {
+      "common": "DR Congo",
+      "cca3": "COD"
+    },
+    {
+      "common": "Equatorial Guinea",
+      "cca3": "GNQ"
+    },
+    {
+      "common": "Gabon",
+      "cca3": "GAB"
+    },
+    {
+      "common": "São Tomé and Príncipe",
+      "cca3": "STP"
+    },
+    {
+      "common": "South Sudan",
+      "cca3": "SSD"
+    }
+  ],
+  "Eastern%20Africa": [
+    {
+      "common": "British Indian Ocean Territory",
+      "cca3": "IOT"
+    },
+    {
+      "common": "Burundi",
+      "cca3": "BDI"
+    },
+    {
+      "common": "Comoros",
+      "cca3": "COM"
+    },
+    {
+      "common": "Djibouti",
+      "cca3": "DJI"
+    },
+    {
+      "common": "Eritrea",
+      "cca3": "ERI"
+    },
+    {
+      "common": "Ethiopia",
+      "cca3": "ETH"
+    },
+    {
+      "common": "Kenya",
+      "cca3": "KEN"
+    },
+    {
+      "common": "Madagascar",
+      "cca3": "MDG"
+    },
+    {
+      "common": "Malawi",
+      "cca3": "MWI"
+    },
+    {
+      "common": "Mauritius",
+      "cca3": "MUS"
+    },
+    {
+      "common": "Mayotte",
+      "cca3": "MYT"
+    },
+    {
+      "common": "Mozambique",
+      "cca3": "MOZ"
+    },
+    {
+      "common": "Réunion",
+      "cca3": "REU"
+    },
+    {
+      "common": "Rwanda",
+      "cca3": "RWA"
+    },
+    {
+      "common": "Seychelles",
+      "cca3": "SYC"
+    },
+    {
+      "common": "Somalia",
+      "cca3": "SOM"
+    },
+    {
+      "common": "Tanzania",
+      "cca3": "TZA"
+    },
+    {
+      "common": "Uganda",
+      "cca3": "UGA"
+    },
+    {
+      "common": "Zambia",
+      "cca3": "ZMB"
+    },
+    {
+      "common": "Zimbabwe",
+      "cca3": "ZWE"
+    }
+  ],
+  "Southern%20Africa": [
+    {
+      "common": "Botswana",
+      "cca3": "BWA"
+    },
+    {
+      "common": "Lesotho",
+      "cca3": "LSO"
+    },
+    {
+      "common": "Namibia",
+      "cca3": "NAM"
+    },
+    {
+      "common": "South Africa",
+      "cca3": "ZAF"
+    },
+    {
+      "common": "Swaziland",
+      "cca3": "SWZ"
+    }
+  ],
+  "Northern%20America": [
+    {
+      "common": "Bermuda",
+      "cca3": "BMU"
+    },
+    {
+      "common": "Canada",
+      "cca3": "CAN"
+    },
+    {
+      "common": "Greenland",
+      "cca3": "GRL"
+    },
+    {
+      "common": "Saint Pierre and Miquelon",
+      "cca3": "SPM"
+    },
+    {
+      "common": "United States",
+      "cca3": "USA"
+    },
+    {
+      "common": "United States Minor Outlying Islands",
+      "cca3": "UMI"
+    }
+  ],
+  "Central%20America": [
+    {
+      "common": "Belize",
+      "cca3": "BLZ"
+    },
+    {
+      "common": "Costa Rica",
+      "cca3": "CRI"
+    },
+    {
+      "common": "El Salvador",
+      "cca3": "SLV"
+    },
+    {
+      "common": "Guatemala",
+      "cca3": "GTM"
+    },
+    {
+      "common": "Honduras",
+      "cca3": "HND"
+    },
+    {
+      "common": "Mexico",
+      "cca3": "MEX"
+    },
+    {
+      "common": "Nicaragua",
+      "cca3": "NIC"
+    },
+    {
+      "common": "Panama",
+      "cca3": "PAN"
+    }
+  ],
+  "Caribbean": [
+    {
+      "common": "Anguilla",
+      "cca3": "AIA"
+    },
+    {
+      "common": "Antigua and Barbuda",
+      "cca3": "ATG"
+    },
+    {
+      "common": "Aruba",
+      "cca3": "ABW"
+    },
+    {
+      "common": "Bahamas",
+      "cca3": "BHS"
+    },
+    {
+      "common": "Barbados",
+      "cca3": "BRB"
+    },
+    {
+      "common": "Bonaire",
+      "cca3": "BES"
+    },
+    {
+      "common": "British Virgin Islands",
+      "cca3": "VGB"
+    },
+    {
+      "common": "Cayman Islands",
+      "cca3": "CYM"
+    },
+    {
+      "common": "Cuba",
+      "cca3": "CUB"
+    },
+    {
+      "common": "Curaçao",
+      "cca3": "CUW"
+    },
+    {
+      "common": "Dominica",
+      "cca3": "DMA"
+    },
+    {
+      "common": "Dominican Republic",
+      "cca3": "DOM"
+    },
+    {
+      "common": "Grenada",
+      "cca3": "GRD"
+    },
+    {
+      "common": "Guadeloupe",
+      "cca3": "GLP"
+    },
+    {
+      "common": "Haiti",
+      "cca3": "HTI"
+    },
+    {
+      "common": "Jamaica",
+      "cca3": "JAM"
+    },
+    {
+      "common": "Martinique",
+      "cca3": "MTQ"
+    },
+    {
+      "common": "Puerto Rico",
+      "cca3": "PRI"
+    },
+    {
+      "common": "Saint Barthélemy",
+      "cca3": "BLM"
+    },
+    {
+      "common": "Saint Kitts and Nevis",
+      "cca3": "KNA"
+    },
+    {
+      "common": "Saint Lucia",
+      "cca3": "LCA"
+    },
+    {
+      "common": "Saint Martin",
+      "cca3": "MAF"
+    },
+    {
+      "common": "Saint Vincent and the Grenadines",
+      "cca3": "VCT"
+    },
+    {
+      "common": "Sint Maarten",
+      "cca3": "SXM"
+    },
+    {
+      "common": "Trinidad and Tobago",
+      "cca3": "TTO"
+    },
+    {
+      "common": "Turks and Caicos Islands",
+      "cca3": "TCA"
+    },
+    {
+      "common": "United States Virgin Islands",
+      "cca3": "VIR"
+    }
+  ],
+  "South%20America": [
+    {
+      "common": "Argentina",
+      "cca3": "ARG"
+    },
+    {
+      "common": "Bolivia",
+      "cca3": "BOL"
+    },
+    {
+      "common": "Brazil",
+      "cca3": "BRA"
+    },
+    {
+      "common": "Chile",
+      "cca3": "CHL"
+    },
+    {
+      "common": "Colombia",
+      "cca3": "COL"
+    },
+    {
+      "common": "Ecuador",
+      "cca3": "ECU"
+    },
+    {
+      "common": "Falkland Islands",
+      "cca3": "FLK"
+    },
+    {
+      "common": "French Guiana",
+      "cca3": "GUF"
+    },
+    {
+      "common": "Guyana",
+      "cca3": "GUY"
+    },
+    {
+      "common": "Paraguay",
+      "cca3": "PRY"
+    },
+    {
+      "common": "Peru",
+      "cca3": "PER"
+    },
+    {
+      "common": "South Georgia",
+      "cca3": "SGS"
+    },
+    {
+      "common": "Suriname",
+      "cca3": "SUR"
+    },
+    {
+      "common": "Uruguay",
+      "cca3": "URY"
+    },
+    {
+      "common": "Venezuela",
+      "cca3": "VEN"
+    }
+  ],
+  "Western%20Asia": [
+    {
+      "common": "Armenia",
+      "cca3": "ARM"
+    },
+    {
+      "common": "Azerbaijan",
+      "cca3": "AZE"
+    },
+    {
+      "common": "Bahrain",
+      "cca3": "BHR"
+    },
+    {
+      "common": "Georgia",
+      "cca3": "GEO"
+    },
+    {
+      "common": "Iraq",
+      "cca3": "IRQ"
+    },
+    {
+      "common": "Israel",
+      "cca3": "ISR"
+    },
+    {
+      "common": "Jordan",
+      "cca3": "JOR"
+    },
+    {
+      "common": "Kuwait",
+      "cca3": "KWT"
+    },
+    {
+      "common": "Lebanon",
+      "cca3": "LBN"
+    },
+    {
+      "common": "Oman",
+      "cca3": "OMN"
+    },
+    {
+      "common": "Palestine",
+      "cca3": "PSE"
+    },
+    {
+      "common": "Qatar",
+      "cca3": "QAT"
+    },
+    {
+      "common": "Saudi Arabia",
+      "cca3": "SAU"
+    },
+    {
+      "common": "Syria",
+      "cca3": "SYR"
+    },
+    {
+      "common": "Turkey",
+      "cca3": "TUR"
+    },
+    {
+      "common": "United Arab Emirates",
+      "cca3": "ARE"
+    },
+    {
+      "common": "Yemen",
+      "cca3": "YEM"
+    }
+  ],
+  "Central%20Asia": [],
+  "Eastern%20Asia": [],
+  "South-Eastern%20Asia": [],
+  "Southern%20Asia": [],
+  "Australia%20and%20New%20Zealand": [],
+  "Northern%20Europe": [],
+  "Western%20Europe": [],
+  "Eastern%20Europe": [],
+  "Southern%20Europe": []
+}
