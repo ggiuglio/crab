@@ -23,6 +23,7 @@ const Module = ({
       const selectedBaseModule = baseModules.find(m => m.code === module.type);
       setBaseModule(selectedBaseModule);
       const notSelectedActivities = selectedBaseModule ? JSON.parse(JSON.stringify(selectedBaseModule.activities.filter(ba => !module.activities.find(a => a.code === ba.code)))) : [];
+      notSelectedActivities.unshift({id: "-1", title: "Select activity"});
       setAvailableActivities(notSelectedActivities);
     }
   }, [module])
@@ -120,10 +121,8 @@ const Module = ({
                         onChange={(e) =>
                           activityChange(e.target.value)
                         }
+                        value={selectedActivity ? selectedActivity.code : "-1"}
                       >
-                        <option key={module.id} value="-1" defaultValue>
-                          Select activity
-                      </option>
                         {availableActivities.map((activity) => {
                           return (
                             <option key={activity.id} value={activity.code}>
