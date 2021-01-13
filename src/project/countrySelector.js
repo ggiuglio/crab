@@ -1,193 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
-import Preloader from "../common/preloader";
-import { getSelectedProject } from "../store/selectors/projectSelectors";
-import { setProjectGeos } from "../store/actions/projectActions";
+import { getRegions, getCountries, getSelectedProject, getSelectedCountriesInRegion } from "../store/selectors/projectSelectors";
+import { selectProjectRegion, setProjectGeos } from "../store/actions/projectActions";
 
-const CountrySelector = ({ project, setNewProjectGeos }) => {
- 
+const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selectNewProjectRegion, selectedCountriesInRegion }) => {
+  const [geoSelect, setGeoSelect] = useState({});
   useEffect(() => {
-    // let subSel = document.getElementById("subregion");
-    // M.FormSelect.init(subSel);
+    M.AutoInit();
+    const select = document.getElementById("geo");
+    setGeoSelect(M.FormSelect.init(select));
+  }, [project]);
 
-    const geoSelect = document.getElementById("geo");
-    M.FormSelect.init(geoSelect);
-  });
-
-
-
-  // SUBREGION LIST OBJECT
-  const [subregionList, setSubregionList] = useState({
-    "Northern%20Africa": [],
-    "Western%20Africa": [],
-    "Middle%20Africa": [],
-    "Eastern%20Africa": [],
-    "Southern%20Africa": [],
-    "Northern%20America": [],
-    "Central%20America": [],
-    "Caribbean": [],
-    "South%20America": [],
-    "Western%20Asia": [],
-    "Central%20Asia": [],
-    "Eastern%20Asia": [],
-    "South-Eastern%20Asia": [],
-    "Southern%20Asia": [],
-    "Australia%20and%20New%20Zealand": [],
-    "Northern%20Europe": [],
-    "Western%20Europe": [],
-    "Eastern%20Europe": [],
-    "Southern%20Europe": [],
-    "Melanesia": []
-    // Micronesia: [],
-    // Polynesia: [],
-  });
-  const [geo, setGeo] = useState({});
-  const [subregion, setSubregion] = useState("");
-  const [sites, setSites] = useState({});
-
-  const cleanUpGeoName = (name) => {
-    const regex = /%20/g;
-    return name.replaceAll(regex, " ");
-  };
-
-  // URI PROXY, ENDPOINT GEO
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/",
-    targetUrl = "https://restcountries.herokuapp.com/api/v1/subregion/";
-
-  // ADD NATION TO GEO SELECT
-  const addNationToGeoSelect = (cca3, name, newSubregion) => {
-    const geoSelect = document.getElementById("geo");
-    let opt = new Option(
-      `${cca3} - ${name}`,
-      cca3,
-      false,
-      geo.hasOwnProperty(newSubregion) && geo[newSubregion].hasOwnProperty(cca3)
-    );
-    opt.setAttribute(
-      "data-icon",
-      `https://restcountries.eu/data/${cca3.toLowerCase()}.svg`
-    );
-    opt.setAttribute("id", `geo_option_${cca3}`);
-    geoSelect.options[geoSelect.options.length] = opt;
-  };
-
-  // SUBREGION CHANGE
-  const subregionChange = (newSubregion) => {
-    //DOM ELEMENTS
-    const geoSelect = document.getElementById("geo");
-    const loader = document.querySelector(".preloader-wrapper");
-
-    setSubregion(newSubregion);
-    const geoSelectDD = document.getElementById("wrapper-select-geo");
-console.log(geoSelectDD.classList.add("hide"))
-    geoSelectDD.classList.add("hide");
-    loader.classList.remove("hide");
-    geoSelect.options.length = 0;
-    if (newSubregion.length === 0) {
-      geoSelectDD.classList.remove("hide");
-      loader.classList.add("hide");
-      M.FormSelect.init(geoSelect);
-      return;
+  const selectRegion = (regionCode) => {
+    if (regionCode != "-1") {
+      const region = regions.find(r => r.code === regionCode);
+      selectNewProjectRegion(region);
     }
-    if (subregionList[newSubregion].length === 0) {
-      // fetch(proxyUrl + targetUrl + newSubregion)
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     let nationsList = [];
-      //     data.map((nation) => {
-      //       nationsList.push({
-      //         cca3: nation.cca3,
-      //         name: nation.name.common,
-      //       });
-      //       addNationToGeoSelect(nation.cca3, nation.name.common, newSubregion);
-      //     });
-      //     setSubregionList({ ...subregionList, [newSubregion]: nationsList });
-      //     M.FormSelect.init(geoSelect);
-      //     geoSelectDD.classList.remove("hide");
-      //     loader.classList.add("hide");
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     //**TODO REMOVE */
-      //     alert(error);
-      //   });
+  }
 
-      //TEMP
-      let nationsList = [];
-      nationsList.push({
-        cca3: 'ITA',
-        name: 'Italia',
-      });
-      addNationToGeoSelect('ITA', 'Italia', newSubregion);
-      setSubregionList({ ...subregionList, [newSubregion]: nationsList });
-      M.FormSelect.init(geoSelect);
-      setTimeout(function() { 
-        geoSelectDD.classList.remove("hide");
-        loader.classList.add("hide"); 
-      }, 2000);
-      //TEMP
-    } else {
-      subregionList[newSubregion].map((nation) => {
-        addNationToGeoSelect(nation.cca3, nation.name, newSubregion);
-      });
-      M.FormSelect.init(geoSelect);
-      geoSelectDD.classList.remove("hide");
-      loader.classList.add("hide");
-    }
-  };
+  const selectCountry = () => {
+    const selectedCodes = geoSelect.getSelectedValues();
+    const selectedCountries = { description: `${project.selectedRegion.name} -` };
+    selectedCodes.forEach(code => {
+      const country = countries.find(c => c.code === code);
+      selectedCountries[code] = { name: `${country.code} - ${country.name}`, sites: [] }
+      selectedCountries.description += ` ${country.code}`
+    })
+    let currentGeos = JSON.parse(JSON.stringify(project.geos));
+    currentGeos[project.selectedRegion.code] = selectedCountries;
 
-  // GEO SELECT CHANGE
-  const geoChange = () => {
-    const geoSelect = document.getElementById("geo");
-    let hasSubregion = geo.hasOwnProperty(subregion);
-    const geoKeysArray = hasSubregion ? Object.keys(geo[subregion]) : [];
-    const geoSelectedArray = M.FormSelect.getInstance(
-      geoSelect
-    ).getSelectedValues();
-    const sitesKeysArray = Object.keys(sites).filter((k) => {
-      return sites[k].subregion == subregion;
-    });
-
-    let geoObj = {};
-    let geoDesc = cleanUpGeoName(subregion);
-
-    geoSelectedArray.map((k, idx, list) => {
-      if (geoKeysArray.includes(k)) {
-        geoObj[k] = geo[subregion][k];
-      } else {
-        geoObj[k] = {
-          sites: [],
-          name: document.getElementById(`geo_option_${k}`).text,
-        };
-      }
-
-      if (sitesKeysArray.indexOf(k) >= 0)
-        sitesKeysArray.splice(sitesKeysArray.indexOf(k), 1); // For the sites rendering. The remainigs will be removed
-      geoDesc += ` ${k}${list.length === idx + 1 ? "" : ","}`;
-    });
-
-    let currentGeos = geo;
-    if (Object.keys(geoObj).length > 0) {
-      geoObj.description = geoDesc;
-
-    currentGeos = {
-      ...geo,
-      [subregion]: geoObj,
-    };
-
-    } else {
-      delete currentGeos[subregion];
-    }
-    setGeo(currentGeos);
     setNewProjectGeos(currentGeos);
-
-    sitesKeysArray.map((k) => {
-      delete sites[k];
-      setSites({ ...sites });
-    });
-  };
-
+  }
 
   return (
     <div className="row">
@@ -195,45 +39,30 @@ console.log(geoSelectDD.classList.add("hide"))
         <select
           id="subregion"
           className="browser-default"
-          onChange={(e) => subregionChange(e.target.value)}
+          value={project.selectedRegion ? project.selectedRegion.code : "-1"}
+          onChange={(e) => selectRegion(e.target.value)}
         >
-          <option value="" defaultValue>
-            No Subregion
-      </option>
-          <option value="Australia%20and%20New%20Zealand">
-            Australia and New Zealand
-      </option>
-          <option value="Caribbean">Caribbean</option>
-          <option value="Central%20America">Central America</option>
-          <option value="Central%20Asia">Central Asia</option>
-          <option value="Eastern%20Africa">Eastern Africa</option>
-          <option value="Eastern%20Asia">Eastern Asia</option>
-          <option value="Eastern%20Europe">Eastern Europe</option>
-          <option value="Melanesia">Melanesia</option>
-          {/* <option value="Micronesia">Micronesia</option> */}
-          <option value="Middle%20Africa">Middle Africa</option>
-          <option value="Northern%20Africa">Northern Africa</option>
-          <option value="Northern%20America">Northern America</option>
-          <option value="Northern%20Europe">Northern Europe</option>
-          {/* <option value="Polynesia">Polynesia</option> */}
-          <option value="South%20America">South America</option>
-          <option value="South-Eastern%20Asia">South-Eastern Asia</option>
-          <option value="Southern%20Africa">Southern Africa</option>
-          <option value="Southern%20Asia">Southern Asia</option>
-          <option value="Southern%20Europe">Southern Europe</option>
-          <option value="Western%20Africa">Western Africa</option>
-          <option value="Western%20Asia">Western Asia</option>
-          <option value="Western%20Europe">Western Europe</option>
+          {
+            regions.map(r => <option key={r.code} value={r.code}>
+              {r.name}
+            </option>)
+          }
+
         </select>
         <label className="active">Geo subregion</label>
       </div>
       <div className="input-field col s6">
         <div id="wrapper-select-geo" className="multi-select-wrapper">
-          <select multiple id="geo" onChange={(e) => geoChange()}></select>
+          <select multiple id="geo" onChange={() => selectCountry()} defaultValue={selectedCountriesInRegion}>
+            {
+              countries.map(country =>
+                <option key={country.code} value={country.code} data-icon={country.img}>
+                  {country.name}
+                </option>
+              )
+            }
+          </select>
           <label>Geo</label>
-        </div>
-        <div className="center">
-          <Preloader classes="preloader-wrapper small active hide" />
         </div>
       </div>
     </div>
@@ -241,14 +70,17 @@ console.log(geoSelectDD.classList.add("hide"))
 }
 const mapStateToProps = (state) => {
   return {
-    project: getSelectedProject(state)
-
+    project: getSelectedProject(state),
+    regions: getRegions(state),
+    countries: getCountries(state),
+    selectedCountriesInRegion: getSelectedCountriesInRegion(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNewProjectGeos: (geos) => dispatch(setProjectGeos(geos)) 
+    setNewProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
+    selectNewProjectRegion: (region) => dispatch(selectProjectRegion(region))
   };
 };
 

@@ -8,7 +8,8 @@ import {
   SET_PROJECT_GEOS,
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER,
-  SET_PROJECT_PM
+  SET_PROJECT_PM,
+  SELECT_REGION_FOR_PROJECT
 } from './actionsTypes.js';
 
 
@@ -116,6 +117,17 @@ export const removeProjectProvider = (providerId) => {
       {
         type: REMOVE_PROJECT_PROVIDER,
         providerId: providerId
+      }
+    )
+  }
+}
+
+export const selectProjectRegion = (region) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SELECT_REGION_FOR_PROJECT,
+        region: region
       }
     )
   }

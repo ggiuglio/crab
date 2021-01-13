@@ -33,7 +33,8 @@ import {
   SET_PROJECT_TITLE,
   SET_PROJECT_PM,
   ADD_PROJECT_PROVIDER,
-  REMOVE_PROJECT_PROVIDER
+  REMOVE_PROJECT_PROVIDER,
+  SELECT_REGION_FOR_PROJECT
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -58,60 +59,60 @@ export const INITIAL_STATE = {
 };
 
 const NAVIGATION_CODES = {
-  "ADM" : {
+  "ADM": {
     title: "Administration",
     url: `#!`,
     order: 1
   },
-  "PJS" : {
+  "PJS": {
     title: "Projects",
     url: `/projects`,
     order: 1
   },
-  "NPJ" : {
+  "NPJ": {
     title: "New project",
     url: `/new-project`,
     parent: "PJS",
     order: 2
   },
-  "QTS" : {
+  "QTS": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
     url: `/project/quotations?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
-  "DSB" : {
+  "DSB": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Dashboard`,
     url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
-  "INV" : {
+  "INV": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Invoicing`,
     url: `/project/invoices?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
-  "BDG" : {
+  "BDG": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Budget`,
     url: `/project/budget?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
-  "ADA" : {
+  "ADA": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Advanced analytics`,
     url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
-  "NQT" : {
+  "NQT": {
     title: `New quotation`,
     // url: `/project/new-quotation`,
     url: `#!`,
     parent: "QTS",
     order: 3
   },
-  "QTN" : {
+  "QTN": {
     title: `Quotation ${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE}`,
     url: `/project/quotation?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}&quotation=${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_ID}`,
     parent: "QTS",
@@ -209,7 +210,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         professionals: action.professionals,
-        baseModules: action.modules
+        baseModules: action.modules,
+        regions: action.regions
       }
     }
     case SET_QUOTATION_VIEW_MODE: {
@@ -224,7 +226,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         title: '',
         pm: '',
         providers: [],
-        geos: []
+        geos: {}
       }
       return {
         ...state,
@@ -451,6 +453,15 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedProjectData: project
       }
     }
+    case SELECT_REGION_FOR_PROJECT: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.selectedRegion = action.region;
+
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
 
     default:
       return state;
@@ -526,19 +537,19 @@ const mapProfessionalAndGeosToResources = (professionals, geos) => {
 
 const mapBreadcrumb = (par_code, stateCode, project, quotation = undefined, breadcrumb = []) => {
   let code = stateCode;
-  if(par_code) {
+  if (par_code) {
     code = par_code;
   }
-  if(NAVIGATION_CODES.hasOwnProperty(code)) {
+  if (NAVIGATION_CODES.hasOwnProperty(code)) {
     let title = NAVIGATION_CODES[code].title;
     let url = NAVIGATION_CODES[code].url;
 
-    if(project) {
+    if (project) {
       title = title.replace(NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE, project.title);
       url = url.replace(NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID, project.id);
     }
 
-    if(quotation) {
+    if (quotation) {
       title = title.replace(NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE, quotation.code);
       url = url.replace(NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_ID, quotation.id);
     }
@@ -551,8 +562,8 @@ const mapBreadcrumb = (par_code, stateCode, project, quotation = undefined, brea
     };
 
     breadcrumb.splice(0, 0, bdItem);
-    
-    if(NAVIGATION_CODES[code].hasOwnProperty("parent")) {
+
+    if (NAVIGATION_CODES[code].hasOwnProperty("parent")) {
       mapBreadcrumb(NAVIGATION_CODES[code].parent, stateCode, project, quotation, breadcrumb);
     }
   }

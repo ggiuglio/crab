@@ -58,7 +58,8 @@ export const loadStaticData = () => {
         {
           type: LOAD_STATIC_DATA,
           professionals: data.professionals,
-          modules: data.baseModules
+          modules: data.baseModules,
+          regions: data.regions
         }
       )
     });

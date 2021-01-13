@@ -1,6 +1,5 @@
 export const getUser = (state) => state.user;
 export const getLoginError = (state) => state.loginError;
-
 export const getBaseModules = (state) => mapBaseModules(state.baseModules);
 export const getBaseModulesWithActivitiesAsList = (state) => mapBaseModulesWithActivitiesAsList(state.baseModules);
 export const getViewMode = (state) => state.viewMode;
