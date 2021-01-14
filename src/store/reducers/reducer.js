@@ -150,12 +150,22 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
       const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
 
+      const selectedPRoject = project ? {
+        id: project.id,
+        title: project.title,
+        pm: project.pm,
+        providers: project.providers,
+        geos: project.geo,
+        viewMode: VIEW_MODES.VIEW,
+      } : undefined;
+
       const bc = mapBreadcrumb(undefined, state.breadcrumbCode, project);
       return {
         ...state,
         quotations: quotations,
         invoiceList: invoices,
         project: project,
+        selectedProjectData: selectedPRoject,
         breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
         breadcrumb: bc
       };
@@ -226,7 +236,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         title: '',
         pm: '',
         providers: [],
-        geos: {}
+        geos: {},
+        viewMode: VIEW_MODES.NEW,
       }
       return {
         ...state,

@@ -6,7 +6,6 @@ import Firebase from "./firebase/firebase";
 import { createBrowserHistory } from "history";
 import Main from "./main/main";
 import Projects from "./project/projects";
-import NewProject from "./project/newProject";
 import Invoice from "./invoice/invoice";
 import Quotations from "./quotation/quotations";
 import Budget from "./budget/budget";
@@ -20,6 +19,8 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Quotation from "./quotation/quotation";
 import Project from "./project/project";
+import ProjectDashboard from "./project/projectDashboard";
+
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
 
@@ -48,8 +49,8 @@ class App extends Component {
           <Route exact path='/'component={Projects} />
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
-          <Route path={"/new-project"} component={NewProject} />
-          <Route exact path={"/project"} component={Project} />
+          <Route path={"/new-project"} component={Project} />
+          <Route exact path={"/project"} component={ProjectDashboard} />
           <Route path={"/project/quotation"} component={Quotation} />
           <Route path={"/project/new-quotation"} component={Quotation} />
           <Route path={"/project/quotations"} component={Quotations} />

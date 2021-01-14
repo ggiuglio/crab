@@ -1,7 +1,7 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { VIEW_MODES } from "../constants/constants";
 
-const Geo = ({ subregion, nations, classes }) => {
+const Geo = ({ viewMode, subregion, nations, classes }) => {
   const setModalValues = (nation, subregion) => {
     document.getElementById("siteNationTitle").innerText = nation.toUpperCase();
     document.getElementById("siteNation").value = nation.toUpperCase();
@@ -13,8 +13,6 @@ const Geo = ({ subregion, nations, classes }) => {
     return name.replaceAll(regex, " ");
   };
 
-  const showAddSite = useLocation().pathname === "/new-project";
-
   return (
     <div className={classes}>
       <span>{cleanUpGeoName(subregion) + " - "}</span>
@@ -23,7 +21,7 @@ const Geo = ({ subregion, nations, classes }) => {
       }).map((nation, idx, list) => (
         <span key={subregion + nation}>
           { //Link insert site only in new-project
-           showAddSite ? (
+           viewMode != VIEW_MODES.VIEW ? (
             <a
               className="indigo white-text modal-trigger"
               href="#modal-site"
