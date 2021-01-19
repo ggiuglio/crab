@@ -6,7 +6,7 @@ import Site from "../geo/site";
 import { createNewProject } from "../store/actions/genericActions";
 import CountrySelector from "./countrySelector";
 import {
-  InitializeProject,
+  initializeProject,
   setProjectGeos,
   setProjectTitle,
   setProjectPM,
@@ -120,7 +120,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
         <div className="container section row">
           <form className="white" onSubmit={(e) => saveProject(e)}>
             <div className="input-field col s12">
-              <label htmlFor="projectName">Project Name</label>
+              { project.viewMode !== VIEW_MODES.VIEW ? <label htmlFor="projectName">Project Name</label> : '' }
               <input
                 type="text"
                 name="projectName"
@@ -264,7 +264,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
             }
 
             <div className="input-field col s12">
-              <label htmlFor="pmName">PM</label>
+            { project.viewMode !== VIEW_MODES.VIEW ? <label htmlFor="pmName">PM</label> : '' }
               <input
                 type="text"
                 id="pmName"
@@ -273,7 +273,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
                 disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
               ></input>
             </div>
-            
+
             {
               project.viewMode !== VIEW_MODES.VIEW ?
                 <div className="input-field col s12 center">
@@ -346,7 +346,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initializeNewProject: () => dispatch(InitializeProject()),
+    initializeNewProject: () => dispatch(initializeProject()),
     createProject: (project) => dispatch(createNewProject(project)),
     setProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
     setProjectTitle: (title) => dispatch(setProjectTitle(title)),

@@ -57,7 +57,7 @@ export const selectProject = (projectId) => {
   }
 }
 
-export const InitializeProject = () => {
+export const initializeProject = () => {
   return dispatch => {
     return dispatch(
       {

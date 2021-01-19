@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { getProjects } from "../store/selectors/projectSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 import ProjectTile from "./projectTile";
-import { selectProject } from "../store/actions/projectActions";
+import { selectProject, initializeProject } from "../store/actions/projectActions";
 import Preloader from "../common/preloader";
 import CustomNavLink from "../common/customNavLink";
 
-const Projects = ({ projects, clearSelectedProject }) => {
+const Projects = ({ projects, clearSelectedProject, startNewProject }) => {
   React.useEffect(() => {
     clearSelectedProject();
 
@@ -30,6 +30,7 @@ const Projects = ({ projects, clearSelectedProject }) => {
             iconType="MATERIAL"
             iconName="add"
             code="NPJ"
+            onClick={() => startNewProject()}
           />
           <p>CREATE NEW PROJECT</p>
         </div>
@@ -79,7 +80,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    clearSelectedProject: () => dispatch(selectProject(null))
+    clearSelectedProject: () => dispatch(selectProject(null)),
+    startNewProject: () => dispatch(initializeProject())
   };
 };
 
