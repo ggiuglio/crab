@@ -18,7 +18,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Quotation from "./quotation/quotation";
-import Project from "./project/project";
+import NewProject from "./project/newProject";
 import ProjectDashboard from "./project/projectDashboard";
 
 export const history = createBrowserHistory();
@@ -49,7 +49,7 @@ class App extends Component {
           <Route exact path='/'component={Projects} />
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
-          <Route path={"/new-project"} component={Project} />
+          <Route path={"/new-project"} component={NewProject} />
           <Route exact path={"/project"} component={ProjectDashboard} />
           <Route path={"/project/quotation"} component={Quotation} />
           <Route path={"/project/new-quotation"} component={Quotation} />

@@ -20,8 +20,8 @@ const Geo = ({ viewMode, subregion, nations, classes }) => {
         return !/^description$/i.test(k)
       }).map((nation, idx, list) => (
         <span key={subregion + nation}>
-          { //Link insert site only in new-project
-           viewMode != VIEW_MODES.VIEW ? (
+          {
+           viewMode !== VIEW_MODES.VIEW ? (
             <a
               className="indigo white-text modal-trigger"
               href="#modal-site"

@@ -9,7 +9,9 @@ import {
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER,
   SET_PROJECT_PM,
-  SELECT_REGION_FOR_PROJECT
+  SELECT_REGION_FOR_PROJECT,
+  SET_PROJECT_VIEW_MODE,
+  CANCEL_PROJECT_EDIT
 } from './actionsTypes.js';
 
 
@@ -128,6 +130,27 @@ export const selectProjectRegion = (region) => {
       {
         type: SELECT_REGION_FOR_PROJECT,
         region: region
+      }
+    )
+  }
+}
+
+export const setProjectViewMode = (viewMode) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SET_PROJECT_VIEW_MODE,
+        viewMode: viewMode
+      }
+    )
+  }
+}
+
+export const cancelProjectEdit = () => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: CANCEL_PROJECT_EDIT
       }
     )
   }

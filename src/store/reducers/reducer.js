@@ -34,7 +34,9 @@ import {
   SET_PROJECT_PM,
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER,
-  SELECT_REGION_FOR_PROJECT
+  SELECT_REGION_FOR_PROJECT,
+  CANCEL_PROJECT_EDIT,
+  SET_PROJECT_VIEW_MODE
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -150,7 +152,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
       const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
 
-      const selectedPRoject = project ? {
+      const selectedProject = project ? {
         id: project.id,
         title: project.title,
         pm: project.pm,
@@ -165,7 +167,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         quotations: quotations,
         invoiceList: invoices,
         project: project,
-        selectedProjectData: selectedPRoject,
+        selectedProjectData: selectedProject,
         breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
         breadcrumb: bc
       };
@@ -237,13 +239,27 @@ const Reducer = (state = INITIAL_STATE, action) => {
         pm: '',
         providers: [],
         geos: {},
-        viewMode: VIEW_MODES.NEW,
+        viewMode: VIEW_MODES.CREATE,
       }
       return {
         ...state,
         selectedProjectData: emptyProject,
         selectedProjectId: '0',
-        viewMode: VIEW_MODES.CREATE
+      }
+    }
+    case CANCEL_PROJECT_EDIT: {
+      const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
+      const selectedProject = project ? {
+        id: project.id,
+        title: project.title,
+        pm: project.pm,
+        providers: project.providers,
+        geos: project.geo,
+        viewMode: VIEW_MODES.VIEW,
+      } : undefined;
+      return {
+        ...state,
+        selectedProjectData: selectedProject,
       }
     }
     case INITIALIZE_NEW_QUOTATION: {
@@ -457,7 +473,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
 
     case REMOVE_PROJECT_PROVIDER: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
-      project.providers = project.providers.filter(p => p.id != action.providerId);
+      project.providers = project.providers.filter(p => p.id !== action.providerId);
 
       return {
         ...state,
@@ -467,6 +483,15 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case SELECT_REGION_FOR_PROJECT: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
       project.selectedRegion = action.region;
+
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+    case SET_PROJECT_VIEW_MODE: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.viewMode = action.viewMode;
 
       return {
         ...state,

@@ -6,7 +6,6 @@ import Site from "../geo/site";
 import { createNewProject } from "../store/actions/genericActions";
 import CountrySelector from "./countrySelector";
 import {
-  initializeProject,
   setProjectGeos,
   setProjectTitle,
   setProjectPM,
@@ -16,7 +15,7 @@ import {
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { VIEW_MODES } from "../constants/constants";
 
-const Project = ({ createProject, project, initializeNewProject, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
+const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
     if (project) {
       let collapsible = document.querySelectorAll(".collapsible");
@@ -40,9 +39,6 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
       })
 
       setSites(selectedSites);
-    }
-    if (!project) {
-      initializeNewProject();
     }
   }, [project]);
   useEffect(() => {
@@ -102,7 +98,6 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
   const saveProject = (e) => {
     e.preventDefault();
 
-
     const newProject = {
       title: project.title,
       geo: project.geos,
@@ -120,7 +115,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
         <div className="container section row">
           <form className="white" onSubmit={(e) => saveProject(e)}>
             <div className="input-field col s12">
-              { project.viewMode !== VIEW_MODES.VIEW ? <label htmlFor="projectName">Project Name</label> : '' }
+             <label htmlFor="projectName" className="active">Project Name</label>
               <input
                 type="text"
                 name="projectName"
@@ -161,7 +156,6 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
                 </ul>
               </div>
             </div>
-
 
             <div className="row">
               <div className="col s12">
@@ -253,7 +247,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
                         <div className="collapsible-body">
                           <div className="row">
                             {project.providers.map(provider =>
-                              <span>{provider.name}</span>
+                              <span>{provider.title}</span>
                             )}
                           </div>
                         </div>
@@ -264,7 +258,7 @@ const Project = ({ createProject, project, initializeNewProject, setProjectGeos,
             }
 
             <div className="input-field col s12">
-            { project.viewMode !== VIEW_MODES.VIEW ? <label htmlFor="pmName">PM</label> : '' }
+           <label htmlFor="pmName" className="active">PM</label> 
               <input
                 type="text"
                 id="pmName"
@@ -346,7 +340,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    initializeNewProject: () => dispatch(initializeProject()),
     createProject: (project) => dispatch(createNewProject(project)),
     setProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
     setProjectTitle: (title) => dispatch(setProjectTitle(title)),
