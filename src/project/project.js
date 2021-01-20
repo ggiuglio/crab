@@ -226,7 +226,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectPM, addPr
                         <div className="collapsible-body">
                           <div className="row">
                             {project.providers.map(provider =>
-                              <div>{provider.title}</div>
+                              <div key={provider.id}>{provider.title}</div>
                             )}
                           </div>
                         </div>

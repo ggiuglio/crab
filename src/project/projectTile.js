@@ -20,7 +20,7 @@ const ProjectTile = ({ project, chooseProject, clearOldProject }) => {
                 </div>
                 <div className="row">
                 <span className="col s12 m6 s-center truncate" title={project.sponsor}>Sponsor: {project.sponsor} </span>
-                <span className="col s12 m6 s-center truncate" title={project.PM}>PM: {project.PM}</span>
+                <span className="col s12 m6 s-center truncate" title={project.PM}>PM: {project.pm}</span>
               </div>
               <div className="row">
                 <span className="col s12 m6 s-center truncate" title={project.creationDate}>Creation date: {project.creationDate} </span>

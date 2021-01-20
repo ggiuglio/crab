@@ -51,9 +51,10 @@ const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selec
         </select>
         <label className="active">Geo subregion</label>
       </div>
+
       <div className="input-field col s6">
         <div id="wrapper-select-geo" className="multi-select-wrapper">
-          <select multiple id="geo" onChange={() => selectCountry()} defaultValue={selectedCountriesInRegion}>
+          <select multiple id="geo" onChange={() => selectCountry()} value={selectedCountriesInRegion}>
             {
               countries.map(country =>
                 <option key={country.code} value={country.code} data-icon={country.img}>

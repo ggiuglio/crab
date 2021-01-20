@@ -50,8 +50,12 @@ const mapCountries = (regions, project) => {
 
 const mapSelectedCountriesInRegion = (geos, region) => {
   const countryCodes = [];
-  if (geos && region && geos[region]) {
-    countryCodes.push(...Object.keys(geos[region]))
+  if (geos && region && geos[region.code]) {
+    Object.keys(geos[region.code]).forEach(k => {
+      if (k !== "description") {
+        countryCodes.push(k)
+      }
+    });
   }
 
   return countryCodes;

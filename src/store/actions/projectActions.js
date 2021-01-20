@@ -56,12 +56,21 @@ export const createNewProject = (project) => {
       quotations: {},
       invoices: {}
     }
+    
 
     return FirebaseInstance.projects.push(projectData).then((res) => {
       const id = res.path.pieces_[1];
       project.id = id;
 
-      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
+      const userProject = {
+        id: project.id,
+        title: project.title,
+        pm: project.pm,
+        creationDate: project.creationDate,
+        status: project.status
+      };
+
+      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(userProject).then((res) => {
         history.push('/projects')
       });
     });
@@ -71,8 +80,17 @@ export const createNewProject = (project) => {
 export const editSelectedProject = (project, projcetId) => {
   return (dispatch, getSate) => {
     const userId = getSate().user.uid;
+    const userProject = {
+      id: projcetId,
+      title: project.title,
+      pm: project.pm,
+      creationDate: project.creationDate,
+      status: project.status
+    };
+      return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).set(project).then((res) => {
+        return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).set(userProject).then((res) => {
 
-    return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).set(project).then((res) => {
+      });
     });
   }
 }
