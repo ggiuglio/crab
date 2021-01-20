@@ -4,16 +4,17 @@ import { VIEW_MODES } from "../constants/constants";
 import {
   setProjectViewMode,
   cancelProjectEdit,
-} from "../store/actions/quotationActions";
+} from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 
-const ProjectActions = ({
+const ProjectViewMode = ({
   project,
   startEditProject,
   cancelEditProject
 }) => {
   return (
     <div>
+      { project ? <div>
       {project.viewMode === VIEW_MODES.VIEW ? (
         <a
           href="#!"
@@ -38,6 +39,7 @@ const ProjectActions = ({
       ) : (
         ""
       )}
+      </div> : ""}
     </div>
   );
 };
@@ -55,4 +57,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectActions);
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectViewMode);

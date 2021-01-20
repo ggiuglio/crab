@@ -3,16 +3,20 @@ import { connect } from "react-redux";
 import { initializeProject } from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 import Project from "./project";
+import CreateProject from "./createProject";
 
 const NewProject = ({ project, initializeNewProject }) => {
-  useEffect(() => { 
+  useEffect(() => {
     if (!project) {
       initializeNewProject();
     }
   }, [])
 
   return (
-    <Project />
+    <div>
+      <Project />
+      <CreateProject />
+    </div>
   )
 }
 

@@ -158,6 +158,9 @@ const Reducer = (state = INITIAL_STATE, action) => {
         pm: project.pm,
         providers: project.providers,
         geos: project.geo,
+        ownerId: project.ownerId,
+        status: project.status,
+        creationDate: project.creationDate,
         viewMode: VIEW_MODES.VIEW,
       } : undefined;
 
@@ -239,6 +242,8 @@ const Reducer = (state = INITIAL_STATE, action) => {
         pm: '',
         providers: [],
         geos: {},
+        ownerId: undefined,
+        status: "Open",
         viewMode: VIEW_MODES.CREATE,
       }
       return {
@@ -248,7 +253,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       }
     }
     case CANCEL_PROJECT_EDIT: {
-      const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
+      const project = JSON.parse(JSON.stringify(state.project));
       const selectedProject = project ? {
         id: project.id,
         title: project.title,

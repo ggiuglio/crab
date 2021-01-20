@@ -8,7 +8,6 @@ import {
   SET_BREADCRUMB_CODE
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
-import { history } from '../../App';
 
 export const loginAction = (username, password) => {
   return dispatch => {
@@ -65,26 +64,6 @@ export const loadStaticData = () => {
     });
   }
 };
-
-export const createNewProject = (project) => {
-  return (dispatch, getSate) => {
-    const userId = getSate().user.uid;
-    const projectData = {
-      project: {...project, ownerId: userId },
-      quotations: {},
-      invoices: {}
-    }
-
-    return FirebaseInstance.projects.push(projectData).then((res) => {
-      const id = res.path.pieces_[1];
-      project.id = id;
-
-      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
-        history.push('/projects')
-      });
-    });
-  }
-}
 
 export const setBreadcrumbCodeAction = (code) => {
   return dispatch => {

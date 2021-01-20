@@ -13,7 +13,7 @@ import {
   SET_PROJECT_VIEW_MODE,
   CANCEL_PROJECT_EDIT
 } from './actionsTypes.js';
-
+import { history } from '../../App';
 
 export const loadProjectsAction = () => {
   return (dispatch, getSate) => {
@@ -47,6 +47,37 @@ export const loadProjectAction = (projectId) => {
     });
   }
 }
+
+export const createNewProject = (project) => {
+  return (getSate) => {
+    const userId = getSate().user.uid;
+    const projectData = {
+      project: { ...project, ownerId: userId },
+      quotations: {},
+      invoices: {}
+    }
+
+    return FirebaseInstance.projects.push(projectData).then((res) => {
+      const id = res.path.pieces_[1];
+      project.id = id;
+
+      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(project).then((res) => {
+        history.push('/projects')
+      });
+    });
+  }
+}
+
+export const editSelectedProject = (project, projcetId) => {
+  return (dispatch, getSate) => {
+    const userId = getSate().user.uid;
+
+    return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).set(project).then((res) => {
+    });
+  }
+}
+
+
 
 export const selectProject = (projectId) => {
   return dispatch => {

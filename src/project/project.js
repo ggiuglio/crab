@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site";
-import { createNewProject } from "../store/actions/genericActions";
 import CountrySelector from "./countrySelector";
 import {
   setProjectGeos,
@@ -15,7 +14,7 @@ import {
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { VIEW_MODES } from "../constants/constants";
 
-const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
+const Project = ({ project, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
     if (project) {
       let collapsible = document.querySelectorAll(".collapsible");
@@ -50,12 +49,6 @@ const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setP
   const [provider, setProvider] = useState("");
 
   const checkAddSiteDisabled = !siteName || siteName.length === 0;
-  const checkCreateDisabled =
-    !project ||
-    !project.title ||
-    !project.pm ||
-    Object.keys(project.geos).length === 0 ||
-    project.providers.length === 0;
   const checkAddProviderDisabled = !provider || provider.length === 0;
 
   const setTitle = (title) => {
@@ -95,25 +88,11 @@ const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setP
     setProjectGeos(currentGeos);
   };
 
-  const saveProject = (e) => {
-    e.preventDefault();
-
-    const newProject = {
-      title: project.title,
-      geo: project.geos,
-      creationDate: new Date().toLocaleString("It-it").split(",")[0],
-      pm: project.pm,
-      status: "Open",
-      providers: project.providers
-    };
-    createProject(newProject);
-  };
-
   return (
     <div>
       { project ?
         <div className="container section row">
-          <form className="white" onSubmit={(e) => saveProject(e)}>
+          <form className="white">
             <div className="input-field col s12">
              <label htmlFor="projectName" className="active">Project Name</label>
               <input
@@ -247,7 +226,7 @@ const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setP
                         <div className="collapsible-body">
                           <div className="row">
                             {project.providers.map(provider =>
-                              <span>{provider.title}</span>
+                              <div>{provider.title}</div>
                             )}
                           </div>
                         </div>
@@ -267,20 +246,6 @@ const Project = ({ createProject, project, setProjectGeos, setProjectTitle, setP
                 disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
               ></input>
             </div>
-
-            {
-              project.viewMode !== VIEW_MODES.VIEW ?
-                <div className="input-field col s12 center">
-                  <button
-                    className="btn indigo lighten-1 z-depth-0"
-                    type="submit"
-                    disabled={checkCreateDisabled}
-                  >
-                    Create
-              </button>
-                </div> :
-                ""
-            }
           </form>
 
         </div>
@@ -340,7 +305,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createProject: (project) => dispatch(createNewProject(project)),
     setProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
     setProjectTitle: (title) => dispatch(setProjectTitle(title)),
     setProjectPM: (pm) => dispatch(setProjectPM(pm)),

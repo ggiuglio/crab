@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getProject, getSelectedProjectId } from "../store/selectors/projectSelectors";
+import { getSelectedProject, getSelectedProjectId } from "../store/selectors/projectSelectors";
 import { selectProject, loadProjectAction } from "../store/actions/projectActions";
-import Dashboard from "../dashboard/dashboard";
+import ProjectViewMode from "./projectViewMode";
 import { history } from "../App";
 import Project from "./project"
+import EditProject from "./editProject";
+import { VIEW_MODES } from "../constants/constants";
 
 const ProjectDashboard = ({ selectedProjectId, project, chooseProject, loadProject }) => {
   useEffect(() => {
-    if(!selectedProjectId) {
+    if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')
-      if(queryProject) {
+      if (queryProject) {
         chooseProject(queryProject);
       }
       else {
@@ -26,13 +28,15 @@ const ProjectDashboard = ({ selectedProjectId, project, chooseProject, loadProje
 
   return (
     <div className="container">
-      {project ? 
-        <h6 className="center page-title">{project.title}</h6>
-        // aggiugnere info progetto - bandierine ecc...
-      : ''}
-
-      <Dashboard />
-      <Project />
+      {project ?
+        <div>
+          <ProjectViewMode />
+          <Project />
+          {project.viewMode === VIEW_MODES.EDIT ?
+            <EditProject />
+            : ""}
+        </div>
+        : ''}
     </div>
   );
 };
@@ -40,7 +44,7 @@ const ProjectDashboard = ({ selectedProjectId, project, chooseProject, loadProje
 const mapStateToProps = (state) => {
   return {
     selectedProjectId: getSelectedProjectId(state),
-    project: getProject(state)
+    project: getSelectedProject(state)
   };
 };
 
