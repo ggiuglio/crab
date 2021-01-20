@@ -21,14 +21,19 @@ const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selec
 
   const selectCountry = () => {
     const selectedCodes = geoSelect.getSelectedValues();
-    const selectedCountries = { description: `${project.selectedRegion.name} -` };
-    selectedCodes.forEach(code => {
-      const country = countries.find(c => c.code === code);
-      selectedCountries[code] = { name: `${country.code} - ${country.name}`, sites: [] }
-      selectedCountries.description += ` ${country.code}`
-    })
     let currentGeos = JSON.parse(JSON.stringify(project.geos));
-    currentGeos[project.selectedRegion.code] = selectedCountries;
+
+    if (selectedCodes.length > 0) {
+      const selectedCountries = { description: `${project.selectedRegion.name} -` };
+      selectedCodes.forEach(code => {
+        const country = countries.find(c => c.code === code);
+        selectedCountries[code] = { name: `${country.code} - ${country.name}`, sites: [] }
+        selectedCountries.description += ` ${country.code}`
+      });
+      currentGeos[project.selectedRegion.code] = selectedCountries;
+    } else if (currentGeos[project.selectedRegion.code]) {
+      delete currentGeos[project.selectedRegion.code];
+    }
 
     setNewProjectGeos(currentGeos);
   }
