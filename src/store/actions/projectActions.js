@@ -98,8 +98,6 @@ export const editSelectedProject = (project, projcetId) => {
   }
 }
 
-
-
 export const selectProject = (projectId) => {
   return dispatch => {
     return dispatch(
