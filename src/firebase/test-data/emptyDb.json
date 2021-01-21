@@ -1963,47 +1963,428 @@
       "Central-Asia": {
         "name": "Central Asia",
         "code": "Central-Asia",
-        "countries": []
+        "countries": [
+          {
+            "common": "Kazakhstan",
+            "cca3": "KAZ" 
+          },
+          {
+            "common": "Kyrgyzstan",
+            "cca3": "KGZ" 
+          },
+          {
+            "common": "Tajikistan",
+            "cca3": "TJK" 
+          },
+          {
+            "common": "Turkmenistan",
+            "cca3": "TKM" 
+          },
+          {
+            "common": "Uzbekistan",
+            "cca3": "UZB" 
+          }
+        ]
       },
       "Eastern-Asia": {
         "name": "Eastern Asia",
         "code": "Eastern-Asia",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "China",
+            "cca3": "CHN" 
+          },
+          {
+            "common": "Hong Kong",
+            "cca3": "HKG" 
+          },
+          {
+            "common": "Japan",
+            "cca3": "JPN" 
+          },
+          {
+            "common": "Macau",
+            "cca3": "MAC" 
+          },
+          {
+            "common": "Mongolia",
+            "cca3": "MNG" 
+          },
+          {
+            "common": "North Korea",
+            "cca3": "PRK" 
+          },
+          {
+            "common": "South Korea",
+            "cca3": "KOR" 
+          },
+          {
+            "common": "Taiwan",
+            "cca3": "TWN" 
+          }
+        ]
       },
       "South-Eastern-Asia": {
         "name": "South-Eastern Asia",
         "code": "South-Eastern-Asia",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Indonesia",
+            "cca3": "IDN" 
+          },
+          {
+            "common": "Brunei",
+            "cca3": "BRN" 
+          },
+          {
+            "common": "Cambodia",
+            "cca3": "KHM" 
+          },
+          {
+            "common": "Laos",
+            "cca3": "LAO" 
+          },
+          {
+            "common": "Malaysia",
+            "cca3": "MYS" 
+          },
+          {
+            "common": "Myanmar",
+            "cca3": "MMR" 
+          },
+          {
+            "common": "Philippines",
+            "cca3": "PHL" 
+          },
+          {
+            "common": "Singapore",
+            "cca3": "SGP" 
+          },
+          {
+            "common": "Thailand",
+            "cca3": "THA" 
+          },
+          {
+            "common": "Timor-Leste",
+            "cca3": "TLS" 
+          },
+          {
+            "common": "Vietnam",
+            "cca3": "VNM" 
+          }
+        ]
       },
       "Southern-Asia": {
         "name": "Southern Asia",
         "code": "Southern-Asia",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Afghanistan",
+            "cca3": "AFG" 
+          },
+          {
+            "common": "Bangladesh",
+            "cca3": "BGD" 
+          },
+          {
+            "common": "Bhutan",
+            "cca3": "BTN" 
+          },
+          {
+            "common": "India",
+            "cca3": "IND" 
+          },
+          {
+            "common": "Iran",
+            "cca3": "IRN" 
+          },
+          {
+            "common": "Maldives",
+            "cca3": "MDV" 
+          },
+          {
+            "common": "Nepal",
+            "cca3": "NPL" 
+          },
+          {
+            "common": "Pakistan",
+            "cca3": "PAK" 
+          },
+          {
+            "common": "Sri Lanka",
+            "cca3": "LKA" 
+          }
+        ]
       },
       "Australia-and-New-Zealand": {
         "name": "Australia and New Zealand",
         "code": "Australia-and-New-Zealand",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Australia",
+            "cca3": "AUS" 
+          },
+          {
+            "common": "Christmas Island",
+            "cca3": "CXR" 
+          },
+          {
+            "common": "Cocos (Keeling) Islands",
+            "cca3": "CCK" 
+          },
+          {
+            "common": "New Zealand",
+            "cca3": "NZL" 
+          },
+          {
+            "common": "Norfolk Island",
+            "cca3": "NFK" 
+          }
+        ]
       },
       "Northern-Europe": {
         "name": "Northern Europe",
         "code": "Northern-Europe",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Åland Islands",
+            "cca3": "ALA" 
+          },
+          {
+            "common": "Danmark",
+            "cca3": "DNK" 
+          },
+          {
+            "common": "Estonia",
+            "cca3": "EST" 
+          },
+          {
+            "common": "Faroe Islands",
+            "cca3": "FRO" 
+          },
+          {
+            "common": "Finland",
+            "cca3": "FIN" 
+          },
+          {
+            "common": "Guernsey",
+            "cca3": "GGY" 
+          },
+          {
+            "common": "Iceland",
+            "cca3": "ISL" 
+          },
+          {
+            "common": "Ireland",
+            "cca3": "IRL" 
+          },
+          {
+            "common": "Isle of Man",
+            "cca3": "IMN" 
+          },
+          {
+            "common": "Jersey",
+            "cca3": "JEY" 
+          },
+          {
+            "common": "Latvia",
+            "cca3": "LVA" 
+          },
+          {
+            "common": "Lithuania",
+            "cca3": "LTU" 
+          },
+          {
+            "common": "Norway",
+            "cca3": "NOR" 
+          },
+          {
+            "common": "Svalbard and Jan Mayen",
+            "cca3": "SJM" 
+          },
+          {
+            "common": "Sverige",
+            "cca3": "SWE" 
+          }, 
+          {
+            "common": "United Kingdom",
+            "cca3": "GBR" 
+          }
+        ]
       },
       "Western-Europe": {
         "name": "Western Europe",
         "code": "Western-Europe",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Austria",
+            "cca3": "AUT" 
+          },  
+          {
+            "common": "Belgium",
+            "cca3": "BEL" 
+          },  
+          {
+            "common": "France",
+            "cca3": "FRA" 
+          },  
+          {
+            "common": "Germany",
+            "cca3": "DEU" 
+          },  
+          {
+            "common": "Liechtenstein",
+            "cca3": "LIE" 
+          },  
+          {
+            "common": "Luxembourg",
+            "cca3": "LUX" 
+          },  
+          {
+            "common": "Monaco",
+            "cca3": "MCO" 
+          },  
+          {
+            "common": "Netherlands",
+            "cca3": "NLD" 
+          },  
+          {
+            "common": "Switzerland",
+            "cca3": "CHE" 
+          }
+        ]
       },
       "Eastern-Europe": {
         "name": "Eastern Europe",
         "code": "Eastern-Europe",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Belarus",
+            "cca3": "BLR" 
+          },   
+          {
+            "common": "Bulgaria",
+            "cca3": "BGR" 
+          },   
+          {
+            "common": "Cyprus",
+            "cca3": "CYP" 
+          },   
+          {
+            "common": "Czech Republic",
+            "cca3": "CZE" 
+          },   
+          {
+            "common": "Hungary",
+            "cca3": "HUN" 
+          },   
+          {
+            "common": "Moldova",
+            "cca3": "MDA" 
+          },   
+          {
+            "common": "Poland",
+            "cca3": "POL" 
+          },   
+          {
+            "common": "Kosovo",
+            "cca3": "KOS" 
+          },   
+          {
+            "common": "Romania",
+            "cca3": "ROU" 
+          },   
+          {
+            "common": "Russia",
+            "cca3": "RUS" 
+          },   
+          {
+            "common": "Slovakia",
+            "cca3": "SVK" 
+          },   
+          {
+            "common": "Ukraine",
+            "cca3": "UKR" 
+          }
+        ]
       },
       "Southern-Europe": {
         "name": "Southern Europe",
         "code": "Southern-Europe",
-        "countries": []
+        "countries": 
+        [
+          {
+            "common": "Albania",
+            "cca3": "UKR" 
+          },
+          {
+            "common": "Andorra",
+            "cca3": "AND" 
+          },
+          {
+            "common": "Bosnia and Herzegovina",
+            "cca3": "BIH" 
+          },
+          {
+            "common": "Croatia",
+            "cca3": "HRV" 
+          },
+          {
+            "common": "Gibraltar",
+            "cca3": "GIB" 
+          },
+          {
+            "common": "Greece",
+            "cca3": "GRC" 
+          },
+          {
+            "common": "Vaticano",
+            "cca3": "VAT" 
+          },
+          {
+            "common": "Italy",
+            "cca3": "ITA" 
+          },
+          {
+            "common": "Macedonia",
+            "cca3": "MKD" 
+          },
+          {
+            "common": "Malta",
+            "cca3": "MLT" 
+          },
+          {
+            "common": "Montenegro",
+            "cca3": "MNE" 
+          },
+          {
+            "common": "Portugal",
+            "cca3": "PRT" 
+          },
+          {
+            "common": "San Marino",
+            "cca3": "SMR" 
+          },
+          {
+            "common": "Serbia",
+            "cca3": "SRB" 
+          },
+          {
+            "common": "Slovenia",
+            "cca3": "SVN" 
+          },
+          {
+            "common": "Spain",
+            "cca3": "ESP" 
+          }
+        ]
       }
     }
   }
