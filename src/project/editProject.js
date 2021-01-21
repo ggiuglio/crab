@@ -12,6 +12,7 @@ const EditProject = ({
     !project ||
     !project.title ||
     !project.pm ||
+    !project.sponsor ||
     Object.keys(project.geos).length === 0 ||
     project.providers.length === 0;
 
@@ -21,6 +22,7 @@ const EditProject = ({
     const newProject = {
       title: project.title,
       geo: project.geos,
+      sponsor: project.sponsor,
       creationDate: project.creationDate,
       updateDate: new Date().toLocaleString("It-it").split(",")[0],
       pm: project.pm,

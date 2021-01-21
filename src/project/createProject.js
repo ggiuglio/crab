@@ -12,6 +12,7 @@ const CreateProject = ({
     !project ||
     !project.title ||
     !project.pm ||
+    !project.sponsor ||
     Object.keys(project.geos).length === 0 ||
     project.providers.length === 0;
 
@@ -20,6 +21,7 @@ const CreateProject = ({
 
     const newProject = {
       title: project.title,
+      sponsor: project.sponsor,
       geo: project.geos,
       creationDate: new Date().toLocaleString("It-it").split(",")[0],
       pm: project.pm,

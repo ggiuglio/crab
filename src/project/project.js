@@ -8,13 +8,14 @@ import {
   setProjectGeos,
   setProjectTitle,
   setProjectPM,
+  setProjectSponsor,
   addProjectProvider,
   removeProjectProvider
 } from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { VIEW_MODES } from "../constants/constants";
 
-const Project = ({ project, setProjectGeos, setProjectTitle, setProjectPM, addProjectProvider, removeProjectProvider }) => {
+const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
     if (project) {
       let collapsible = document.querySelectorAll(".collapsible");
@@ -53,6 +54,10 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectPM, addPr
 
   const setTitle = (title) => {
     setProjectTitle(title)
+  }
+
+  const setSponsor = (sponsor) => {
+    setProjectSponsor(sponsor)
   }
 
   const setPM = (pm) => {
@@ -102,8 +107,19 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectPM, addPr
                 onChange={(e) => setTitle(e.target.value)}
                 disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
               ></input>
-
             </div>
+
+            <div className="input-field col s12">
+             <label htmlFor="projectName" className="active">Sponsor</label>
+              <input
+                type="text"
+                name="projectName"
+                value={project.sponsor}
+                onChange={(e) => setSponsor(e.target.value)}
+                disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
+              ></input>
+            </div>
+
             {
               project.viewMode !== VIEW_MODES.VIEW ?
                 <CountrySelector /> :
@@ -307,6 +323,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setProjectGeos: (geos) => dispatch(setProjectGeos(geos)),
     setProjectTitle: (title) => dispatch(setProjectTitle(title)),
+    setProjectSponsor: (sponsor) => dispatch(setProjectSponsor(sponsor)),
     setProjectPM: (pm) => dispatch(setProjectPM(pm)),
     addProjectProvider: (provider) => dispatch(addProjectProvider(provider)),
     removeProjectProvider: (providerId) => dispatch(removeProjectProvider(providerId))

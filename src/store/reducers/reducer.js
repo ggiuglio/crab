@@ -32,6 +32,7 @@ import {
   SET_PROJECT_GEOS,
   SET_PROJECT_TITLE,
   SET_PROJECT_PM,
+  SET_PROJECT_SPONSOR,
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER,
   SELECT_REGION_FOR_PROJECT,
@@ -161,6 +162,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ownerId: project.ownerId,
         status: project.status,
         creationDate: project.creationDate,
+        sponsor: project.sponsor,
         viewMode: VIEW_MODES.VIEW,
       } : undefined;
 
@@ -239,6 +241,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const emptyProject = {
         id: '0',
         title: '',
+        sponsor: '',
         pm: '',
         providers: [],
         geos: {},
@@ -447,6 +450,15 @@ const Reducer = (state = INITIAL_STATE, action) => {
     case SET_PROJECT_TITLE: {
       const project = JSON.parse(JSON.stringify(state.selectedProjectData));
       project.title = action.title;
+      return {
+        ...state,
+        selectedProjectData: project
+      }
+    }
+
+    case SET_PROJECT_SPONSOR: {
+      const project = JSON.parse(JSON.stringify(state.selectedProjectData));
+      project.sponsor = action.sponsor;
       return {
         ...state,
         selectedProjectData: project

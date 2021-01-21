@@ -9,6 +9,7 @@ import {
   ADD_PROJECT_PROVIDER,
   REMOVE_PROJECT_PROVIDER,
   SET_PROJECT_PM,
+  SET_PROJECT_SPONSOR,
   SELECT_REGION_FOR_PROJECT,
   SET_PROJECT_VIEW_MODE,
   CANCEL_PROJECT_EDIT
@@ -65,6 +66,7 @@ export const createNewProject = (project) => {
       const userProject = {
         id: project.id,
         title: project.title,
+        sponsor: project.sponsor,
         pm: project.pm,
         creationDate: project.creationDate,
         status: project.status
@@ -83,6 +85,7 @@ export const editSelectedProject = (project, projcetId) => {
     const userProject = {
       id: projcetId,
       title: project.title,
+      sponsor: project.sponsor,
       pm: project.pm,
       creationDate: project.creationDate,
       status: project.status
@@ -124,6 +127,17 @@ export const setProjectTitle = (title) => {
       {
         type: SET_PROJECT_TITLE,
         title: title
+      }
+    )
+  }
+}
+
+export const setProjectSponsor = (sponsor) => {
+  return dispatch => {
+    return dispatch(
+      {
+        type: SET_PROJECT_SPONSOR,
+        sponsor: sponsor
       }
     )
   }
