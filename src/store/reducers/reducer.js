@@ -157,7 +157,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         id: project.id,
         title: project.title,
         pm: project.pm,
-        providers: project.providers,
+        providers: project.providers ? project.providers : [],
         geos: project.geo,
         ownerId: project.ownerId,
         status: project.status,

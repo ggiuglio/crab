@@ -13,8 +13,7 @@ const EditProject = ({
     !project.title ||
     !project.pm ||
     !project.sponsor ||
-    Object.keys(project.geos).length === 0 ||
-    project.providers.length === 0;
+    Object.keys(project.geos).length === 0;
 
   const saveProject = (e) => {
     e.preventDefault();
@@ -28,7 +27,7 @@ const EditProject = ({
       pm: project.pm,
       status: project.status,
       ownerId: project.ownerId,
-      providers: project.providers
+      providers: project.providers ? project.providers : []
     };
     editProject(newProject, project.id);
   };

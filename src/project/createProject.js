@@ -13,8 +13,7 @@ const CreateProject = ({
     !project.title ||
     !project.pm ||
     !project.sponsor ||
-    Object.keys(project.geos).length === 0 ||
-    project.providers.length === 0;
+    Object.keys(project.geos).length === 0;
 
   const saveProject = (e) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ const CreateProject = ({
       creationDate: new Date().toLocaleString("It-it").split(",")[0],
       pm: project.pm,
       status: "Open",
-      providers: project.providers
+      providers: project.providers ? project.providers : []
     };
     createProject(newProject);
   };
