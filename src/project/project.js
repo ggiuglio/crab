@@ -80,9 +80,13 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
     let nation = document.getElementById("siteNation").value;
 
     const currentGeos = project.geos;
+    if (currentGeos[subregion][nation].sites) {
     currentGeos[subregion][nation].sites.push({ name: siteName });
-    setProjectGeos(currentGeos);
+    } else {
+      currentGeos[subregion][nation].sites = [{ name: siteName }];
+    }
 
+    setProjectGeos(currentGeos);
     setSiteName("");
   };
 
