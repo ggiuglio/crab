@@ -27,6 +27,7 @@ const Quotations = ({
   selectedProjectId,
   providerQuotations,
   sponsorQuotations,
+  creatNewQuotation
 }) => {
   useEffect(() => {
     if (!selectedProjectId) {
@@ -75,7 +76,7 @@ const Quotations = ({
                   <CustomNavLink
                     className="btn-floating waves-effect waves-light green darken-1"
                     to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
-                    onClick={() => startNewQuotation(QUOTATION_TYPES.SPONSOR)}
+                    onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
                     iconType="MATERIAL"
                     iconName="add"
                     code="NQT"
@@ -102,7 +103,7 @@ const Quotations = ({
                   <CustomNavLink
                     className="btn-floating waves-effect waves-light red darken-1"
                     to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
-                    onClick={() => startNewQuotation(QUOTATION_TYPES.PROVIDER)}
+                    onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
                     iconType="MATERIAL"
                     iconName="add"
                     code="NQT"
@@ -164,7 +165,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    startNewQuotation: (type) => dispatch(startNewQuotation(type)),
+    creatNewQuotation: (type) => dispatch(startNewQuotation(type)),
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
   };
