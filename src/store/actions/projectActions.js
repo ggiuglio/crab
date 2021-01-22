@@ -50,15 +50,14 @@ export const loadProjectAction = (projectId) => {
 }
 
 export const createNewProject = (project) => {
-  return (getSate) => {
+  return  (dipatch, getSate) => {
     const userId = getSate().user.uid;
     const projectData = {
       project: { ...project, ownerId: userId },
       quotations: {},
       invoices: {}
-    }
+    };
     
-
     return FirebaseInstance.projects.push(projectData).then((res) => {
       const id = res.path.pieces_[1];
       project.id = id;
