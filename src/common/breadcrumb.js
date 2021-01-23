@@ -54,7 +54,7 @@ if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
   }, [breadcrumbCode]);
 
   return (
-    <div className="section col s12">
+    <div className="col s12">
       {breadcrumb.map((bcItem) => (
         <CustomNavLink
           key={bcItem.id}
