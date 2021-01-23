@@ -100,7 +100,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
   return (
     <div>
       { project ?
-        <div className="container section row">
+        <div className="section row">
           <form className="white">
             <div className="input-field col s12">
              <label htmlFor="projectName" className="active">Project Name</label>
@@ -213,7 +213,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                         </tr>
                       </thead>
                       <tbody>
-                        {project.providers.map((provider) => (
+                        {project.providers ? project.providers.map((provider) => (
                           <tr key={provider.id}>
                             <td>{provider.title}</td>
                             <td>
@@ -231,7 +231,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                               </a>
                             </td>
                           </tr>
-                        ))}
+                        )) : ''}
                       </tbody>
                     </table>
                   </div>
@@ -245,9 +245,9 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                         </div>
                         <div className="collapsible-body">
                           <div className="row">
-                            {project.providers.map(provider =>
+                            {project.providers ? project.providers.map(provider =>
                               <div key={provider.id}>{provider.title}</div>
-                            )}
+                            ) : ''}
                           </div>
                         </div>
                       </li>

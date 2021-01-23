@@ -78,48 +78,48 @@ const NAVIGATION_CODES = {
     parent: "PJS",
     order: 2
   },
-  "QTS": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
-    url: `/project/quotations?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
-    parent: "PJS",
-    order: 2
-  },
   "DSB": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Dashboard`,
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE}`,
     url: `/project?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "PJS",
     order: 2
   },
+  "QTS": {
+    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
+    url: `/project/quotations?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "DSB",
+    order: 3
+  },
   "INV": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Invoicing`,
     url: `/project/invoices?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
-    parent: "PJS",
-    order: 2
+    parent: "DSB",
+    order: 3
   },
   "BDG": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Budget`,
     url: `/project/budget?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
-    parent: "PJS",
-    order: 2
+    parent: "DSB",
+    order: 3
   },
   "ADA": {
     title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Advanced analytics`,
     url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
-    parent: "PJS",
-    order: 2
+    parent: "DSB",
+    order: 3
   },
   "NQT": {
     title: `New quotation`,
     // url: `/project/new-quotation`,
     url: `#!`,
     parent: "QTS",
-    order: 3
+    order: 4
   },
   "QTN": {
     title: `Quotation ${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_CODE}`,
     url: `/project/quotation?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}&quotation=${NAVIGATION_REPLACERS.NAV_REPL_QUOTATION_ID}`,
     parent: "QTS",
-    order: 3
+    order: 4
   },
 };
 

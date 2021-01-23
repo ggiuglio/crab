@@ -1,112 +1,147 @@
 .valign-page-center {
-    margin-top: Calc(20vh) !important;
+  margin-top: Calc(20vh) !important;
 }
 
 .static {
-    position: static !important;
+  position: static !important;
+}
+
+.relative {
+  position: relative !important;
+}
+
+.absolute {
+  position: absolute !important;
 }
 
 .block {
-    display: block !important;
+  display: block !important;
 }
 
 .inline {
-    display: inline !important;
+  display: inline !important;
 }
 
 .italic {
-    font-style: italic;
+  font-style: italic;
 }
 
 .line-through {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .no-padding {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 .bolder {
-    font-weight: bolder;
+  font-weight: bolder;
 }
 
 .mbold {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .side-by-side {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .text-right {
-    text-align: right;
+  text-align: right;
 }
 
 .card .card-content {
-    padding: 1rem !important;
+  padding: 1rem !important;
 }
 
 .card .card-action {
-    border-top: 1px solid rgba(255,255,255,1);
-    padding: 1rem 1.5rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 1) !important;
+  padding: 1rem 1.5rem !important;
 }
 
 .page-title {
-    margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .price:after {
-    content: ' €';
+  content: " €";
 }
 
 .clear-flow {
-    display: flow-root;
+  display: flow-root;
 }
 
 #menu-project-dd {
-    overflow: hidden;
+  overflow: hidden;
 }
 
-.fixed-action-btn.static li {
-    margin-top: 20px !important;
+.fixed-action-btn.absolute {
+  top: 0 !important;
+  bottom: 0 !important;
+  right: 0.5rem !important;
+  padding: 0 !important;
+}
+
+.fixed-action-btn.absolute.direction-buttom ul {
+  top: 3rem !important;
+  bottom: 0 !important;
+}
+
+.fixed-action-btn.absolute.direction-left ul {
+  right: 3rem !important;
+  bottom: 0 !important;
+}
+
+.fixed-action-btn li {
+  margin: 0 !important;
+}
+
+.fixed-action-btn.absolute.direction-buttom li {
+  margin-bottom: 0.2rem !important;
+}
+
+.fixed-action-btn.absolute.direction-left li {
+  margin-left: 0.2rem !important;
 }
 
 .collapsible-header > div:first-of-type {
-    width: 100%;
+  width: 100%;
 }
 
-.collapsible-header, .collapsible-body {
-    padding: 0.5rem 1rem !important;
+.collapsible-header,
+.collapsible-body {
+  padding: 0.5rem 1rem !important;
 }
 
 .row {
-    margin-bottom: 1rem !important;
+  margin-bottom: 1rem !important;
 }
 
 .space-up {
-    margin-top: 1rem;
+  margin-top: 1rem;
 }
 
 .space-right {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 .document-type {
-    font-style: italic;
+  font-style: italic;
 }
 
-th, td {
-    padding: 0.1rem !important;
+th,
+td {
+  padding: 0.1rem !important;
 }
 
 #modal-resource {
-    max-height: 100%;
-    overflow: visible;
+  max-height: 100%;
+  overflow: visible;
 }
 
 #wrapper-select-geo .select-wrapper .select-dropdown li img {
-    border-radius: 20px;
-    border: solid black;
+  border-radius: 20px;
+  border: solid black;
 }
 
 select.browser-default {
@@ -131,13 +166,13 @@ select.browser-default {
 }
 
 select.browser-default + label {
-  top: -.75rem !important;
-  font-size: .8rem !important;
+  top: -0.75rem !important;
+  font-size: 0.8rem !important;
 }
 
 select.browser-default + label:not(.label-icon).active {
   transform: inherit !important;
-    transform-origin: 0 0 !important;
+  transform-origin: 0 0 !important;
 }
 
 select.browser-default > option {
@@ -150,7 +185,7 @@ select.browser-default > option {
 
 .multi-select-wrapper > label {
   top: -0.75rem !important;
-  font-size: .8rem !important;
+  font-size: 0.8rem !important;
 }
 
 select.browser-default > option:checked {
@@ -165,75 +200,105 @@ select.browser-default > option:checked {
 }
 
 .flag-small {
-    width: 1.5rem;
-    margin: 0 0.5rem;
+  width: 1.5rem;
+  margin: 0 0.5rem;
 }
 
 .remove-site-icon {
-    margin: 0 0.3rem;
+  margin: 0 0.3rem;
 }
 
 .lateral-margin {
-    margin: 0 1rem;
+  margin: 0 1rem;
 }
 
 .logo-footer {
-    max-height: 80px;
+  max-height: 80px;
 }
 
 .page-footer {
-    background-color: #fefefc !important;
+  background-color: #fefefc !important;
 }
 
-.tabs .tab a{
-  color:indigo !important;
+.tabs .tab a {
+  color: indigo !important;
 } /*Black color to the text*/
 
 .tabs .tab a:hover {
-  background-color:#eee !important;
-  color:indigo !important;
+  background-color: #eee !important;
+  color: indigo !important;
 } /*Text color on hover*/
 
 .tabs .tab a.active {
-  background-color:#e8eaf6 !important;
-  color:indigo !important;
+  background-color: #e8eaf6 !important;
+  color: indigo !important;
 } /*Background and text color when a tab is active*/
 
 .tabs .indicator {
-  background-color:indigo !important;
+  background-color: indigo !important;
 } /*Color of underline*/
 
-@media only screen and (min-width: 0) {
-    html {
-        font-size: 12px !important;
-    }
+.tooltip .tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  z-index: 10;
+  width: max-content;
+  height: fit-content;
+  border-top: 0.1rem solid black;
+  border-left: 0.1rem solid black;
+  border-bottom: 0.1rem solid grey;
+  border-right: 0.1rem solid grey;
+  background-color: white;
+  color: black;
+  font-size: 1rem;
+  padding: 0 1rem;
+  line-height: 1.5;
 }
 
-@media only screen and (min-width: 992px){
-    html {
-        font-size: 12.5px !important;
-    }
+.tooltip .tooltiptext.right {
+  top: 25%;
+}
+
+.tooltip .tooltiptext.bottom {
+  top: 100%;
+  left: -50%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+@media only screen and (min-width: 0) {
+  html {
+    font-size: 12px !important;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  html {
+    font-size: 12.5px !important;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-    html {
-        font-size: 13px !important;
-    }
+  html {
+    font-size: 13px !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
-    .s-space-up {
-        margin-top: 1rem;
-    }
+  .s-space-up {
+    margin-top: 1rem;
+  }
 
-    .s-center {
-        text-align: center !important;
-    }
+  .s-center {
+    text-align: center !important;
+  }
 
-    .s-truncate {
-        display: block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+  .s-truncate {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

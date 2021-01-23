@@ -13,14 +13,14 @@ const ProjectViewMode = ({
   cancelEditProject
 }) => {
   return (
-    <div>
+    <div className="col s1">
       { project ? <div>
       {project.viewMode === VIEW_MODES.VIEW ? (
         <a
           href="#!"
           className="btn-floating btn-small waves-effect waves-light indigo"
           onClick={() => startEditProject()}
-          title="Edit quotation"
+          title="Edit project"
         >
           <i className="material-icons">edit</i>
         </a>
@@ -32,7 +32,7 @@ const ProjectViewMode = ({
           href="#!"
           className="btn-floating btn-small waves-effect waves-light red darken-1"
           onClick={() => cancelEditProject()}
-          title="Cancel edit quotation"
+          title="Cancel edit project"
         >
           <i className="material-icons">undo</i>
         </a>

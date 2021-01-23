@@ -73,15 +73,17 @@ const Quotations = ({
             <div className="section">
               <div className="row">
                 <div className="col s6 push-s3 center">
-                  <CustomNavLink
-                    className="btn-floating waves-effect waves-light green darken-1"
-                    to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
-                    onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
-                    iconType="MATERIAL"
-                    iconName="add"
-                    code="NQT"
-                  />
-                  <p>CREATE NEW SPONSOR QUOTATION</p>
+                  <span className="tooltip relative">
+                    <CustomNavLink
+                      className="btn-floating waves-effect waves-light green darken-1"
+                      to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
+                      onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
+                      iconType="MATERIAL"
+                      iconName="add"
+                      code="NQT"
+                    />
+                    <span className="tooltiptext right">Create new sponsor quotation</span>
+                  </span>
                 </div>
               </div>
 
@@ -100,15 +102,17 @@ const Quotations = ({
             <div className="section">
               <div className="row">
                 <div className="col s6 push-s3 center">
-                  <CustomNavLink
-                    className="btn-floating waves-effect waves-light red darken-1"
-                    to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
-                    onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
-                    iconType="MATERIAL"
-                    iconName="add"
-                    code="NQT"
-                  />
-                  <p>CREATE NEW PROVIDER QUOTATION</p>
+                  <span className="tooltip relative">
+                    <CustomNavLink
+                      className="btn-floating waves-effect waves-light red darken-1"
+                      to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
+                      onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
+                      iconType="MATERIAL"
+                      iconName="add"
+                      code="NQT"
+                    />
+                    <span className="tooltiptext right">Create new provider quotation</span>
+                  </span>
                 </div>
               </div>
 

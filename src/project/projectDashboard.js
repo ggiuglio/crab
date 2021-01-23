@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { getSelectedProject, getSelectedProjectId } from "../store/selectors/projectSelectors";
 import { selectProject, loadProjectAction } from "../store/actions/projectActions";
 import ProjectViewMode from "./projectViewMode";
+import ProjectOperations from "./projectOperations";
 import { history } from "../App";
 import Project from "./project"
 import EditProject from "./editProject";
@@ -30,7 +31,10 @@ const ProjectDashboard = ({ selectedProjectId, project, chooseProject, loadProje
     <div className="container">
       {project ?
         <div>
-          <ProjectViewMode />
+          <div className="row">
+            <ProjectViewMode />
+            <ProjectOperations />
+          </div>
           <Project />
           {project.viewMode === VIEW_MODES.EDIT ?
             <EditProject />
