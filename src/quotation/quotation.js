@@ -233,10 +233,10 @@ const NewQuotation = ({
               <form className="white" onSubmit={(e) => saveQuotation(e)}>
                 <div className="container">
                   <div className="row">
-                    <div className="col s1">
+                    <div className="col s12 s-center m1">
                       <QuotationActions />
                     </div>
-                    <div className="input-field col s10">
+                    <div className="input-field col s12 m11">
                       <label className="active" htmlFor="quotationCode">
                         quotation code
                       </label>

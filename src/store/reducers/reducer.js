@@ -85,25 +85,25 @@ const NAVIGATION_CODES = {
     order: 2
   },
   "QTS": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Quotations`,
+    title: `Quotations`,
     url: `/project/quotations?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "DSB",
     order: 3
   },
   "INV": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Invoicing`,
+    title: `Invoicing`,
     url: `/project/invoices?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "DSB",
     order: 3
   },
   "BDG": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Budget`,
+    title: `Budget`,
     url: `/project/budget?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "DSB",
     order: 3
   },
   "ADA": {
-    title: `Project ${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_TITLE} - Advanced analytics`,
+    title: `Advanced analytics`,
     url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
     parent: "DSB",
     order: 3

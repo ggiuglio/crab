@@ -49,8 +49,6 @@ const Quotations = ({
       M.Tabs.init(tabs);
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
-      let fab = document.querySelectorAll(".fixed-action-btn");
-      M.FloatingActionButton.init(fab, { direction: "left" });
     }
   });
 
