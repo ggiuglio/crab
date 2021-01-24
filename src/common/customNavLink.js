@@ -15,7 +15,7 @@ const CustomNavLink = (par) => {
       {(() => {
         switch (par.iconType) {
           case "AWESOME":
-            return <div style={{display: 'inline'}}><FontAwesomeIcon icon={par.iconName} fixedWidth />&nbsp;&nbsp;</div>
+            return <div style={{display: 'inline'}} className="navlink-awesome-icon"><FontAwesomeIcon icon={par.iconName} fixedWidth />&nbsp;&nbsp;</div>
 
           case "MATERIAL":
             return <i className="material-icons">{par.iconName}</i>;

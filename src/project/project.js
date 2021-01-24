@@ -231,7 +231,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                               </a>
                             </td>
                           </tr>
-                        )) : ''}
+                        )) : null}
                       </tbody>
                     </table>
                   </div>

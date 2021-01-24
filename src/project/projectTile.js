@@ -25,30 +25,34 @@ const ProjectTile = ({ project, chooseProject }) => {
         <div className="card-content" onClick={() => goToProjectPage()}>
           <div className="row card-text">
             <div className="col s11">
-              <CustomNavLink to={`/project?project=${project.id}`} code="DSB">
-                <span
-                  className="bolder col s12 m6 s-center truncate white-text"
-                  title={project.title}
-                >
-                  {project.title}
-                </span>
-                <span
-                  className="col s12 m5 s-center truncate white-text"
-                  title={project.sponsor}
-                >
-                  {project.sponsor}
-                </span>
-                <span className="col s1 s-center tooltip">
+              <div className="row">
+                <CustomNavLink to={`/project?project=${project.id}`} code="DSB">
+                  <span
+                    className="bolder col s12 m6 s-center truncate white-text"
+                    title={project.title}
+                  >
+                    {project.title}
+                  </span>
+                  <span
+                    className="col s12 m5 s-center truncate white-text"
+                    title={project.sponsor}
+                  >
+                    {project.sponsor}
+                  </span>
+                </CustomNavLink>
+                <span className="col s12 m1 s-center tooltip m-space-up">
                   <span className="tooltiptext">{project.status}</span>
                   {project.status.toLowerCase() === "open" ? (
                     <i className="material-icons amber-text">lock_open</i>
                   ) : (
-                    <i className="material-icons brown-text text-darken-3">lock</i>
+                    <i className="material-icons brown-text text-darken-3">
+                      lock
+                    </i>
                   )}
                 </span>
-              </CustomNavLink>
+              </div>
             </div>
-            <div className="col s1 relative">
+            <div className="col s1 card-action-btn relative">
               <div>
                 <div className="fixed-action-btn absolute">
                   <a

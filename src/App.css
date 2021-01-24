@@ -55,6 +55,10 @@
   margin-bottom: 0 !important;
 }
 
+.card .row {
+  margin-bottom: 0.3rem !important;
+}
+
 .card-text {
   font-size: 1.5rem !important;
 }
@@ -77,6 +81,10 @@
 
 .nav-wrapper {
   margin-bottom: 1rem;
+}
+
+input[type="text"]:disabled, input[type="number"]:disabled {
+  border: none !important;
 }
 
 #menu-project-dd {
@@ -122,6 +130,10 @@
   margin-right: 0.2rem !important;
 }
 
+.btn-floating .navlink-awesome-icon {
+  padding-left: 0.5rem;
+}
+
 .collapsible-header > div:first-of-type {
   width: 100%;
 }
@@ -133,6 +145,10 @@
 
 .row {
   margin-bottom: 1rem !important;
+}
+
+.m-space-up {
+  margin-top: 0.4rem;
 }
 
 .space-up {
@@ -323,5 +339,13 @@ select.browser-default > option:checked {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .card .row {
+    margin-bottom: 0 !important;
+  }
+
+  .card-action-btn.relative {
+    top: 4rem !important;
   }
 }
