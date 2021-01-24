@@ -43,13 +43,17 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                     {quotation.quotationCost}
                   </span>
                 </CustomNavLink>
-                <span className="col s12 m1 s-center tooltip m-space-up">
+                <span className="col s12 m1 center-align tooltip m-space-up">
                   <span className="tooltiptext">{quotation.status}</span>
-                  {quotation.status.toLowerCase() === "open" ? (
-                    <i className="material-icons amber-text">lock_open</i>
+                  {quotation.status.toLowerCase() === "setup" ? (
+                    <i className="material-icons amber-text">settings</i>
+                  ) : quotation.status.toLowerCase() === "active" ? (
+                    <i className="material-icons green-text text-darken-1">
+                      check_circle
+                    </i>
                   ) : (
-                    <i className="material-icons brown-text text-darken-3">
-                      lock
+                    <i className="material-icons red-text text-darken-2">
+                      cancel
                     </i>
                   )}
                 </span>

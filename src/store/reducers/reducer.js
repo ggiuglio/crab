@@ -274,7 +274,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const emptyQuotation = {
         id: '0',
         code: '',
-        status: 'IP',
+        status: 'setup',
         quotationCost: 0,
         quotationType: action.quotationType,
         modules: {},

@@ -40,7 +40,7 @@ const ProjectTile = ({ project, chooseProject }) => {
                     {project.sponsor}
                   </span>
                 </CustomNavLink>
-                <span className="col s12 m1 s-center tooltip m-space-up">
+                <span className="col s12 m1 center-align tooltip m-space-up">
                   <span className="tooltiptext">{project.status}</span>
                   {project.status.toLowerCase() === "open" ? (
                     <i className="material-icons amber-text">lock_open</i>
