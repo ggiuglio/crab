@@ -89,8 +89,10 @@ export const editSelectedProject = (project, projcetId) => {
       creationDate: project.creationDate,
       status: project.status
     };
-      return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).set(project).then((res) => {
-        return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).set(userProject).then((res) => {
+      return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).update(project).then((res) => {
+        console.log(res);
+
+        return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).update(userProject).then((res) => {
 
       });
     });

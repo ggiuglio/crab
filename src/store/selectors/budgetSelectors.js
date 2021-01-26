@@ -112,19 +112,23 @@ const addActivityToBudget = (budgetModule, activity) => {
       originalActivities: []
     };
   }
-  if (activity.type === "SPONSOR") {
+  if (activity.type === "SPONSOR" || true) {
     budgetModule.activities[activity.code].estimatedCost += activity.activityCost;
     budgetModule.activities[activity.code].sustainedCost += activity.totalInvoiced;
   } else {
-    budgetModule.activities[activity.code].estimatedIncome += activity.activityCost;
-    budgetModule.activities[activity.code].sustainedIncome += activity.totalInvoiced;
+    // budgetModule.activities[activity.code].estimatedIncome += activity.activityCost;
+    // budgetModule.activities[activity.code].sustainedIncome += activity.totalInvoiced;
   }
+  activity.sustainedCost = activity.totalInvoiced;
   budgetModule.activities[activity.code].originalActivities.push(activity);
 
-  budgetModule.estimatedCost += activity.activityCost;
-  budgetModule.sustainedCost += activity.sustainedCost;
-  budgetModule.estimatedIncome += activity.activityCost;
-  budgetModule.sustainedIncome += activity.totalInvoiced;
+  if (activity.type === "SPONSOR" || true) {
+    budgetModule.estimatedCost += activity.activityCost;
+    budgetModule.sustainedCost += activity.totalInvoiced;
+
+   // budgetModule.estimatedIncome += activity.activityCost;
+   // budgetModule.sustainedIncome += activity.totalInvoiced;
+  }
 }
 
 const mapBudgetWithData = (budget) => {
