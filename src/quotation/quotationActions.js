@@ -12,8 +12,10 @@ const QuotationActions = ({
   startEditQuotation,
   cancelEditQuotation,
 }) => {
+  const width = viewMode === VIEW_MODES.CREATE ? "" : "m1";
+
   return (
-    <div>
+    <div className={`col s12 s-center ${width}`}>
       {viewMode === VIEW_MODES.VIEW ? (
         <a
           href="#!"

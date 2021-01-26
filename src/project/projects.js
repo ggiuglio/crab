@@ -27,7 +27,7 @@ const Projects = ({ projects, clearSelectedProject, startNewProject }) => {
         <div className="col s12 center">
           <span className="tooltip relative">
             <CustomNavLink
-              className="btn-floating waves-effect waves-light indigo"
+              className="btn-floating btn-small waves-effect waves-light indigo"
               to="/new-project"
               iconType="MATERIAL"
               iconName="add"

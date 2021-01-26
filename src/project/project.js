@@ -14,6 +14,7 @@ import {
 } from "../store/actions/projectActions";
 import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { VIEW_MODES } from "../constants/constants";
+import ProjectViewMode from "./projectViewMode";
 
 const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, setProjectPM, addProjectProvider, removeProjectProvider }) => {
   useEffect(() => {
@@ -96,32 +97,48 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
 
     setProjectGeos(currentGeos);
   };
+  const titleWidth = project ? (project.viewMode === VIEW_MODES.CREATE ? "m12" : "m11") : '';
 
   return (
     <div>
       { project ?
-        <div className="section row">
+        <div className="section container">
           <form className="white">
-            <div className="input-field col s12">
-             <label htmlFor="projectName" className="active">Project Name</label>
-              <input
-                type="text"
-                name="projectName"
-                value={project.title}
-                onChange={(e) => setTitle(e.target.value)}
-                disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
-              ></input>
+            <div className="row">
+              <ProjectViewMode />
+              <div className={`input-field col s12 ${titleWidth}`}>
+              <label htmlFor="projectName" className="active">Project Name</label>
+                <input
+                  type="text"
+                  name="projectName"
+                  value={project.title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
+                ></input>
+              </div>
             </div>
 
-            <div className="input-field col s12">
-             <label htmlFor="projectName" className="active">Sponsor</label>
-              <input
-                type="text"
-                name="projectName"
-                value={project.sponsor}
-                onChange={(e) => setSponsor(e.target.value)}
-                disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
-              ></input>
+            <div className="row">
+              <div className="input-field col s12 m6">
+              <label htmlFor="projectSponsor" className="active">Sponsor</label>
+                <input
+                  type="text"
+                  name="projectSponsor"
+                  value={project.sponsor}
+                  onChange={(e) => setSponsor(e.target.value)}
+                  disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
+                ></input>
+              </div>
+              <div className="input-field col s12 m6">
+                <label htmlFor="pmName" className="active">PM</label> 
+                <input
+                  type="text"
+                  id="pmName"
+                  value={project.pm}
+                  onChange={(e) => setPM(e.target.value)}
+                  disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
+                ></input>
+              </div>
             </div>
 
             {
@@ -131,9 +148,9 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
             }
 
             <div className="row">
-              <div className="col s12">
+              <div className="col s12 m6">
                 <ul className="collapsible">
-                  <li>
+                  <li className="active">
                     <div className="collapsible-header">
                       <div className="center">Selected Geo</div>
                     </div>
@@ -154,12 +171,9 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                   </li>
                 </ul>
               </div>
-            </div>
-
-            <div className="row">
-              <div className="col s12">
+              <div className="col s12 m6">
                 <ul className="collapsible">
-                  <li>
+                  <li className="active">
                     <div className="collapsible-header">
                       <div className="center">Sites</div>
                     </div>
@@ -185,87 +199,70 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
 
             {
               project.viewMode !== VIEW_MODES.VIEW ?
+              <div className="row">
                 <div id="providerList" className="col s12">
-                  <div className="input-field col s6 no-padding">
-                    <label htmlFor="provider">Provider</label>
-                    <input
-                      className="col s10 m11"
-                      type="text"
-                      name="provider"
-                      value={provider}
-                      onChange={(e) => setProvider(e.target.value)}
-                    ></input>
-                    <a
-                      href="#!"
-                      className="right btn-floating btn-small waves-effect waves-light indigo"
-                      onClick={(e) => addProvider(e)}
-                      disabled={checkAddProviderDisabled}
-                    >
-                      <i className="material-icons">add</i>
-                    </a>
+                  <div className="col s12 m6 no-padding">
+                    <div className="input-field col s11">
+                      <label htmlFor="provider">Provider</label>
+                      <input
+                        type="text"
+                        name="provider"
+                        value={provider}
+                        onChange={(e) => setProvider(e.target.value)}
+                      ></input>
+                    </div>
+                    <div className="col s1">
+                      <a
+                        href="#!"
+                        className="btn-flat btn-large no-padding indigo-text"
+                        onClick={(e) => addProvider(e)}
+                        disabled={checkAddProviderDisabled}
+                      >
+                        <i className="material-icons">add</i>
+                      </a>
+                    </div>
                   </div>
-                  <div className="col s6">
-                    <table className="centered striped">
-                      <thead>
-                        <tr>
-                          <th>Providers</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {project.providers ? project.providers.map((provider) => (
-                          <tr key={provider.id}>
-                            <td>{provider.title}</td>
-                            <td>
-                              <a
-                                href="#!"
-                                className="right btn-floating btn-small red darken-2 waves-effect waves-light"
-                                onClick={(e) => removeProvider(e, provider.id)}
-                              >
-                                <i
-                                  id={"cancelProvider_" + provider.id}
-                                  className="material-icons"
-                                >
-                                  clear
-                        </i>
-                              </a>
-                            </td>
-                          </tr>
-                        )) : null}
-                      </tbody>
-                    </table>
-                  </div>
-                </div> :
-                <div className="row">
-                  <div className="col s12">
-                    <ul className="collapsible">
-                      <li>
+                  <div className="col s12 m6">
+                  <ul className="collapsible">
+                      <li className="active">
                         <div className="collapsible-header">
                           <div className="center">Providers</div>
                         </div>
                         <div className="collapsible-body">
                           <div className="row">
                             {project.providers ? project.providers.map(provider =>
-                              <div key={provider.id}>{provider.title}</div>
+                              <span key={provider.id}>{provider.title}
+                              <a href="#!" title="Remove provider" onClick={(e) => removeProvider(e, provider.id)} className="remove-site-icon">
+                                <i className="tiny material-icons red-text text-darken-2">clear</i>
+                              </a>
+                              </span>
+                            ) : null}
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div></div> :
+                project.providers && project.providers.length > 0 ? 
+                <div className="row">
+                  <div className="col s12 m6">
+                    <ul className="collapsible">
+                      <li className="active">
+                        <div className="collapsible-header">
+                          <div className="center">Providers</div>
+                        </div>
+                        <div className="collapsible-body">
+                          <div className="row">
+                            {project.providers ? project.providers.map(provider =>
+                              <span key={provider.id}>{provider.title}</span>
                             ) : ''}
                           </div>
                         </div>
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> : null
             }
-
-            <div className="input-field col s12">
-           <label htmlFor="pmName" className="active">PM</label> 
-              <input
-                type="text"
-                id="pmName"
-                value={project.pm}
-                onChange={(e) => setPM(e.target.value)}
-                disabled={project.viewMode === VIEW_MODES.VIEW ? true : null}
-              ></input>
-            </div>
           </form>
 
         </div>

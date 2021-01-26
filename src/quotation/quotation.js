@@ -224,6 +224,7 @@ const NewQuotation = ({
     editQuotationCode(code);
   };
 
+  const titleWidth = viewMode === VIEW_MODES.CREATE ? "m12" : "m11";
   return (
     <div>
       {
@@ -233,10 +234,8 @@ const NewQuotation = ({
               <form className="white" onSubmit={(e) => saveQuotation(e)}>
                 <div className="container">
                   <div className="row">
-                    <div className="col s12 s-center m1">
-                      <QuotationActions />
-                    </div>
-                    <div className="input-field col s12 m11">
+                    <QuotationActions />
+                    <div className={`input-field col s12 ${titleWidth}`}>
                       <label className="active" htmlFor="quotationCode">
                         quotation code
                       </label>
@@ -308,7 +307,7 @@ const NewQuotation = ({
                       </h6>
                     </div>
                     {viewMode === VIEW_MODES.VIEW ? null : (
-                      <div className="input-field col s12 center">
+                      <div className="input-field col s12 center space-up">
                         <button
                           className="btn indigo lighten-1 z-depth-0"
                           type="submit"

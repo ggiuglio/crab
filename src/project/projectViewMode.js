@@ -12,8 +12,9 @@ const ProjectViewMode = ({
   startEditProject,
   cancelEditProject
 }) => {
+  const width = project ? (project.viewMode === VIEW_MODES.CREATE ? "" : "m1") : '';
   return (
-    <div className="col s1">
+    <div className={`col s12 s-center ${width}`}>
       { project ? <div>
       {project.viewMode === VIEW_MODES.VIEW ? (
         <a

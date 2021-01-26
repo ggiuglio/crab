@@ -11,32 +11,13 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
   React.useEffect(() => {
     let userTooltip = document.querySelector(".tooltipped");
     M.Tooltip.init(userTooltip);
-    if (selectedProjectId) {
-      let dropdown = document.querySelector(".dropdown-trigger");
-      M.Dropdown.init(dropdown, { coverTrigger: false });
-    }
   });
 
   const projectLinks =
-    useLocation().pathname === "/new-project" ? (
+    useLocation().pathname === "/new-project" || selectedProjectId ? (
       <li>
         <CustomNavLink to="/projects" code="PJS">Projects</CustomNavLink>
       </li>
-    ) : selectedProjectId ? (
-      <div className="inline">
-        <li>
-          <CustomNavLink to="/projects" code="PJS">Projects</CustomNavLink>
-        </li>
-        <li>
-          <a
-            href="#!"
-            className="dropdown-trigger"
-            data-target="menu-project-dd"
-          >
-            Operations
-          </a>
-        </li>
-      </div>
     ) : null;
   return (
     <div>

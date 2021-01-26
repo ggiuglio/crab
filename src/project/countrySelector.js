@@ -31,6 +31,8 @@ const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selec
         selectedCountries.description += ` ${country.code}`
       });
       currentGeos[project.selectedRegion.code] = selectedCountries;
+
+      M.toast({html: 'Please, click on the highlighted GEO name to add a site!', classes: 'rounded amber lighten-1 black-text bolder', displayLength: 2000});
     } else if (currentGeos[project.selectedRegion.code]) {
       delete currentGeos[project.selectedRegion.code];
     }

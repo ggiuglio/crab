@@ -122,7 +122,7 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
         </select>
         <label className="active">Module</label>
       </div>
-      <div id="wrapper-select-geo" className="input-field col s6">
+      <div id="wrapper-select-geo" className="input-field col s5">
         <select
           className="browser-default"
           id="availableGeo"
@@ -138,15 +138,15 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
         </select>
         <label className="active">Geo</label>
       </div>
-      <div className="col s2 offset-s5">
+      <div className="col s1 center">
         <a
           href="#!"
-          className="waves-effect waves-light btn indigo"
+          className="btn-flat btn-large no-padding indigo-text"
           disabled={!canCreate()}
           onClick={(e) => addModule()}
+          title="Add module"
         >
-          Add module
-          <i className="left material-icons" title="Add module">
+          <i className="material-icons">
             add
           </i>
         </a>

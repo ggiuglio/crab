@@ -35,7 +35,7 @@
 }
 
 .bolder {
-  font-weight: bolder;
+  font-weight: bolder !important;
 }
 
 .mbold {
@@ -79,8 +79,27 @@
   display: flow-root;
 }
 
-.nav-wrapper {
-  margin-bottom: 1rem;
+nav {
+  background-color: #9fa8da !important;
+}
+
+nav ul a {
+  font-size: 1.2 rem;
+  text-transform: uppercase;
+}
+
+.nav-content {
+  margin-bottom: 0.5rem;
+}
+
+.nav-content ul.tabs {
+  margin-right: 0;
+  width: fit-content;
+}
+
+.input-field {
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.2rem !important;
 }
 
 input[type="text"]:disabled, input[type="number"]:disabled {
@@ -144,19 +163,23 @@ input[type="text"]:disabled, input[type="number"]:disabled {
 }
 
 .row {
-  margin-bottom: 1rem !important;
+  margin-bottom: 0.3rem !important;
 }
 
 .m-space-up {
-  margin-top: 0.4rem;
+  margin-top: 0.4rem !important;
 }
 
 .space-up {
-  margin-top: 1rem;
+  margin-top: 1rem !important;
+}
+
+.m-space-down {
+  margin-bottom: 0.4rem !important;
 }
 
 .space-right {
-  margin-right: 1rem;
+  margin-right: 1rem !important;
 }
 
 .document-type {
@@ -254,8 +277,18 @@ select.browser-default > option:checked {
   background-color: #fefefc !important;
 }
 
+.tabs {
+  height: 3rem !important;
+}
+
+.tabs .tab {
+  height: 3rem !important;
+  line-height: 3rem !important;
+}
+
 .tabs .tab a {
   color: indigo !important;
+  font-size: 1rem !important;
 } /*Black color to the text*/
 
 .tabs .tab a:hover {
@@ -295,7 +328,6 @@ select.browser-default > option:checked {
 
 .tooltip .tooltiptext.bottom {
   top: 100%;
-  left: -50%;
 }
 
 .tooltip .tooltiptext.left {
@@ -309,19 +341,19 @@ select.browser-default > option:checked {
 
 @media only screen and (min-width: 0) {
   html {
-    font-size: 12px !important;
+    font-size: 10px !important;
   }
 }
 
 @media only screen and (min-width: 992px) {
   html {
-    font-size: 12.5px !important;
+    font-size: 10px !important;
   }
 }
 
 @media only screen and (min-width: 1200px) {
   html {
-    font-size: 13px !important;
+    font-size: 11px !important;
   }
 }
 

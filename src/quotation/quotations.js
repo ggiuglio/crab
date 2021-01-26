@@ -45,7 +45,7 @@ const Quotations = ({
     }
 
     if (providerQuotations !== undefined && sponsorQuotations !== undefined) {
-      let tabs = document.querySelector(".tabs");
+      let tabs = document.getElementById("tabs-swipe-quotations");
       M.Tabs.init(tabs);
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
@@ -73,7 +73,7 @@ const Quotations = ({
                 <div className="col s6 push-s3 center">
                   <span className="tooltip relative">
                     <CustomNavLink
-                      className="btn-floating waves-effect waves-light green darken-1"
+                      className="btn-floating btn-small waves-effect waves-light green darken-1"
                       to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
                       onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
                       iconType="MATERIAL"
@@ -102,7 +102,7 @@ const Quotations = ({
                 <div className="col s6 push-s3 center">
                   <span className="tooltip relative">
                     <CustomNavLink
-                      className="btn-floating waves-effect waves-light red darken-1"
+                      className="btn-floating btn-small waves-effect waves-light red darken-1"
                       to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
                       onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
                       iconType="MATERIAL"
