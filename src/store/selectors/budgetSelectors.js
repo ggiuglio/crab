@@ -1,3 +1,5 @@
+import quotations from "../../quotation/quotations";
+
 export const getBudget = (state) => mapBudget(state);
 
 const mapBudget = (state) => {
@@ -57,8 +59,8 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.unitNumber = activity.unitNumber ? parseInt(activity.unitNumber) : 0;
       activity.quotation = { id: quotation.id, code: quotation.code };
       activity.module = { id: module.id, code: module.code, title: module.title };
-      let activityInvoices = invoices.filter(i => i.activityCode === activity.code);
-      activity.sustainedCost = activityInvoices.reduce((total, i) => (total + i.totalCost), 0);
+      let activityInvoices = invoices.filter(i => i.activityCode === activity.code && activity.type === quotation.type);
+      activity.totalInvoiced = activityInvoices.reduce((total, i) => (total + i.totalCost), 0);
       let resources = [];
       if (activity.resources) {
         Object.keys(activity.resources).forEach((i) => {
@@ -73,6 +75,7 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       }
       activity.activityCost = activity.unitCost * activity.unitNumber;
       activity.resources = resources;
+      activity.type = quotation.type;
       activities[activity.code] = activity;
     });
   }
@@ -104,15 +107,24 @@ const addActivityToBudget = (budgetModule, activity) => {
       title: activity.title,
       estimatedCost: 0,
       sustainedCost: 0,
+      estimatedIncome: 0,
+      sustainedIncome: 0,
       originalActivities: []
     };
   }
-  budgetModule.activities[activity.code].estimatedCost += activity.activityCost;
-  budgetModule.activities[activity.code].sustainedCost += activity.sustainedCost;
+  if (activity.type === "SPONSOR") {
+    budgetModule.activities[activity.code].estimatedCost += activity.activityCost;
+    budgetModule.activities[activity.code].sustainedCost += activity.totalInvoiced;
+  } else {
+    budgetModule.activities[activity.code].estimatedIncome += activity.activityCost;
+    budgetModule.activities[activity.code].sustainedIncome += activity.totalInvoiced;
+  }
   budgetModule.activities[activity.code].originalActivities.push(activity);
 
   budgetModule.estimatedCost += activity.activityCost;
   budgetModule.sustainedCost += activity.sustainedCost;
+  budgetModule.estimatedIncome += activity.activityCost;
+  budgetModule.sustainedIncome += activity.totalInvoiced;
 }
 
 const mapBudgetWithData = (budget) => {
