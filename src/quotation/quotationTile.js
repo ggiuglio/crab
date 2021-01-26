@@ -28,9 +28,9 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                   </span>
                   <span
                     className="col s12 m4 text-right s-center price truncate white-text"
-                    title={quotation.quotationCost}
+                    title={quotation.cost}
                   >
-                    {quotation.quotationCost}
+                    {quotation.cost}
                   </span>
                 </CustomNavLink>
                 <span className="col s12 m1 center-align tooltip relative m-space-up">

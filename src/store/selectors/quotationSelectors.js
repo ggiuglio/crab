@@ -13,14 +13,18 @@ const mapQuotationList = (quotations) => {
   const quotationList = [];
   if (quotations) {
     Object.keys(quotations).forEach((k) => {
-      const quotation = {
-        id: k,
-        type: quotations[k].quotationType,
-        code: quotations[k].code,
-        status: quotations[k].status,
-        quotationCost: quotations[k].quotationCost
-      }
-      quotationList.push(mapQuotation(quotation));
+      let quotation = quotations[k];
+      quotation.id = k;
+      quotation = mapQuotation(quotation);
+      const qutationTile = {
+        id: quotation.id,
+        code: quotation.code,
+        cost: quotation.quotationCost,
+        type: quotation.quotationType,
+        status: quotation.status
+      };
+
+      quotationList.push(qutationTile);
     });
   }
 
