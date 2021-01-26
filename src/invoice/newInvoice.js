@@ -46,14 +46,24 @@ const SelectEntity = styled.select`
 `;
 
 const NewInvoice = ({ createInvoice, lists, completeList }) => {
+  const [quotationList, setQuotationList] = useState(lists.quotations.filter(q => q.type === "SPONSOR" || q.type === "any"));
   const [moduleList, setModuleList] = useState(lists.modules);
   const [activityList, setActivityList] = useState(lists.activities);
   const [quotationId, setQuotationId] = useState("-1");
+  const [quotationType, setQuotationType] = useState("SPONSOR");
   const [moduleId, setModuleId] = useState("-1");
   const [activityId, setActivityId] = useState("-1");
   const [unitCost, setUnitCost] = useState('');
   const [unitNumber, setUnitNumber] = useState('');
   const [totalCost, setTotalCost] = useState('');
+
+  const invoiceTypeChange = (type) => {
+    setQuotationList(lists.quotations.filter(q => q.type === type || q.type === "any"));
+    setQuotationType(type);
+    setQuotationId("-1");
+    setModuleId("-1");
+    setActivityId("-1");
+  }
 
   const quotationChange = (qId) => {
     setQuotationId(qId);
@@ -79,11 +89,11 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   };
 
   const getAvailableActivities = (quotation, module) => {
-    if(quotation === "-1" || module === "-1") {
+    if (quotation === "-1" || module === "-1") {
       return lists.activities.filter(a => a.id === "-1")
     }
 
-    if(quotation === "0") {
+    if (quotation === "0") {
       return completeList.activities.filter(
         a => (
           (a.moduleId === module) ||
@@ -125,7 +135,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
     if (!cannotSave()) {
       const invoice = {
         date: "12/12/1212",
-        type: 'cost',
+        type: quotationType,
         quotationCode: lists.quotations.find(q => q.id === quotationId).code,
         moduleCode: selectedModule.code ? selectedModule.code : "N/A",
         activityCode: selectedActivity.code,
@@ -145,10 +155,17 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
       <NewInvoiceContainer>
         <NewInvoiceBody>
           <BodyItem>
+            <label htmlFor="quotation">Invoice type</label>
+            <SelectEntity onChange={e => invoiceTypeChange(e.target.value)}>
+              <option key={"SPONSOR"} value={"SPONSOR"}> SPONSOR </option>
+              <option key={"PROVIDER"} value={"PROVIDER"}> PROVIDER </option>
+            </SelectEntity>
+          </BodyItem>
+          <BodyItem>
             <label htmlFor="quotation">Quotation</label>
             <SelectEntity onChange={e => quotationChange(e.target.value)}>
               {
-                lists.quotations.map(q =>
+                quotationList.map(q =>
                   <option key={q.id} value={q.id}>  {q.code} </option>
                 )
               }

@@ -117,6 +117,7 @@ const mapQuotationsEntityList = (quotationsObj) => {
       let quotation = {
         id: i,
         code: quotationsObj[i].code,
+        type: quotationsObj[i].quotationType
       };
       quotations.unshift(quotation);
 
@@ -161,11 +162,13 @@ const mapQuotationsEntityList = (quotationsObj) => {
   });
   quotations.unshift({
     id: "0",
-    code: "Out of budget"
+    code: "Out of budget",
+    type: "any"
   });
   quotations.unshift({
     id: "-1",
-    code: "select a quotation"
+    code: "select a quotation",
+    type: "any"
   });
 
   return {
