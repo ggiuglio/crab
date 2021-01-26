@@ -71,8 +71,8 @@ export const createNewProject = (project) => {
         status: project.status
       };
 
-      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects`).push(userProject).then((res) => {
-        history.push('/projects')
+      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${project.id}`).set(userProject).then((res) => {
+        history.push('/projects');
       });
     });
   }
@@ -90,10 +90,7 @@ export const editSelectedProject = (project, projcetId) => {
       status: project.status
     };
       return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).update(project).then((res) => {
-        console.log(res);
-
         return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).update(userProject).then((res) => {
-
       });
     });
   }
