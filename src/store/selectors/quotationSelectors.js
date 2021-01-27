@@ -41,7 +41,7 @@ const filterSponsorQuotations = (quotations) => {
 
 const getSingleQuotation = (selectedQuotation) => {
   return mapQuotation(JSON.parse(JSON.stringify(selectedQuotation)));
-}
+};
 
 const mapQuotation = (quotation) => {
   const modules = [];
@@ -102,9 +102,7 @@ const mapActivity = (activity, quotation) => {
       resources.push(activity.resources[k]);
     });
   }
-  if (activity.fixedCost) {
-    activity.unitCost += activity.fixedCost;
-  }
+ 
   activity.resources = resources;
   activity.activityCost = activity.unitCost * activity.unitNumber;
 
