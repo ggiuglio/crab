@@ -1,6 +1,7 @@
 export const getBudget = (state) => mapBudget(state.quotations, state.invoiceList);
 
 const mapBudget = (quotations, invoices) => {
+  const budgetQuotations = JSON.parse(JSON.stringify(quotations));
   const emptyBudget = {
     modules: {},
     budget: 0,              // the total amount quotated to the sponsor
@@ -11,7 +12,7 @@ const mapBudget = (quotations, invoices) => {
     outOfBudgetExpenses: 0  // the total amount invoiced by suppliers for NOT quotated activities
   };
 
-  const projectBudgetData = addQuotationDataToBudget(emptyBudget, quotations, invoices);
+  const projectBudgetData = addQuotationDataToBudget(emptyBudget, budgetQuotations, invoices);
   const projectBudgetDataWithOutOfBudget = calculateOutOfBudget(projectBudgetData, invoices);
   const projectBudget = mapDataToBudget(projectBudgetDataWithOutOfBudget);
 
@@ -20,11 +21,10 @@ const mapBudget = (quotations, invoices) => {
 
 const addQuotationDataToBudget = (budgetData, quotations, invoices) => {
   if (quotations) {
-    const budgetQuotations = JSON.parse(JSON.stringify(quotations));
-    Object.keys(budgetQuotations).forEach((k) => {
-      budgetQuotations[k].id = k;
-      let quotationInvoices = invoices.filter(i => i.quotationCode === budgetQuotations[k].code);
-      const quotation = mapQuotationForBudget(budgetQuotations[k], quotationInvoices);
+    Object.keys(quotations).forEach((k) => {
+      quotations[k].id = k;
+      let quotationInvoices = invoices.filter(i => i.quotationCode === quotations[k].code);
+      const quotation = mapQuotationForBudget(quotations[k], quotationInvoices);
 
       Object.keys(quotation.modules).forEach((j) => {
         addModuleToBudget(budgetData, quotation.modules[j]);
