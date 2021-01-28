@@ -1,8 +1,7 @@
 export const getBudget = (state) => mapBudget(state.quotations, state.invoiceList);
 
 const mapBudget = (quotations, invoices) => {
-  const budgetQuotations = JSON.parse(JSON.stringify(quotations));
-  const emptyBudget = {
+  let projectBudget = {
     modules: {},
     budget: 0,              // the total amount quotated to the sponsor
     plannedExpenses: 0,     // the total amount quotated by providers
@@ -12,9 +11,12 @@ const mapBudget = (quotations, invoices) => {
     outOfBudgetExpenses: 0  // the total amount invoiced by suppliers for NOT quotated activities
   };
 
-  const projectBudgetData = addQuotationDataToBudget(emptyBudget, budgetQuotations, invoices);
-  const projectBudgetDataWithOutOfBudget = calculateOutOfBudget(projectBudgetData, invoices);
-  const projectBudget = mapDataToBudget(projectBudgetDataWithOutOfBudget);
+  if (quotations) {
+    const budgetQuotations = JSON.parse(JSON.stringify(quotations));
+    projectBudget = addQuotationDataToBudget(projectBudget, budgetQuotations, invoices);
+    projectBudget = calculateOutOfBudget(projectBudget, invoices);
+    projectBudget = mapDataToBudget(projectBudget);
+  }
 
   return projectBudget;
 }
@@ -76,6 +78,9 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.activityCost = activity.unitCost * activity.unitNumber;
       activity.resources = resources;
       activity.type = quotation.quotationType;
+      activity.incomes = activity.type === "SPONSOR" ? activity.totalInvoiced : 0;
+      activity.expenses = activity.type === "PROVIDER" ? activity.totalInvoiced : 0;
+      activity.provider = activity.type === "PROVIDER" ? quotation.provider.title : undefined;
       activities[activity.code] = activity;
     });
   }
@@ -102,9 +107,15 @@ const addModuleToBudget = (budget, module) => {
   });
 };
 
-const addActivityToBudget = (budgetModule, activity) => {
-  if (!budgetModule.activities[activity.code]) {
-    budgetModule.activities[activity.code] = {
+const addActivityToBudget = (module, activity) => {
+  initializeAggregatedActiyty(module, activity);
+  aggregateActivity(activity, module.activities[activity.code]);
+  updateModuleTotals(module, activity);
+};
+
+const initializeAggregatedActiyty = (module, activity) => {
+  if (!module.activities[activity.code]) {
+    module.activities[activity.code] = {
       code: activity.code,
       title: activity.title,
       budget: 0,
@@ -114,23 +125,27 @@ const addActivityToBudget = (budgetModule, activity) => {
       originalActivities: []
     };
   }
-  if (activity.type === "SPONSOR") {
-    budgetModule.activities[activity.code].budget += activity.activityCost;
-    budgetModule.activities[activity.code].incomes += activity.totalInvoiced;
-  } else {
-    budgetModule.activities[activity.code].plannedExpenses += activity.activityCost;
-    budgetModule.activities[activity.code].expenses += activity.totalInvoiced;
-  }
-  activity.sustainedCost = activity.totalInvoiced;
-  budgetModule.activities[activity.code].originalActivities.push(activity);
+};
 
+const aggregateActivity = (activity, aggregatedActivity) => {
   if (activity.type === "SPONSOR") {
-    budgetModule.budget += activity.activityCost;
-    budgetModule.incomes += activity.totalInvoiced;
+    aggregatedActivity.budget += activity.activityCost;
   } else {
-    budgetModule.plannedExpenses += activity.activityCost;
-    budgetModule.expenses += activity.totalInvoiced;
+    aggregatedActivity.plannedExpenses += activity.activityCost;
   }
+  aggregatedActivity.incomes += activity.incomes;
+  aggregatedActivity.expenses += activity.expenses;
+  aggregatedActivity.originalActivities.push(activity);
+};
+
+const updateModuleTotals = (module, activity) => {
+  if (activity.type === "SPONSOR") {
+    module.budget += activity.activityCost;
+  } else {
+    module.plannedExpenses += activity.activityCost;
+  }
+  module.incomes += activity.incomes;
+  module.expenses += activity.expenses;
 };
 
 const calculateOutOfBudget = (budget, invoices) => {
