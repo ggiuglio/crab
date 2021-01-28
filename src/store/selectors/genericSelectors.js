@@ -8,6 +8,7 @@ export const getProfessionals = (state) => state.professionals;
 export const getProviders = (state) => mapProviders(state.project);
 export const getBreadcrumbCode = (state) => state.breadcrumbCode;
 export const getBreadcrumb = (state) => state.breadcrumb;
+export const getProjectMenu = (state) => state.projectMenu;
 
 const mapProviders = (project) => {
   const providers = project ? project.providers : [];

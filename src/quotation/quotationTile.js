@@ -18,7 +18,7 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                 <CustomNavLink
                   to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`}
                   code="QTN"
-                  onClick={() => goToQuotationPage()}
+                  onClick={goToQuotationPage}
                 >
                   <span
                     className="bolder col s12 m7 s-center truncate white-text"

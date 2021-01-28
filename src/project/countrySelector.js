@@ -7,7 +7,6 @@ import { selectProjectRegion, setProjectGeos } from "../store/actions/projectAct
 const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selectNewProjectRegion, selectedCountriesInRegion }) => {
   const [geoSelect, setGeoSelect] = useState({});
   useEffect(() => {
-    M.AutoInit();
     const select = document.getElementById("geo");
     setGeoSelect(M.FormSelect.init(select));
   }, [project]);

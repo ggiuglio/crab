@@ -88,13 +88,32 @@ nav ul a {
   text-transform: uppercase;
 }
 
-.nav-content {
+.custom-nav-content {
   margin-bottom: 0.5rem;
+  position: relative;
+  line-height: normal;
 }
 
-.nav-content ul.tabs {
+.custom-nav-content ul.custom-tabs {
+  margin: auto;
   margin-right: 0;
   width: fit-content;
+}
+
+.custom-nav-content ul li {
+  transition: background-color .3s;
+  float: left;
+  padding: 0;
+}
+
+.custom-nav-content ul a {
+  transition: background-color .3s;
+  font-size: 1rem;
+  color: #fff;
+  display: block;
+  padding: 0 15px;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
 .input-field {
@@ -277,29 +296,37 @@ select.browser-default > option:checked {
   background-color: #fefefc !important;
 }
 
-.tabs {
+.tabs, .custom-tabs {
   height: 3rem !important;
 }
 
-.tabs .tab {
+.tabs .tab, .custom-tabs .custom-action-tab {
   height: 3rem !important;
   line-height: 3rem !important;
 }
 
-.tabs .tab a {
+.custom-tabs .custom-action-tab.active {
+  background-color: indigo !important;
+}
+
+.tabs .tab a, .custom-tabs .custom-action-tab a {
   color: indigo !important;
   font-size: 1rem !important;
 } /*Black color to the text*/
 
-.tabs .tab a:hover {
+.tabs .tab a:hover, .custom-tabs .custom-action-tab a:hover {
   background-color: #eee !important;
   color: indigo !important;
 } /*Text color on hover*/
 
-.tabs .tab a.active {
+.tabs .tab a.active, .custom-tabs .custom-action-tab a.active {
   background-color: #e8eaf6 !important;
   color: indigo !important;
 } /*Background and text color when a tab is active*/
+
+.custom-tabs .custom-action-tab a.active {
+  height: 93%;
+}
 
 .tabs .indicator {
   background-color: indigo !important;

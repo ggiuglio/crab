@@ -36,7 +36,7 @@ const SignedInLinks = ({ user, selectedProjectId, logout }) => {
         </a>
       </li>
       <li>
-        <CustomNavLink to="/login" onClick={() => logout()}>
+        <CustomNavLink to="/login" onClick={logout}>
           Log Out
         </CustomNavLink>
       </li>

@@ -7,19 +7,21 @@ import ProjectMenu from "../menu/projectMenu";
 
 const Header = ({ selectedProjectId }) => {
   return (
-    <nav className="nav-extended">
-      <div className="nav-wrapper indigo">
-        <div className="container">
-          <Title></Title>
-          <Menu></Menu>
+    <div>
+      <nav>
+        <div className="nav-wrapper indigo">
+          <div className="container">
+            <Title></Title>
+            <Menu></Menu>
+          </div>
         </div>
-      </div>
-      {selectedProjectId && selectedProjectId !== '0' ? (
-        <div className="nav-content container indigo lighten-3 hide-on-med-and-down">
+      </nav>
+      {selectedProjectId && selectedProjectId !== "0" ? (
+        <div className="custom-nav-content container hide-on-med-and-down">
           <ProjectMenu />
         </div>
       ) : null}
-    </nav>
+    </div>
   );
 };
 

@@ -42,9 +42,6 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
       setSites(selectedSites);
     }
   }, [project]);
-  useEffect(() => {
-
-  }, [project])
 
   const [siteName, setSiteName] = useState("");
   const [sites, setSites] = useState({});
@@ -254,7 +251,7 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
                         <div className="collapsible-body">
                           <div className="row">
                             {project.providers ? project.providers.map(provider =>
-                              <span key={provider.id}>{provider.title}</span>
+                              <span key={provider.id}>{provider.title}{" "}</span>
                             ) : ''}
                           </div>
                         </div>

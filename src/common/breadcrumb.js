@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import { history } from "../App";
-import { getUser } from "../store/selectors/genericSelectors";
-import { getBreadcrumbCode, getBreadcrumb } from "../store/selectors/genericSelectors";
+import { getUser, getBreadcrumbCode, getBreadcrumb } from "../store/selectors/genericSelectors";
 import { setBreadcrumbAction } from "../store/actions/genericActions";
 import CustomNavLink from "./customNavLink";
 import "./breadcrumb.css";

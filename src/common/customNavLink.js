@@ -5,13 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { setBreadcrumbCodeAction } from "../store/actions/genericActions";
 
 const CustomNavLink = (par) => {
-  const onNavClick = () => {
-    if(typeof(par.onClick) === 'function') par.onClick();
+  const onNavClick = (e, par) => {
+    if(typeof(par.onClick) === 'function') par.onClick(e, par);
     par.setBreadcrumbCode(par.code);
   };
 
   return (
-    <NavLink to={par.to} className={par.className} onClick={(e) => onNavClick()} code={par.code}>
+    <NavLink to={par.to} className={par.className} onClick={(e) => onNavClick(e, par)} code={par.code} activeClassName="no-one">
       {(() => {
         switch (par.iconType) {
           case "AWESOME":

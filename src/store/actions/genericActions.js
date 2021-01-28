@@ -5,7 +5,8 @@ import {
   LOAD_STATIC_DATA,
   CLEAR_USER_DATA,
   SET_BREADCRUMB,
-  SET_BREADCRUMB_CODE
+  SET_BREADCRUMB_CODE,
+  SET_PROJECT_MENU
 } from './actionsTypes.js';
 import { FirebaseInstance } from '../../App';
 
@@ -73,10 +74,20 @@ export const setBreadcrumbCodeAction = (code) => {
     });
   }
 }
+
 export const setBreadcrumbAction = (code = undefined) => {
   return dispatch => {
     dispatch({
       type: SET_BREADCRUMB,
+      code: code
+    });
+  }
+}
+
+export const setProjectMenuAction = (code) => {
+  return dispatch => {
+    dispatch({
+      type: SET_PROJECT_MENU,
       code: code
     });
   }

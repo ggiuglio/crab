@@ -28,6 +28,7 @@ import {
   CANCEL_QUOTATION_EDIT,
   SET_BREADCRUMB_CODE,
   SET_BREADCRUMB,
+  SET_PROJECT_MENU,
   INITIALIZE_NEW_PROJECT,
   SET_PROJECT_GEOS,
   SET_PROJECT_TITLE,
@@ -58,7 +59,8 @@ export const INITIAL_STATE = {
     showModal: false
   },
   breadcrumbCode: undefined,
-  breadcrumb: []
+  breadcrumb: [],
+  projectMenu: undefined
 };
 
 const NAVIGATION_CODES = {
@@ -435,6 +437,13 @@ const Reducer = (state = INITIAL_STATE, action) => {
         ...state,
         breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
         breadcrumb: bc,
+      }
+    }
+
+    case SET_PROJECT_MENU: {
+      return {
+        ...state,
+        projectMenu: action.code,
       }
     }
 

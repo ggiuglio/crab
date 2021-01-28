@@ -15,7 +15,7 @@ const ProjectTile = ({ project, chooseProject }) => {
           <div className="row card-text">
             <div className="col s11">
               <div className="row">
-                <CustomNavLink to={`/project?project=${project.id}`} code="DSB" onClick={() => goToProjectPage()}>
+                <CustomNavLink to={`/project?project=${project.id}`} code="DSB" onClick={goToProjectPage}>
                   <span
                     className="bolder col s12 m6 s-center truncate white-text"
                     title={project.title}

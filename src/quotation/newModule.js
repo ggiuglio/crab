@@ -8,7 +8,6 @@ import {
 } from "../store/selectors/genericSelectors";
 import { getProject } from "../store/selectors/projectSelectors";
 import { addModuleToSelectedQuotation } from "../store/actions/quotationActions";
-import M from "materialize-css/dist/js/materialize.min.js";
 
 const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) => {
   const [availableModules, setAvailableModules] = useState([]);
@@ -50,7 +49,6 @@ const NewModule = ({ quotation, baseModules, project, addModuleToQuotation }) =>
         title: "Select module",
         availableGeos: ['']
       });
-      M.AutoInit();
     }
 
   }, [baseModules, project])
