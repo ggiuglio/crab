@@ -7,9 +7,10 @@ export const getSponsorQuotations = (state) => filterSponsorQuotations(mapQuotat
 export const getQuotation = (state) => state.selectedQuotationData ? getSingleQuotation(state.selectedQuotationData) : undefined;
 export const getQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations);
 export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules);
-export const getModalResourceData = (state) => state.resourceModalData; 
+export const getModalResourceData = (state) => state.resourceModalData;
 
-const mapQuotationList = (quotations) => {
+const mapQuotationList = (qs) => {
+  const quotations = JSON.parse(JSON.stringify(qs));
   const quotationList = [];
   if (quotations) {
     Object.keys(quotations).forEach((k) => {
@@ -32,7 +33,7 @@ const mapQuotationList = (quotations) => {
 };
 
 const filterProviderQuotations = (quotations) => {
-    return quotations.filter(q => q.type === QUOTATION_TYPES.PROVIDER);
+  return quotations.filter(q => q.type === QUOTATION_TYPES.PROVIDER);
 };
 
 const filterSponsorQuotations = (quotations) => {
@@ -56,11 +57,11 @@ const mapQuotation = (quotation) => {
         module.id = k;
         module = mapModule(quotation.modules[k], quotation)
         quotation.quotationCost += module.moduleCost;
-        if(module.isPassthrough) {
+        if (module.isPassthrough) {
           quotation.quotationPTCost += module.moduleCost;
         } else {
           quotation.quotationNotPTCost += module.moduleCost;
-        } 
+        }
         modules.push(module);
       });
     }
@@ -93,7 +94,7 @@ const mapActivity = (activity, quotation) => {
   if (activity.resources) {
     Object.keys(activity.resources).forEach((k) => {
       const resource = activity.resources[k];
-      const quotationResource =  quotation.resources[resource.code];
+      const quotationResource = quotation.resources[resource.code];
       resource.id = k;
       resource.hourCost = quotationResource.fee;
       resource.cost = resource.hourCost * resource.hours;
@@ -102,7 +103,7 @@ const mapActivity = (activity, quotation) => {
       resources.push(activity.resources[k]);
     });
   }
- 
+
   activity.resources = resources;
   activity.activityCost = activity.unitCost * activity.unitNumber;
 
