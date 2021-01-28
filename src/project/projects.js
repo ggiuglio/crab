@@ -9,10 +9,12 @@ import {
 } from "../store/actions/projectActions";
 import Preloader from "../common/preloader";
 import CustomNavLink from "../common/customNavLink";
+import { setProjectMenuAction } from "../store/actions/genericActions";
 
-const Projects = ({ projects, clearSelectedProject, startNewProject }) => {
+const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjectMenu }) => {
   React.useEffect(() => {
     clearSelectedProject();
+    clearProjectMenu();
 
     if (projects) {
       let modal = document.querySelector(".modal");
@@ -86,6 +88,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     clearSelectedProject: () => dispatch(selectProject(null)),
+    clearProjectMenu: () => dispatch(setProjectMenuAction(undefined)),
     startNewProject: () => dispatch(initializeProject()),
   };
 };
