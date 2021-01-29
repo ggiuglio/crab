@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
 import { getQuotationsEntityList, getAllModulesAndActivities } from "../store/selectors/quotationSelectors";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 const MainContainer = styled.div`
   margin: 20px;
 `;
 const NewInvoiceContainer = styled.div`
   width: 100%;
-  display: inline-flex;
 `;
 const NewInvoiceBody = styled.div`
   display: inline-flex;
+  width: 100%;
 `;
 const BodyItem = styled.div`
   width: 250px;
@@ -26,8 +27,18 @@ const BodyItemSmall = styled.div`
   margin: 0 10px;
 
 `;
+const BodyItemFull = styled.div`
+  width: 100%;
+`;
 const InvoiceInput = styled.input`
   padding: 5px;
+`;
+const InvoiceTextArea = styled.textarea`
+  padding: 5px;
+  resize: none;
+  width: 80%;
+  display: block;
+  height: 50px;
 `;
 const TotalCost = styled.div`
   padding-top: 10px;
@@ -40,6 +51,7 @@ const TotalCost = styled.div`
 `;
 const SaveButton = styled.button`
   padding: 5px 10px;
+  margin-top: 20px;
 `;
 const SelectEntity = styled.select`
   display: block;
@@ -56,6 +68,15 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   const [unitCost, setUnitCost] = useState('');
   const [unitNumber, setUnitNumber] = useState('');
   const [totalCost, setTotalCost] = useState('');
+  const [date, setDate] = useState('');
+  const [comment, setComment] = useState('');
+
+  useEffect(() => {
+    let datePicker = document.getElementById("date");
+    if (datePicker) {
+      let d = M.Datepicker.init(datePicker, { format: "dd/mm/yyyy", onClose: () => invoiceDateChange(datePicker.value) });
+    }
+  }, []);
 
   const invoiceTypeChange = (type) => {
     setQuotationList(lists.quotations.filter(q => q.type === type || q.type === "any"));
@@ -63,7 +84,11 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
     setQuotationId("-1");
     setModuleId("-1");
     setActivityId("-1");
-  }
+  };
+
+  const invoiceDateChange = (date) => {
+    setDate(date);
+  };
 
   const quotationChange = (qId) => {
     setQuotationId(qId);
@@ -125,8 +150,8 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   };
 
   const cannotSave = () => {
-    return (quotationId === "-1" || (quotationId !== "0" && (moduleId === "-1" || activityId === "-1")) || !unitCost || !unitNumber);
-  }
+    return (quotationId === "-1" || (quotationId !== "0" && (moduleId === "-1" || activityId === "-1")) || !unitCost || !unitNumber || !date);
+  };
 
   const saveInvoice = () => {
     const selectedModule = quotationId === "0" ? completeList.modules.find(m => m.id === moduleId) : lists.modules.find(m => m.id === moduleId);
@@ -134,7 +159,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
 
     if (!cannotSave()) {
       const invoice = {
-        date: "12/12/1212",
+        date: date,
         type: quotationType,
         quotationCode: lists.quotations.find(q => q.id === quotationId).code,
         moduleCode: selectedModule.code ? selectedModule.code : "N/A",
@@ -143,10 +168,21 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
         activityTitle: selectedActivity.title,
         unitCost: unitCost,
         unitNumber: unitNumber,
-        totalCost: totalCost
+        totalCost: totalCost,
+        comment: comment
       }
 
       createInvoice(invoice);
+      setQuotationId("-1");
+      setModuleId("-1");
+      setActivityId("-1");
+      setUnitCost("");
+      setUnitNumber("");
+      setTotalCost("");
+      setDate("");
+      setComment("");
+      let datePicker = document.getElementById("date");
+      datePicker.value = "";
     }
   };
 
@@ -155,15 +191,21 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
       <NewInvoiceContainer>
         <NewInvoiceBody>
           <BodyItem>
-            <label htmlFor="quotation">Invoice type</label>
+            <label htmlFor="type">Invoice type</label>
             <SelectEntity onChange={e => invoiceTypeChange(e.target.value)}>
               <option key={"SPONSOR"} value={"SPONSOR"}> SPONSOR </option>
               <option key={"PROVIDER"} value={"PROVIDER"}> PROVIDER </option>
             </SelectEntity>
           </BodyItem>
           <BodyItem>
+            <label htmlFor="date">Date</label>
+            <input type="text" id="date" className="datepicker" onClose={e => invoiceDateChange(e.target.value)} />
+          </BodyItem>
+        </NewInvoiceBody>
+        <NewInvoiceBody>
+          <BodyItem>
             <label htmlFor="quotation">Quotation</label>
-            <SelectEntity onChange={e => quotationChange(e.target.value)}>
+            <SelectEntity value={quotationId} onChange={e => quotationChange(e.target.value)}>
               {
                 quotationList.map(q =>
                   <option key={q.id} value={q.id}>  {q.code} </option>
@@ -173,7 +215,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           </BodyItem>
           <BodyItem type="text">
             <label>Module</label>
-            <SelectEntity disabled={quotationId === "-1"} onChange={e => moduleChange(e.target.value)}>
+            <SelectEntity value={moduleId} disabled={quotationId === "-1"} onChange={e => moduleChange(e.target.value)}>
               {
                 moduleList.map(m =>
                   <option key={m.id} value={m.id} >  {m.title} {m.geo ? m.geo.description : ''} </option>
@@ -181,10 +223,9 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
               }
             </SelectEntity>
           </BodyItem>
-
           <BodyItem type="text">
             <label>Activity Code</label>
-            <SelectEntity disabled={moduleId === "-1"} onChange={e => setActivityId(e.target.value)}>
+            <SelectEntity value={activityId} disabled={moduleId === "-1"} onChange={e => setActivityId(e.target.value)}>
               {
                 activityList.map(a =>
                   <option key={a.id} value={a.id}>  {a.title} </option>
@@ -192,18 +233,24 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
               }
             </SelectEntity>
           </BodyItem>
-          <BodyItemSmall type="text">
+          <BodyItemSmall>
             <label>Unit cost</label>
             <InvoiceInput type="number" min="0.00" step="0.01" value={unitCost} onChange={e => unitCostChange(e.target.value)} />
           </BodyItemSmall>
-          <BodyItemSmall type="text">
+          <BodyItemSmall>
             <label>Unit number</label>
             <InvoiceInput type="number" min="0" step="1" value={unitNumber} onChange={e => unitNumberChange(e.target.value)} />
           </BodyItemSmall>
-          <BodyItemSmall type="text">
+          <BodyItemSmall>
             <label>Total cost</label>
             <TotalCost>{totalCost}</TotalCost>
           </BodyItemSmall>
+        </NewInvoiceBody>
+        <NewInvoiceBody>
+          <BodyItemFull>
+            <label>Comment</label>
+            <InvoiceTextArea value={comment} onChange={e => setComment(e.target.value)} />
+          </BodyItemFull>
         </NewInvoiceBody>
 
       </NewInvoiceContainer>
