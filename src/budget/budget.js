@@ -37,11 +37,24 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
       { project ?
         <div>
           <h3>Budget</h3>
-          <div>Project budget: {budget.budget} </div>
-          <div>Project incomes: {budget.incomes} </div>
+          <div>Budget: {budget.budget} </div>
+          <div>Incomes: {budget.incomes} </div>
           <div>Planned expenses: {budget.plannedExpenses} </div>
           <div>Expenses: {budget.expenses} </div>
-          <div>Remainging budget: <Money positive={(budget.budget - budget.incomes) > 0}> {budget.budget - budget.incomes}</Money> </div>
+          <div>Remainging budget:
+            <Money positive={budget.budget - budget.incomes > 0}> {budget.budget - budget.incomes}</Money>
+            {budget.budget ?
+              <span> ({100 - Math.round((budget.incomes / budget.budget * 100))}%)</span>
+              : <span> (0%)</span>
+            }
+          </div>
+          <div>Remainging expenses:
+            <Money positive={budget.plannedExpenses - budget.expenses > 0}> {budget.plannedExpenses - budget.expenses}</Money>
+            {budget.plannedExpenses ?
+              <span> ({100 - Math.round((budget.expenses / budget.plannedExpenses * 100))}%)</span>
+              : <span> (0%)</span>
+            }
+          </div>
           <div>Net income: <Money positive={(budget.incomes - budget.expenses) > 0}> {budget.incomes - budget.expenses}</Money> </div>
           <div>Out of budget incomes: {budget.outOfBudgetIncomes} </div>
           {
@@ -50,8 +63,23 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
                 <span><b>module:</b> </span> <span> {m.title} / {m.code}</span>
                 <div>Module budget: {m.budget}</div>
                 <div>Module incomes: {m.incomes}</div>
-                { }
-                <div>Remainging budget: <Money positive={(m.budget - m.incomes) > 0}>{m.budget - m.incomes}</Money> </div>
+                <div>Planned expenses: {m.plannedExpenses} </div>
+                <div>Expenses: {m.expenses} </div>
+                <div>Remainging budget:
+                  <Money positive={m.budget - m.incomes > 0}> {m.budget - m.incomes}</Money>
+                  {m.budget ?
+                    <span> ({100 - Math.round((m.incomes / m.budget * 100))}%)</span>
+                    : <span> (0%)</span>
+                  }
+                </div>
+                <div>Remainging expenses:
+                  <Money positive={m.plannedExpenses - m.expenses > 0}> {m.plannedExpenses - m.expenses}</Money>
+                  {m.plannedExpenses ?
+                    <span> ({100 - Math.round((m.expenses / m.plannedExpenses * 100))}%)</span>
+                    : <span> (0%)</span>
+                  }
+                </div>
+                <div>Net income: <Money positive={(m.incomes - m.expenses) > 0}> {m.incomes - m.expenses}</Money> </div>
                 <Act>
                   {
                     m.activities.map(a =>
@@ -61,14 +89,14 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
                         <div>Activity incomes: {a.incomes} </div>
                         <div>Planned expenses: {a.expenses} </div>
                         <div>Activity expenses: {a.expenses} </div>
-                        <div>Remainging budget: 
+                        <div>Remainging budget:
                           <Money positive={a.budget - a.incomes > 0}> {a.budget - a.incomes}</Money>
                           {a.budget ?
                             <span> ({100 - Math.round((a.incomes / a.budget * 100))}%)</span>
                             : <span> (0%)</span>
                           }
                         </div>
-                        <div>Remainging expenses: 
+                        <div>Remainging expenses:
                           <Money positive={a.plannedExpenses - a.expenses > 0}> {a.plannedExpenses - a.expenses}</Money>
                           {a.plannedExpenses ?
                             <span> ({100 - Math.round((a.expenses / a.plannedExpenses * 100))}%)</span>
