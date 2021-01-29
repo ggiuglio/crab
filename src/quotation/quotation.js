@@ -18,11 +18,11 @@ import {
   selectProject,
   loadProjectAction,
 } from "../store/actions/projectActions";
-import { 
-  addQuotation, 
-  startNewQuotation, 
-  editSelectedQuotationCode, 
-  editQuotation 
+import {
+  addQuotation,
+  startNewQuotation,
+  editSelectedQuotationCode,
+  editQuotation
 } from "../store/actions/quotationActions";
 
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -200,14 +200,13 @@ const NewQuotation = ({
 
   const saveQuotation = (e) => {
     e.preventDefault();
-    if(viewMode === VIEW_MODES.CREATE) {
+    if (viewMode === VIEW_MODES.CREATE) {
       saveQuotationToDb();
       history.push(`/project/quotations/?project=${project.id}`)
-    } else 
-    {
+    } else {
       saveQuotationEdit();
     }
-    
+
   };
 
   const checkCreateDisabled = () => {
@@ -313,7 +312,7 @@ const NewQuotation = ({
                           type="submit"
                           disabled={checkCreateDisabled()}
                         >
-                          { viewMode === VIEW_MODES.CREATE ? "Create" : "Save" }
+                          {viewMode === VIEW_MODES.CREATE ? "Create" : "Save"}
                         </button>
                       </div>
                     )}
@@ -326,7 +325,6 @@ const NewQuotation = ({
                   </div>
                 </div>
               </form>
-
               {viewMode !== VIEW_MODES.VIEW ? (
                 <div>
                   <NewResource />

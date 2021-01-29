@@ -17,6 +17,7 @@ const NewResource = ({ modalData, resources, createResource }) => {
 
   useEffect(() => {
     const modal = document.querySelectorAll("#modal-resource");
+    M.Modal.init(modal[0])
     const modalInstance = M.Modal.getInstance(modal[0]);
     setSelectedResource({ id: "-1", title: "Select resource" });
     setResourceHours(0);
