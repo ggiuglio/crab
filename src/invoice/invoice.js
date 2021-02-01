@@ -8,19 +8,32 @@ import { selectProject, loadProjectAction } from "../store/actions/projectAction
 import { ShowNewInvoice } from "../store/actions/invoiceActions";
 import { getShowNewInvoice } from "../store/selectors/invoiceSelectors";
 import { getSelectedProjectId, getProject } from "../store/selectors/projectSelectors";
+import InvoiceFilter from "./invoiceFilter";
 import { history } from "../App";
 
 const AddInvoice = styled.div`
   height: 30px; 
   width: 100%;
+  margin-top: 2s0px;
+  margin-bottom: 20px;
   cursor: pointer;
   font-weight: bold;
-  display: inline-flex;
+  font-size: 16px;
 `;
 const AddArticleImage = styled.img`
   width: 30px;
   vertical-align: -8px;
   margin-right: 10px;
+`;
+const InvoiceContainer = styled.div`
+  display: inline-flex;
+`;
+const InvoiceListContainer = styled.div`
+  flex-grow: 1;
+`;
+const InvoiceFilterContainer = styled.div`
+  width: 300px;
+  padding-right: 20px;
 `;
 
 const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project, chooseProject, loadProject }) => {
@@ -28,7 +41,7 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project,
     if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
       const queryProject = query.get('project')
-      if(queryProject) {
+      if (queryProject) {
         chooseProject(queryProject);
       }
       else {
@@ -47,13 +60,22 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project,
 
   return (
     <div>
-      <AddInvoice onClick={() => addInvoiceClick()}>
-        <AddArticleImage src={add} /> Insert new invoice
+      <div className="container">
+        <AddInvoice onClick={() => addInvoiceClick()}>
+          <AddArticleImage src={add} /> Insert new activity
       </AddInvoice>
 
-      {isNewInvoiceOpen ? <NewInvoice /> : ''}
+        {isNewInvoiceOpen ? <NewInvoice /> : ''}
 
-      <InvoiceList />
+        <InvoiceContainer>
+          <InvoiceFilterContainer>
+            <InvoiceFilter />
+          </InvoiceFilterContainer>
+          <InvoiceListContainer>
+            <InvoiceList />
+          </InvoiceListContainer>
+        </InvoiceContainer>
+      </div>
     </div>
   );
 };
@@ -62,7 +84,8 @@ const mapStateToProps = (state) => {
   return {
     isNewInvoiceOpen: getShowNewInvoice(state),
     selectedProjectId: getSelectedProjectId(state),
-    project: getProject(state),  };
+    project: getProject(state),
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
