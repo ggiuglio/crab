@@ -1,7 +1,8 @@
 import { FirebaseInstance } from '../../App';
 import {
   SHOW_NEW_INVOICE,
-  HIDE_NEW_INVOICE
+  HIDE_NEW_INVOICE,
+  SET_INVOICE_FILTER
 } from './actionsTypes.js';
 
 export const HideNewInvoice = () => {
@@ -37,7 +38,7 @@ export const deleteInvoice = (invoiceId) => {
   return (dispatch, getSate) => {
     const projectId = getSate().selectedProjectId;
 
-    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/`).child(invoiceId).remove().then(() => {});
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/`).child(invoiceId).remove().then(() => { });
   }
 }
 
@@ -45,6 +46,15 @@ export const setInvoiecStatus = (invoiceId, status) => {
   return (dispatch, getSate) => {
     const projectId = getSate().selectedProjectId;
 
-    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/${invoiceId}/status`).set(status).then(() => {});
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/${invoiceId}/status`).set(status).then(() => { });
+  }
+}
+
+export const setInvoiceFilter = (filter) => {
+  return (dispatch) => {
+    return dispatch({
+      type: SET_INVOICE_FILTER,
+      filter: filter
+    })
   }
 }

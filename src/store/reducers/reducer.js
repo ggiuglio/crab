@@ -52,6 +52,12 @@ export const INITIAL_STATE = {
   quotations: undefined,
   project: undefined,
   invoiceList: [],
+  invoiceFilter: {
+    types: [],
+    quotations: [],
+    modules: [],
+    activities: []
+  },
   showNewInvoice: false,
   viewMode: VIEW_MODES.VIEW,
   qotationType: undefined,
