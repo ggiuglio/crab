@@ -125,16 +125,16 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                       </div>
                       <div className="col s4">
                         {i.status === "NEW" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "ACTIVE")}>Active</InvoiceButton>
                           : ""}
-                        {i.status === "READY" ?
+                        {i.status === "ACTIVE" ?
                           <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
                           : ""}
                         {i.status === "INVOICED" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Not invoiced</InvoiceButton>
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "ACTIVE")}>Not invoiced</InvoiceButton>
                           : ""}
-                        {i.status === "READY" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>Not ready</InvoiceButton>
+                        {i.status === "ACTIVE" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>Inactive</InvoiceButton>
                           : ""}
                       </div>
 
