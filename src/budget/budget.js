@@ -111,6 +111,7 @@ const Budget = ({ selectedProjectId, chooseProject, budget, project, loadProject
                               <div key={oa.id}>
                                 <div>title: {oa.title}</div>
                                 <div>code: {oa.code}</div>
+                                <div>quotation: {oa.quotationCode}</div>
                                 {oa.provider ?
                                   <div>provider: {oa.provider}</div>
                                   : ''

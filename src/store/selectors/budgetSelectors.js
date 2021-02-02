@@ -81,6 +81,7 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.incomes = activity.type === "SPONSOR" ? activity.totalInvoiced : 0;
       activity.expenses = activity.type === "PROVIDER" ? activity.totalInvoiced : 0;
       activity.provider = activity.type === "PROVIDER" ? quotation.provider.title : undefined;
+      activity.quotationCode = quotation.code;
       activities[activity.code] = activity;
     });
   }
