@@ -1,3 +1,29 @@
+/*
+  QUOTATION TILE COMPONENT
+*/
+.quotation-status {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 2.2rem;
+  margin-left: -1.1rem;
+  left: 50%;
+  position: relative;
+}
+
+.quotation-status.setup {
+  background-color: #fdd835 !important;
+}
+
+.quotation-status.active {
+  background-color: #64dd17  !important;
+}
+
+.quotation-status.expired {
+  background-color: #e53935 !important;
+}
+/*
+  SINGLE QUOTATION COMPONENT
+*/
 #peopleTable {
   position: -webkit-sticky; /* Safari */
   position: sticky;

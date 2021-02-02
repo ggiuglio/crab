@@ -16,28 +16,32 @@ const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjec
     clearSelectedProject();
     clearProjectMenu();
 
+    let newPrjTooltip = document.querySelector(".tooltipped");
+    M.Tooltip.init(newPrjTooltip);
+  }, []);
+  
+  React.useEffect(() => {
     if (projects) {
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
     }
-  }, []);
+  });
 
   return (
     <div className="container">
       <h4 className="center page-title"></h4>
       <div className="row">
         <div className="col s12 center">
-          <span className="tooltip relative">
-            <CustomNavLink
-              className="btn-floating btn-small waves-effect waves-light indigo"
-              to="/new-project"
-              iconType="MATERIAL"
-              iconName="add"
-              code="NPJ"
-              onClick={() => startNewProject()}
-            />
-            <span className="tooltiptext right">Create new project</span>
-          </span>
+          <CustomNavLink
+            className="btn-floating btn-small waves-effect waves-light indigo tooltipped"
+            to="/new-project"
+            iconType="MATERIAL"
+            iconName="add"
+            code="NPJ"
+            onClick={() => startNewProject()}
+            dataPosition="bottom"
+            dataTooltip="Create new project"
+          />
         </div>
       </div>
 
@@ -52,7 +56,7 @@ const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjec
           <div id="modal-archive" className="modal">
             <div className="modal-content">
               <h4>Project Archiving</h4>
-              <p>Are you sure you want to archive this project?</p>
+              <h5>Are you sure you want to archive this project?</h5>
             </div>
             <div className="modal-footer">
               <a

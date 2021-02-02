@@ -11,7 +11,7 @@ const CustomNavLink = (par) => {
   };
 
   return (
-    <NavLink to={par.to} className={par.className} onClick={(e) => onNavClick(e, par)} code={par.code} activeClassName="no-one">
+    <NavLink to={par.to} className={par.className} onClick={(e) => onNavClick(e, par)} code={par.code} activeClassName="no-one" data-position={par.dataPosition ? par.dataPosition : ""} data-tooltip={par.dataTooltip ? par.dataTooltip : ""}>
       {(() => {
         switch (par.iconType) {
           case "AWESOME":

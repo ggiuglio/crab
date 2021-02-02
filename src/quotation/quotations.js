@@ -27,7 +27,7 @@ const Quotations = ({
   selectedProjectId,
   providerQuotations,
   sponsorQuotations,
-  creatNewQuotation
+  creatNewQuotation,
 }) => {
   useEffect(() => {
     if (!selectedProjectId) {
@@ -49,6 +49,8 @@ const Quotations = ({
       M.Tabs.init(tabs);
       let modal = document.querySelector(".modal");
       M.Modal.init(modal);
+      let tooltips = document.querySelectorAll(".tooltipped");
+      M.Tooltip.init(tooltips);
     }
   });
 
@@ -71,17 +73,16 @@ const Quotations = ({
             <div className="section">
               <div className="row">
                 <div className="col s6 push-s3 center">
-                  <span className="tooltip relative">
-                    <CustomNavLink
-                      className="btn-floating btn-small waves-effect waves-light green darken-1"
-                      to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
-                      onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
-                      iconType="MATERIAL"
-                      iconName="add"
-                      code="NQT"
-                    />
-                    <span className="tooltiptext right">Create new sponsor quotation</span>
-                  </span>
+                  <CustomNavLink
+                    className="btn-floating btn-small waves-effect waves-light green darken-1 tooltipped"
+                    to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.SPONSOR}`}
+                    onClick={() => creatNewQuotation(QUOTATION_TYPES.SPONSOR)}
+                    iconType="MATERIAL"
+                    iconName="add"
+                    code="NQT"
+                    dataPosition="bottom"
+                    dataTooltip="Create new sponsor quotation"
+                  />
                 </div>
               </div>
 
@@ -100,17 +101,16 @@ const Quotations = ({
             <div className="section">
               <div className="row">
                 <div className="col s6 push-s3 center">
-                  <span className="tooltip relative">
-                    <CustomNavLink
-                      className="btn-floating btn-small waves-effect waves-light red darken-1"
-                      to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
-                      onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
-                      iconType="MATERIAL"
-                      iconName="add"
-                      code="NQT"
-                    />
-                    <span className="tooltiptext right">Create new provider quotation</span>
-                  </span>
+                  <CustomNavLink
+                    className="btn-floating btn-small waves-effect waves-light red darken-1 tooltipped"
+                    to={`/project/new-quotation?project=${selectedProjectId}&quotation-type=${QUOTATION_TYPES.PROVIDER}`}
+                    onClick={() => creatNewQuotation(QUOTATION_TYPES.PROVIDER)}
+                    iconType="MATERIAL"
+                    iconName="add"
+                    code="NQT"
+                    dataPosition="bottom"
+                    dataTooltip="Create new provider quotation"
+                  />
                 </div>
               </div>
 
@@ -129,7 +129,7 @@ const Quotations = ({
           <div id="modal-archive" className="modal">
             <div className="modal-content">
               <h4>Quotation Archiving</h4>
-              <p>Are you sure you want to archive this quotation?</p>
+              <h5>Are you sure you want to archive this quotation?</h5>
             </div>
             <div className="modal-footer">
               <a

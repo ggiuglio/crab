@@ -2,8 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectProject } from "../store/actions/projectActions";
 import CustomNavLink from "../common/customNavLink";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 const ProjectTile = ({ project, chooseProject }) => {
+  React.useEffect(() => {
+    let tooltips = document.querySelectorAll(".tooltipped");
+    M.Tooltip.init(tooltips);
+  });
+
   const goToProjectPage = () => {
     chooseProject(project.id);
   };
@@ -13,7 +19,7 @@ const ProjectTile = ({ project, chooseProject }) => {
       <div className="card indigo lighten-2">
         <div className="card-content">
           <div className="row card-text">
-            <div className="col s11">
+            <div className="col s10 m11">
               <div className="row">
                 <CustomNavLink to={`/project?project=${project.id}`} code="DSB" onClick={goToProjectPage}>
                   <span
@@ -29,32 +35,20 @@ const ProjectTile = ({ project, chooseProject }) => {
                     {project.sponsor}
                   </span>
                 </CustomNavLink>
-                <span className="col s12 m1 center-align tooltip relative m-space-up">
-                  <span className="tooltiptext bottom">{project.status}</span>
-                  {project.status.toLowerCase() === "open" ? (
-                    <i className="material-icons amber-text">lock_open</i>
-                  ) : (
-                    <i className="material-icons brown-text text-darken-3">
-                      lock
-                    </i>
-                  )}
+                <span className="col s12 m1 center-align">
+                  <i className="material-icons amber-text tooltipped" data-position="bottom" data-tooltip={project.status}>settings</i>
                 </span>
               </div>
             </div>
-            <div className="col s1 card-action-btn relative">
-              <div>
-                <div className="fixed-action-btn absolute">
-                  <span className="tooltip relative">
-                    <a
-                      className="btn-floating btn-small red darken-1 modal-trigger"
-                      href="#modal-archive"
-                    >
-                      <i className="material-icons">archive</i>
-                    </a>
-                    <span className="tooltiptext bottom">Archive</span>
-                  </span>
-                </div>
-              </div>
+            <div className="col s2 m1 center">
+              <a
+                className="modal-trigger transparent tooltipped"
+                href="#modal-archive"
+                data-position="bottom"
+                data-tooltip="Archive project"
+              >
+                <i className="material-icons red-text text-darken-3">archive</i>
+              </a>
             </div>
           </div>
         </div>

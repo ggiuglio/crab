@@ -2,8 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { selectQuotation } from "../store/actions/quotationActions";
 import CustomNavLink from "../common/customNavLink";
+import M from "materialize-css/dist/js/materialize.min.js";
+import "./css/quotation.css";
 
 const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
+  React.useEffect(() => {
+    let tooltips = document.querySelectorAll(".tooltipped");
+    M.Tooltip.init(tooltips);
+  });
+
   const goToQuotationPage = () => {
     chooseQuotation(quotation.id);
   };
@@ -13,7 +20,7 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
       <div className="card indigo lighten-2">
         <div className="card-content">
           <div className="row card-text">
-            <div className="col s11">
+            <div className="col s10 m11">
               <div className="row">
                 <CustomNavLink
                   to={`/project/quotation?project=${projectId}&quotation=${quotation.id}`}
@@ -33,36 +40,25 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                     {quotation.cost}
                   </span>
                 </CustomNavLink>
-                <span className="col s12 m1 center-align tooltip relative m-space-up">
-                  <span className="tooltiptext bottom">{quotation.status}</span>
-                  {quotation.status.toLowerCase() === "setup" ? (
-                    <i className="material-icons amber-text">settings</i>
-                  ) : quotation.status.toLowerCase() === "active" ? (
-                    <i className="material-icons green-text text-darken-1">
-                      check_circle
-                    </i>
-                  ) : (
-                    <i className="material-icons red-text text-darken-2">
-                      cancel
-                    </i>
-                  )}
+                <span className="col s12 m1">
+                  <div
+                    className={`tooltipped quotation-status ${quotation.status.toLowerCase()}`}
+                    data-position="bottom"
+                    data-tooltip={quotation.status}
+                  >
+                  </div>
                 </span>
               </div>
             </div>
-            <div className="col s1 card-action-btn relative">
-              <div>
-                <div className="fixed-action-btn absolute">
-                  <span className="tooltip relative">
-                    <a
-                      className="btn-floating btn-small red darken-1 modal-trigger"
-                      href="#modal-archive"
-                    >
-                      <i className="material-icons">archive</i>
-                    </a>
-                    <span className="tooltiptext bottom">Archive</span>
-                  </span>
-                </div>
-              </div>
+            <div className="col s2 m1 center">
+              <a
+                className="modal-trigger transparent tooltipped"
+                href="#modal-archive"
+                data-position="bottom"
+                data-tooltip="Archive quotation"
+              >
+                <i className="material-icons red-text text-darken-3">archive</i>
+              </a>
             </div>
           </div>
         </div>
