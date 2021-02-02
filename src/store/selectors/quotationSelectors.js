@@ -10,23 +10,25 @@ export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.ba
 export const getModalResourceData = (state) => state.resourceModalData;
 
 const mapQuotationList = (qs) => {
-  const quotations = JSON.parse(JSON.stringify(qs));
   const quotationList = [];
-  if (quotations) {
-    Object.keys(quotations).forEach((k) => {
-      let quotation = quotations[k];
-      quotation.id = k;
-      quotation = mapQuotation(quotation);
-      const qutationTile = {
-        id: quotation.id,
-        code: quotation.code,
-        cost: quotation.quotationCost,
-        type: quotation.quotationType,
-        status: quotation.status
-      };
+  if (qs) {
+    const quotations = JSON.parse(JSON.stringify(qs));
+    if (quotations) {
+      Object.keys(quotations).forEach((k) => {
+        let quotation = quotations[k];
+        quotation.id = k;
+        quotation = mapQuotation(quotation);
+        const qutationTile = {
+          id: quotation.id,
+          code: quotation.code,
+          cost: quotation.quotationCost,
+          type: quotation.quotationType,
+          status: quotation.status
+        };
 
-      quotationList.push(qutationTile);
-    });
+        quotationList.push(qutationTile);
+      });
+    }
   }
 
   return quotationList.reverse();
