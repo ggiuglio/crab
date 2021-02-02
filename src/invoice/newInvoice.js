@@ -169,7 +169,8 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
         unitCost: unitCost,
         unitNumber: unitNumber,
         totalCost: totalCost,
-        comment: comment
+        comment: comment,
+        status: "NEW"
       }
 
       createInvoice(invoice);

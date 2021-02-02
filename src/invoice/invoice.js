@@ -13,9 +13,7 @@ import { history } from "../App";
 
 const AddInvoice = styled.div`
   height: 30px; 
-  width: 100%;
-  margin-top: 2s0px;
-  margin-bottom: 20px;
+  margin: 20px;
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
@@ -24,16 +22,6 @@ const AddArticleImage = styled.img`
   width: 30px;
   vertical-align: -8px;
   margin-right: 10px;
-`;
-const InvoiceContainer = styled.div`
-  display: inline-flex;
-`;
-const InvoiceListContainer = styled.div`
-  flex-grow: 1;
-`;
-const InvoiceFilterContainer = styled.div`
-  width: 300px;
-  padding-right: 20px;
 `;
 
 const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project, chooseProject, loadProject }) => {
@@ -60,21 +48,22 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project,
 
   return (
     <div>
-      <div className="container">
-        <AddInvoice onClick={() => addInvoiceClick()}>
-          <AddArticleImage src={add} /> Insert new activity
+      <div className="s12">
+        <div className="row">
+          <AddInvoice onClick={() => addInvoiceClick()}>
+            <AddArticleImage src={add} /> Insert new activity
       </AddInvoice>
-
+        </div>
         {isNewInvoiceOpen ? <NewInvoice /> : ''}
 
-        <InvoiceContainer>
-          <InvoiceFilterContainer>
+        <div className="row">
+          <div className="col s3">
             <InvoiceFilter />
-          </InvoiceFilterContainer>
-          <InvoiceListContainer>
+          </div>
+          <div className="col s9">
             <InvoiceList />
-          </InvoiceListContainer>
-        </InvoiceContainer>
+          </div>
+        </div>
       </div>
     </div>
   );

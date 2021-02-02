@@ -40,3 +40,11 @@ export const deleteInvoice = (invoiceId) => {
     return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/`).child(invoiceId).remove().then(() => {});
   }
 }
+
+export const setInvoiecStatus = (invoiceId, status) => {
+  return (dispatch, getSate) => {
+    const projectId = getSate().selectedProjectId;
+
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/invoices/${invoiceId}/status`).set(status).then(() => {});
+  }
+}
