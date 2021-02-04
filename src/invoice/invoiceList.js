@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { getInvoiceList } from "../store/selectors/invoiceSelectors";
+import { getFilteredInvoice } from "../store/selectors/invoiceSelectors";
 import { deleteInvoice, setInvoiecStatus } from '../store/actions/invoiceActions';
 
 const Maintitle = styled.div`
@@ -91,7 +91,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
           {displayInvoices.map(i =>
             !i.selected ?
               <tr key={i.id} onClick={() => expandRow(i.id)}>
-                <td><i class="material-icons">keyboard_arrow_right</i></td>
+                <td><i className="material-icons">keyboard_arrow_right</i></td>
                 <InvoiceTd> {i.type} </InvoiceTd>
                 <InvoiceTd> {i.date} </InvoiceTd>
                 <InvoiceTd> {i.quotationCode} </InvoiceTd>
@@ -101,7 +101,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 <InvoiceNumberTd> {i.unitNumber} </InvoiceNumberTd>
                 <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
                 <InvoiceTd> {i.status} </InvoiceTd>
-                <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i class="material-icons">delete</i></InvoiceActionTd>
+                <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i className="material-icons">delete</i></InvoiceActionTd>
               </tr>
               : <>
                 <tr key={i.id} onClick={() => expandRow(i.id)}>
@@ -151,7 +151,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
 
 const mapStateToProps = (state) => {
   return {
-    invoices: getInvoiceList(state)
+    invoices: getFilteredInvoice(state)
   };
 };
 

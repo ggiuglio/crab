@@ -50,11 +50,12 @@ export const setInvoiecStatus = (invoiceId, status) => {
   }
 }
 
-export const setInvoiceFilter = (filter) => {
+export const setInvoiceFilter = (filterType, filterValue) => {
   return (dispatch) => {
     return dispatch({
       type: SET_INVOICE_FILTER,
-      filter: filter
+      filterType: filterType,
+      filterValue: filterValue
     })
   }
 }

@@ -38,7 +38,8 @@ import {
   REMOVE_PROJECT_PROVIDER,
   SELECT_REGION_FOR_PROJECT,
   CANCEL_PROJECT_EDIT,
-  SET_PROJECT_VIEW_MODE
+  SET_PROJECT_VIEW_MODE,
+  SET_INVOICE_FILTER
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -53,7 +54,8 @@ export const INITIAL_STATE = {
   project: undefined,
   invoiceList: [],
   invoiceFilter: {
-    types: [],
+    type: [],
+    status: [],
     quotations: [],
     modules: [],
     activities: []
@@ -530,6 +532,16 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedProjectData: project
       }
     }
+    case SET_INVOICE_FILTER: {
+      const invoiceFilter = JSON.parse(JSON.stringify(state.invoiceFilter));
+      invoiceFilter[action.filterType] = action.filterValue;
+
+      return {
+        ...state,
+        invoiceFilter: invoiceFilter
+      }
+    }
+
 
     default:
       return state;
