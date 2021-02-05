@@ -44,6 +44,9 @@ const InvoiceButton = styled.button`
   margin-right: 10px;
 `;
 
+const ActivityRow = styled.tr`
+  cursor: pointer;
+`;
 const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
   const [displayInvoices, setDisplayInvoices] = useState([]);
 
@@ -90,7 +93,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
         <tbody>
           {displayInvoices.map(i =>
             !i.selected ?
-              <tr key={i.id} onClick={() => expandRow(i.id)}>
+              <ActivityRow key={i.id} onClick={() => expandRow(i.id)}>
                 <td><i className="material-icons">keyboard_arrow_right</i></td>
                 <InvoiceTd> {i.type} </InvoiceTd>
                 <InvoiceTd> {i.date} </InvoiceTd>
@@ -102,9 +105,9 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
                 <InvoiceTd> {i.status} </InvoiceTd>
                 <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i className="material-icons">delete</i></InvoiceActionTd>
-              </tr>
+              </ActivityRow>
               : <>
-                <tr key={i.id} onClick={() => expandRow(i.id)}>
+                <ActivityRow key={i.id} onClick={() => expandRow(i.id)}>
                   <td><i class="material-icons">keyboard_arrow_down</i></td>
                   <InvoiceTd> {i.type} </InvoiceTd>
                   <InvoiceTd> {i.date} </InvoiceTd>
@@ -116,7 +119,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
                   <InvoiceTd> {i.status} </InvoiceTd>
                   <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i class="material-icons">delete</i></InvoiceActionTd>
-                </tr>
+                </ActivityRow>
                 <tr key={i.id + '-comment'}>
                   <td colSpan="11">
                     <CommentRow className="row">
@@ -125,16 +128,16 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                       </div>
                       <div className="col s4">
                         {i.status === "NEW" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "ACTIVE")}>Active</InvoiceButton>
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
                           : ""}
-                        {i.status === "ACTIVE" ?
+                        {i.status === "READY" ?
                           <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
                           : ""}
                         {i.status === "INVOICED" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "ACTIVE")}>Not invoiced</InvoiceButton>
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Not invoiced</InvoiceButton>
                           : ""}
-                        {i.status === "ACTIVE" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>Inactive</InvoiceButton>
+                        {i.status === "READY" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>Not ready</InvoiceButton>
                           : ""}
                       </div>
 

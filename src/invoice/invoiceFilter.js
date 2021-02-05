@@ -74,8 +74,8 @@ const InvoiceFilter = ({ filters, quotationEntities, setFilter }) => {
               <input type="checkbox" value={invoiceStatusFilter.find(t => t === "NEW") !== null} onChange={() => setStatusFilter("NEW")} />
               <span>New</span> </label></div>
             <div><label>
-              <input type="checkbox" value={invoiceStatusFilter.find(t => t === "ACTIVE") !== null} onChange={() => setStatusFilter("ACTIVE")} />
-              <span>Active</span> </label></div>
+              <input type="checkbox" value={invoiceStatusFilter.find(t => t === "READY") !== null} onChange={() => setStatusFilter("READY")} />
+              <span>Ready</span> </label></div>
             <div><label>
               <input type="checkbox" value={invoiceStatusFilter.find(t => t === "INVOICED") !== null} onChange={() => setStatusFilter("INVOICED")} />
               <span>Invoiced</span> </label></div>
