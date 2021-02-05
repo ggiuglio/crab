@@ -39,7 +39,8 @@ import {
   SELECT_REGION_FOR_PROJECT,
   CANCEL_PROJECT_EDIT,
   SET_PROJECT_VIEW_MODE,
-  SET_INVOICE_FILTER
+  SET_INVOICE_FILTER,
+  CLEAR_INVOICE_FILTER
 } from "../actions/actionsTypes";
 import { VIEW_MODES, NAVIGATION_REPLACERS } from "../../constants/constants";
 import { v4 as uuid } from "uuid";
@@ -541,7 +542,19 @@ const Reducer = (state = INITIAL_STATE, action) => {
         invoiceFilter: invoiceFilter
       }
     }
+    case CLEAR_INVOICE_FILTER: {
 
+      return {
+        ...state,
+        invoiceFilter: {
+          type: [],
+          status: [],
+          quotations: [],
+          modules: [],
+          activities: []
+        }
+      }
+    }
 
     default:
       return state;

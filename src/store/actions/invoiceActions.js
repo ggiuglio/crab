@@ -2,7 +2,8 @@ import { FirebaseInstance } from '../../App';
 import {
   SHOW_NEW_INVOICE,
   HIDE_NEW_INVOICE,
-  SET_INVOICE_FILTER
+  SET_INVOICE_FILTER,
+  CLEAR_INVOICE_FILTER
 } from './actionsTypes.js';
 
 export const HideNewInvoice = () => {
@@ -59,3 +60,12 @@ export const setInvoiceFilter = (filterType, filterValue) => {
     })
   }
 }
+
+export const clearInvoiceFilter = () => {
+  return (dispatch) => {
+    return dispatch({
+      type: CLEAR_INVOICE_FILTER
+    })
+  }
+}
+
