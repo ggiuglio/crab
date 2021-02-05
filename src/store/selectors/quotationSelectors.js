@@ -155,27 +155,6 @@ const mapQuotationsEntityList = (quotationsObj) => {
   activities.sort((a, b) => a.index > b.index ? 1 : -1);
   modules.sort((a, b) => a.index > b.index ? 1 : -1);
 
-  activities.unshift({
-    id: "-1",
-    code: '',
-    title: "select an activity"
-  });
-  modules.unshift({
-    id: "-1",
-    code: '',
-    title: "select a module"
-  });
-  quotations.unshift({
-    id: "0",
-    code: "Out of budget",
-    type: "any"
-  });
-  quotations.unshift({
-    id: "-1",
-    code: "select a quotation",
-    type: "any"
-  });
-
   return {
     activities: activities,
     modules: modules,
