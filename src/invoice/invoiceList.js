@@ -85,7 +85,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
             <InvoiceTh> Activity </InvoiceTh>
             <InvoiceTh> Per unit </InvoiceTh>
             <InvoiceTh> Units </InvoiceTh>
-            <InvoiceTh> Amount</InvoiceTh>
+            <InvoiceTh> Amount </InvoiceTh>
             <InvoiceTh> Status </InvoiceTh>
             <th ></th>
           </tr>
@@ -114,7 +114,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   <InvoiceTd> {i.quotationCode} </InvoiceTd>
                   <InvoiceTd> {i.moduleTitle} </InvoiceTd>
                   <InvoiceTd> {i.activityTitle} </InvoiceTd>
-                  <InvoiceAmountTd> {i.unitCost} &euro;  </InvoiceAmountTd>
+                  <InvoiceAmountTd> {i.unitCost} &euro; </InvoiceAmountTd>
                   <InvoiceNumberTd> {i.unitNumber} </InvoiceNumberTd>
                   <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
                   <InvoiceTd> {i.status} </InvoiceTd>
@@ -127,17 +127,29 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                         <InvoiceTextarea value={i.comment} disabled={true} />
                       </div>
                       <div className="col s4">
-                        {i.status === "NEW" ?
+                        {i.status === "NEW" && i.type === "SPONSOR" ?
                           <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
                           : ""}
-                        {i.status === "READY" ?
+                        {i.status === "READY" && i.type === "SPONSOR" ?
                           <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
                           : ""}
-                        {i.status === "INVOICED" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Not invoiced</InvoiceButton>
+                        {i.status === "INVOICED" && i.type === "SPONSOR" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
                           : ""}
-                        {i.status === "READY" ?
-                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>Not ready</InvoiceButton>
+                        {i.status === "READY" && i.type === "SPONSOR" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>New</InvoiceButton>
+                          : ""}
+                        {i.status === "INVOICED" && i.type === "SPONSOR" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "PAID")}>Paid</InvoiceButton>
+                          : ""}
+                        {i.status === "PAID" && i.type === "SPONSOR" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
+                          : ""}
+                          {i.status === "NEW" && i.type === "PROVIDER" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "PAID")}>Paid</InvoiceButton>
+                          : ""}
+                        {i.status === "PAID" && i.type === "PROVIDER" ?
+                          <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>New</InvoiceButton>
                           : ""}
                       </div>
 
