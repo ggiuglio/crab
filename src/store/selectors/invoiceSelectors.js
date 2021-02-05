@@ -8,16 +8,28 @@ const filterInvoices = (invoices, filters) => {
   if (invoices) {
     filteredInvoices = filterInvoiceByStatus(invoices, filters.status);
     filteredInvoices = filterInvoiceByQuotation(filteredInvoices, filters.quotations);
+    filteredInvoices = filterInvoiceByModule(filteredInvoices, filters.modules);
+    filteredInvoices = filterInvoiceByActivity(filteredInvoices, filters.activities);
   }
   return filteredInvoices;
-}
+};
 
 const filterInvoiceByStatus = (invoices, filters) => {
   const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.status));
   return filteredInvoices;
-}
+};
 
 const filterInvoiceByQuotation = (invoices, filters) => {
   const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.quotationId));
   return filteredInvoices;
-}
+};
+
+const filterInvoiceByModule = (invoices, filters) => {
+  const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.moduleCode));
+  return filteredInvoices;
+};
+
+const filterInvoiceByActivity = (invoices, filters) => {
+  const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.activityId));
+  return filteredInvoices;
+};

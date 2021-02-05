@@ -45,7 +45,7 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   const [invoiceStatusFilter, setInvoiceStatusFilter] = useState([]);
   const [invoiceQuotationFilter, setInvoiceQuotationFilter] = useState([]);
   const [invoiceModuleFilter, setInvoiceModuleFilter] = useState([]);
-
+  const [invoiceActivityFilter, setInvoiceActivityFilter] = useState([]);
   const [activitiesShown, setActivitiesShown] = useState(undefined);
 
   useEffect(() => {
@@ -81,18 +81,29 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
     setInvoiceModuleFilter(invoiceModuleFilter);
     setFilter("modules", invoiceModuleFilter);
     showActivitiesForModule(value);
+  };
+
+  const setActivityFilter = (value) => {
+    if (invoiceActivityFilter.includes(value)) {
+      invoiceActivityFilter.splice(invoiceActivityFilter.indexOf(value), 1);
+    } else {
+      invoiceActivityFilter.push(value);
+    }
+    setInvoiceActivityFilter(invoiceActivityFilter);
+    setFilter("activities", invoiceActivityFilter);
   }
 
   const showActivitiesForModule = (moduleCode) => {
     const newActivitiesShown = activitiesShown === moduleCode ? undefined : moduleCode;
 
     setActivitiesShown(newActivitiesShown);
-  }
+  };
 
   const clearAllFilters = () => {
     setInvoiceStatusFilter([]);
     setInvoiceQuotationFilter([]);
     setInvoiceModuleFilter([]);
+    setInvoiceActivityFilter([]);
     clearFilters();
   }
 
@@ -142,7 +153,7 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
               <Filter key={m.code} className="collapsible">
                 <li>
                   <label>
-                    <input type="checkbox" onChange={() => setModuleFilter(m.code)} />
+                    <input type="checkbox" onChange={() => setModuleFilter(m.code)} checked={invoiceModuleFilter.find(t => t === m.code) ? true : false} />
                     <span> {m.title} - {m.geo.description} </span>
                   </label>
 
@@ -153,7 +164,8 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
                         activity =>
                           <div key={activity.id}>
                             <label>
-                              <input type="checkbox" /><span>{activity.title}</span>
+                              <input type="checkbox" onChange={() => setActivityFilter(activity.id)} checked={invoiceActivityFilter.find(t => t === activity.id) ? true : false}/>
+                              <span>{activity.title}</span>
                             </label>
                           </div>
                       )}

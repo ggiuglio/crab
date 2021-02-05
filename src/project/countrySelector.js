@@ -12,7 +12,7 @@ const CountrySelector = ({ project, setNewProjectGeos, regions, countries, selec
   }, [project]);
 
   const selectRegion = (regionCode) => {
-    if (regionCode != "-1") {
+    if (regionCode !== "-1") {
       const region = regions.find(r => r.code === regionCode);
       selectNewProjectRegion(region);
     }
