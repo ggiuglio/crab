@@ -1,0 +1,22 @@
+#budget-data {
+  padding: 0.5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  thead.s-active, thead.s-active tr, thead.s-active th {
+    background-color: green !important;
+  }
+
+  thead.s-passive, thead.s-passive tr, thead.s-passive th {
+    background-color: red !important;
+  }
+
+  .s-active-text {
+    color: green !important;
+  }
+
+  .s-passive-text {
+    color: red !important;
+  }
+
+}
