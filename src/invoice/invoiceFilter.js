@@ -42,6 +42,7 @@ const ActivityList = styled.div`
 `;
 
 const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
+  const [invoiceTypeFilter, setInvoiceTypeFilter] = useState([]);
   const [invoiceStatusFilter, setInvoiceStatusFilter] = useState([]);
   const [invoiceQuotationFilter, setInvoiceQuotationFilter] = useState([]);
   const [invoiceModuleFilter, setInvoiceModuleFilter] = useState([]);
@@ -51,6 +52,16 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   useEffect(() => {
     M.AutoInit();
   }, []);
+
+  const setTypeFilter = (value) => {
+    if (invoiceTypeFilter.includes(value)) {
+      invoiceTypeFilter.splice(invoiceTypeFilter.indexOf(value), 1);
+    } else {
+      invoiceTypeFilter.push(value);
+    }
+    setInvoiceTypeFilter(invoiceTypeFilter);
+    setFilter("type", invoiceTypeFilter);
+  };
 
   const setStatusFilter = (value) => {
     if (invoiceStatusFilter.includes(value)) {
@@ -91,7 +102,7 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
     }
     setInvoiceActivityFilter(invoiceActivityFilter);
     setFilter("activities", invoiceActivityFilter);
-  }
+  };
 
   const showActivitiesForModule = (moduleCode) => {
     const newActivitiesShown = activitiesShown === moduleCode ? undefined : moduleCode;
@@ -100,12 +111,13 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   };
 
   const clearAllFilters = () => {
+    setInvoiceTypeFilter([]);
     setInvoiceStatusFilter([]);
     setInvoiceQuotationFilter([]);
     setInvoiceModuleFilter([]);
     setInvoiceActivityFilter([]);
     clearFilters();
-  }
+  };
 
   return (
     <div>
@@ -113,6 +125,20 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
       <Clear onClick={() => clearAllFilters()}>
         <i className="material-icons">clear</i> <span>clear fitlers</span>
       </Clear>
+      <Filter className="collapsible">
+        <li>
+          <Title className="collapsible-header">Type</Title>
+          <div className="collapsible-body">
+            <div><label>
+              <input type="checkbox" checked={invoiceTypeFilter.find(t => t === "SPONSOR") ? true : false} onChange={() => setTypeFilter("SPONSOR")} />
+              <span>Sponsor</span> </label></div>
+            <div><label>
+              <input type="checkbox" checked={invoiceTypeFilter.find(t => t === "PROVIDER") ? true : false} onChange={() => setTypeFilter("PROVIDER")} />
+              <span>Provider</span> </label></div>
+          </div>
+        </li>
+      </Filter>
+
       <Filter className="collapsible">
         <li>
           <Title className="collapsible-header">Status</Title>

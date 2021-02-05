@@ -6,11 +6,17 @@ export const getFilteredInvoice = (state) => filterInvoices(state.invoiceList, s
 const filterInvoices = (invoices, filters) => {
   let filteredInvoices = [];
   if (invoices) {
-    filteredInvoices = filterInvoiceByStatus(invoices, filters.status);
+    filteredInvoices = filterInvoiceByType(invoices, filters.type);
+    filteredInvoices = filterInvoiceByStatus(filteredInvoices, filters.status);
     filteredInvoices = filterInvoiceByQuotation(filteredInvoices, filters.quotations);
     filteredInvoices = filterInvoiceByModule(filteredInvoices, filters.modules);
     filteredInvoices = filterInvoiceByActivity(filteredInvoices, filters.activities);
   }
+  return filteredInvoices;
+};
+
+const filterInvoiceByType = (invoices, filters) => {
+  const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.type));
   return filteredInvoices;
 };
 
