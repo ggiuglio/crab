@@ -114,6 +114,7 @@ const mapActivity = (activity, quotation) => {
 
 const mapQuotationsEntityList = (quotationsObj) => {
   let modules = [];
+  let uniqueModuleList = [];
   let activities = [];
   let quotations = [];
 
@@ -132,15 +133,20 @@ const mapQuotationsEntityList = (quotationsObj) => {
           id: j,
           index: quotationsObj[i].modules[j].index,
           code: quotationsObj[i].modules[j].code,
+          geo:  quotationsObj[i].modules[j].geo,
           title: quotationsObj[i].modules[j].title,
           geo: quotationsObj[i].modules[j].geo
         };
         modules.push(module);
+        if (!uniqueModuleList.find(um => um.code ===  quotationsObj[i].modules[j].code)) {
+          uniqueModuleList.push(quotationsObj[i].modules[j]);
+        }
 
         Object.keys(quotationsObj[i].modules[j].activities).forEach((k) => {
           let activity = {
             quotationId: quotation.id,
             moduleId: module.id,
+            moduleCode: module.code,
             id: k,
             index: quotationsObj[i].modules[j].activities[k].index,
             code: quotationsObj[i].modules[j].activities[k].code,
@@ -158,6 +164,7 @@ const mapQuotationsEntityList = (quotationsObj) => {
   return {
     activities: activities,
     modules: modules,
+    uniqueModules: uniqueModuleList,
     quotations: quotations
   }
 };
