@@ -95,6 +95,7 @@ const addModuleToBudget = (budget, module) => {
     budget.modules[module.code] = {
       code: module.code,
       title: module.title,
+      geo: module.geo,
       budget: 0,
       plannedExpenses: 0,
       incomes: 0,
