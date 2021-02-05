@@ -262,7 +262,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
         </NewInvoiceBody>
 
       </NewInvoiceContainer>
-      <SaveButton disabled={cannotSave()} onClick={() => saveInvoice()}>Save Invoice</SaveButton>
+      <SaveButton disabled={cannotSave()} onClick={() => saveInvoice()}>Create Activity</SaveButton>
     </MainContainer>
   );
 };
