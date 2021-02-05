@@ -117,11 +117,11 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   <InvoiceTd> {i.status} </InvoiceTd>
                   <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i class="material-icons">delete</i></InvoiceActionTd>
                 </tr>
-                <tr key={i.id}>
-                  <td colspan="11">
+                <tr key={i.id + '-comment'}>
+                  <td colSpan="11">
                     <CommentRow className="row">
                       <div className="col s8">
-                        <InvoiceTextarea value={i.comment} disabled="true" />
+                        <InvoiceTextarea value={i.comment} disabled={true} />
                       </div>
                       <div className="col s4">
                         {i.status === "NEW" ?

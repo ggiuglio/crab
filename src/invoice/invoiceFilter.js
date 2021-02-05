@@ -4,6 +4,7 @@ import styled from "styled-components";
 import M, { Collapsible } from "materialize-css/dist/js/materialize.min.js";
 import { getInvoiceFilter } from "../store/selectors/invoiceSelectors";
 import { setInvoiceFilter } from "../store/actions/invoiceActions";
+import { getQuotationsEntityList } from "../store/selectors/quotationSelectors";
 
 const Maintitle = styled.div`
   font-size: 16px;
@@ -31,13 +32,13 @@ cursor:pointer;
 };
 `;
 
-const InvoiceFilter = ({ filters, setFilter }) => {
+const InvoiceFilter = ({ filters, quotationEntities, setFilter }) => {
   const [invoiceStatusFilter, setInvoiceStatusFilter] = useState([]);
-
+  const [invoiceQuotationFilter, setInvoiceQuotationFilter] = useState([]);
 
   useEffect(() => {
     M.AutoInit();
-  }, [])
+  }, []);
 
   const setStatusFilter = (value) => {
     if (invoiceStatusFilter.includes(value)) {
@@ -47,6 +48,16 @@ const InvoiceFilter = ({ filters, setFilter }) => {
     }
     setInvoiceStatusFilter(invoiceStatusFilter);
     setFilter("status", invoiceStatusFilter);
+  };
+
+  const setQuotationFilter = (value) => {
+    if (invoiceQuotationFilter.includes(value)) {
+      invoiceQuotationFilter.splice(invoiceQuotationFilter.indexOf(value), 1);
+    } else {
+      invoiceQuotationFilter.push(value);
+    }
+    setInvoiceQuotationFilter(invoiceQuotationFilter);
+    setFilter("quotations", invoiceQuotationFilter);
   };
 
   return (
@@ -76,8 +87,13 @@ const InvoiceFilter = ({ filters, setFilter }) => {
         <li>
           <Title className="collapsible-header">Quotation</Title>
           <div className="collapsible-body">
-            <div><label> <input type="checkbox" /> <span>Onda dei dragoni gemelli di Hokuto</span></label></div>
-            <div><label> <input type="checkbox" /> <span>Tecnica della distrutione esplosiva rotante</span></label></div>
+            {quotationEntities.quotations.map(q =>
+              <div key={q.id}><label>
+                <input type="checkbox" value={invoiceQuotationFilter.find(t => t === q.id) !== null} onChange={() => setQuotationFilter(q.id)} />
+                <span>{q.code}</span> </label>
+              </div>
+            )}
+
           </div>
         </li>
       </Filter>
@@ -115,7 +131,8 @@ const InvoiceFilter = ({ filters, setFilter }) => {
 
 const mapStateToProps = (state) => {
   return {
-    filters: getInvoiceFilter(state)
+    filters: getInvoiceFilter(state),
+    quotationEntities: getQuotationsEntityList(state)
   };
 
 };

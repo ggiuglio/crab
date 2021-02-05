@@ -79,7 +79,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   }, []);
 
   const invoiceTypeChange = (type) => {
-    setQuotationList(lists.quotations.filter(q => q.type === type || q.type === "any"));
+    setQuotationList(lists.quotations.filter(q => q.type === type));
     setQuotationType(type);
     setQuotationId("-1");
     setModuleId("-1");
@@ -164,6 +164,9 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
         quotationCode: lists.quotations.find(q => q.id === quotationId).code,
         moduleCode: selectedModule.code ? selectedModule.code : "N/A",
         activityCode: selectedActivity.code,
+        quotationId: lists.quotations.find(q => q.id === quotationId).id,
+        moduleId: selectedModule.id,
+        activityId: selectedActivity.id,
         moduleTitle: selectedModule.title,
         activityTitle: selectedActivity.title,
         unitCost: unitCost,
@@ -207,6 +210,8 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem>
             <label htmlFor="quotation">Quotation</label>
             <SelectEntity value={quotationId} onChange={e => quotationChange(e.target.value)}>
+              <option key="selectQuotation" value="-1">Selecta quotation</option>
+              <option key="outOfBudget" value="0">Out of budget</option>
               {
                 quotationList.map(q =>
                   <option key={q.id} value={q.id}>  {q.code} </option>
@@ -217,6 +222,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem type="text">
             <label>Module</label>
             <SelectEntity value={moduleId} disabled={quotationId === "-1"} onChange={e => moduleChange(e.target.value)}>
+            <option key="selectModule" value="-1">Select a module</option>
               {
                 moduleList.map(m =>
                   <option key={m.id} value={m.id} >  {m.title} {m.geo ? m.geo.description : ''} </option>
@@ -227,6 +233,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem type="text">
             <label>Activity Code</label>
             <SelectEntity value={activityId} disabled={moduleId === "-1"} onChange={e => setActivityId(e.target.value)}>
+            <option key="selectActivity" value="-1">Select an activity</option>
               {
                 activityList.map(a =>
                   <option key={a.id} value={a.id}>  {a.title} </option>

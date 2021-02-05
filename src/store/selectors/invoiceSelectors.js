@@ -7,11 +7,17 @@ const filterInvoices = (invoices, filters) => {
   let filteredInvoices = [];
   if (invoices) {
     filteredInvoices = filterInvoiceByStatus(invoices, filters.status);
+    filteredInvoices = filterInvoiceByQuotation(filteredInvoices, filters.quotations);
   }
   return filteredInvoices;
 }
 
 const filterInvoiceByStatus = (invoices, filters) => {
   const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.status));
+  return filteredInvoices;
+}
+
+const filterInvoiceByQuotation = (invoices, filters) => {
+  const filteredInvoices = invoices.filter(inv => filters.length === 0 || filters.includes(inv.quotationId));
   return filteredInvoices;
 }
