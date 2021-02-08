@@ -47,7 +47,6 @@ const Activity = ({
     patient: "user-injured",
     year: "dot-circle",
   };
-  let rdm = Date.now();
 
   const deleteActivity = (e) => {
     removeActivity(moduleId, activity.id);
@@ -210,7 +209,7 @@ const Activity = ({
             </label>
           </div>
           <div className="col s2 side-by-side resourcesTrigger">
-            <a href="#!" onClick={(e) => toggleResources(rdm, e)}>
+            <a href="#!" onClick={(e) => toggleResources(activity.code, e)}>
               <FontAwesomeIcon
                 icon="user-tie"
                 className="indigo-text"
@@ -231,7 +230,7 @@ const Activity = ({
             {activity.comment}
           </div>
         </div>
-        <div className="container hide" id={"resources_" + rdm}>
+        <div className="container hide" id={"resources_" + activity.code}>
           <div className="container">
             <div className="row centered">
               <div className="col s10">
