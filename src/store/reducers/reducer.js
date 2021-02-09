@@ -577,6 +577,7 @@ const mapInvoiceList = (invoices) => {
 
 const addModuleToSelectedQuotation = (quotation, module) => {
   const id = uuid();
+  module.id = id;
   quotation.modules[id] = module;
   return quotation;
 }
