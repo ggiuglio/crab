@@ -78,7 +78,7 @@ const Activity = ({
 
   const toggleResources = (id, event) => {
     event.preventDefault();
-    let res = document.getElementById("resources_" + id);
+    let res = document.getElementById(`resources_${id}_${moduleId}`);
     res.classList.contains("hide")
       ? res.classList.remove("hide")
       : res.classList.add("hide");
@@ -230,7 +230,7 @@ const Activity = ({
             {activity.comment}
           </div>
         </div>
-        <div className="container hide" id={"resources_" + activity.code}>
+        <div className="container hide" id={`resources_${activity.code}_${moduleId}`}>
           <div className="container">
             <div className="row centered">
               <div className="col s10">
