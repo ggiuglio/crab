@@ -50,6 +50,10 @@
   text-align: right;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .card {
   margin: 0.5rem !important;
   margin-bottom: 0 !important;

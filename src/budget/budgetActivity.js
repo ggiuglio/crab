@@ -2,6 +2,7 @@ import React from "react";
 import OriginalProviderActivity from "./originalProviderActivity";
 import OriginalSponsorActivity from "./originalSponsorActivity";
 import "./css/budget.css";
+import {printNumbers} from "../util/util";
 
 const BudgetActivity = ({ activity }) => {
   return (
@@ -11,7 +12,8 @@ const BudgetActivity = ({ activity }) => {
           <div className="col s9">
             <span className="bolder">{activity.title}</span>
           </div>
-          <div className="col s3">
+          <div className="col s3 center bolder no-wrap">
+            <span title="NET INCOMES">NET IN</span>&nbsp;
             <span
               className={`${
                 activity.incomes - activity.expenses > 0
@@ -22,15 +24,18 @@ const BudgetActivity = ({ activity }) => {
               {activity.incomes - activity.expenses}
             </span>
           </div>
-          <div className="col s4">
-            <span className="text-right">{activity.budget}</span>
+          <div className="col s4 text-right">
+            <span title="BUDGET">BUDG:</span>&nbsp;
+            <span>{activity.budget}</span>
           </div>
-          <div className="col s4">
-            <span className="text-right">{activity.incomes}</span>
+          <div className="col s4 text-right">
+            <span title="INCOMES">IN:</span>&nbsp;
+            <span>{activity.incomes}</span>
           </div>
-          <div className="col s4">
+          <div className="col s4 text-right">
+            <span title="REMAINING BUDGET">REM B:</span>&nbsp;
             <span
-              className={`text-right ${
+              className={`${
                 activity.budget - activity.incomes > 0
                   ? "green-text"
                   : "red-text"
@@ -38,20 +43,23 @@ const BudgetActivity = ({ activity }) => {
             >
               {activity.budget - activity.incomes}&nbsp; (
               {activity.budget
-                ? 100 - Math.round((activity.incomes / activity.budget) * 100)
+                ? printNumbers(100 - Math.round((activity.incomes / activity.budget) * 100))
                 : 0}
               %)
             </span>
           </div>
-          <div className="col s4">
-            <span className="text-right">{activity.plannedExpenses}</span>
+          <div className="col s4 text-right">
+            <span title="PLANNED EXPENSES">PLAN E:</span>&nbsp;
+            <span>{activity.plannedExpenses}</span>
           </div>
-          <div className="col s4">
-            <span className="text-right">{activity.expenses}</span>
+          <div className="col s4 text-right">
+            <span title="PLANNED EXPENSES">EXP:</span>&nbsp;
+            <span>{activity.expenses}</span>
           </div>
-          <div className="col s4">
+          <div className="col s4 text-right">
+            <span title="REMAINING EXPENSES">REM E:</span>&nbsp;
             <span
-              className={`text-right ${
+              className={`${
                 activity.plannedExpenses - activity.expenses > 0
                   ? "green-text"
                   : "red-text"
@@ -59,9 +67,9 @@ const BudgetActivity = ({ activity }) => {
             >
               {activity.plannedExpenses - activity.expenses}&nbsp;(
               {activity.budget
-                ? 100 -
+                ? printNumbers(100 -
                   Math.round(
-                    (activity.expenses / activity.plannedExpenses) * 100
+                    (activity.expenses / activity.plannedExpenses) * 100)
                   )
                 : 0}
               %)
@@ -69,20 +77,21 @@ const BudgetActivity = ({ activity }) => {
           </div>
         </div>
         <div className="row hide-on-small-only">
-          <div className="col s4">
-            <span className="bolder">{activity.title}</span>
+          <div className="col s4 bolder">
+            <span>{activity.title}</span>
           </div>
           <div className="col s6">
             <div className="row">
-              <div className="col s4">
-                <span className="text-right">{activity.budget}</span>
+              <div className="col s4 text-right">
+                <span>Budget:&nbsp;{activity.budget}</span>
               </div>
-              <div className="col s4">
-                <span className="text-right">{activity.incomes}</span>
+              <div className="col s4 text-right">
+                <span>Incomes:&nbsp;{activity.incomes}</span>
               </div>
-              <div className="col s4">
+              <div className="col s4 text-right">
+                Remaining budget:&nbsp;
                 <span
-                  className={`text-right ${
+                  className={`${
                     activity.budget - activity.incomes > 0
                       ? "green-text"
                       : "red-text"
@@ -90,23 +99,24 @@ const BudgetActivity = ({ activity }) => {
                 >
                   {activity.budget - activity.incomes}&nbsp; (
                   {activity.budget
-                    ? 100 -
-                      Math.round((activity.incomes / activity.budget) * 100)
+                    ? printNumbers(100 -
+                      Math.round((activity.incomes / activity.budget) * 100))
                     : 0}
                   %)
                 </span>
               </div>
             </div>
             <div className="row">
-              <div className="col s4">
-                <span className="text-right">{activity.plannedExpenses}</span>
+              <div className="col s4 text-right">
+                <span>Planned expenses:&nbsp;{activity.plannedExpenses}</span>
               </div>
-              <div className="col s4">
-                <span className="text-right">{activity.expenses}</span>
+              <div className="col s4 text-right">
+                <span>Expenses:&nbsp;{activity.expenses}</span>
               </div>
-              <div className="col s4">
+              <div className="col s4 text-right">
+                Remaining expenses:&nbsp;
                 <span
-                  className={`text-right ${
+                  className={`${
                     activity.plannedExpenses - activity.expenses > 0
                       ? "green-text"
                       : "red-text"
@@ -114,9 +124,9 @@ const BudgetActivity = ({ activity }) => {
                 >
                   {activity.plannedExpenses - activity.expenses}&nbsp;(
                   {activity.budget
-                    ? 100 -
+                    ? printNumbers(100 -
                       Math.round(
-                        (activity.expenses / activity.plannedExpenses) * 100
+                        (activity.expenses / activity.plannedExpenses) * 100)
                       )
                     : 0}
                   %)
@@ -124,16 +134,21 @@ const BudgetActivity = ({ activity }) => {
               </div>
             </div>
           </div>
-          <div className="col s2">
-            <span
-              className={`${
-                activity.incomes - activity.expenses > 0
-                  ? "green-text"
-                  : "red-text"
-              }`}
-            >
-              {activity.incomes - activity.expenses}
-            </span>
+          <div className="col s2 center bolder">
+            <div className="row">
+              <div className="col s12">NET INCOMES</div>
+              <div className="col s12">
+                <span
+                  className={`${
+                    activity.incomes - activity.expenses > 0
+                      ? "green-text"
+                      : "red-text"
+                  }`}
+                >
+                  {activity.incomes - activity.expenses}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -146,7 +161,9 @@ const BudgetActivity = ({ activity }) => {
                   <span className="bolder s-active-text">Original active</span>
                 </div>
                 <div className="col s12 m6 center">
-                  <span className="bolder s-passive-text">Original passive</span>
+                  <span className="bolder s-passive-text">
+                    Original passive
+                  </span>
                 </div>
               </div>
             </div>
