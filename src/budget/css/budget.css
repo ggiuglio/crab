@@ -1,5 +1,8 @@
 #budget-data {
   padding: 0.5rem;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 }
 
 @media only screen and (max-width: 600px) {

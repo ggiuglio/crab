@@ -126,23 +126,7 @@ const Budget = ({
                 </div>
               </div>
               <div className="row hide-on-small-only bolder">
-                <div className="col s3 center">
-                  <div className="row">
-                    <div className="col s12">NET INCOMES</div>
-                    <div className="col s12">
-                      <h5
-                        className={`${
-                          budget.incomes - budget.expenses > 0
-                            ? "light-green-text"
-                            : "red-text"
-                        }`}
-                      >
-                        {budget.incomes - budget.expenses}
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-                <div className="col s6">
+                <div className="col s8">
                   <div className="row">
                     <div className="col s4 text-right">
                       <h6>Budget:&nbsp;{budget.budget}</h6>
@@ -200,11 +184,27 @@ const Budget = ({
                     </div>
                   </div>
                 </div>
-                <div className="col s3 center">
+                <div className="col s2 center">
                   <div className="row">
                     <div className="col s12">OUT OF BUDGET INCOMES</div>
                     <div className="col s12">
                       <h5>{budget.outOfBudgetIncomes}</h5>
+                    </div>
+                  </div>
+                </div>
+                <div className="col s2 center">
+                  <div className="row">
+                    <div className="col s12">NET INCOMES</div>
+                    <div className="col s12">
+                      <h5
+                        className={`${
+                          budget.incomes - budget.expenses > 0
+                            ? "light-green-text"
+                            : "red-text"
+                        }`}
+                      >
+                        {budget.incomes - budget.expenses}
+                      </h5>
                     </div>
                   </div>
                 </div>
