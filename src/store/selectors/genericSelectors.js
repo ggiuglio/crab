@@ -5,15 +5,9 @@ export const getBaseModulesWithActivitiesAsList = (state) => mapBaseModulesWithA
 export const getViewMode = (state) => state.viewMode;
 export const getResources = (state) => state.selectedQuotationData ? mapResourcesToList(state.selectedQuotationData) : [];
 export const getProfessionals = (state) => state.professionals;
-export const getProviders = (state) => mapProviders(state.project);
 export const getBreadcrumbCode = (state) => state.breadcrumbCode;
 export const getBreadcrumb = (state) => state.breadcrumb;
 export const getProjectMenu = (state) => state.projectMenu;
-
-const mapProviders = (project) => {
-  const providers = project ? project.providers : [];
-  return providers;
-};
 
 const mapBaseModules = (modules) => {
   const moduleList = [];

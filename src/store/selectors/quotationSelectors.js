@@ -123,7 +123,8 @@ const mapQuotationsEntityList = (quotationsObj) => {
       let quotation = {
         id: i,
         code: quotationsObj[i].code,
-        type: quotationsObj[i].quotationType
+        type: quotationsObj[i].quotationType,
+        provider: quotationsObj[i].provider
       };
       quotations.unshift(quotation);
 

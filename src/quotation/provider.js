@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getProviders } from "../store/selectors/genericSelectors";
+import { getProjectProviders } from "../store/selectors/projectSelectors";
 import { setSelectedQuotationProvider } from "../store/actions/quotationActions";
 import { getViewMode } from "../store/selectors/genericSelectors";
 import { getQuotation } from "../store/selectors/quotationSelectors";
@@ -57,7 +57,7 @@ const Provider = ({ providers, quotation, setQuotationProvider, viewMode }) => {
 
 const mapStateToProps = (state) => {
   return {
-    providers: getProviders(state),
+    providers: getProjectProviders(state),
     quotation: getQuotation(state),
     viewMode: getViewMode(state)
   };

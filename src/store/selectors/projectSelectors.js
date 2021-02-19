@@ -5,6 +5,8 @@ export const getSelectedProjectId = (state) => state.selectedProjectId;
 export const getRegions = (state) => mapRegions(state.regions);
 export const getCountries = (state) => mapCountries(state.regions, state.selectedProjectData);
 export const getSelectedCountriesInRegion = (state) => mapSelectedCountriesInRegion(state.selectedProjectData.geos, state.selectedProjectData.selectedRegion);
+export const getProjectProviders = (state) => state.selectedProjectData ? state.selectedProjectData.providers : [];
+
 
 const mapProjectList = (projects) => {
   const projectList = [];

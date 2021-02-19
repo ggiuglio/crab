@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from "react-redux";
 import { createNewInvoice } from '../store/actions/invoiceActions';
 import { getQuotationsEntityList, getAllModulesAndActivities } from "../store/selectors/quotationSelectors";
+import { getProjectProviders } from "../store/selectors/projectSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 
 const MainContainer = styled.div`
@@ -57,7 +58,7 @@ const SelectEntity = styled.select`
   display: block;
 `;
 
-const NewInvoice = ({ createInvoice, lists, completeList }) => {
+const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
   const [quotationList, setQuotationList] = useState(lists.quotations.filter(q => q.type === "SPONSOR" || q.type === "any"));
   const [moduleList, setModuleList] = useState(lists.modules);
   const [activityList, setActivityList] = useState(lists.activities);
@@ -70,6 +71,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   const [totalCost, setTotalCost] = useState('');
   const [date, setDate] = useState('');
   const [comment, setComment] = useState('');
+  const [providerId, setProviderId] = useState('-1');
 
   useEffect(() => {
     let datePicker = document.getElementById("date");
@@ -79,12 +81,25 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   }, []);
 
   const invoiceTypeChange = (type) => {
-    setQuotationList(lists.quotations.filter(q => q.type === type));
+    if (type === "SPONSOR") {
+      setQuotationList(lists.quotations.filter(q => q.type === type));
+    } else {
+      setQuotationList([]);
+    }
     setQuotationType(type);
     setQuotationId("-1");
     setModuleId("-1");
     setActivityId("-1");
+    setProviderId("-1")
   };
+
+  const providerChange = (provider) => {
+    setQuotationList(lists.quotations.filter(q => q.type === "PROVIDER" && q.provider && q.provider.id === provider));
+    setQuotationId("-1");
+    setModuleId("-1");
+    setActivityId("-1");
+    setProviderId(provider);
+  }
 
   const invoiceDateChange = (date) => {
     setDate(date);
@@ -150,7 +165,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
   };
 
   const cannotSave = () => {
-    return (quotationId === "-1" || (quotationId !== "0" && (moduleId === "-1" || activityId === "-1")) || !unitCost || !unitNumber || !date);
+    return (quotationId === "-1" || (quotationId !== "0" && (moduleId === "-1" || activityId === "-1")) || !unitCost || !unitNumber || !date || (quotationType === "PROVIDER" && providerId === "-1"));
   };
 
   const saveInvoice = () => {
@@ -165,6 +180,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
         moduleCode: selectedModule.code ? selectedModule.code : "N/A",
         activityCode: selectedActivity.code,
         quotationId: lists.quotations.find(q => q.id === quotationId).id,
+        provider: providers.find(p => p.id = providerId),
         moduleId: selectedModule.id,
         activityId: selectedActivity.id,
         moduleTitle: selectedModule.title,
@@ -180,6 +196,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
       setQuotationId("-1");
       setModuleId("-1");
       setActivityId("-1");
+      setProviderId("-1");
       setUnitCost("");
       setUnitNumber("");
       setTotalCost("");
@@ -201,6 +218,17 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
               <option key={"PROVIDER"} value={"PROVIDER"}> PROVIDER </option>
             </SelectEntity>
           </BodyItem>
+          {quotationType === "PROVIDER" ?
+            <BodyItem>
+              <label htmlFor="type">Provider</label>
+              <SelectEntity value={providerId} onChange={e => providerChange(e.target.value)}>
+              <option key="selectProvider" value="-1">Select a provider</option>
+                {providers.map(p => <option key={p.id} value={p.id}>
+                  {p.title}
+                </option>)}
+              </SelectEntity>
+            </BodyItem>
+            : ""}
           <BodyItem>
             <label htmlFor="date">Date</label>
             <input type="text" id="date" className="datepicker" onClose={e => invoiceDateChange(e.target.value)} />
@@ -210,7 +238,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem>
             <label htmlFor="quotation">Quotation</label>
             <SelectEntity value={quotationId} onChange={e => quotationChange(e.target.value)}>
-              <option key="selectQuotation" value="-1">Selecta quotation</option>
+              <option key="selectQuotation" value="-1">Select a quotation</option>
               <option key="outOfBudget" value="0">Out of budget</option>
               {
                 quotationList.map(q =>
@@ -222,7 +250,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem type="text">
             <label>Module</label>
             <SelectEntity value={moduleId} disabled={quotationId === "-1"} onChange={e => moduleChange(e.target.value)}>
-            <option key="selectModule" value="-1">Select a module</option>
+              <option key="selectModule" value="-1">Select a module</option>
               {
                 moduleList.map(m =>
                   <option key={m.id} value={m.id} >  {m.title} {m.geo ? m.geo.description : ''} </option>
@@ -233,7 +261,7 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
           <BodyItem type="text">
             <label>Activity Code</label>
             <SelectEntity value={activityId} disabled={moduleId === "-1"} onChange={e => setActivityId(e.target.value)}>
-            <option key="selectActivity" value="-1">Select an activity</option>
+              <option key="selectActivity" value="-1">Select an activity</option>
               {
                 activityList.map(a =>
                   <option key={a.id} value={a.id}>  {a.title} </option>
@@ -270,7 +298,8 @@ const NewInvoice = ({ createInvoice, lists, completeList }) => {
 const mapStateToProps = (state) => {
   return {
     lists: getQuotationsEntityList(state),
-    completeList: getAllModulesAndActivities(state)
+    completeList: getAllModulesAndActivities(state),
+    providers: getProjectProviders(state)
   };
 };
 
