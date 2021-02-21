@@ -24,8 +24,9 @@
 /*
   SINGLE QUOTATION COMPONENT
 */
-#peopleTable {
+#peopleTable, #smallPeopleTable {
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
+  background-color: white;
 }
