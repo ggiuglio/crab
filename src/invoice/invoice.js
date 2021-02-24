@@ -1,67 +1,74 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import InvoiceList from "./invoiceList";
 import NewInvoice from "./newInvoice";
-import add from "../assets/images/add.png";
-import { selectProject, loadProjectAction } from "../store/actions/projectActions";
-import { ShowNewInvoice } from "../store/actions/invoiceActions";
-import { getShowNewInvoice } from "../store/selectors/invoiceSelectors";
-import { getSelectedProjectId, getProject } from "../store/selectors/projectSelectors";
+import {
+  selectProject,
+  loadProjectAction,
+} from "../store/actions/projectActions";
+import {
+  getSelectedProjectId,
+  getProject,
+} from "../store/selectors/projectSelectors";
 import InvoiceFilter from "./invoiceFilter";
 import { history } from "../App";
+import M from "materialize-css/dist/js/materialize.min.js";
 
-const AddInvoice = styled.div`
-  height: 30px; 
-  margin: 20px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 16px;
-`;
-const AddArticleImage = styled.img`
-  width: 30px;
-  vertical-align: -8px;
-  margin-right: 10px;
-`;
-
-const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project, chooseProject, loadProject }) => {
+const Invoice = ({
+  selectedProjectId,
+  project,
+  chooseProject,
+  loadProject,
+}) => {
   useEffect(() => {
     if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
-      const queryProject = query.get('project')
+      const queryProject = query.get("project");
       if (queryProject) {
         chooseProject(queryProject);
-      }
-      else {
-        history.push('/');
+      } else {
+        history.push("/");
       }
     } else {
       if (!project || project.id !== selectedProjectId) {
         loadProject(selectedProjectId);
       }
     }
-  });
 
-  const addInvoiceClick = () => {
-    openNewInvoice();
-  };
+    let collapsible = document.querySelectorAll(".collapsible");
+    if (collapsible) M.Collapsible.init(collapsible, { accordion: false });
+    let tooltips = document.querySelectorAll(".tooltipped");
+    M.Tooltip.init(tooltips);
+  });
 
   return (
     <div>
-      <div className="s12">
-        <div className="row">
-          <AddInvoice onClick={() => addInvoiceClick()}>
-            <AddArticleImage src={add} /> Insert new activity
-      </AddInvoice>
-        </div>
-        {isNewInvoiceOpen ? <NewInvoice /> : ''}
+      <div className="row">
+        <div className="col s12">
+          <ul className="collapsible">
+            <li>
+              <div className="collapsible-header indigo lighten-2 block center">
+                <a
+                  href="#!"
+                  className="btn-floating btn-small waves-effect waves-light indigo darken-4 white-text tooltipped"
+                  title="Insert new activity"
+                  data-position="bottom"
+                  data-tooltip="Insert new activity"
+                >
+                  <i className="small material-icons">add</i>
+                </a>
+              </div>
+              <NewInvoice />
+            </li>
+          </ul>
 
-        <div className="row">
-          <div className="col s3">
-            <InvoiceFilter />
-          </div>
-          <div className="col s9">
-            <InvoiceList />
+          <div className="row">
+            <div className="col s3">
+              <InvoiceFilter />
+            </div>
+            <div className="col s9">
+              <InvoiceList />
+            </div>
           </div>
         </div>
       </div>
@@ -71,7 +78,6 @@ const Invoice = ({ openNewInvoice, isNewInvoiceOpen, selectedProjectId, project,
 
 const mapStateToProps = (state) => {
   return {
-    isNewInvoiceOpen: getShowNewInvoice(state),
     selectedProjectId: getSelectedProjectId(state),
     project: getProject(state),
   };
@@ -79,9 +85,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    openNewInvoice: () => dispatch(ShowNewInvoice()),
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
-    loadProject: (projectId) => dispatch(loadProjectAction(projectId))
+    loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
   };
 };
 

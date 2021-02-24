@@ -4,8 +4,6 @@ import {
   RESET_LOGIN_ERROR,
   LOAD_PROJECTS,
   LOAD_PROJECT,
-  SHOW_NEW_INVOICE,
-  HIDE_NEW_INVOICE,
   CLEAR_USER_DATA,
   SELECT_PROJECT,
   SELECT_QUOTATION,
@@ -61,7 +59,6 @@ export const INITIAL_STATE = {
     modules: [],
     activities: []
   },
-  showNewInvoice: false,
   viewMode: VIEW_MODES.VIEW,
   qotationType: undefined,
   resourceModalData: {
@@ -186,18 +183,6 @@ const Reducer = (state = INITIAL_STATE, action) => {
         selectedProjectData: selectedProject,
         breadcrumbCode: bc.length > 0 ? bc[bc.length - 1].id : undefined,
         breadcrumb: bc
-      };
-    }
-    case SHOW_NEW_INVOICE: {
-      return {
-        ...state,
-        showNewInvoice: true,
-      };
-    }
-    case HIDE_NEW_INVOICE: {
-      return {
-        ...state,
-        showNewInvoice: false,
       };
     }
     case CLEAR_USER_DATA: {

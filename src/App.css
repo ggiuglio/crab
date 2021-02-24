@@ -146,6 +146,10 @@ input[type="text"]:disabled, input[type="number"]:disabled {
   padding: 0.5rem 1rem !important;
 }
 
+.collapsible-header i {
+  margin: 0 !important;
+}
+
 .row {
   margin-bottom: 0.3rem !important;
 }

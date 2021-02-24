@@ -1,30 +1,8 @@
 import { FirebaseInstance } from '../../App';
 import {
-  SHOW_NEW_INVOICE,
-  HIDE_NEW_INVOICE,
   SET_INVOICE_FILTER,
   CLEAR_INVOICE_FILTER
 } from './actionsTypes.js';
-
-export const HideNewInvoice = () => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: HIDE_NEW_INVOICE,
-      }
-    )
-  }
-}
-
-export const ShowNewInvoice = () => {
-  return dispatch => {
-    return dispatch(
-      {
-        type: SHOW_NEW_INVOICE,
-      }
-    )
-  }
-}
 
 export const createNewInvoice = (invoice) => {
   return (dispatch, getSate) => {
