@@ -21,7 +21,9 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
   const [totalCost, setTotalCost] = useState("");
   const [date, setDate] = useState("");
   const [comment, setComment] = useState("");
+  const [hasProvider, setHasProvider] = useState(false);
   const [providerId, setProviderId] = useState("-1");
+
   useEffect(() => {
     const datePicker = document.getElementById("date");
     if (datePicker) {
@@ -30,16 +32,14 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
         onClose: () => { setDate(datePicker.value); },
       });
     }
-
-
   });
 
   useEffect(() => {
-    setQuotationList(lists.quotations.filter((q) => q.type === "SPONSOR" || q.type === "any"));
+    setQuotationList(lists.quotations.filter((q) => q.type === "PROVIDER" || q.type === "any"));
   }, [lists]);
 
   const invoiceTypeChange = (type) => {
-    if (type === "SPONSOR") {
+    if (type === "SPONSOR" || !hasProvider) {
       setQuotationList(lists.quotations.filter((q) => q.type === type));
     } else {
       setQuotationList([]);
@@ -117,6 +117,21 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
     if (unitCost) {
       setTotalCost(unitCost * newUnitNumber);
     }
+  };
+
+  const hasProviderChange = () => {
+    if (!hasProvider) {
+      setQuotationList([])
+    } else {
+      setQuotationList(
+        lists.quotations.filter(
+          (q) => q.type === "SPONSOR"
+        )
+      );
+    }
+    setProviderId("-1");
+    setQuotationId("-1");
+    setHasProvider(!hasProvider);
   };
 
   const cannotSave = () => {
@@ -199,11 +214,11 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
             >
               <option key={"SPONSOR"} value={"SPONSOR"}>
                 {" "}
-                SPONSOR{" "}
+                INCOME{" "}
               </option>
               <option key={"PROVIDER"} value={"PROVIDER"}>
                 {" "}
-                PROVIDER{" "}
+                EXPENSE{" "}
               </option>
             </select>
             <label className="active" htmlFor="invoiceType">
@@ -211,27 +226,37 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
             </label>
           </div>
           {quotationType === "PROVIDER" ? (
-            <div className="input-field col s12 m6">
-              <select
-                id="provider"
-                name="provider"
-                className="browser-default"
-                value={providerId}
-                onChange={(e) => providerChange(e.target.value)}
-              >
-                <option key="selectProvider" value="-1">
-                  Select a provider
+            <>
+              <div className="col s1 m1">
+                <label>
+                  <input type="checkbox" onChange={e => hasProviderChange()} />
+                  <span>Has provider</span>
+                </label>
+              </div>
+              {hasProvider ?
+                <div className="input-field col s6 m5">
+                  <select
+                    id="provider"
+                    name="provider"
+                    className="browser-default"
+                    value={providerId}
+                    onChange={(e) => providerChange(e.target.value)}
+                  >
+                    <option key="selectProvider" value="-1">
+                      Select a provider
                 </option>
-                {providers.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.title}
-                  </option>
-                ))}
-              </select>
-              <label className="active" htmlFor="provider">
-                Provider
-              </label>
-            </div>
+                    {providers.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.title}
+                      </option>
+                    ))}
+                  </select>
+                  <label className="active" htmlFor="provider">
+                    Provider
+                  </label>
+                </div> : ""
+              }
+            </>
           ) : (
               ""
             )}
@@ -243,6 +268,7 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               name="quotation"
               className="browser-default"
               value={quotationId}
+              disabled={hasProvider && providerId === "-1"}
               onChange={(e) => quotationChange(e.target.value)}
             >
               <option key="selectQuotation" value="-1">
