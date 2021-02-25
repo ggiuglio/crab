@@ -9,9 +9,7 @@ import { getProjectProviders } from "../store/selectors/projectSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 
 const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
-  const [quotationList, setQuotationList] = useState(
-    lists.quotations.filter((q) => q.type === "SPONSOR" || q.type === "any")
-  );
+  const [quotationList, setQuotationList] = useState([]);
   const [moduleList, setModuleList] = useState(lists.modules);
   const [activityList, setActivityList] = useState(lists.activities);
   const [quotationId, setQuotationId] = useState("-1");
@@ -29,10 +27,16 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
     if (datePicker) {
       M.Datepicker.init(datePicker, {
         format: "dd/mm/yyyy",
-        onClose: () => {setDate(datePicker.value);},
+        onClose: () => { setDate(datePicker.value); },
       });
     }
+
+
   });
+
+  useEffect(() => {
+    setQuotationList(lists.quotations.filter((q) => q.type === "SPONSOR" || q.type === "any"));
+  }, [lists]);
 
   const invoiceTypeChange = (type) => {
     if (type === "SPONSOR") {
@@ -229,8 +233,8 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               </label>
             </div>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </div>
         <div className="row">
           <div className="input-field col s12 m4">
@@ -267,6 +271,9 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               disabled={quotationId === "-1"}
               onChange={(e) => moduleChange(e.target.value)}
             >
+              <option key="module-0" value="-1">
+                Select a module
+              </option>
               {moduleList.map((m) => (
                 <option key={m.id} value={m.id}>
                   {" "}
@@ -287,6 +294,9 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               disabled={moduleId === "-1"}
               onChange={(e) => setActivityId(e.target.value)}
             >
+              <option key="activity-0" value="-1">
+                Select an activity
+              </option>
               {activityList.map((a) => (
                 <option key={a.id} value={a.id}>
                   {" "}
