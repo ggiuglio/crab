@@ -159,10 +159,10 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
       const invoice = {
         date: date,
         type: quotationType,
-        quotationCode: lists.quotations.find((q) => q.id === quotationId).code,
+        quotationCode: quotationId === "0" ? "Out of budget" : lists.quotations.find((q) => q.id === quotationId).code,
         moduleCode: selectedModule.code ? selectedModule.code : "N/A",
         activityCode: selectedActivity.code,
-        quotationId: lists.quotations.find((q) => q.id === quotationId).id,
+        quotationId: quotationId,
         provider: providers.find((p) => (p.id = providerId)),
         moduleId: selectedModule.id,
         activityId: selectedActivity.id,
