@@ -141,7 +141,7 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
       !unitCost ||
       !unitNumber ||
       !date ||
-      (quotationType === "PROVIDER" && providerId === "-1")
+      (quotationType === "PROVIDER" && hasProvider && providerId === "-1")
     );
   };
 
