@@ -37,24 +37,29 @@ table#invoice-table i.delete:after {
   text-shadow: 0 0 3px red;
 }
 
-@media only screen and (min-width: 870px) {
-  table#invoice-table span.m-truncate {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+table#invoice-table span.custom-truncate {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+@media only screen and (min-width: 869px) {
   td.delete-cell {
     border-left: 1px solid black;
   }
 
   .hide-on-custom-med-and-up {
-    display: none;
+    display: none !important;
   }
 }
 
-@media only screen and (max-width: 869px) {
+@media only screen and (max-width: 868px) {
+  table#invoice-table tbody tr {
+    min-width: 20%;
+    max-width: 100%;
+  }
+
   td.delete-cell {
     border-top: 1px solid black;
   }
@@ -65,5 +70,29 @@ table#invoice-table i.delete:after {
 
   .hide-on-custom-med {
     display: none !important;
+  }
+}
+
+@media only screen and (max-width: 868px) {
+  table#invoice-table tbody tr {
+    max-width: 40rem;
+  }
+}
+
+@media only screen and (max-width: 648px) {
+  table#invoice-table tbody tr {
+    max-width: 30rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  table#invoice-table tbody tr {
+    max-width: 25rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  table#invoice-table tbody tr {
+    max-width: 20rem;
   }
 }

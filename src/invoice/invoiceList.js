@@ -33,7 +33,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
     setResponsiveTable();
   };
 
-  const innerWidth = 870;
+  const innerWidth = 868;
 
   const setResponsiveTable = () => {
     const invTable = document.getElementById("invoice-table");
@@ -48,7 +48,6 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
 
   return (
     <div className="section">
-      <h5 className="bolder">Activity list</h5>
       <table id="invoice-table" className="responsive-table">
         <thead>
           <tr>
@@ -106,14 +105,14 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
           {invoices.map((i) => (
             <tr key={i.id}>
               <td>
-                <span className="m-truncate" title={i.type}>
+                <span className="custom-truncate" title={i.type}>
                   {" "}
                   {i.type}{" "}
                 </span>
               </td>
               <td width={hasProvider ? "5%" : "0%"} className="hide-on-custom-med">
                 <span
-                  className="m-truncate"
+                  className="custom-truncate"
                   title={i.provider ? i.provider.title : ""}
                 >
                   {i.provider ? i.provider.title : ""}
@@ -125,57 +124,57 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 </span>
               </td> : null}
               <td>
-                <span className="m-truncate" title={i.date}>
+                <span className="custom-truncate" title={i.date}>
                   {" "}
                   {i.date}{" "}
                 </span>
               </td>
               <td>
-                <span className="m-truncate" title={i.quotationCode}>
+                <span className="custom-truncate" title={i.quotationCode}>
                   {" "}
                   {i.quotationCode}{" "}
                 </span>
               </td>
               <td>
-                <span className="m-truncate" title={i.moduleTitle}>
+                <span className="custom-truncate" title={i.moduleTitle}>
                   {" "}
                   {i.moduleTitle}{" "}
                 </span>
               </td>
               <td className="hide-on-custom-med" width={hasProvider ? "20%" : "25%"}>
-                <span className="m-truncate" title={i.activityTitle}>
+                <span className="custom-truncate" title={i.activityTitle}>
                   {" "}
                   {i.activityTitle}{" "}
                 </span>
               </td>
               <td className="hide-on-custom-med-and-up">
-                <span className="m-truncate" title={i.activityTitle}>
+                <span className="custom-truncate" title={i.activityTitle}>
                   {" "}
                   {i.activityTitle}{" "}
                 </span>
               </td>
               <td className="text-right">
-                <span className="m-truncate" title={i.unitCost}>
+                <span className="custom-truncate" title={i.unitCost}>
                   {i.unitCost}
                 </span>
               </td>
               <td className="text-right">
-                <span className="m-truncate" title={i.unitNumber}>
+                <span className="custom-truncate" title={i.unitNumber}>
                   {i.unitNumber}{" "}
                 </span>
               </td>
               <td className="text-right">
-                <span className="m-truncate" title={i.totalCost}>
+                <span className="custom-truncate" title={i.totalCost}>
                   {i.totalCost}{" "}
                 </span>
               </td>
               <td className="center">
-                <span className="m-truncate" title={i.status}>
+                <span className="custom-truncate" title={i.status}>
                   {i.status}{" "}
                 </span>
               </td>
               <td >
-                <span className="m-truncate" title={i.comment}>
+                <span className="custom-truncate" title={i.comment}>
                   {i.comment}
                 </span>
               </td>
