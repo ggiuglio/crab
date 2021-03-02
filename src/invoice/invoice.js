@@ -63,10 +63,10 @@ const Invoice = ({
           </ul>
 
           <div className="row">
-            <div className="col s3">
+            <div className="col l2 hide-on-med-and-down">
               <InvoiceFilter />
             </div>
-            <div className="col s9">
+            <div className="col s12 l10">
               <InvoiceList />
             </div>
           </div>

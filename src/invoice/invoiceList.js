@@ -1,179 +1,267 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { getFilteredInvoice } from "../store/selectors/invoiceSelectors";
-import { deleteInvoice, setInvoiecStatus } from '../store/actions/invoiceActions';
+import {
+  deleteInvoice,
+  setInvoiecStatus,
+} from "../store/actions/invoiceActions";
+import "./css/invoice.css";
 
-const Maintitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 10px;
-  padding-top: 10px;
-`;
-const InvoiceTd = styled.td`
-  padding: 10px 5px !important;
-  min-width: 50px;
-  font-size: 14px;
-  vertical-align: top;
-`;
-const InvoiceAmountTd = styled(InvoiceTd)`
-  text-align: right;
-`;
-const InvoiceNumberTd = styled(InvoiceTd)`
-  text-align: center;
-`;
-const InvoiceActionTd = styled(InvoiceTd)`
-  text-align: center;
-  cursor: pointer;
-`;
-const InvoiceTh = styled.th`
-  padding: 10px 5px !important;
-  min-width: 70px;
-  font-size: 16px;
-`;
-const CommentRow = styled.div`
-  padding: 10px 0;
-`;
-const InvoiceTextarea = styled.textarea`
-  resize: none;
-  padding: 5px;
-  margin-top: 2px;
-  font-size: 14px;
-`;
-const InvoiceButton = styled.button`
-  margin-right: 10px;
-`;
-
-const ActivityRow = styled.tr`
-  cursor: pointer;
-`;
 const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
-  const [displayInvoices, setDisplayInvoices] = useState([]);
+  const [hasProvider, setHasProvider] = React.useState(false);
 
-  useEffect(() => {
-    setDisplayInvoices(invoices)
-  }, [invoices])
+  React.useEffect(() => {
+    setHasProvider(
+      invoices.some(
+        (i) =>
+          i.provider && i.provider.title && i.provider.title.trim().length > 0
+      )
+    );
+
+    setResponsiveTable();
+  }, [invoices]);
 
   const deleteInvoiceClick = (invoiceId) => {
     deleteInvoiceAction(invoiceId);
   };
 
-  const expandRow = (id) => {
-    const newInvoices = JSON.parse(JSON.stringify(displayInvoices))
-    const selectedInvoice = newInvoices.find(inv => inv.id === id);
-    selectedInvoice.selected = !selectedInvoice.selected;
-    setDisplayInvoices(newInvoices);
+  const setStatus = (id, status) => {
+    changeStatus(id, status);
   };
 
-  const setStatus = (id, status) => {
-    changeStatus(id, status)
+  window.onresize = function(event) {
+    setResponsiveTable();
+  };
+
+  const innerWidth = 870;
+
+  const setResponsiveTable = () => {
+    const invTable = document.getElementById("invoice-table");
+    if(invTable){
+      if(window.innerWidth < innerWidth && !invTable.classList.contains("responsive-table")) {
+        invTable.classList.add("responsive-table");
+      } else if(window.innerWidth >= innerWidth && invTable.classList.contains("responsive-table")) {
+          invTable.classList.remove("responsive-table")
+      }
+    }
   };
 
   return (
-    <div>
-      <Maintitle>
-        Activity list
-      </Maintitle>
-      <table className="striped">
+    <div className="section">
+      <h5 className="bolder">Activity list</h5>
+      <table id="invoice-table" className="responsive-table">
         <thead>
           <tr>
-            <th ></th>
-            <InvoiceTh> Type </InvoiceTh>
-            <InvoiceTh> Date </InvoiceTh>
-            <InvoiceTh> Quotation </InvoiceTh>
-            <InvoiceTh> Module </InvoiceTh>
-            <InvoiceTh> Activity </InvoiceTh>
-            <InvoiceTh> Per unit </InvoiceTh>
-            <InvoiceTh> Units </InvoiceTh>
-            <InvoiceTh> Amount </InvoiceTh>
-            <InvoiceTh> Status </InvoiceTh>
-            <th ></th>
+            <th className="hide-on-custom-med" width="5%">Type</th>
+            <th className="hide-on-custom-med-and-up" title="Type">Tp.</th>
+            <th className="hide-on-custom-med" width={hasProvider ? "6%" : "0%"}>
+              {hasProvider ? "Provider" : ""}
+            </th>
+            {hasProvider ? <th className="hide-on-custom-med-and-up" title="Provider">
+              Prv.
+            </th> : null}
+            <th className="hide-on-custom-med" width="6%">Date</th>
+            <th className="hide-on-custom-med-and-up" title="Date">Dt.</th>
+            <th className="hide-on-custom-med" width="12%">Quotation</th>
+            <th className="hide-on-custom-med-and-up" title="Quotation">Qt.</th>
+            <th className="hide-on-custom-med" width="14%">Module</th>
+            <th className="hide-on-custom-med-and-up" title="Module">Md.</th>
+            <th className="hide-on-custom-med" width={hasProvider ? "16%" : "25%"}>Activity</th>
+            <th className="hide-on-custom-med-and-up" title="Activity">Act.</th>
+            <th width="4%" className="hide-on-custom-med text-right">
+              €/unit
+            </th>
+            <th title="€/unit" className="hide-on-custom-med-and-up text-right">
+              €/un.
+            </th>
+            <th width="3%" className="hide-on-custom-med text-right">
+              Units
+            </th>
+            <th title="Units" className="hide-on-custom-med-and-up text-right">
+              Un.s
+            </th>
+            <th width="5%" className="hide-on-custom-med text-right price">
+              Amnt
+            </th>
+            <th title="Amount €" className="hide-on-custom-med-and-up text-right price">
+              Am.
+            </th>
+            <th width="5%" className="hide-on-custom-med center">
+              Status
+            </th>
+            <th title="Status" className="hide-on-custom-med-and-up center">
+              St.
+            </th>
+            <th className="hide-on-custom-med" title="Comment" width="11%">Comment</th>
+            <th className="hide-on-custom-med-and-up" title="Comment">Com.</th>
+            <th width="10%" colSpan="2" className="hide-on-custom-med center">
+              Actions
+            </th>
+            <th title="Actions" colSpan="2" className="hide-on-custom-med-and-up center">
+              Act.
+            </th>
           </tr>
         </thead>
         <tbody>
-          {displayInvoices.map(i =>
-            !i.selected ?
-              <ActivityRow key={i.id} onClick={() => expandRow(i.id)}>
-                <td><i className="material-icons">keyboard_arrow_right</i></td>
-                <InvoiceTd> {i.type} </InvoiceTd>
-                <InvoiceTd> {i.date} </InvoiceTd>
-                <InvoiceTd> {i.quotationCode} </InvoiceTd>
-                <InvoiceTd> {i.moduleTitle} </InvoiceTd>
-                <InvoiceTd> {i.activityTitle} </InvoiceTd>
-                <InvoiceAmountTd> {i.unitCost} &euro;  </InvoiceAmountTd>
-                <InvoiceNumberTd> {i.unitNumber} </InvoiceNumberTd>
-                <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
-                <InvoiceTd> {i.status} </InvoiceTd>
-                <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i className="material-icons">delete</i></InvoiceActionTd>
-              </ActivityRow>
-              :
-              <ActivityRow key={i.id + "open"} onClick={() => expandRow(i.id)}>
-                <td colSpan="11">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td><i className="material-icons">keyboard_arrow_down</i></td>
-                        <InvoiceTd> {i.type} </InvoiceTd>
-                        <InvoiceTd> {i.date} </InvoiceTd>
-                        <InvoiceTd> {i.quotationCode} </InvoiceTd>
-                        <InvoiceTd> {i.moduleTitle} </InvoiceTd>
-                        <InvoiceTd> {i.activityTitle} </InvoiceTd>
-                        <InvoiceAmountTd> {i.unitCost} &euro; </InvoiceAmountTd>
-                        <InvoiceNumberTd> {i.unitNumber} </InvoiceNumberTd>
-                        <InvoiceAmountTd> {i.totalCost} &euro; </InvoiceAmountTd>
-                        <InvoiceTd> {i.status} </InvoiceTd>
-                        <InvoiceActionTd onClick={() => deleteInvoiceClick(i.id)}><i className="material-icons">delete</i></InvoiceActionTd>
-                      </tr>
-                      {i.type === "PROVIDER" ?
-                        <tr key={i.id + '-provider'}>
-                          <td colSpan="11">
-                            Provider: {i.provider.title}
-                          </td>
-                        </tr>
-                        : <tr key={i.id + '-no-provider'}><td colSpan="11"></td></tr>
-                      }
-                      <tr key={i.id + '-comment'}>
-                        <td colSpan="11">
-                          <CommentRow className="row">
-                            <div className="col s8">
-                              <InvoiceTextarea value={i.comment} disabled={true} />
-                            </div>
-                            <div className="col s4">
-                              {i.status === "NEW" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
-                                : ""}
-                              {i.status === "READY" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
-                                : ""}
-                              {i.status === "INVOICED" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "READY")}>Ready</InvoiceButton>
-                                : ""}
-                              {i.status === "READY" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>New</InvoiceButton>
-                                : ""}
-                              {i.status === "INVOICED" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "PAID")}>Paid</InvoiceButton>
-                                : ""}
-                              {i.status === "PAID" && i.type === "SPONSOR" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "INVOICED")}>Invoiced</InvoiceButton>
-                                : ""}
-                              {i.status === "NEW" && i.type === "PROVIDER" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "PAID")}>Paid</InvoiceButton>
-                                : ""}
-                              {i.status === "PAID" && i.type === "PROVIDER" ?
-                                <InvoiceButton className="btn waves-effect waves-light" onClick={() => setStatus(i.id, "NEW")}>New</InvoiceButton>
-                                : ""}
-                            </div>
-
-                          </CommentRow>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </ActivityRow>
-
-          )}
+          {invoices.map((i) => (
+            <tr key={i.id}>
+              <td>
+                <span className="m-truncate" title={i.type}>
+                  {" "}
+                  {i.type}{" "}
+                </span>
+              </td>
+              <td width={hasProvider ? "5%" : "0%"} className="hide-on-custom-med">
+                <span
+                  className="m-truncate"
+                  title={i.provider ? i.provider.title : ""}
+                >
+                  {i.provider ? i.provider.title : ""}
+                </span>
+              </td>
+              {hasProvider ? <td className="hide-on-custom-med-and-up">
+                <span>
+                  {i.provider ? i.provider.title : ""}
+                </span>
+              </td> : null}
+              <td>
+                <span className="m-truncate" title={i.date}>
+                  {" "}
+                  {i.date}{" "}
+                </span>
+              </td>
+              <td>
+                <span className="m-truncate" title={i.quotationCode}>
+                  {" "}
+                  {i.quotationCode}{" "}
+                </span>
+              </td>
+              <td>
+                <span className="m-truncate" title={i.moduleTitle}>
+                  {" "}
+                  {i.moduleTitle}{" "}
+                </span>
+              </td>
+              <td className="hide-on-custom-med" width={hasProvider ? "20%" : "25%"}>
+                <span className="m-truncate" title={i.activityTitle}>
+                  {" "}
+                  {i.activityTitle}{" "}
+                </span>
+              </td>
+              <td className="hide-on-custom-med-and-up">
+                <span className="m-truncate" title={i.activityTitle}>
+                  {" "}
+                  {i.activityTitle}{" "}
+                </span>
+              </td>
+              <td className="text-right">
+                <span className="m-truncate" title={i.unitCost}>
+                  {i.unitCost}
+                </span>
+              </td>
+              <td className="text-right">
+                <span className="m-truncate" title={i.unitNumber}>
+                  {i.unitNumber}{" "}
+                </span>
+              </td>
+              <td className="text-right">
+                <span className="m-truncate" title={i.totalCost}>
+                  {i.totalCost}{" "}
+                </span>
+              </td>
+              <td className="center">
+                <span className="m-truncate" title={i.status}>
+                  {i.status}{" "}
+                </span>
+              </td>
+              <td >
+                <span className="m-truncate" title={i.comment}>
+                  {i.comment}
+                </span>
+              </td>
+              <td className="center">
+                {i.status === "NEW" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons ready small"
+                    title="set Ready"
+                    onClick={() => setStatus(i.id, "READY")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "READY" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons invoiced small"
+                    title="set Invoiced"
+                    onClick={() => setStatus(i.id, "INVOICED")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "INVOICED" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons ready small"
+                    title="set Ready"
+                    onClick={() => setStatus(i.id, "READY")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "READY" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons new small"
+                    title="set New"
+                    onClick={() => setStatus(i.id, "NEW")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "INVOICED" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons paid small"
+                    title="set Paid"
+                    onClick={() => setStatus(i.id, "PAID")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "PAID" && i.type === "SPONSOR" ? (
+                  <i
+                    className="material-icons invoiced small"
+                    title="set Invoiced"
+                    onClick={() => setStatus(i.id, "INVOICED")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "NEW" && i.type === "PROVIDER" ? (
+                  <i
+                    className="material-icons paid small"
+                    title="set Paid"
+                    onClick={() => setStatus(i.id, "PAID")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+                {i.status === "PAID" && i.type === "PROVIDER" ? (
+                  <i
+                    className="material-icons new small"
+                    title="set New"
+                    onClick={() => setStatus(i.id, "NEW")}
+                  ></i>
+                ) : (
+                  ""
+                )}
+              </td>
+              <td className="delete-cell center">
+                <i
+                  className="material-icons delete small"
+                  title="Delete"
+                  onClick={() => deleteInvoiceClick(i.id)}
+                ></i>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
@@ -182,14 +270,14 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
 
 const mapStateToProps = (state) => {
   return {
-    invoices: getFilteredInvoice(state)
+    invoices: getFilteredInvoice(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     deleteInvoiceAction: (invoice) => dispatch(deleteInvoice(invoice)),
-    changeStatus: (id, status) => dispatch(setInvoiecStatus(id, status))
+    changeStatus: (id, status) => dispatch(setInvoiecStatus(id, status)),
   };
 };
 

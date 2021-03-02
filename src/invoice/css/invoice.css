@@ -1,0 +1,69 @@
+table#invoice-table {
+  table-layout: fixed;
+}
+
+table#invoice-table i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin: 0 0.5rem;
+}
+
+table#invoice-table i.ready:after {
+  content: "R";
+  text-shadow: 0 0 3px green;
+}
+
+table#invoice-table i.invoiced:after {
+  content: "I";
+  text-shadow: 0 0 3px blue;
+}
+
+table#invoice-table i.new:after {
+  content: "N";
+  text-shadow: 0 0 3px yellow;
+}
+
+table#invoice-table i.paid:after {
+  content: "P";
+  text-shadow: 0 0 3px orchid;
+}
+
+table#invoice-table i.delete {
+  margin: 0;
+}
+
+table#invoice-table i.delete:after {
+  content: "X";
+  text-shadow: 0 0 3px red;
+}
+
+@media only screen and (min-width: 870px) {
+  table#invoice-table span.m-truncate {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  td.delete-cell {
+    border-left: 1px solid black;
+  }
+
+  .hide-on-custom-med-and-up {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 869px) {
+  td.delete-cell {
+    border-top: 1px solid black;
+  }
+
+  table#invoice-table i.delete {
+    margin: 0 0.5rem;
+  }
+
+  .hide-on-custom-med {
+    display: none !important;
+  }
+}
