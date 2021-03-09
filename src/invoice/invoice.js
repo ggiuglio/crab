@@ -11,8 +11,11 @@ import {
   getProject,
 } from "../store/selectors/projectSelectors";
 import InvoiceFilter from "./invoiceFilter";
+import InvoiceFilterSmall from "./invoiceFilterSmall";
 import { history } from "../App";
 import M from "materialize-css/dist/js/materialize.min.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./css/invoice.css";
 
 const Invoice = ({
   selectedProjectId,
@@ -59,6 +62,24 @@ const Invoice = ({
                 </a>
               </div>
               <NewInvoice />
+            </li>
+            <li className="hide-on-large-only">
+              <div className="collapsible-header indigo lighten-2 block center">
+                <a
+                  href="#!"
+                  className="btn-floating btn-small waves-effect waves-light indigo darken-4 tooltipped"
+                  title="Filter activities"
+                  data-position="bottom"
+                  data-tooltip="Filter activities"
+                >
+                  <FontAwesomeIcon
+                  icon="filter"
+                  className="white-text "
+                  fixedWidth
+                />
+                </a>
+              </div>
+              <InvoiceFilterSmall />
             </li>
           </ul>
 

@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import InvoiceLegend from "./invoiceLegend";
 import { getFilteredInvoice } from "../store/selectors/invoiceSelectors";
 import {
   deleteInvoice,
   setInvoiecStatus,
 } from "../store/actions/invoiceActions";
-import "./css/invoice.css";
 
 const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
   const [hasProvider, setHasProvider] = React.useState(false);
@@ -18,7 +18,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
       )
     );
 
-    setResponsiveTable();
+    setResponsive();
   }, [invoices]);
 
   const deleteInvoiceClick = (invoiceId) => {
@@ -29,44 +29,86 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
     changeStatus(id, status);
   };
 
-  window.onresize = function(event) {
-    setResponsiveTable();
+  window.onresize = function (event) {
+    setResponsive();
   };
 
   const innerWidth = 868;
 
-  const setResponsiveTable = () => {
+  const setResponsive = () => {
     const invTable = document.getElementById("invoice-table");
-    if(invTable){
-      if(window.innerWidth < innerWidth && !invTable.classList.contains("responsive-table")) {
+    const legend = document.getElementById("invoice-status-legend");
+    if (invTable) {
+      if (
+        window.innerWidth < innerWidth &&
+        !invTable.classList.contains("responsive-table")
+      ) {
         invTable.classList.add("responsive-table");
-      } else if(window.innerWidth >= innerWidth && invTable.classList.contains("responsive-table")) {
-          invTable.classList.remove("responsive-table")
+        if(legend && legend.classList.contains("right")) {
+          legend.classList.remove("right");
+        }
+      } else if (
+        window.innerWidth >= innerWidth &&
+        invTable.classList.contains("responsive-table")
+      ) {
+        invTable.classList.remove("responsive-table");
+        if(legend && !legend.classList.contains("right")) {
+          legend.classList.add("right");
+        }
       }
     }
   };
 
   return (
-    <div className="section">
+    <div>
+      <InvoiceLegend />
       <table id="invoice-table" className="responsive-table">
         <thead>
           <tr>
-            <th className="hide-on-custom-med" width="5%">Type</th>
-            <th className="hide-on-custom-med-and-up" title="Type">Tp.</th>
-            <th className="hide-on-custom-med" width={hasProvider ? "6%" : "0%"}>
+            <th className="hide-on-custom-med" width="5%">
+              Type
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Type">
+              Tp.
+            </th>
+            <th
+              className="hide-on-custom-med"
+              width={hasProvider ? "6%" : "0%"}
+            >
               {hasProvider ? "Provider" : ""}
             </th>
-            {hasProvider ? <th className="hide-on-custom-med-and-up" title="Provider">
-              Prv.
-            </th> : null}
-            <th className="hide-on-custom-med" width="6%">Date</th>
-            <th className="hide-on-custom-med-and-up" title="Date">Dt.</th>
-            <th className="hide-on-custom-med" width="12%">Quotation</th>
-            <th className="hide-on-custom-med-and-up" title="Quotation">Qt.</th>
-            <th className="hide-on-custom-med" width="14%">Module</th>
-            <th className="hide-on-custom-med-and-up" title="Module">Md.</th>
-            <th className="hide-on-custom-med" width={hasProvider ? "16%" : "25%"}>Activity</th>
-            <th className="hide-on-custom-med-and-up" title="Activity">Act.</th>
+            {hasProvider ? (
+              <th className="hide-on-custom-med-and-up" title="Provider">
+                Prv.
+              </th>
+            ) : null}
+            <th className="hide-on-custom-med" width="6%">
+              Date
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Date">
+              Dt.
+            </th>
+            <th className="hide-on-custom-med" width="12%">
+              Quotation
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Quotation">
+              Qt.
+            </th>
+            <th className="hide-on-custom-med" width="14%">
+              Module
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Module">
+              Md.
+            </th>
+            <th
+              className="hide-on-custom-med"
+              width={hasProvider ? "16%" : "25%"}
+            >
+              Activity
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Activity">
+              Act.
+            </th>
             <th width="4%" className="hide-on-custom-med text-right">
               €/unit
             </th>
@@ -82,7 +124,10 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
             <th width="5%" className="hide-on-custom-med text-right price">
               Amnt
             </th>
-            <th title="Amount €" className="hide-on-custom-med-and-up text-right price">
+            <th
+              title="Amount €"
+              className="hide-on-custom-med-and-up text-right price"
+            >
               Am.
             </th>
             <th width="5%" className="hide-on-custom-med center">
@@ -91,12 +136,20 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
             <th title="Status" className="hide-on-custom-med-and-up center">
               St.
             </th>
-            <th className="hide-on-custom-med" title="Comment" width="11%">Comment</th>
-            <th className="hide-on-custom-med-and-up" title="Comment">Com.</th>
+            <th className="hide-on-custom-med" title="Comment" width="11%">
+              Comment
+            </th>
+            <th className="hide-on-custom-med-and-up" title="Comment">
+              Com.
+            </th>
             <th width="10%" colSpan="2" className="hide-on-custom-med center">
               Actions
             </th>
-            <th title="Actions" colSpan="2" className="hide-on-custom-med-and-up center">
+            <th
+              title="Actions"
+              colSpan="2"
+              className="hide-on-custom-med-and-up center"
+            >
               Act.
             </th>
           </tr>
@@ -110,7 +163,10 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   {i.type}{" "}
                 </span>
               </td>
-              <td width={hasProvider ? "5%" : "0%"} className="hide-on-custom-med">
+              <td
+                width={hasProvider ? "5%" : "0%"}
+                className="hide-on-custom-med"
+              >
                 <span
                   className="custom-truncate"
                   title={i.provider ? i.provider.title : ""}
@@ -118,11 +174,11 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   {i.provider ? i.provider.title : ""}
                 </span>
               </td>
-              {hasProvider ? <td className="hide-on-custom-med-and-up">
-                <span>
-                  {i.provider ? i.provider.title : ""}
-                </span>
-              </td> : null}
+              {hasProvider ? (
+                <td className="hide-on-custom-med-and-up">
+                  <span>{i.provider ? i.provider.title : ""}</span>
+                </td>
+              ) : null}
               <td>
                 <span className="custom-truncate" title={i.date}>
                   {" "}
@@ -141,7 +197,10 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   {i.moduleTitle}{" "}
                 </span>
               </td>
-              <td className="hide-on-custom-med" width={hasProvider ? "20%" : "25%"}>
+              <td
+                className="hide-on-custom-med"
+                width={hasProvider ? "20%" : "25%"}
+              >
                 <span className="custom-truncate" title={i.activityTitle}>
                   {" "}
                   {i.activityTitle}{" "}
@@ -173,7 +232,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   {i.status}{" "}
                 </span>
               </td>
-              <td >
+              <td>
                 <span className="custom-truncate" title={i.comment}>
                   {i.comment}
                 </span>
@@ -207,42 +266,6 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                   ""
                 )}
                 {i.status === "READY" && i.type === "SPONSOR" ? (
-                  <i
-                    className="material-icons new small"
-                    title="set New"
-                    onClick={() => setStatus(i.id, "NEW")}
-                  ></i>
-                ) : (
-                  ""
-                )}
-                {i.status === "INVOICED" && i.type === "SPONSOR" ? (
-                  <i
-                    className="material-icons paid small"
-                    title="set Paid"
-                    onClick={() => setStatus(i.id, "PAID")}
-                  ></i>
-                ) : (
-                  ""
-                )}
-                {i.status === "PAID" && i.type === "SPONSOR" ? (
-                  <i
-                    className="material-icons invoiced small"
-                    title="set Invoiced"
-                    onClick={() => setStatus(i.id, "INVOICED")}
-                  ></i>
-                ) : (
-                  ""
-                )}
-                {i.status === "NEW" && i.type === "PROVIDER" ? (
-                  <i
-                    className="material-icons paid small"
-                    title="set Paid"
-                    onClick={() => setStatus(i.id, "PAID")}
-                  ></i>
-                ) : (
-                  ""
-                )}
-                {i.status === "PAID" && i.type === "PROVIDER" ? (
                   <i
                     className="material-icons new small"
                     title="set New"

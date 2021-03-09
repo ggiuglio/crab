@@ -8,31 +8,31 @@ table#invoice-table i {
   margin: 0 0.5rem;
 }
 
-table#invoice-table i.ready:after {
+i.ready:after {
   content: "R";
   text-shadow: 0 0 3px green;
 }
 
-table#invoice-table i.invoiced:after {
+i.invoiced:after {
   content: "I";
   text-shadow: 0 0 3px blue;
 }
 
-table#invoice-table i.new:after {
+i.new:after {
   content: "N";
   text-shadow: 0 0 3px yellow;
 }
 
-table#invoice-table i.paid:after {
+i.paid:after {
   content: "P";
   text-shadow: 0 0 3px orchid;
 }
 
-table#invoice-table i.delete {
+i.delete {
   margin: 0;
 }
 
-table#invoice-table i.delete:after {
+i.delete:after {
   content: "X";
   text-shadow: 0 0 3px red;
 }
@@ -42,6 +42,56 @@ table#invoice-table span.custom-truncate {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#invoice-status-legend {
+  width: fit-content;
+  margin-bottom: 1rem !important;
+}
+
+#invoice-status-legend h6,
+#invoice-status-legend ul,
+#invoice-status-legend li {
+  display: inline-block;
+}
+
+#invoice-status-legend li {
+  margin-left: 1rem;
+}
+
+#invoice-filters ul {
+  font-size: 1.1rem;;
+}
+
+#invoice-filters #filter-module-list li:last-child div.bot-separator {
+  border: none;
+}
+
+#invoice-filters label span {
+  color: black;
+}
+
+.filter-small.card {
+  display: inline-block !important;
+  width: fit-content;
+}
+
+.filter-small.card div,
+.filter-small.card h6 {
+  display: inline-block;
+}
+
+.filter-small.card label {
+  margin-left: 1rem;
+}
+
+.filter-small.card label span {
+  color: black;
+  padding-left: 2.5rem;
+}
+
+.filter-small-module:nth-child(odd) {
+  background: #ddd;
 }
 
 @media only screen and (min-width: 869px) {

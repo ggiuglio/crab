@@ -30,6 +30,10 @@
   text-decoration: line-through;
 }
 
+.upper-text {
+  text-transform: uppercase;
+}
+
 .no-padding {
   padding: 0 !important;
 }
@@ -170,6 +174,14 @@ input[type="text"]:disabled, input[type="number"]:disabled {
   margin-right: 1rem !important;
 }
 
+.pad-left {
+  padding-left: 1rem !important;
+}
+
+.bot-separator {
+  border-bottom: 1px solid #ddd;
+}
+
 .document-type {
   font-style: italic;
 }
@@ -300,40 +312,6 @@ select.browser-default > option:checked {
 .tabs .indicator {
   background-color: indigo !important;
 } /*Color of underline*/
-
-/* .tooltip .tooltiptext {
-  visibility: hidden;
-  position: absolute;
-  z-index: 1000;
-  width: max-content;
-  height: fit-content;
-  border-top: 0.1rem solid black;
-  border-left: 0.1rem solid black;
-  border-bottom: 0.1rem solid grey;
-  border-right: 0.1rem solid grey;
-  background-color: white;
-  color: black;
-  font-size: 1rem;
-  padding: 0 1rem;
-  line-height: 1.5;
-}
-
-.tooltip .tooltiptext.right {
-  top: 25%;
-}
-
-.tooltip .tooltiptext.bottom {
-  top: 100%;
-}
-
-.tooltip .tooltiptext.left {
-  top: 25%;
-  left: -50%;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-} */
 
 @media only screen and (min-width: 0) {
   html {

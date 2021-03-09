@@ -1,45 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
-import M, { Collapsible } from "materialize-css/dist/js/materialize.min.js";
-import { setInvoiceFilter, clearInvoiceFilter } from "../store/actions/invoiceActions";
+import {
+  setInvoiceFilter,
+  clearInvoiceFilter,
+} from "../store/actions/invoiceActions";
 import { getQuotationsEntityList } from "../store/selectors/quotationSelectors";
-
-const Maintitle = styled.div`
-  font-size: 16px;
-  font-weight: bold;
-  padding-bottom: 10px;
-  padding-top: 10px;
-`;
-const Title = styled.div`
-  font-size: 14px;
-  font-weight: bold;
-`;
-const SubTitile = styled(Title)`
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 4px;
-  margin-bottom: 8px;
-`;
-const Filter = styled.ul`
-  border: none !important;
-  box-shadow: none !important;
-  background-color: white !important;
-`;
-const Clear = styled.div`
-font-size: 14px;
-color: red;
-cursor:pointer;
-& > i {
-   color: red;
-   height: 8px;
-   vertical-align: -7px;
-};
-`;
-const ActivityList = styled.div`
-  margin: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #ddd;
-`;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   const [invoiceTypeFilter, setInvoiceTypeFilter] = useState([]);
@@ -48,10 +14,6 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   const [invoiceModuleFilter, setInvoiceModuleFilter] = useState([]);
   const [invoiceActivityFilter, setInvoiceActivityFilter] = useState([]);
   const [activitiesShown, setActivitiesShown] = useState(undefined);
-
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
 
   const setTypeFilter = (value) => {
     if (invoiceTypeFilter.includes(value)) {
@@ -105,7 +67,8 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   };
 
   const showActivitiesForModule = (moduleCode) => {
-    const newActivitiesShown = activitiesShown === moduleCode ? undefined : moduleCode;
+    const newActivitiesShown =
+      activitiesShown === moduleCode ? undefined : moduleCode;
 
     setActivitiesShown(newActivitiesShown);
   };
@@ -120,103 +83,191 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   };
 
   return (
-    <div>
-      <Maintitle>Filter activities</Maintitle>
-      <Clear onClick={() => clearAllFilters()}>
-        <i className="material-icons">clear</i> <span>clear fitlers</span>
-      </Clear>
-      <Filter className="collapsible">
+    <div id="invoice-filters" className="row">
+      <div className="col s12">
+        <span className="bolder card-text space-right">Filter activities</span>
+        <FontAwesomeIcon icon="filter" className="black-text fa-lg" />
+      </div>
+      <div className="col s12 center">
+        <a
+          href="#!"
+          className="red-text upper-text"
+          onClick={() => clearAllFilters()}
+        >
+          <FontAwesomeIcon icon="times" className="space-right" />
+          Clear filters
+        </a>
+      </div>
+      <ul className="collapsible">
         <li>
-          <Title className="collapsible-header">Type</Title>
+          <div className="collapsible-header bolder">Type</div>
           <div className="collapsible-body">
-            <div><label>
-              <input type="checkbox" checked={invoiceTypeFilter.find(t => t === "SPONSOR") ? true : false} onChange={() => setTypeFilter("SPONSOR")} />
-              <span>Sponsor</span> </label></div>
-            <div><label>
-              <input type="checkbox" checked={invoiceTypeFilter.find(t => t === "PROVIDER") ? true : false} onChange={() => setTypeFilter("PROVIDER")} />
-              <span>Provider</span> </label></div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    invoiceTypeFilter.find((t) => t === "SPONSOR")
+                      ? true
+                      : false
+                  }
+                  onChange={() => setTypeFilter("SPONSOR")}
+                />
+                <span>Sponsor</span>{" "}
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    invoiceTypeFilter.find((t) => t === "PROVIDER")
+                      ? true
+                      : false
+                  }
+                  onChange={() => setTypeFilter("PROVIDER")}
+                />
+                <span>Provider</span>{" "}
+              </label>
+            </div>
           </div>
         </li>
-      </Filter>
-
-      <Filter className="collapsible">
         <li>
-          <Title className="collapsible-header">Status</Title>
+          <div className="collapsible-header bolder">Status</div>
           <div className="collapsible-body">
-            <div><label>
-              <input type="checkbox" checked={invoiceStatusFilter.find(t => t === "NEW") ? true : false} onChange={() => setStatusFilter("NEW")} />
-              <span>New</span> </label></div>
-            <div><label>
-              <input type="checkbox" checked={invoiceStatusFilter.find(t => t === "READY") ? true : false} onChange={() => setStatusFilter("READY")} />
-              <span>Ready</span> </label></div>
-            <div><label>
-              <input type="checkbox" checked={invoiceStatusFilter.find(t => t === "INVOICED") ? true : false} onChange={() => setStatusFilter("INVOICED")} />
-              <span>Invoiced</span> </label></div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    invoiceStatusFilter.find((t) => t === "NEW") ? true : false
+                  }
+                  onChange={() => setStatusFilter("NEW")}
+                />
+                <span>New</span>{" "}
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    invoiceStatusFilter.find((t) => t === "READY")
+                      ? true
+                      : false
+                  }
+                  onChange={() => setStatusFilter("READY")}
+                />
+                <span>Ready</span>{" "}
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={
+                    invoiceStatusFilter.find((t) => t === "INVOICED")
+                      ? true
+                      : false
+                  }
+                  onChange={() => setStatusFilter("INVOICED")}
+                />
+                <span>Invoiced</span>{" "}
+              </label>
+            </div>
           </div>
         </li>
-      </Filter>
-
-      <Filter className="collapsible">
         <li>
-          <Title className="collapsible-header">Quotation</Title>
+          <div className="collapsible-header bolder">Quotation</div>
           <div className="collapsible-body">
-            {quotationEntities.quotations.map(q =>
-              <div key={q.id}><label>
-                <input type="checkbox" checked={invoiceQuotationFilter.find(t => t === q.id) ? true : false} onChange={() => setQuotationFilter(q.id)} />
-                <span>{q.code}</span> </label>
+            {quotationEntities.quotations.map((q) => (
+              <div key={q.id}>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={
+                      invoiceQuotationFilter.find((t) => t === q.id)
+                        ? true
+                        : false
+                    }
+                    onChange={() => setQuotationFilter(q.id)}
+                  />
+                  <span>{q.code}</span>{" "}
+                </label>
               </div>
-            )}
-
+            ))}
           </div>
         </li>
-      </Filter>
-
-      <Filter className="collapsible">
         <li>
-          <Title className="collapsible-header">Module</Title>
+          <div className="collapsible-header bolder">Module</div>
           <div className="collapsible-body">
-            {quotationEntities.uniqueModules.map(m =>
-              <Filter key={m.code} className="collapsible">
-                <li>
+            <ul id="filter-module-list">
+              {quotationEntities.uniqueModules.map((m) => (
+                <li key={m.code}>
                   <label>
-                    <input type="checkbox" onChange={() => setModuleFilter(m.code)} checked={invoiceModuleFilter.find(t => t === m.code) ? true : false} />
-                    <span> {m.title} - {m.geo.description} </span>
+                    <input
+                      type="checkbox"
+                      onChange={() => setModuleFilter(m.code)}
+                      checked={
+                        invoiceModuleFilter.find((t) => t === m.code)
+                          ? true
+                          : false
+                      }
+                    />
+                    <span>
+                      {" "}
+                      {m.title} - {m.geo.description}{" "}
+                    </span>
                   </label>
 
-                  {activitiesShown === m.code ?
-                    <ActivityList>
-                      <SubTitile>Activity</SubTitile>
-                      {quotationEntities.activities.filter(a => a.moduleCode === m.code).map(
-                        activity =>
+                  {activitiesShown === m.code ? (
+                    <div className="pad-left bot-separator">
+                      <div className="bolder">Activity</div>
+                      {quotationEntities.activities
+                        .filter((a) => a.moduleCode === m.code)
+                        .map((activity) => (
                           <div key={activity.id}>
                             <label>
-                              <input type="checkbox" onChange={() => setActivityFilter(activity.id)} checked={invoiceActivityFilter.find(t => t === activity.id) ? true : false}/>
+                              <input
+                                type="checkbox"
+                                onChange={() => setActivityFilter(activity.id)}
+                                checked={
+                                  invoiceActivityFilter.find(
+                                    (t) => t === activity.id
+                                  )
+                                    ? true
+                                    : false
+                                }
+                              />
                               <span>{activity.title}</span>
                             </label>
                           </div>
-                      )}
-                    </ActivityList>
-                    : ""}
+                        ))}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </li>
-              </Filter>
-            )}
+              ))}
+            </ul>
           </div>
         </li>
-      </Filter>
+      </ul>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    quotationEntities: getQuotationsEntityList(state)
+    quotationEntities: getQuotationsEntityList(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setFilter: (filterType, filterValue) => dispatch(setInvoiceFilter(filterType, filterValue)),
-    clearFilters: () => dispatch(clearInvoiceFilter())
+    setFilter: (filterType, filterValue) =>
+      dispatch(setInvoiceFilter(filterType, filterValue)),
+    clearFilters: () => dispatch(clearInvoiceFilter()),
   };
 };
 
