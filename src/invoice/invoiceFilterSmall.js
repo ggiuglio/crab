@@ -14,11 +14,6 @@ const InvoiceFilterSmall = ({ quotationEntities, setFilter, clearFilters }) => {
   const [invoiceQuotationFilter, setInvoiceQuotationFilter] = useState([]);
   const [invoiceModuleFilter, setInvoiceModuleFilter] = useState([]);
   const [invoiceActivityFilter, setInvoiceActivityFilter] = useState([]);
-  const [activitiesShown, setActivitiesShown] = useState(undefined);
-
-  useEffect(() => {
-    M.AutoInit();
-  }, []);
 
   const setTypeFilter = (value) => {
     if (invoiceTypeFilter.includes(value)) {
@@ -51,14 +46,32 @@ const InvoiceFilterSmall = ({ quotationEntities, setFilter, clearFilters }) => {
   };
 
   const setModuleFilter = (value) => {
+    let setActivities = false;
     if (invoiceModuleFilter.includes(value)) {
       invoiceModuleFilter.splice(invoiceModuleFilter.indexOf(value), 1);
+
+      quotationEntities.activities
+        .filter((a) => a.moduleCode === value)
+        .map((activity) => {
+          const idx = invoiceActivityFilter.indexOf(activity.id);
+          if (idx >= 0)
+            invoiceActivityFilter.splice(
+              invoiceActivityFilter.indexOf(idx),
+              1
+            );
+        });
+
+      setActivities = true;
     } else {
       invoiceModuleFilter.push(value);
     }
+
+    if (setActivities) {
+      setInvoiceActivityFilter(invoiceActivityFilter);
+      setFilter("activities", invoiceActivityFilter);
+    }
     setInvoiceModuleFilter(invoiceModuleFilter);
     setFilter("modules", invoiceModuleFilter);
-    showActivitiesForModule(value);
   };
 
   const setActivityFilter = (value) => {
@@ -69,13 +82,6 @@ const InvoiceFilterSmall = ({ quotationEntities, setFilter, clearFilters }) => {
     }
     setInvoiceActivityFilter(invoiceActivityFilter);
     setFilter("activities", invoiceActivityFilter);
-  };
-
-  const showActivitiesForModule = (moduleCode) => {
-    const newActivitiesShown =
-      activitiesShown === moduleCode ? undefined : moduleCode;
-
-    setActivitiesShown(newActivitiesShown);
   };
 
   const clearAllFilters = () => {
@@ -212,7 +218,7 @@ const InvoiceFilterSmall = ({ quotationEntities, setFilter, clearFilters }) => {
                   </span>
                 </label>
 
-                {activitiesShown === m.code ? (
+                {invoiceModuleFilter.includes(m.code) ? (
                   <div className="pad-left">
                     <h6 className="bolder">Activity</h6>
                     {quotationEntities.activities

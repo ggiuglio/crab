@@ -13,7 +13,6 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   const [invoiceQuotationFilter, setInvoiceQuotationFilter] = useState([]);
   const [invoiceModuleFilter, setInvoiceModuleFilter] = useState([]);
   const [invoiceActivityFilter, setInvoiceActivityFilter] = useState([]);
-  const [activitiesShown, setActivitiesShown] = useState(undefined);
 
   const setTypeFilter = (value) => {
     if (invoiceTypeFilter.includes(value)) {
@@ -46,14 +45,32 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
   };
 
   const setModuleFilter = (value) => {
+    let setActivities = false;
     if (invoiceModuleFilter.includes(value)) {
       invoiceModuleFilter.splice(invoiceModuleFilter.indexOf(value), 1);
+
+      quotationEntities.activities
+        .filter((a) => a.moduleCode === value)
+        .map((activity) => {
+          const idx = invoiceActivityFilter.indexOf(activity.id);
+          if (idx >= 0)
+            invoiceActivityFilter.splice(
+              invoiceActivityFilter.indexOf(idx),
+              1
+            );
+        });
+
+      setActivities = true;
     } else {
       invoiceModuleFilter.push(value);
     }
+
+    if (setActivities) {
+      setInvoiceActivityFilter(invoiceActivityFilter);
+      setFilter("activities", invoiceActivityFilter);
+    }
     setInvoiceModuleFilter(invoiceModuleFilter);
     setFilter("modules", invoiceModuleFilter);
-    showActivitiesForModule(value);
   };
 
   const setActivityFilter = (value) => {
@@ -64,13 +81,6 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
     }
     setInvoiceActivityFilter(invoiceActivityFilter);
     setFilter("activities", invoiceActivityFilter);
-  };
-
-  const showActivitiesForModule = (moduleCode) => {
-    const newActivitiesShown =
-      activitiesShown === moduleCode ? undefined : moduleCode;
-
-    setActivitiesShown(newActivitiesShown);
   };
 
   const clearAllFilters = () => {
@@ -220,7 +230,7 @@ const InvoiceFilter = ({ quotationEntities, setFilter, clearFilters }) => {
                     </span>
                   </label>
 
-                  {activitiesShown === m.code ? (
+                  {invoiceModuleFilter.includes(m.code) ? (
                     <div className="pad-left bot-separator">
                       <div className="bolder">Activity</div>
                       {quotationEntities.activities

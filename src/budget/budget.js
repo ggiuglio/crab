@@ -47,10 +47,10 @@ const Budget = ({
           <div className="col s12">
             <div id="budget-data" className="card indigo darken-1 white-text">
               <div className="row hide-on-med-and-up bolder">
-                <div className="col s6 center">
-                  <span title="NET INCOMES">NET IN</span>&nbsp;
+                <div className="col s12 center">
+                  <span title="NET INCOMES" className="space-right">NET INCOMES</span>&nbsp;
                   <h5
-                    className={`${
+                    className={`inline-block ${
                       budget.incomes - budget.expenses > 0
                         ? "light-green-text"
                         : "red-text"
@@ -59,10 +59,10 @@ const Budget = ({
                     {budget.incomes - budget.expenses}
                   </h5>
                 </div>
-                <div className="col s6 center">
+                {/* <div className="col s6 center">
                   <span title="OUT OF BUDGET INCOMES">OUT BUDG IN</span>&nbsp;
                   <h5>{budget.outOfBudgetIncomes}</h5>
-                </div>
+                </div> */}
                 <div className="col s4">
                   <h6 className="text-right">
                     <span title="BUDGET">BUDG:</span>&nbsp;{budget.budget}
@@ -126,7 +126,7 @@ const Budget = ({
                 </div>
               </div>
               <div className="row hide-on-small-only bolder">
-                <div className="col s8">
+                <div className="col s10">
                   <div className="row">
                     <div className="col s4 text-right">
                       <h6>Budget:&nbsp;{budget.budget}</h6>
@@ -184,14 +184,14 @@ const Budget = ({
                     </div>
                   </div>
                 </div>
-                <div className="col s2 center">
+                {/* <div className="col s2 center">
                   <div className="row">
                     <div className="col s12">OUT OF BUDGET INCOMES</div>
                     <div className="col s12">
                       <h5>{budget.outOfBudgetIncomes}</h5>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col s2 center">
                   <div className="row">
                     <div className="col s12">NET INCOMES</div>
