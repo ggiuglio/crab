@@ -11,7 +11,6 @@ import {
   getProject,
 } from "../store/selectors/projectSelectors";
 import InvoiceFilter from "./invoiceFilter";
-import InvoiceFilterSmall from "./invoiceFilterSmall";
 import { history } from "../App";
 import M from "materialize-css/dist/js/materialize.min.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -79,13 +78,13 @@ const Invoice = ({
                 />
                 </a>
               </div>
-              <InvoiceFilterSmall />
+              <InvoiceFilter isSmall={true} />
             </li>
           </ul>
 
           <div className="row">
             <div className="col l2 hide-on-med-and-down">
-              <InvoiceFilter />
+              <InvoiceFilter isSmall={false} />
             </div>
             <div className="col s12 l10">
               <InvoiceList />
