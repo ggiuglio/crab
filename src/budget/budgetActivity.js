@@ -13,7 +13,7 @@ const BudgetActivity = ({ activity }) => {
             <span className="bolder">{activity.title}</span>
           </div>
           <div className="col s3 center bolder no-wrap">
-            <span title="NET INCOMES">NET IN</span>&nbsp;
+            <span title="NET INCOME">NET IN</span>&nbsp;
             <span
               className={`${
                 activity.incomes - activity.expenses > 0
@@ -29,7 +29,7 @@ const BudgetActivity = ({ activity }) => {
             <span>{activity.budget}</span>
           </div>
           <div className="col s4 text-right">
-            <span title="INCOMES">IN:</span>&nbsp;
+            <span title="INCOME">IN:</span>&nbsp;
             <span>{activity.incomes}</span>
           </div>
           <div className="col s4 text-right">
@@ -86,7 +86,7 @@ const BudgetActivity = ({ activity }) => {
                 <span>Budget:&nbsp;{activity.budget}</span>
               </div>
               <div className="col s4 text-right">
-                <span>Incomes:&nbsp;{activity.incomes}</span>
+                <span>Income:&nbsp;{activity.incomes}</span>
               </div>
               <div className="col s4 text-right">
                 Remaining budget:&nbsp;
@@ -136,7 +136,7 @@ const BudgetActivity = ({ activity }) => {
           </div>
           <div className="col s2 center bolder">
             <div className="row">
-              <div className="col s12">NET INCOMES</div>
+              <div className="col s12">NET INCOME</div>
               <div className="col s12">
                 <span
                   className={`${
@@ -184,7 +184,7 @@ const BudgetActivity = ({ activity }) => {
                         </th>
                         <th
                           className="text-right hide-on-med-and-up"
-                          title="Incomes"
+                          title="Income"
                         >
                           Inc
                         </th>
@@ -199,7 +199,7 @@ const BudgetActivity = ({ activity }) => {
                           Budget
                         </th>
                         <th className="text-right hide-on-small-only">
-                          Incomes
+                          Income
                         </th>
                         <th className="text-right hide-on-small-only">
                           Remaining Budget (%)

@@ -160,7 +160,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
               <td>
                 <span className="custom-truncate" title={i.type}>
                   {" "}
-                  {i.type}{" "}
+                  {i.type === "SPONSOR" ? "INCOME" : "EXPENSE"}{" "}
                 </span>
               </td>
               <td

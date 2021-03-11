@@ -33,7 +33,7 @@ const InvoiceFilterBig = ( par ) => {
                   }
                   onChange={() => par.setTypeFilter("SPONSOR")}
                 />
-                <span>Sponsor</span>{" "}
+                <span>Income</span>{" "}
               </label>
             </div>
             <div>
@@ -47,7 +47,7 @@ const InvoiceFilterBig = ( par ) => {
                   }
                   onChange={() => par.setTypeFilter("PROVIDER")}
                 />
-                <span>Provider</span>{" "}
+                <span>Expense</span>{" "}
               </label>
             </div>
           </div>

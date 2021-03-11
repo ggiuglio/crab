@@ -6,9 +6,12 @@ const mapBudget = (quotations, invoices) => {
     budget: 0,              // the total amount quotated to the sponsor
     plannedExpenses: 0,     // the total amount quotated by providers
     incomes: 0,             // the total amount invoiced to the sponsor for quotated activities
-    expenses: 0,            // the total amount invoiced by suppliers for quotated activities
-    outOfBudgetIncomes: 0,  // the total amount invoiced to the sponsor for NOT quotated activities
-    outOfBudgetExpenses: 0  // the total amount invoiced by suppliers for NOT quotated activities
+    expenses: 0,            // the total amount of cost activities
+    outOfBudget: {
+      incomes: 0,  // the total amount invoiced to the sponsor for NOT quotated activities
+      expenses: 0, // the total amount of cost activities NOT quotated
+      originalActivities: [] // original OOB activities
+    }
   };
 
   if (quotations) {
@@ -153,8 +156,14 @@ const updateModuleTotals = (module, activity) => {
 const calculateOutOfBudget = (budget, invoices) => {
   let outOfBudgetInvoices = invoices.filter(i => i.quotationCode === "Out of budget");
   outOfBudgetInvoices.forEach(i => {
-    budget.outOfBudgetCost += i.totalCost;
-    budget.sustainedCost += i.totalCost;
+    if(i.type === 'PROVIDER') {
+      budget.outOfBudget.incomes += i.totalCost;
+      budget.incomes += i.totalCost;
+    } else {
+      budget.outOfBudget.expenses += i.totalCost;
+      budget.expenses += i.totalCost;
+    }
+    budget.outOfBudget.originalActivities.push(i);
   });
 
   return budget;

@@ -7,7 +7,6 @@ export const getCountries = (state) => mapCountries(state.regions, state.selecte
 export const getSelectedCountriesInRegion = (state) => mapSelectedCountriesInRegion(state.selectedProjectData.geos, state.selectedProjectData.selectedRegion);
 export const getProjectProviders = (state) => state.selectedProjectData ? state.selectedProjectData.providers : [];
 
-
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {

@@ -35,7 +35,7 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
   });
 
   useEffect(() => {
-    setQuotationList(lists.quotations.filter((q) => q.type === "PROVIDER" || q.type === "any"));
+    setQuotationList(lists.quotations.filter((q) => q.type === "SPONSOR" || q.type === "any"));
   }, [lists]);
 
   const invoiceTypeChange = (type) => {

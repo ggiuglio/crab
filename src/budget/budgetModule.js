@@ -35,7 +35,7 @@ const BudgetModule = ({ module }) => {
             {module.geo.description}
           </div>
           <div className="col s3 bolder center no-wrap">
-            <span title="NET INCOMES">NET IN</span>&nbsp;
+            <span title="NET INCOME">NET IN</span>&nbsp;
             <span
               className={`text-darken-4 ${
                 module.incomes - module.expenses > 0 ? "green-text" : "red-text"
@@ -48,7 +48,7 @@ const BudgetModule = ({ module }) => {
             <span title="BUDGET">BUDG:</span>&nbsp;<span>{module.budget}</span>
           </div>
           <div className="col s4 text-right">
-            <span title="INCOMES">IN:</span>&nbsp;<span>{module.incomes}</span>
+            <span title="INCOME">IN:</span>&nbsp;<span>{module.incomes}</span>
           </div>
           <div className="col s4 text-right">
             <span title="REMAINING BUDGET">REM B:</span>&nbsp;
@@ -107,7 +107,7 @@ const BudgetModule = ({ module }) => {
                 <span>Budget:&nbsp;{module.budget}</span>
               </div>
               <div className="col s4 text-right">
-                <span>Incomes:&nbsp;{module.incomes}</span>
+                <span>Income:&nbsp;{module.incomes}</span>
               </div>
               <div className="col s4 text-right">
                 Remaining budget:&nbsp;
@@ -156,7 +156,7 @@ const BudgetModule = ({ module }) => {
           </div>
           <div className="col s2 center bolder">
             <div className="row">
-              <div className="col s12">NET INCOMES</div>
+              <div className="col s12">NET INCOME</div>
               <div className="col s12">
                 <span
                   className={`text-right text-darken-4 ${
