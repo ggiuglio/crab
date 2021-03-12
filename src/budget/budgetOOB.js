@@ -63,8 +63,8 @@ const BudgetOOB = ({ oob }) => {
           </div>
         </div>
       </div>
-      <div className="collapsible-body">
-        <ul className="collapsible">
+      <div className="collapsible-body container">
+        <ul>
           {
             oob.originalActivities.map((oa, i) =>
               <OriginaOOBActivity key={i} activity={oa} />
