@@ -355,3 +355,44 @@ select.browser-default > option:checked {
     margin-bottom: 0 !important;
   }
 }
+
+@media print {
+ 
+  #content, #page {
+  width: 100%; 
+  margin: 0; 
+  float: none;
+  }
+      
+  @page { margin: 150mm; }
+
+  body {
+    font: 12pt Georgia, "Times New Roman", Times, serif;
+    line-height: 1.2;
+    background: #fff !important;
+    color: #000;
+    }
+     
+    a {
+        page-break-inside:avoid
+    }
+    blockquote {
+        page-break-inside: avoid;
+    }
+    h1, h2, h3, h4, h5, h6 { page-break-after:avoid; 
+         page-break-inside:avoid }
+    img { page-break-inside:avoid; 
+         page-break-after:avoid; }
+    table, pre { page-break-inside:avoid }
+    ul, ol, dl  { page-break-before:avoid }
+
+    .module-li {
+      border-top: 1px solid black;
+      border-bottom: 1px solid black;
+    }
+
+    #quotationGroup {
+      border: none !important;
+    }
+
+}

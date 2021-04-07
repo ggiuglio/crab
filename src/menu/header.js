@@ -5,9 +5,9 @@ import Title from "./title.js";
 import { getSelectedProjectId } from "../store/selectors/projectSelectors";
 import ProjectMenu from "../menu/projectMenu";
 
-const Header = ({ selectedProjectId }) => {
+const Header = ({ isPrintMode, selectedProjectId }) => {
   return (
-    <div>
+    <div style={isPrintMode ? {display: "none"} : {}}>
       <nav>
         <div className="nav-wrapper indigo">
           <div className="container">

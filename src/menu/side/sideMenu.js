@@ -5,7 +5,7 @@ import SignedInSideLinks from './signedInSideLinks'
 import SignedOutSideLinks from './signedOutSideLinks'
 import M from  'materialize-css/dist/js/materialize.min.js';
 
-const SideMenu = ({user}) => {
+const SideMenu = ({isPrintMode, user}) => {
   React.useEffect(() => {
     if(user) {
       let sidenav = document.querySelector('.sidenav');
@@ -16,7 +16,7 @@ const SideMenu = ({user}) => {
   const links = user ? <SignedInSideLinks /> : <SignedOutSideLinks />;
 
   return (
-    <ul className="sidenav" id="mobile-links">
+    <ul className="sidenav" id="mobile-links" style={isPrintMode ? {display: "none"} : {}}>
       {links}
     </ul>
   );

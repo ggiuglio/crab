@@ -272,6 +272,25 @@ const NewQuotation = ({
                   ""
                 )}
               </div>
+              {viewMode === VIEW_MODES.VIEW ? (
+                  <div className="row">
+                    <div className="col s1 offset-s11">
+                      <a
+                        href={`/print/project/quotation?project=${selectedProjectId}&quotation=${selectedQuotationId}`}
+                        target="_blank"
+                      >
+                      <i
+                        className="material-icons indigo-text right"
+                        title="Print quotation"
+                      >
+                        print
+                      </i>
+                    </a>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+              )}
               <div className="row">
                 <div className="col s1 hide-on-small-only offset-s11">
                   <a
