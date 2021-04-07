@@ -87,7 +87,7 @@ const QuotationPrint = ({
                                       <div className="col s1">
                                         <div className="center">
                                          {activity.responsibilityCRO === true ? "CRO" : null}
-                                         {activity.responsibilityCresponsibilitySponsorRO === true ? "SPONSOR" : null}
+                                         {activity.responsibilitySponsor === true ? "SPONSOR" : null}
                                         </div>
                                       </div>
                                       <div className="col s2">
