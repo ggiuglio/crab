@@ -57,12 +57,12 @@ const QuotationPrint = ({
         <div id="selectedQuotation">
           <div>
             <div className="row">
-              <div className="col s12" id="quotationGroup">
+              <div className="col s12" id="quotationGroup-print">
                 <ul>
                   {selectedQuotation.modules.map((module) => (
                     <li key={module.id} className="module-li">
                       <div>
-                        <div className="row">
+                        <div className="row indigo lighten-5">
                           <div className="col s10">
                             <span className="bolder">{module.title}</span>{" "}
                             {module.geo.description}
@@ -72,22 +72,25 @@ const QuotationPrint = ({
                           </div>
                         </div>
                       </div>
-                      <div>
+                      <div className="activity-print">
                         <ul>
                           {module.activities
                             ? module.activities.map((activity) => {
-                                return <li key={activity.id}>
+                                return <li key={activity.id} className="activity-li">
                                   <div>
                                     <div className="row">
-                                      <div className="col s4">
+                                      <div className="col s3">
                                         <span className="italic">
                                           {activity.title}
                                         </span>
                                       </div>
                                       <div className="col s1">
+                                        <span>{activity.unit}</span>
+                                      </div>
+                                      <div className="col s1">
                                         <div className="center">
                                          {activity.responsibilityCRO === true ? "CRO" : null}
-                                         {activity.responsibilitySponsor === true ? "SPONSOR" : null}
+                                         {activity.responsibilitySponsor === true ? "SPO" : null}
                                         </div>
                                       </div>
                                       <div className="col s2">
