@@ -2,20 +2,30 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { createNewInvoice } from "../store/actions/invoiceActions";
 import {
-  getQuotationsEntityList,
+  getSponsorQuotationsEntityList,
+  getProviderQuotationsEntityList,
   getAllModulesAndActivities,
 } from "../store/selectors/quotationSelectors";
 import { getProjectProviders } from "../store/selectors/projectSelectors";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
-  const [quotationList, setQuotationList] = useState([]);
-  const [moduleList, setModuleList] = useState(lists.modules);
-  const [activityList, setActivityList] = useState(lists.activities);
-  const [quotationId, setQuotationId] = useState("-1");
-  const [quotationType, setQuotationType] = useState("SPONSOR");
-  const [moduleId, setModuleId] = useState("-1");
-  const [activityId, setActivityId] = useState("-1");
+const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, providers }) => {
+  const [activityType, setActivityType] = useState("INCOME");
+  // sponsor
+  const [sponsorQuotationList, setSponsorQuotationList] = useState([]);
+  const [sponsorModuleList, setSponsorModuleList] = useState([]);
+  const [sponsorActivityList, setSponsorActivityList] = useState([]);
+  const [sponsorQuotationId, setSponsorQuotationId] = useState("-1");
+  const [sponsorModuleId, setSponsorModuleId] = useState("-1");
+  const [sponsorActivityId, setSponsorActivityId] = useState("-1");
+  // provider
+  const [providerQuotationList, setProviderQuotationList] = useState([]);
+  const [providerModuleList, setProviderModuleList] = useState([]);
+  const [providerActivityList, setProviderActivityList] = useState([]);
+  const [providerQuotationId, setProviderQuotationId] = useState("-1");
+  const [providerModuleId, setProviderModuleId] = useState("-1");
+  const [providerActivityId, setProviderActivityId] = useState("-1");
+
   const [unitCost, setUnitCost] = useState("");
   const [unitNumber, setUnitNumber] = useState("");
   const [totalCost, setTotalCost] = useState("");
@@ -35,62 +45,82 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
   });
 
   useEffect(() => {
-    setQuotationList(lists.quotations.filter((q) => q.type === "SPONSOR" || q.type === "any"));
-  }, [lists]);
+    setSponsorQuotationList(sponsorList.quotations)
+  }, [sponsorList]);
 
-  const invoiceTypeChange = (type) => {
-    if (type === "SPONSOR" || !hasProvider) {
-      setQuotationList(lists.quotations.filter((q) => q.type === type));
-    } else {
-      setQuotationList([]);
-    }
-    setQuotationType(type);
-    setQuotationId("-1");
-    setModuleId("-1");
-    setActivityId("-1");
-    setProviderId("-1");
+  useEffect(() => {
+    setProviderQuotationList(providerList.quotations)
+  }, [providerList]);
+
+  const activityTypeChange = (type) => {
+    setActivityType(type)
   };
 
   const providerChange = (provider) => {
-    setQuotationList(
-      lists.quotations.filter(
-        (q) => q.type === "PROVIDER" && q.provider && q.provider.id === provider
+    setProviderQuotationList(
+      providerList.quotations.filter(
+        (q) => provider === "-1" || (q.provider && q.provider.id === provider)
       )
     );
-    setQuotationId("-1");
-    setModuleId("-1");
-    setActivityId("-1");
+    setProviderQuotationId("-1");
+    setProviderModuleId("-1");
+    setProviderActivityId("-1");
     setProviderId(provider);
   };
 
-  const quotationChange = (qId) => {
-    setQuotationId(qId);
-    setModuleId("-1");
-    setActivityId("-1");
+  const sponsorQuotationChange = (qId) => {
+    setSponsorQuotationId(qId);
+    setSponsorModuleId("-1");
+    setSponsorActivityId("-1");
     if (qId === "-1") {
-      setModuleList(lists.modules.filter((m) => m.id === "-1"));
-      setActivityList(getAvailableActivities(qId));
+      setSponsorModuleList(sponsorList.modules.filter((m) => m.id === "-1"));
+      setSponsorActivityList(getAvailableActivities(qId));
     }
     if (qId === "0") {
-      setModuleList(completeList.modules);
-      setActivityList(getAvailableActivities(qId));
+      setSponsorModuleList(completeList.modules);
+      setSponsorActivityList(getAvailableActivities(qId));
     }
     if (qId !== "-1" && qId !== "0") {
-      setModuleList(
-        lists.modules.filter((m) => m.quotationId === qId || m.id === "-1")
+      setSponsorModuleList(
+        sponsorList.modules.filter((m) => m.quotationId === qId || m.id === "-1")
       );
-      setActivityList(getAvailableActivities(qId));
+      setSponsorActivityList(getAvailableActivities(qId));
     }
   };
 
-  const moduleChange = (mId) => {
-    setModuleId(mId);
-    setActivityList(getAvailableActivities(quotationId, mId));
+  const sponsorModuleChange = (mId) => {
+    setSponsorModuleId(mId);
+    setSponsorActivityList(getAvailableActivities(sponsorQuotationId, mId));
+  };
+
+  const providerQuotationChange = (qId) => {
+    setProviderQuotationId(qId);
+    setProviderModuleId("-1");
+    setProviderActivityId("-1");
+    if (qId === "-1") {
+      setProviderModuleList(sponsorList.modules.filter((m) => m.id === "-1"));
+      setProviderActivityList(getAvailableActivities(qId));
+    }
+    if (qId === "0") {
+      setProviderModuleList(completeList.modules);
+      setProviderActivityList(getAvailableActivities(qId));
+    }
+    if (qId !== "-1" && qId !== "0") {
+      setProviderModuleList(
+        sponsorList.modules.filter((m) => m.quotationId === qId || m.id === "-1")
+      );
+      setProviderActivityList(getAvailableActivities(qId));
+    }
+  };
+
+  const providerModuleChange = (mId) => {
+    setProviderModuleId(mId);
+    setProviderActivityList(getAvailableActivities(sponsorQuotationId, mId));
   };
 
   const getAvailableActivities = (quotation, module) => {
     if (quotation === "-1" || module === "-1") {
-      return lists.activities.filter((a) => a.id === "-1");
+      return sponsorList.activities.filter((a) => a.id === "-1");
     }
 
     if (quotation === "0") {
@@ -99,7 +129,7 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
       );
     }
 
-    return lists.activities.filter(
+    return sponsorList.activities.filter(
       (a) =>
         (a.quotationId === quotation && a.moduleId === module) || a.id === "-1"
     );
@@ -121,53 +151,68 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
 
   const hasProviderChange = () => {
     if (!hasProvider) {
-      setQuotationList([])
+      setProviderQuotationList([])
     } else {
-      setQuotationList(
-        lists.quotations.filter(
-          (q) => q.type === "SPONSOR"
-        )
-      );
+      setProviderQuotationList(providerList);
     }
     setProviderId("-1");
-    setQuotationId("-1");
+    setProviderQuotationId("-1");
     setHasProvider(!hasProvider);
   };
 
   const cannotSave = () => {
     return (
-      quotationId === "-1" ||
-      (quotationId !== "0" && (moduleId === "-1" || activityId === "-1")) ||
+      sponsorQuotationId === "-1" ||
+      (sponsorQuotationId !== "0" && (sponsorModuleId === "-1" || sponsorActivityId === "-1")) ||
       !unitCost ||
       !unitNumber ||
       !date ||
-      (quotationType === "PROVIDER" && hasProvider && providerId === "-1")
+      (hasProvider && providerId === "-1")
     );
   };
 
   const saveInvoice = () => {
-    const selectedModule =
-      quotationId === "0"
-        ? completeList.modules.find((m) => m.id === moduleId)
-        : lists.modules.find((m) => m.id === moduleId);
-    const selectedActivity =
-      quotationId === "0"
-        ? completeList.activities.find((a) => a.id === activityId)
-        : lists.activities.find((a) => a.id === activityId);
+    const selectedSponsorModule =
+      sponsorQuotationId === "0"
+        ? completeList.modules.find((m) => m.id === sponsorModuleId)
+        : sponsorList.modules.find((m) => m.id === sponsorModuleId);
+    const selectedSponsorActivity =
+      sponsorQuotationId === "0"
+        ? completeList.activities.find((a) => a.id === sponsorActivityId)
+        : sponsorList.activities.find((a) => a.id === sponsorActivityId);
+    const sponsorQuotation = sponsorQuotationId === "0" ? "Out of budget" : sponsorList.quotations.find((q) => q.id === sponsorQuotationId);
+
+    const selectedProviderModule =
+      providerQuotationId === "0"
+        ? completeList.modules.find((m) => m.id === providerModuleId)
+        : sponsorList.modules.find((m) => m.id === providerModuleId);
+    const selectedProviderActivity =
+      providerQuotationId === "0"
+        ? completeList.activities.find((a) => a.id === providerActivityId)
+        : sponsorList.activities.find((a) => a.id === providerActivityId);
+    const providerQuotation = sponsorQuotationId === "0" ? "Out of budget" : providerList.quotations.find((q) => q.id === providerQuotationId);
 
     if (!cannotSave()) {
       const invoice = {
         date: date,
-        type: quotationType,
-        quotationCode: quotationId === "0" ? "Out of budget" : lists.quotations.find((q) => q.id === quotationId).code,
-        moduleCode: selectedModule.code ? selectedModule.code : "N/A",
-        activityCode: selectedActivity.code,
-        quotationId: quotationId,
-        provider: providers.find((p) => (p.id = providerId)),
-        moduleId: selectedModule.id,
-        activityId: selectedActivity.id,
-        moduleTitle: selectedModule.title,
-        activityTitle: selectedActivity.title,
+        type: activityType,
+        sponsorQuotationId: sponsorQuotation.id,
+        sponsorQuotationCode: sponsorQuotation.code,
+        sponsorModuleId: selectedSponsorModule.id,
+        sponsorModuleCode: selectedSponsorModule.code,
+        sponsorModuleTitle: selectedSponsorModule.title,
+        sponsorActivityId: selectedSponsorActivity.id,
+        sponsorActivityCode: selectedSponsorActivity.code,
+        sponsorActivityTitle: selectedSponsorActivity.title,
+        provider: activityType === "quotationType" && hasProvider === true ? providers.find((p) => (p.id = providerId)) : null,
+        providerQuotationId: providerQuotation ? providerQuotation.id : null,
+        providerQuotationCode: providerQuotation ? providerQuotation.code : null,
+        providerModuleId: selectedProviderModule ? selectedProviderModule.id : null,
+        providerModuleCode: selectedProviderModule ? selectedProviderModule.code : null,
+        providerModuleTitle: selectedProviderModule ? selectedProviderModule.title : null,
+        providerActivityId: selectedProviderActivity ? selectedProviderActivity.id : null,
+        providerActivityCode: selectedProviderActivity ? selectedProviderActivity.code : null,
+        providerActivityTitle: selectedProviderActivity ? selectedProviderActivity.title : null,
         unitCost: unitCost,
         unitNumber: unitNumber,
         totalCost: totalCost,
@@ -176,9 +221,9 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
       };
 
       createInvoice(invoice);
-      setQuotationId("-1");
-      setModuleId("-1");
-      setActivityId("-1");
+      setSponsorQuotationId("-1");
+      setSponsorModuleId("-1");
+      setSponsorActivityId("-1");
       setProviderId("-1");
       setUnitCost("");
       setUnitNumber("");
@@ -210,22 +255,22 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               id="invoiceType"
               name="invoiceType"
               className="browser-default"
-              onChange={(e) => invoiceTypeChange(e.target.value)}
+              onChange={(e) => activityTypeChange(e.target.value)}
             >
-              <option key={"SPONSOR"} value={"SPONSOR"}>
+              <option key={"INCOME"} value={"INCOME"}>
                 {" "}
                 INCOME{" "}
               </option>
-              <option key={"PROVIDER"} value={"PROVIDER"}>
+              <option key={"EXPENSE"} value={"EXPENSE"}>
                 {" "}
                 EXPENSE{" "}
               </option>
             </select>
             <label className="active" htmlFor="invoiceType">
-              Invoice type
+              Activity type
             </label>
           </div>
-          {quotationType === "PROVIDER" ? (
+          {activityType === "EXPENSE" ? (
             <>
               <div className="col s1 m1">
                 <label>
@@ -258,8 +303,8 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               }
             </>
           ) : (
-              ""
-            )}
+            ""
+          )}
         </div>
         <div className="row">
           <div className="input-field col s12 m4">
@@ -267,9 +312,8 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               id="quotation"
               name="quotation"
               className="browser-default"
-              value={quotationId}
-              disabled={hasProvider && providerId === "-1"}
-              onChange={(e) => quotationChange(e.target.value)}
+              value={sponsorQuotationId}
+              onChange={(e) => sponsorQuotationChange(e.target.value)}
             >
               <option key="selectQuotation" value="-1">
                 Select a quotation
@@ -277,7 +321,7 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               <option key="outOfBudget" value="0">
                 Out of budget
               </option>
-              {quotationList.map((q) => (
+              {sponsorQuotationList.map((q) => (
                 <option key={q.id} value={q.id}>
                   {" "}
                   {q.code}{" "}
@@ -293,14 +337,14 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               id="module"
               name="module"
               className="browser-default"
-              value={moduleId}
-              disabled={quotationId === "-1"}
-              onChange={(e) => moduleChange(e.target.value)}
+              value={sponsorModuleId}
+              disabled={sponsorQuotationId === "-1"}
+              onChange={(e) => sponsorModuleChange(e.target.value)}
             >
               <option key="module-0" value="-1">
                 Select a module
               </option>
-              {moduleList.map((m) => (
+              {sponsorModuleList.map((m) => (
                 <option key={m.id} value={m.id}>
                   {" "}
                   {m.title} {m.geo ? m.geo.description : ""}{" "}
@@ -316,14 +360,14 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               id="activityCode"
               name="activityCode"
               className="browser-default"
-              value={activityId}
-              disabled={moduleId === "-1"}
-              onChange={(e) => setActivityId(e.target.value)}
+              value={sponsorActivityId}
+              disabled={sponsorModuleId === "-1"}
+              onChange={(e) => setSponsorActivityId(e.target.value)}
             >
               <option key="activity-0" value="-1">
                 Select an activity
               </option>
-              {activityList.map((a) => (
+              {sponsorActivityList.map((a) => (
                 <option key={a.id} value={a.id}>
                   {" "}
                   {a.title}{" "}
@@ -331,10 +375,88 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
               ))}
             </select>
             <label className="active" htmlFor="activityCode">
-              Activity code
+              Activity
             </label>
           </div>
         </div>
+
+        {/* PROVIDER QUOTATION  */}
+        {hasProvider && providerId ?
+          <div className="row">
+            <div className="input-field col s12 m4">
+              <select
+                id="quotation"
+                name="quotation"
+                className="browser-default"
+                value={providerQuotationId}
+                onChange={(e) => providerQuotationChange(e.target.value)}
+              >
+                <option key="selectQuotation" value="-1">
+                  Select a quotation
+              </option>
+                <option key="outOfBudget" value="0">
+                  Out of budget
+              </option>
+                {providerQuotationList.map((q) => (
+                  <option key={q.id} value={q.id}>
+                    {" "}
+                    {q.code}{" "}
+                  </option>
+                ))}
+              </select>
+              <label className="active" htmlFor="quotation">
+                Provider quotation
+            </label>
+            </div>
+            <div className="input-field col s12 m4">
+              <select
+                id="module"
+                name="module"
+                className="browser-default"
+                value={providerModuleId}
+                disabled={providerQuotationId === "-1"}
+                onChange={(e) => providerModuleChange(e.target.value)}
+              >
+                <option key="module-0" value="-1">
+                  Select a module
+              </option>
+                {providerModuleList.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {" "}
+                    {m.title} {m.geo ? m.geo.description : ""}{" "}
+                  </option>
+                ))}
+              </select>
+              <label className="active" htmlFor="module">
+                Provider module
+            </label>
+            </div>
+            <div className="input-field col s12 m4">
+              <select
+                id="activityCode"
+                name="activityCode"
+                className="browser-default"
+                value={providerActivityId}
+                disabled={providerModuleId === "-1"}
+                onChange={(e) => setProviderActivityId(e.target.value)}
+              >
+                <option key="activity-0" value="-1">
+                  Select an activity
+              </option>
+                {providerActivityList.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {" "}
+                    {a.title}{" "}
+                  </option>
+                ))}
+              </select>
+              <label className="active" htmlFor="activityCode">
+                Provider activity
+            </label>
+            </div>
+          </div>
+          : ''
+        }
         <div className="row">
           <div className="input-field col s4 m2 l1">
             <label className="active" htmlFor="unitCost">
@@ -397,7 +519,8 @@ const NewInvoice = ({ createInvoice, lists, completeList, providers }) => {
 
 const mapStateToProps = (state) => {
   return {
-    lists: getQuotationsEntityList(state),
+    sponsorList: getSponsorQuotationsEntityList(state),
+    providerList: getProviderQuotationsEntityList(state),
     completeList: getAllModulesAndActivities(state),
     providers: getProjectProviders(state),
   };
