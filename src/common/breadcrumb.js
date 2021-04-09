@@ -6,7 +6,7 @@ import { setBreadcrumbAction } from "../store/actions/genericActions";
 import CustomNavLink from "./customNavLink";
 import "./breadcrumb.css";
 
-const Breadcrumb = ({ breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
+const Breadcrumb = ({ isPrintMode, breadcrumbCode, breadcrumb, setBreadcrumb, user }) => {
   useEffect(() => {
     if(!breadcrumbCode) {
       const locationToken = history.location.pathname.split('/');
@@ -53,7 +53,7 @@ if(breadcrumbCode) setBreadcrumb(breadcrumbCode);
   }, [breadcrumbCode]);
 
   return (
-    <div className="col s12 m-space-up m-space-down">
+    <div className="col s12 m-space-up m-space-down" style={isPrintMode ? {display: "none"} : {}}>
       {breadcrumb.map((bcItem) => (
         <CustomNavLink
           key={bcItem.id}

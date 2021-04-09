@@ -18,6 +18,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import Quotation from "./quotation/quotation";
+import QuotationPrint from "./quotation/template/quotation-print";
 import NewProject from "./project/newProject";
 import ProjectDashboard from "./project/projectDashboard";
 
@@ -57,6 +58,7 @@ class App extends Component {
           <Route path={"/project/invoices"} component={Invoice} />
           <Route path={"/project/budget"} component={Budget} />
           <Route path={"/project/analytics"} component={Analytics} />
+          <Route path={"/print/project/quotation/"} component={QuotationPrint} />
         </Main>
       </Router>
     );

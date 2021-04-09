@@ -113,13 +113,13 @@ nav ul a {
 }
 
 .custom-nav-content ul li {
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   float: left;
   padding: 0;
 }
 
 .custom-nav-content ul a {
-  transition: background-color .3s;
+  transition: background-color 0.3s;
   font-size: 1rem;
   color: #fff;
   display: block;
@@ -133,7 +133,8 @@ nav ul a {
   margin-bottom: 0.2rem !important;
 }
 
-input[type="text"]:disabled, input[type="number"]:disabled {
+input[type="text"]:disabled,
+input[type="number"]:disabled {
   border: none !important;
 }
 
@@ -281,11 +282,13 @@ select.browser-default > option:checked {
   background-color: #fefefc !important;
 }
 
-.tabs, .custom-tabs {
+.tabs,
+.custom-tabs {
   height: 3rem !important;
 }
 
-.tabs .tab, .custom-tabs .custom-action-tab {
+.tabs .tab,
+.custom-tabs .custom-action-tab {
   height: 3rem !important;
   line-height: 3rem !important;
 }
@@ -294,17 +297,20 @@ select.browser-default > option:checked {
   background-color: indigo !important;
 }
 
-.tabs .tab a, .custom-tabs .custom-action-tab a {
+.tabs .tab a,
+.custom-tabs .custom-action-tab a {
   color: indigo !important;
   font-size: 1rem !important;
 } /*Black color to the text*/
 
-.tabs .tab a:hover, .custom-tabs .custom-action-tab a:hover {
+.tabs .tab a:hover,
+.custom-tabs .custom-action-tab a:hover {
   background-color: #eee !important;
   color: indigo !important;
 } /*Text color on hover*/
 
-.tabs .tab a.active, .custom-tabs .custom-action-tab a.active {
+.tabs .tab a.active,
+.custom-tabs .custom-action-tab a.active {
   background-color: #e8eaf6 !important;
   color: indigo !important;
 } /*Background and text color when a tab is active*/
@@ -317,6 +323,28 @@ select.browser-default > option:checked {
   background-color: indigo !important;
 } /*Color of underline*/
 
+
+/* PRINT PAGE SCREEN */
+.module-li {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.activity-li {
+  border-bottom: 1px solid black;
+}
+
+#quotationGroup-print,
+.activity-li:last-of-type {
+  border: none !important;
+}
+
+.activity-print {
+  padding-left: 1rem;
+  border-top: 1px solid black;
+}
+
+/* MEDIA SECTION */
 @media only screen and (min-width: 0) {
   html {
     font-size: 10px !important;
@@ -353,5 +381,73 @@ select.browser-default > option:checked {
 
   .card .row {
     margin-bottom: 0 !important;
+  }
+}
+
+@media print {
+  #content,
+  #page {
+    width: 100%;
+    margin: 0;
+    float: none;
+  }
+
+  @page {
+    margin: 150mm;
+  }
+
+  body {
+    font: 12pt Georgia, "Times New Roman", Times, serif;
+    line-height: 1.2;
+    background: #fff !important;
+    color: #000;
+  }
+
+  a {
+    page-break-inside: avoid;
+  }
+  blockquote {
+    page-break-inside: avoid;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+  }
+  img {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+  table,
+  pre {
+    page-break-inside: avoid;
+  }
+  ul,
+  ol,
+  dl {
+    page-break-before: avoid;
+  }
+
+  .module-li {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+  }
+
+  .activity-li {
+    border-bottom: 1px solid black;
+  }
+
+  #quotationGroup-print,
+  .activity-li:last-of-type {
+    border: none !important;
+  }
+
+  .activity-print {
+    padding-left: 1rem;
+    border-top: 1px solid black;
   }
 }
