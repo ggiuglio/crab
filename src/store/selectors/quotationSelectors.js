@@ -6,6 +6,8 @@ export const getProviderQuotations = (state) => filterProviderQuotations(mapQuot
 export const getSponsorQuotations = (state) => filterSponsorQuotations(mapQuotationList(state.quotations));
 export const getQuotation = (state) => state.selectedQuotationData ? getSingleQuotation(state.selectedQuotationData) : undefined;
 export const getQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations);
+export const getSponsorQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations, 'SPONSOR');
+export const getProviderQuotationsEntityList = (state) => mapQuotationsEntityList(state.quotations, 'PROVIDER');
 export const getAllModulesAndActivities = (state) => mapAllBaseEntities(state.baseModules);
 export const getModalResourceData = (state) => state.resourceModalData;
 
@@ -112,7 +114,7 @@ const mapActivity = (activity, quotation) => {
   return activity;
 };
 
-const mapQuotationsEntityList = (quotationsObj) => {
+const mapQuotationsEntityList = (quotationsObj, type) => {
   let modules = [];
   let uniqueModuleList = [];
   let activities = [];
@@ -126,37 +128,39 @@ const mapQuotationsEntityList = (quotationsObj) => {
         type: quotationsObj[i].quotationType,
         provider: quotationsObj[i].provider
       };
-      quotations.unshift(quotation);
+      if (!type || quotation.type === type) {
+        quotations.unshift(quotation);
 
-      Object.keys(quotationsObj[i].modules).forEach((j) => {
-        let module = {
-          quotationId: quotation.id,
-          id: j,
-          index: quotationsObj[i].modules[j].index,
-          code: quotationsObj[i].modules[j].code,
-          geo:  quotationsObj[i].modules[j].geo,
-          title: quotationsObj[i].modules[j].title,
-          geo: quotationsObj[i].modules[j].geo
-        };
-        modules.push(module);
-        if (!uniqueModuleList.find(um => um.code ===  quotationsObj[i].modules[j].code)) {
-          uniqueModuleList.push(quotationsObj[i].modules[j]);
-        }
-
-        Object.keys(quotationsObj[i].modules[j].activities).forEach((k) => {
-          let activity = {
+        Object.keys(quotationsObj[i].modules).forEach((j) => {
+          let module = {
             quotationId: quotation.id,
-            moduleId: module.id,
-            moduleCode: module.code,
-            id: k,
-            index: quotationsObj[i].modules[j].activities[k].index,
-            code: quotationsObj[i].modules[j].activities[k].code,
-            title: quotationsObj[i].modules[j].activities[k].title
+            id: j,
+            index: quotationsObj[i].modules[j].index,
+            code: quotationsObj[i].modules[j].code,
+            geo: quotationsObj[i].modules[j].geo,
+            title: quotationsObj[i].modules[j].title,
+            geo: quotationsObj[i].modules[j].geo
           };
-          activities.unshift(activity);
+          modules.push(module);
+          if (!uniqueModuleList.find(um => um.code === quotationsObj[i].modules[j].code)) {
+            uniqueModuleList.push(quotationsObj[i].modules[j]);
+          }
 
+          Object.keys(quotationsObj[i].modules[j].activities).forEach((k) => {
+            let activity = {
+              quotationId: quotation.id,
+              moduleId: module.id,
+              moduleCode: module.code,
+              id: k,
+              index: quotationsObj[i].modules[j].activities[k].index,
+              code: quotationsObj[i].modules[j].activities[k].code,
+              title: quotationsObj[i].modules[j].activities[k].title
+            };
+            activities.unshift(activity);
+
+          });
         });
-      });
+      }
     });
   }
   activities.sort((a, b) => a.index > b.index ? 1 : -1);
