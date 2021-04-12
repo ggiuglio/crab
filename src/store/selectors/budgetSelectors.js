@@ -1,6 +1,6 @@
 export const getBudget = (state) => mapBudget(state.quotations, state.invoiceList);
-
 const mapBudget = (quotations, invoices) => {
+
   let projectBudget = {
     modules: {},
     budget: 0,              // the total amount quotated to the sponsor
@@ -28,7 +28,7 @@ const addQuotationDataToBudget = (budgetData, quotations, invoices) => {
   if (quotations) {
     Object.keys(quotations).forEach((k) => {
       quotations[k].id = k;
-      let quotationInvoices = invoices.filter(i => i.quotationCode === quotations[k].code);
+      let quotationInvoices = invoices.filter(i => i.sponsorQuotationCode === quotations[k].code);
       const quotation = mapQuotationForBudget(quotations[k], quotationInvoices);
 
       Object.keys(quotation.modules).forEach((j) => {
@@ -44,7 +44,7 @@ const mapQuotationForBudget = (quotation, invoices) => {
   const modules = {};
   if (quotation.modules) {
     Object.keys(quotation.modules).forEach((k) => {
-      let moduleInvoices = invoices.filter(i => i.moduleCode === quotation.modules[k].code);
+      let moduleInvoices = invoices.filter(i => i.sponsorModuleCode === quotation.modules[k].code);
       quotation.modules[k].id = k;
       modules[quotation.modules[k].code] = mapModuleForBudget(quotation, quotation.modules[k], moduleInvoices);
     });
@@ -64,8 +64,7 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.unitNumber = activity.unitNumber ? parseInt(activity.unitNumber) : 0;
       activity.quotation = { id: quotation.id, code: quotation.code };
       activity.module = { id: module.id, code: module.code, title: module.title };
-      let activityInvoices = invoices.filter(i => i.activityCode === activity.code && activity.type === quotation.type);
-      activity.totalInvoiced = activityInvoices.reduce((total, i) => (total + i.totalCost), 0);
+
       let resources = [];
       if (activity.resources) {
         Object.keys(activity.resources).forEach((i) => {
@@ -81,9 +80,9 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.activityCost = activity.unitCost * activity.unitNumber;
       activity.resources = resources;
       activity.type = quotation.quotationType;
-      activity.incomes = activity.type === "SPONSOR" ? activity.totalInvoiced : 0;
-      activity.expenses = activity.type === "PROVIDER" ? activity.totalInvoiced : 0;
-      activity.provider = activity.type === "PROVIDER" ? quotation.provider.title : undefined;
+      let activityInvoices = invoices.filter(i => i.sponsorActivityCode === activity.code);
+      activity.incomes = activityInvoices.filter(i => i.type === 'INCOME').reduce((total, i) => (total + i.totalCost), 0);
+      activity.expenses = activityInvoices.filter(i => i.type === 'EXPENSE').reduce((total, i) => (total + i.totalCost), 0);
       activity.quotationCode = quotation.code;
       activities[activity.code] = activity;
     });
@@ -154,9 +153,9 @@ const updateModuleTotals = (module, activity) => {
 };
 
 const calculateOutOfBudget = (budget, invoices) => {
-  let outOfBudgetInvoices = invoices.filter(i => i.quotationCode === "Out of budget");
+  let outOfBudgetInvoices = invoices.filter(i => i.sponsorQuotationCode === "Out of budget");
   outOfBudgetInvoices.forEach(i => {
-    if(i.type === 'PROVIDER') {
+    if (i.type === 'INCOME') {
       budget.outOfBudget.incomes += i.totalCost;
       budget.incomes += i.totalCost;
     } else {

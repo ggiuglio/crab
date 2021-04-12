@@ -44,7 +44,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
         !invTable.classList.contains("responsive-table")
       ) {
         invTable.classList.add("responsive-table");
-        if(legend && legend.classList.contains("right")) {
+        if (legend && legend.classList.contains("right")) {
           legend.classList.remove("right");
         }
       } else if (
@@ -52,7 +52,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
         invTable.classList.contains("responsive-table")
       ) {
         invTable.classList.remove("responsive-table");
-        if(legend && !legend.classList.contains("right")) {
+        if (legend && !legend.classList.contains("right")) {
           legend.classList.add("right");
         }
       }
@@ -160,7 +160,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
               <td>
                 <span className="custom-truncate" title={i.type}>
                   {" "}
-                  {i.type === "SPONSOR" ? "INCOME" : "EXPENSE"}{" "}
+                  {i.type}
                 </span>
               </td>
               <td
@@ -186,30 +186,30 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 </span>
               </td>
               <td>
-                <span className="custom-truncate" title={i.quotationCode}>
+                <span className="custom-truncate" title={i.sponsorQuotationCode}>
                   {" "}
-                  {i.quotationCode}{" "}
+                  {i.sponsorQuotationCode}{" "}
                 </span>
               </td>
               <td>
-                <span className="custom-truncate" title={i.moduleTitle}>
+                <span className="custom-truncate" title={i.sponsorModuleTitle}>
                   {" "}
-                  {i.moduleTitle}{" "}
+                  {i.sponsorModuleTitle}{" "}
                 </span>
               </td>
               <td
                 className="hide-on-custom-med"
                 width={hasProvider ? "20%" : "25%"}
               >
-                <span className="custom-truncate" title={i.activityTitle}>
+                <span className="custom-truncate" title={i.sponsorActivityTitle}>
                   {" "}
-                  {i.activityTitle}{" "}
+                  {i.sponsorActivityTitle}{" "}
                 </span>
               </td>
               <td className="hide-on-custom-med-and-up">
-                <span className="custom-truncate" title={i.activityTitle}>
+                <span className="custom-truncate" title={i.sponsorActivityTitle}>
                   {" "}
-                  {i.activityTitle}{" "}
+                  {i.sponsorActivityTitle}{" "}
                 </span>
               </td>
               <td className="text-right">
@@ -238,7 +238,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 </span>
               </td>
               <td className="center">
-                {i.status === "NEW" && i.type === "SPONSOR" ? (
+                {i.status === "NEW" && i.type === "INCOME" ? (
                   <i
                     className="material-icons ready small"
                     title="set Ready"
@@ -247,7 +247,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 ) : (
                   ""
                 )}
-                {i.status === "READY" && i.type === "SPONSOR" ? (
+                {i.status === "READY" && i.type === "INCOME" ? (
                   <i
                     className="material-icons invoiced small"
                     title="set Invoiced"
@@ -256,7 +256,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 ) : (
                   ""
                 )}
-                {i.status === "INVOICED" && i.type === "SPONSOR" ? (
+                {i.status === "INVOICED" && i.type === "INCOME" ? (
                   <i
                     className="material-icons ready small"
                     title="set Ready"
@@ -265,7 +265,7 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 ) : (
                   ""
                 )}
-                {i.status === "READY" && i.type === "SPONSOR" ? (
+                {i.status === "READY" && i.type === "INCOME" ? (
                   <i
                     className="material-icons new small"
                     title="set New"

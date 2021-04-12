@@ -1,7 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const InvoiceFilterBig = ( par ) => {
+const InvoiceFilterBig = (par) => {
   return (
     <div id="invoice-filters" className="row">
       <div className="col s12">
@@ -27,11 +27,11 @@ const InvoiceFilterBig = ( par ) => {
                 <input
                   type="checkbox"
                   checked={
-                    par.invoiceTypeFilter.find((t) => t === "SPONSOR")
+                    par.invoiceTypeFilter.find((t) => t === "INCOME")
                       ? true
                       : false
                   }
-                  onChange={() => par.setTypeFilter("SPONSOR")}
+                  onChange={() => par.setTypeFilter("INCOME")}
                 />
                 <span>Income</span>{" "}
               </label>
@@ -41,11 +41,11 @@ const InvoiceFilterBig = ( par ) => {
                 <input
                   type="checkbox"
                   checked={
-                    par.invoiceTypeFilter.find((t) => t === "PROVIDER")
+                    par.invoiceTypeFilter.find((t) => t === "EXPENSE")
                       ? true
                       : false
                   }
-                  onChange={() => par.setTypeFilter("PROVIDER")}
+                  onChange={() => par.setTypeFilter("EXPENSE")}
                 />
                 <span>Expense</span>{" "}
               </label>
