@@ -325,6 +325,13 @@ select.browser-default > option:checked {
 
 
 /* PRINT PAGE SCREEN */
+#page {
+  width: 100%;
+  margin: 0;
+  float: none;
+  padding: 0 .75rem;
+}
+
 .module-li {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
@@ -342,6 +349,16 @@ select.browser-default > option:checked {
 .activity-print {
   padding-left: 1rem;
   border-top: 1px solid black;
+}
+
+.box {
+  border: 1px solid black;
+  min-height: 1cm !important;
+}
+
+.signature {
+  min-height: 2cm;
+  height: 2cm;
 }
 
 /* MEDIA SECTION */
@@ -390,6 +407,7 @@ select.browser-default > option:checked {
     width: 100%;
     margin: 0;
     float: none;
+    padding: 0 .75rem;
   }
 
   @page {
@@ -449,5 +467,15 @@ select.browser-default > option:checked {
   .activity-print {
     padding-left: 1rem;
     border-top: 1px solid black;
+  }
+
+  .box {
+    border: 1px solid black;
+    min-height: 1cm !important;
+  }
+
+  .signature {
+    min-height: 2cm;
+    height: 2cm;
   }
 }

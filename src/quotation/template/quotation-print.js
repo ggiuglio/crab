@@ -26,7 +26,7 @@ const QuotationPrint = ({
   loadProject,
 }) => {
   const [quotationCode, setQuotationCode] = useState("");
-  
+
   useEffect(() => {
     const query = new URLSearchParams(history.location.search);
     const queryProject = query.get("project");
@@ -44,8 +44,8 @@ const QuotationPrint = ({
       } else {
         chooseQuotation(queryQuotation);
       }
-    } 
-    
+    }
+
     if (selectedQuotation) {
       setQuotationCode(selectedQuotation.code);
     }
@@ -54,8 +54,23 @@ const QuotationPrint = ({
   return (
     <div id="page">
       {selectedQuotation ? (
-        <div id="selectedQuotation">
-          <div>
+        <div>
+          <div className="row">
+            <div className="col s12">Introduction:</div>
+            <div className="box col s12">
+              Qui ci va una descrizione della company che emette il preventivo e
+              gli identificativi di preventivo (nome sponsor, codice progetto)
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12">Scenario:</div>
+            <div className="box col s12">
+              Qui va inserito un campo testuale che dovrebbe essere preso dalla
+              definizione del progetto. Non lo abbiamo mai inserito ma dovremmo
+              avere un campo che permetta di definire uno scenario di progetto.
+            </div>
+          </div>
+          <div id="selectedQuotation">
             <div className="row">
               <div className="col s12" id="quotationGroup-print">
                 <ul>
@@ -68,90 +83,149 @@ const QuotationPrint = ({
                             {module.geo.description}
                           </div>
                           <div className="col s2 text-right price">
-                              {module.moduleCost || 0}
+                            {module.moduleCost || 0}
                           </div>
                         </div>
                       </div>
                       <div className="activity-print">
-                        <ul>
-                          {module.activities
-                            ? module.activities.map((activity) => {
-                                return <li key={activity.id} className="activity-li">
-                                  <div>
-                                    <div className="row">
-                                      <div className="col s3">
-                                        <span className="italic">
-                                          {activity.title}
-                                        </span>
+                        {module.activities ? (
+                          <ul>
+                            <li
+                              key={`${module.id}-activity-li`}
+                              className="activity-li"
+                            >
+                              <div className="row">
+                                <div className="col s3">Activity name</div>
+                                <div className="col s1">Unit type</div>
+                                <div className="col s1">
+                                  <div className="center">Responsibility</div>
+                                </div>
+                                <div className="col s2">Cost specifics</div>
+                                <div className="col s2">
+                                  <div className="text-right">Unit cost</div>
+                                </div>
+                                <div className="col s1">
+                                  <div className="text-right">Unit number</div>
+                                </div>
+                                <div className="col s2">
+                                  <div className="text-right">Total budget</div>
+                                </div>
+                              </div>
+                            </li>
+                            {module.activities.map((activity) => {
+                              return (
+                                <li key={activity.id} className="activity-li">
+                                  <div className="row">
+                                    <div className="col s3">
+                                      <span className="italic">
+                                        {activity.title}
+                                      </span>
+                                    </div>
+                                    <div className="col s1">
+                                      <span>{activity.unit}</span>
+                                    </div>
+                                    <div className="col s1">
+                                      <div className="center">
+                                        {activity.responsibilityCRO === true
+                                          ? "CRO"
+                                          : null}
+                                        {activity.responsibilitySponsor === true
+                                          ? "SPO"
+                                          : null}
                                       </div>
-                                      <div className="col s1">
-                                        <span>{activity.unit}</span>
+                                    </div>
+                                    <div className="col s2">
+                                      <div>
+                                        {activity.resources
+                                          ? activity.resources.map(
+                                              (resource, idx) => {
+                                                const add =
+                                                  idx <
+                                                  activity.resources.length - 1
+                                                    ? " + "
+                                                    : "";
+                                                return (
+                                                  <span key={resource.id}>
+                                                    {resource.title}
+                                                    &nbsp;x&nbsp;
+                                                    {resource.hours}
+                                                    {add}
+                                                  </span>
+                                                );
+                                              }
+                                            )
+                                          : null}
+                                        {activity.fixedCost &&
+                                        activity.fixedCost !== 0
+                                          ? activity.resources.length > 0
+                                            ? " + " + activity.fixedCost
+                                            : activity.fixedCost
+                                          : null}
                                       </div>
-                                      <div className="col s1">
-                                        <div className="center">
-                                         {activity.responsibilityCRO === true ? "CRO" : null}
-                                         {activity.responsibilitySponsor === true ? "SPO" : null}
-                                        </div>
+                                    </div>
+                                    <div className="col s2">
+                                      <div className="text-right price">
+                                        {activity.unitCost || 0}
                                       </div>
-                                      <div className="col s2">
-                                        <div>
-                                          {activity.resources
-                                            ? activity.resources.map(
-                                                (resource, idx) =>
-                                                  {
-                                                    const add = idx < activity.resources.length -1 ? " + " : "";
-                                                    return <span key={resource.id}>{resource.title}&nbsp;x&nbsp;{resource.hours}{add}</span>
-                                                  }
-                                              )
-                                            : null}
-                                          {activity.fixedCost &&
-                                            activity.fixedCost !== 0
-                                              ? (activity.resources.length > 0 ? " + " + activity.fixedCost : activity.fixedCost)
-                                              : null}
-                                        </div>
+                                    </div>
+                                    <div className="col s1">
+                                      <div className="text-right">
+                                        {activity.unitNumber || 0}
                                       </div>
-                                      <div className="col s2">
-                                        <div className="text-right price">
-                                          {activity.unitCost || 0}
-                                        </div>
-                                      </div>
-                                      <div className="col s1">
-                                        <div className="text-right">
-                                          {activity.unitNumber || 0}
-                                        </div>
-                                      </div>
-                                      <div className="col s2">
-                                        <div className="text-right price">
-                                          {activity.activityCost || 0}
-                                        </div>
+                                    </div>
+                                    <div className="col s2">
+                                      <div className="text-right price">
+                                        {activity.activityCost || 0}
                                       </div>
                                     </div>
                                   </div>
-                                </li>;
-                              })
-                            : null}
-                        </ul>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        ) : null}
                       </div>
                     </li>
                   ))}
                 </ul>
-
-                <div className="col s4">
-                  <h6 className="bolder price center">
-                    Price without PT: {selectedQuotation.quotationNotPTCost || 0}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="bolder price center">
-                    PT only: {selectedQuotation.quotationPTCost || 0}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="bolder price center">
-                    Quotation cost: {selectedQuotation.quotationCost || 0}
-                  </h6>
-                </div>
               </div>
+            </div>
+            <div className="row">
+              <div className="col s12">
+                Costs summary
+              </div>
+              <div className="box col s4">
+                <h6 className="bolder price">
+                  Price without PT: {selectedQuotation.quotationNotPTCost || 0}
+                </h6>
+              </div>
+              <div className="box col s4">
+                <h6 className="bolder price">
+                  PT only: {selectedQuotation.quotationPTCost || 0}
+                </h6>
+              </div>
+              <div className="box col s4">
+                <h6 className="bolder price">
+                  Quotation cost: {selectedQuotation.quotationCost || 0}
+                </h6>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12">Other notes:</div>
+            <div className="box col s12">
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12">Terms of payments:</div>
+            <div className="box col s12">
+            </div>
+          </div>
+          <div className="row">
+            <div className="col s12">Signatures:</div>
+            <div className="box signature col s6">
+            </div>
+            <div className="box signature col s6">
             </div>
           </div>
         </div>
