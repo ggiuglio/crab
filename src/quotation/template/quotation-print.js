@@ -76,15 +76,13 @@ const QuotationPrint = ({
                 <ul>
                   {selectedQuotation.modules.map((module) => (
                     <li key={module.id} className="module-li">
-                      <div>
-                        <div className="row indigo lighten-5">
-                          <div className="col s10">
-                            <span className="bolder">{module.title}</span>{" "}
-                            {module.geo.description}
-                          </div>
-                          <div className="col s2 text-right price">
-                            {module.moduleCost || 0}
-                          </div>
+                      <div className="row indigo lighten-5">
+                        <div className="col s10">
+                          <span className="bolder">{module.title}</span>{" "}
+                          {module.geo.description}
+                        </div>
+                        <div className="col s2 text-right price">
+                          {module.moduleCost || 0}
                         </div>
                       </div>
                       <div className="activity-print">
@@ -92,20 +90,17 @@ const QuotationPrint = ({
                           <ul>
                             <li
                               key={`${module.id}-activity-li`}
-                              className="activity-li"
+                              className="activity-li grey lighten-4 bolder"
                             >
                               <div className="row">
-                                <div className="col s3">Activity name</div>
-                                <div className="col s1">Unit type</div>
-                                <div className="col s1">
-                                  <div className="center">Responsibility</div>
-                                </div>
+                                <div className="col s4">Activity name</div>
+                                <div className="col s1">Type</div>
                                 <div className="col s2">Cost specifics</div>
                                 <div className="col s2">
                                   <div className="text-right">Unit cost</div>
                                 </div>
                                 <div className="col s1">
-                                  <div className="text-right">Unit number</div>
+                                  <div className="text-right">Unit n.</div>
                                 </div>
                                 <div className="col s2">
                                   <div className="text-right">Total budget</div>
@@ -116,23 +111,13 @@ const QuotationPrint = ({
                               return (
                                 <li key={activity.id} className="activity-li">
                                   <div className="row">
-                                    <div className="col s3">
+                                    <div className="col s4">
                                       <span className="italic">
                                         {activity.title}
                                       </span>
                                     </div>
                                     <div className="col s1">
                                       <span>{activity.unit}</span>
-                                    </div>
-                                    <div className="col s1">
-                                      <div className="center">
-                                        {activity.responsibilityCRO === true
-                                          ? "CRO"
-                                          : null}
-                                        {activity.responsibilitySponsor === true
-                                          ? "SPO"
-                                          : null}
-                                      </div>
                                     </div>
                                     <div className="col s2">
                                       <div>
@@ -191,9 +176,7 @@ const QuotationPrint = ({
               </div>
             </div>
             <div className="row">
-              <div className="col s12">
-                Costs summary
-              </div>
+              <div className="col s12">Costs summary</div>
               <div className="box col s4">
                 <h6 className="bolder price">
                   Price without PT: {selectedQuotation.quotationNotPTCost || 0}
@@ -213,19 +196,40 @@ const QuotationPrint = ({
           </div>
           <div className="row">
             <div className="col s12">Other notes:</div>
-            <div className="box col s12">
-            </div>
+            <div className="box col s12"></div>
           </div>
           <div className="row">
             <div className="col s12">Terms of payments:</div>
-            <div className="box col s12">
-            </div>
+            <div className="box col s12"></div>
           </div>
-          <div className="row">
+          <div className="row signature">
             <div className="col s12">Signatures:</div>
-            <div className="box signature col s6">
+            <div className="col s5">Per Sintesi Research</div>
+            <div className="col s5 offset-s1">Per {project.sponsor}</div>
+            <div className="col s12 empty-field"></div>
+            <div className="col s5">
+              <div className="row">
+                <div className="col s2 center">Data</div>
+                <div className="col s10 underline empty-field"></div>
+              </div>
             </div>
-            <div className="box signature col s6">
+            <div className="col s5 offset-s1">
+              <div className="row">
+                <div className="col s2 center">Data</div>
+                <div className="col s10 underline empty-field"></div>
+              </div>
+            </div>
+            <div className="col s5">
+              <div className="row">
+                <div className="col s2 center">Firma</div>
+                <div className="col s10 underline empty-field"></div>
+              </div>
+            </div>
+            <div className="col s5 offset-s1">
+              <div className="row">
+                <div className="col s2 center">Firma</div>
+                <div className="col s10 underline empty-field"></div>
+              </div>
             </div>
           </div>
         </div>
