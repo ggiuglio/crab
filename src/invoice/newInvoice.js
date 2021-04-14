@@ -74,23 +74,23 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
     setSponsorActivityId("-1");
     if (qId === "-1") {
       setSponsorModuleList(sponsorList.modules.filter((m) => m.id === "-1"));
-      setSponsorActivityList(getAvailableActivities(qId));
+      setSponsorActivityList(getAvailableSponsorActivities(qId));
     }
     if (qId === "0") {
       setSponsorModuleList(completeList.modules);
-      setSponsorActivityList(getAvailableActivities(qId));
+      setSponsorActivityList(getAvailableSponsorActivities(qId));
     }
     if (qId !== "-1" && qId !== "0") {
       setSponsorModuleList(
         sponsorList.modules.filter((m) => m.quotationId === qId || m.id === "-1")
       );
-      setSponsorActivityList(getAvailableActivities(qId));
+      setSponsorActivityList(getAvailableSponsorActivities(qId));
     }
   };
 
   const sponsorModuleChange = (mId) => {
     setSponsorModuleId(mId);
-    setSponsorActivityList(getAvailableActivities(sponsorQuotationId, mId));
+    setSponsorActivityList(getAvailableSponsorActivities(sponsorQuotationId, mId));
   };
 
   const providerQuotationChange = (qId) => {
@@ -98,27 +98,27 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
     setProviderModuleId("-1");
     setProviderActivityId("-1");
     if (qId === "-1") {
-      setProviderModuleList(sponsorList.modules.filter((m) => m.id === "-1"));
-      setProviderActivityList(getAvailableActivities(qId));
+      setProviderModuleList(providerList.modules.filter((m) => m.id === "-1"));
+      setProviderActivityList(getAvailableProviderActivities(qId));
     }
     if (qId === "0") {
       setProviderModuleList(completeList.modules);
-      setProviderActivityList(getAvailableActivities(qId));
+      setProviderActivityList(getAvailableProviderActivities(qId));
     }
     if (qId !== "-1" && qId !== "0") {
       setProviderModuleList(
-        sponsorList.modules.filter((m) => m.quotationId === qId || m.id === "-1")
+        providerList.modules.filter((m) => m.quotationId === qId || m.id === "-1")
       );
-      setProviderActivityList(getAvailableActivities(qId));
+      setProviderActivityList(getAvailableProviderActivities(qId));
     }
   };
 
   const providerModuleChange = (mId) => {
     setProviderModuleId(mId);
-    setProviderActivityList(getAvailableActivities(sponsorQuotationId, mId));
+    setProviderActivityList(getAvailableProviderActivities(providerQuotationId, mId));
   };
 
-  const getAvailableActivities = (quotation, module) => {
+  const getAvailableSponsorActivities = (quotation, module) => {
     if (quotation === "-1" || module === "-1") {
       return sponsorList.activities.filter((a) => a.id === "-1");
     }
@@ -130,6 +130,23 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
     }
 
     return sponsorList.activities.filter(
+      (a) =>
+        (a.quotationId === quotation && a.moduleId === module) || a.id === "-1"
+    );
+  };
+
+  const getAvailableProviderActivities = (quotation, module) => {
+    if (quotation === "-1" || module === "-1") {
+      return providerList.activities.filter((a) => a.id === "-1");
+    }
+
+    if (quotation === "0") {
+      return completeList.activities.filter(
+        (a) => a.moduleId === module || a.id === "-1"
+      );
+    }
+
+    return providerList.activities.filter(
       (a) =>
         (a.quotationId === quotation && a.moduleId === module) || a.id === "-1"
     );
