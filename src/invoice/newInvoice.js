@@ -197,7 +197,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
       sponsorQuotationId === "0"
         ? completeList.activities.find((a) => a.id === sponsorActivityId)
         : sponsorList.activities.find((a) => a.id === sponsorActivityId);
-    const sponsorQuotation = sponsorQuotationId === "0" ? "Out of budget" : sponsorList.quotations.find((q) => q.id === sponsorQuotationId);
+    const sponsorQuotation = sponsorQuotationId === "0" ? { id: "0", code: "Out of budget" } : sponsorList.quotations.find((q) => q.id === sponsorQuotationId);
 
     const selectedProviderModule =
       providerQuotationId === "0"
@@ -207,7 +207,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
       providerQuotationId === "0"
         ? completeList.activities.find((a) => a.id === providerActivityId)
         : sponsorList.activities.find((a) => a.id === providerActivityId);
-    const providerQuotation = sponsorQuotationId === "0" ? "Out of budget" : providerList.quotations.find((q) => q.id === providerQuotationId);
+    const providerQuotation = sponsorQuotationId === "0" ? { id: "0", code: "Out of budget" } : providerList.quotations.find((q) => q.id === providerQuotationId);
 
     if (!cannotSave()) {
       const invoice = {
