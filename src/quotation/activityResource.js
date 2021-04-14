@@ -29,7 +29,7 @@ const ActivityResource = ({ resource, moduleId, activityId, editResource, remove
       <td>{resource.title}</td>
       <td className="text-right">{resource.hourCost}</td>
       <td className="text-right">
-        <input className="text-right browser-default" type="number" min="0" max="9999"
+        <input className="text-right browser-default" type="number" min="0"
           value={resourceHours}
           onChange={(e) => resourceHoursChanged(e.target.value)}
           disabled={viewMode === VIEW_MODES.VIEW} />

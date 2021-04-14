@@ -82,7 +82,6 @@ const NewResource = ({ modalData, resources, createResource }) => {
                 name="resourceHours"
                 type="number"
                 min="0"
-                max="9999"
                 value={resourceHours}
                 onChange={(e) => setResourceHours(e.target.value)}
               ></input>

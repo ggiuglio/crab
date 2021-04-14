@@ -16,7 +16,7 @@ const ActivityFixedCost = ({ moduleId, activity, editActivity, viewMode }) => {
     editActivity(moduleId, activity);
   }
 
-  const removeFixedCost= () => {
+  const removeFixedCost = () => {
     setFixedCost(undefined);
     activity.fixedCost = undefined;
     editActivity(moduleId, activity);
@@ -29,7 +29,7 @@ const ActivityFixedCost = ({ moduleId, activity, editActivity, viewMode }) => {
       <td className="text-right">
       </td>
       <td className="text-right">
-        <input className="text-right browser-default" type="number" min="0" max="9999"
+        <input className="text-right browser-default" type="number" min="0"
           value={fixedCost}
           onChange={(e) => fixedCostChanged(e.target.value)}
           disabled={viewMode === VIEW_MODES.VIEW} />
