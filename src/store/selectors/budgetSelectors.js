@@ -28,7 +28,7 @@ const addQuotationDataToBudget = (budgetData, quotations, invoices) => {
   if (quotations) {
     Object.keys(quotations).forEach((k) => {
       quotations[k].id = k;
-      let quotationInvoices = invoices.filter(i => i.sponsorQuotationCode === quotations[k].code);
+      let quotationInvoices = invoices.filter(i => i.sponsorQuotationCode === quotations[k].code || i.providerQuotationCode === quotations[k].code);
       const quotation = mapQuotationForBudget(quotations[k], quotationInvoices);
 
       Object.keys(quotation.modules).forEach((j) => {
@@ -44,7 +44,7 @@ const mapQuotationForBudget = (quotation, invoices) => {
   const modules = {};
   if (quotation.modules) {
     Object.keys(quotation.modules).forEach((k) => {
-      let moduleInvoices = invoices.filter(i => i.sponsorModuleCode === quotation.modules[k].code);
+      let moduleInvoices = invoices.filter(i => i.sponsorModuleCode === quotation.modules[k].code || i.providerModuleCode === quotation.modules[k].code);
       quotation.modules[k].id = k;
       modules[quotation.modules[k].code] = mapModuleForBudget(quotation, quotation.modules[k], moduleInvoices);
     });
@@ -80,9 +80,18 @@ const mapModuleForBudget = (quotation, module, invoices) => {
       activity.activityCost = activity.unitCost * activity.unitNumber;
       activity.resources = resources;
       activity.type = quotation.quotationType;
-      let activityInvoices = invoices.filter(i => i.sponsorActivityCode === activity.code);
-      activity.incomes = activityInvoices.filter(i => i.type === 'INCOME').reduce((total, i) => (total + i.totalCost), 0);
-      activity.expenses = activityInvoices.filter(i => i.type === 'EXPENSE').reduce((total, i) => (total + i.totalCost), 0);
+      activity.incomes = 0;
+      activity.expenses = 0;
+      let activityInvoices;
+      if (activity.type === 'SPONSOR') {
+        activityInvoices = invoices.filter(i => ((i.sponsorActivityCode === activity.code)));
+        activity.incomes = activityInvoices.filter(i => i.type === 'INCOME').reduce((total, i) => (total + i.totalCost), 0);
+
+      } else {
+        activityInvoices = invoices.filter(i => ((i.providerActivityCode === activity.code)));
+        activity.expenses = activityInvoices.filter(i => i.type === 'EXPENSE').reduce((total, i) => (total + i.totalCost), 0);
+      }
+
       activity.quotationCode = quotation.code;
       activities[activity.code] = activity;
     });

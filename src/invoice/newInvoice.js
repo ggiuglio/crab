@@ -202,11 +202,11 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
     const selectedProviderModule =
       providerQuotationId === "0"
         ? completeList.modules.find((m) => m.id === providerModuleId)
-        : sponsorList.modules.find((m) => m.id === providerModuleId);
+        : providerList.modules.find((m) => m.id === providerModuleId);
     const selectedProviderActivity =
       providerQuotationId === "0"
         ? completeList.activities.find((a) => a.id === providerActivityId)
-        : sponsorList.activities.find((a) => a.id === providerActivityId);
+        : providerList.activities.find((a) => a.id === providerActivityId);
     const providerQuotation = sponsorQuotationId === "0" ? { id: "0", code: "Out of budget" } : providerList.quotations.find((q) => q.id === providerQuotationId);
 
     if (!cannotSave()) {
@@ -221,7 +221,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
         sponsorActivityId: selectedSponsorActivity.id,
         sponsorActivityCode: selectedSponsorActivity.code,
         sponsorActivityTitle: selectedSponsorActivity.title,
-        provider: activityType === "quotationType" && hasProvider === true ? providers.find((p) => (p.id = providerId)) : null,
+        provider: activityType === "EXPENSE" && hasProvider === true ? providers.find((p) => (p.id = providerId)) : null,
         providerQuotationId: providerQuotation ? providerQuotation.id : null,
         providerQuotationCode: providerQuotation ? providerQuotation.code : null,
         providerModuleId: selectedProviderModule ? selectedProviderModule.id : null,
@@ -241,6 +241,9 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
       setSponsorQuotationId("-1");
       setSponsorModuleId("-1");
       setSponsorActivityId("-1");
+      setProviderQuotationId("-1");
+      setProviderModuleId("-1");
+      setProviderActivityId("-1");
       setProviderId("-1");
       setUnitCost("");
       setUnitNumber("");

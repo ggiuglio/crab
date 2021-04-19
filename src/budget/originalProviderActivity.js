@@ -8,9 +8,8 @@ const OriginalProviderActivity = ({ activity }) => {
       <td className="text-right">{activity.activityCost}</td>
       <td className="text-right">{activity.expenses}</td>
       <td
-        className={`text-right ${
-          activity.activityCost - activity.expenses > 0 ? "green-text" : "red-text"
-        }`}
+        className={`text-right ${activity.activityCost - activity.expenses > 0 ? "green-text" : "red-text"
+          }`}
       >
         {activity.activityCost - activity.expenses} (
         {100 - Math.round((activity.expenses / activity.activityCost) * 100)}%)
