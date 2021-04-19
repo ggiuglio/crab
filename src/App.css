@@ -332,12 +332,12 @@ select.browser-default > option:checked {
   padding: 0 .75rem;
 }
 
-.module-li {
+/* .module-li {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-}
+} */
 
-.activity-li {
+.activity-li, .underline {
   border-bottom: 1px solid black;
 }
 
@@ -348,7 +348,6 @@ select.browser-default > option:checked {
 
 .activity-print {
   padding-left: 1rem;
-  border-top: 1px solid black;
 }
 
 .box {
@@ -356,9 +355,8 @@ select.browser-default > option:checked {
   min-height: 1cm !important;
 }
 
-.signature {
-  min-height: 2cm;
-  height: 2cm;
+.empty-field {
+  min-height: 5mm !important;
 }
 
 /* MEDIA SECTION */
@@ -441,7 +439,7 @@ select.browser-default > option:checked {
     page-break-after: avoid;
   }
   table,
-  pre {
+  pre, .signature, .box {
     page-break-inside: avoid;
   }
   ul,
@@ -450,12 +448,12 @@ select.browser-default > option:checked {
     page-break-before: avoid;
   }
 
-  .module-li {
+  /* .module-li {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
-  }
+  } */
 
-  .activity-li {
+  .activity-li, .underline {
     border-bottom: 1px solid black;
   }
 
@@ -466,7 +464,7 @@ select.browser-default > option:checked {
 
   .activity-print {
     padding-left: 1rem;
-    border-top: 1px solid black;
+    /* border-top: 1px solid black; */
   }
 
   .box {
@@ -474,8 +472,7 @@ select.browser-default > option:checked {
     min-height: 1cm !important;
   }
 
-  .signature {
-    min-height: 2cm;
-    height: 2cm;
+  .empty-field {
+    min-height: 5mm !important;
   }
 }
