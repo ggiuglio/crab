@@ -1,5 +1,6 @@
 import React from "react";
-import OriginaOOBActivity from "./originalOOBActivity";
+import OriginalOOBActivitySponsor from "./originalOOBActivitySponsor";
+import OriginalOOBActivityProvider from "./originalOOBActivityProvider";
 
 const BudgetOOB = ({ oob }) => {
   return (
@@ -63,15 +64,125 @@ const BudgetOOB = ({ oob }) => {
           </div>
         </div>
       </div>
-      <div className="collapsible-body container">
-        <ul>
-          {
-            oob.originalActivities.map((oa, i) =>
-              <OriginaOOBActivity key={i} activity={oa} />
-            )
-          }
+      <div className="collapsible-body">
+        <ul className="collapsible">
+          <li>
+            <div className="collapsible-header block">
+              <div className="row indigo-text">
+                <div className="col s12 m6 center">
+                  <span className="bolder s-active-text">Original active</span>
+                </div>
+                <div className="col s12 m6 center">
+                  <span className="bolder s-passive-text">
+                    Original passive
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="collapsible-body">
+              <div className="row">
+                <div className="col s12 m6">
+                  <table className="responsive-table">
+                    <thead className="s-active">
+                      <tr>
+                        <th className="hide-on-med-and-up" title="Module">
+                          Mod
+                        </th>
+                        <th
+                          className="text-left hide-on-med-and-up"
+                          title="Activity"
+                        >
+                          Act
+                        </th>
+                        <th
+                          className="text-right hide-on-med-and-up"
+                          title="Income"
+                        >
+                          Inc
+                        </th>
+                        <th className="hide-on-small-only">Module</th>
+                        <th className="text-left hide-on-small-only">
+                          Activity
+                        </th>
+                        <th className="text-right hide-on-small-only">
+                          Income
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {oob.originalActivities
+                        ? oob.originalActivities
+                          .filter((oA) => {
+                            return oA.type === "INCOME";
+                          })
+                          .map((oA, i) => {
+                            return (
+                              <OriginalOOBActivitySponsor
+                                key={i}
+                                activity={oA}
+                              />
+                            );
+                          })
+                        : null}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="col s12 m6">
+                  <table className="responsive-table">
+                    <thead className="s-active">
+                      <tr>
+                        <th className="hide-on-med-and-up" title="Sponsor">
+                          Spo
+                        </th>
+                        <th className="hide-on-med-and-up" title="Module">
+                          Mod
+                        </th>
+                        <th
+                          className="text-left hide-on-med-and-up"
+                          title="Activity"
+                        >
+                          Act
+                        </th>
+                        <th
+                          className="text-right hide-on-med-and-up"
+                          title="Income"
+                        >
+                          Inc
+                        </th>
+                        <th className="hide-on-small-only">Sponsor</th>
+                        <th className="hide-on-small-only">Module</th>
+                        <th className="text-left hide-on-small-only">
+                          Activity
+                        </th>
+                        <th className="text-right hide-on-small-only">
+                          Income
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {oob.originalActivities
+                        ? oob.originalActivities
+                          .filter((oA) => {
+                            return oA.type === "EXPENSE";
+                          })
+                          .map((oA, i) => {
+                            return (
+                              <OriginalOOBActivityProvider
+                                key={i}
+                                activity={oA}
+                              />
+                            );
+                          })
+                        : null}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </li>
         </ul>
       </div>
+
     </li>
   );
 };
