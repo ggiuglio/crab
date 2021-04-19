@@ -250,6 +250,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
       setTotalCost("");
       setDate("");
       setComment("");
+      setHasProvider(false);
       let datePicker = document.getElementById("date");
       datePicker.value = "";
     }
@@ -294,7 +295,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
             <>
               <div className="col s1 m1">
                 <label>
-                  <input type="checkbox" onChange={e => hasProviderChange()} />
+                  <input type="checkbox" checked={hasProvider} onChange={e => hasProviderChange()} />
                   <span>Has provider</span>
                 </label>
               </div>
