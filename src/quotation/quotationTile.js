@@ -5,7 +5,7 @@ import CustomNavLink from "../common/customNavLink";
 import M from "materialize-css/dist/js/materialize.min.js";
 import "./css/quotation.css";
 
-const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
+const QuotationTile = ({ quotation, chooseQuotation, projectId, archiveQuotationFn }) => {
   React.useEffect(() => {
     let tooltips = document.querySelectorAll(".tooltipped");
     M.Tooltip.init(tooltips);
@@ -56,6 +56,7 @@ const QuotationTile = ({ quotation, chooseQuotation, projectId }) => {
                 href="#modal-archive"
                 data-position="bottom"
                 data-tooltip="Archive quotation"
+                onClick={() => archiveQuotationFn(quotation.id)}
               >
                 <i className="material-icons red-text text-darken-3">archive</i>
               </a>

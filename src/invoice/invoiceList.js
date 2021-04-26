@@ -6,9 +6,11 @@ import {
   deleteInvoice,
   setInvoiecStatus,
 } from "../store/actions/invoiceActions";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
   const [hasProvider, setHasProvider] = React.useState(false);
+  const [invoiceToDelete, setInvoiceToDelete] = React.useState("");
 
   React.useEffect(() => {
     setHasProvider(
@@ -19,6 +21,11 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
     );
 
     setResponsive();
+
+    if(invoices !== undefined) {
+      let modal = document.getElementById("modal-deletion");
+      M.Modal.init(modal, {'onCloseEnd' : setInvoiceToDelete("")});
+    } 
   }, [invoices]);
 
   const deleteInvoiceClick = (invoiceId) => {
@@ -276,16 +283,45 @@ const InvoiceList = ({ invoices, deleteInvoiceAction, changeStatus }) => {
                 )}
               </td>
               <td className="delete-cell center">
+              <a
+                className="modal-trigger transparent tooltipped"
+                href="#modal-deletion"
+                data-position="bottom"
+                data-tooltip="Delete invoice"
+                onClick={() => setInvoiceToDelete(i.id)}
+              >
                 <i
                   className="material-icons delete small"
                   title="Delete"
-                  onClick={() => deleteInvoiceClick(i.id)}
                 ></i>
+              </a>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <div id="modal-deletion" className="modal">
+        <div className="modal-content">
+          <h4>Invoice Deletion</h4>
+          <h5>Are you sure you want to delete this invoice?</h5>
+        </div>
+        <div className="modal-footer">
+          <a
+            href="#!"
+            className="modal-close waves-effect waves-indigo btn-flat"
+            >
+            Cancel
+          </a>
+          <a
+            href="#!"
+            className="modal-close btn red darken-2 waves-effect waves-light"
+            onClick={() => deleteInvoiceClick(invoiceToDelete)}
+          >
+            Ok
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

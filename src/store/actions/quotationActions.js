@@ -264,3 +264,11 @@ export const cancelQuotationEdit = () => {
     })
   }
 }
+
+export const archiveQuotation = (quotationId) => {
+  return (dispatch, getSate) => {
+    const projectId = getSate().selectedProjectId;
+
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/archived`).set(true).then(() => { });
+  }
+}
