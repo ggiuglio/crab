@@ -6,12 +6,15 @@ import ProjectTile from "./projectTile";
 import {
   selectProject,
   initializeProject,
+  archiveProject
 } from "../store/actions/projectActions";
 import Preloader from "../common/preloader";
 import CustomNavLink from "../common/customNavLink";
 import { setProjectMenuAction } from "../store/actions/genericActions";
 
-const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjectMenu }) => {
+const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjectMenu, archiveProjectAction }) => {
+  const [projectToArchive, setProjectToArchive] = React.useState("");
+
   React.useEffect(() => {
     clearSelectedProject();
     clearProjectMenu();
@@ -22,10 +25,18 @@ const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjec
   
   React.useEffect(() => {
     if (projects) {
-      let modal = document.querySelector(".modal");
-      M.Modal.init(modal);
+      let modal = document.getElementById("modal-archive");
+      M.Modal.init(modal, {'onCloseEnd' : setProjectToArchive("")});
     }
-  });
+  }, [projects]);
+
+  const archiveProjectFn = (project) => {
+    setProjectToArchive(project);
+  };
+
+  const archiveProjectClick = (projectId) => {
+    archiveProjectAction(projectId);
+  };
 
   return (
     <div className="container">
@@ -49,7 +60,7 @@ const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjec
         <div>
           <div className="row">
             {projects.map((p) => (
-              <ProjectTile key={p.id} project={p} />
+              <ProjectTile key={p.id} project={p} archiveProjectFn={archiveProjectFn} />
             ))}
           </div>
 
@@ -68,6 +79,7 @@ const Projects = ({ projects, clearSelectedProject, startNewProject, clearProjec
               <a
                 href="#!"
                 className="modal-close btn red darken-2 waves-effect waves-light"
+                onClick={() => archiveProjectClick(projectToArchive)}
               >
                 Ok
               </a>
@@ -94,6 +106,7 @@ const mapDispatchToProps = (dispatch) => {
     clearSelectedProject: () => dispatch(selectProject(null)),
     clearProjectMenu: () => dispatch(setProjectMenuAction(undefined)),
     startNewProject: () => dispatch(initializeProject()),
+    archiveProjectAction: (project) => dispatch(archiveProject(project)),
   };
 };
 

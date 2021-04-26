@@ -10,6 +10,8 @@ export const getProjectProviders = (state) => state.selectedProjectData ? state.
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {
+    console.log(projects[k])
+    if(projects[k].archived) return;
     projectList.push(projects[k]);
   });
 

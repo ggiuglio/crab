@@ -18,6 +18,7 @@ const mapQuotationList = (qs) => {
     if (quotations) {
       Object.keys(quotations).forEach((k) => {
         let quotation = quotations[k];
+        if(quotation.archived) return;
         quotation.id = k;
         quotation = mapQuotation(quotation);
         const qutationTile = {

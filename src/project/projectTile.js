@@ -4,7 +4,7 @@ import { selectProject } from "../store/actions/projectActions";
 import CustomNavLink from "../common/customNavLink";
 import M from "materialize-css/dist/js/materialize.min.js";
 
-const ProjectTile = ({ project, chooseProject }) => {
+const ProjectTile = ({ project, chooseProject, archiveProjectFn }) => {
   React.useEffect(() => {
     let tooltips = document.querySelectorAll(".tooltipped");
     M.Tooltip.init(tooltips);
@@ -46,6 +46,7 @@ const ProjectTile = ({ project, chooseProject }) => {
                 href="#modal-archive"
                 data-position="bottom"
                 data-tooltip="Archive project"
+                onClick={() => archiveProjectFn(project.id)}
               >
                 <i className="material-icons red-text text-darken-3">archive</i>
               </a>
