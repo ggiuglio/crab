@@ -8,16 +8,19 @@ import { getProjectMenu } from "../store/selectors/genericSelectors";
 
 const ProjectMenu = ({ selectedProjectId, projectMenu, setProjectMenuAction }) => {
   React.useEffect(() => {
-    if(!projectMenu) {
+    if (!projectMenu) {
       const locationToken = history.location.pathname.split('/');
       const location = locationToken[locationToken.length - 1];
 
       let code = "";
 
-      if(selectedProjectId && selectedProjectId !== "0") {
+      if (selectedProjectId && selectedProjectId !== "0") {
         switch (location) {
           case "project":
             code = "DSB";
+            break;
+          case "settings":
+            code = 'SET';
             break;
           case "quotations":
           case "quotation":
@@ -36,7 +39,7 @@ const ProjectMenu = ({ selectedProjectId, projectMenu, setProjectMenuAction }) =
           default:
         }
       }
-      if(projectMenu !== code) setProjectMenuAction(code);
+      if (projectMenu !== code) setProjectMenuAction(code);
     }
   }, [selectedProjectId]);
 
@@ -84,6 +87,16 @@ const ProjectMenu = ({ selectedProjectId, projectMenu, setProjectMenuAction }) =
           onClick={setProjectMenu}
         >
           <span>Budget</span>
+        </CustomNavLink>
+      </li>
+      <li className={`custom-action-tab indigo lighten-3 ${projectMenu === "SET" ? "active" : ""}`}>
+        <CustomNavLink
+          to={`/project/settings?project=${selectedProjectId}`}
+          code="SET"
+          className={projectMenu === "SET" ? "active" : ""}
+          onClick={setProjectMenu}
+        >
+          <span>Settings</span>
         </CustomNavLink>
       </li>
       <li className={`custom-action-tab indigo lighten-3 ${projectMenu === "ADA" ? "active" : ""}`}>

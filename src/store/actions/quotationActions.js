@@ -52,7 +52,7 @@ export const editQuotation = () => {
       viewMode: VIEW_MODES.VIEW
     })
   }
-} 
+}
 
 export const addQuotation = () => {
   return (dispatch, getSate) => {
@@ -106,7 +106,7 @@ export const addActivity = (activity, moduleId, quotationId, projectId) => {
 export const addResource = (resource, activityId, moduleId, quotationId, projectId) => {
 
   return (dispatch) => {
-    FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules/${moduleId}/activities/${activityId}/resources`).push(resource).then((res) => {});
+    FirebaseInstance.dataRef.ref(`projects/${projectId}/quotations/${quotationId}/modules/${moduleId}/activities/${activityId}/resources`).push(resource).then((res) => { });
   }
 };
 
@@ -236,7 +236,6 @@ export const editDefaultResourceCostInSelectedQuotation = (resourceId, resourceF
       resourceFee: resourceFee
     })
   }
-
 }
 
 export const setSelectedQuotationProvider = (provider) => {

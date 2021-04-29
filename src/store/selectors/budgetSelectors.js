@@ -164,7 +164,6 @@ const updateModuleTotals = (module, activity) => {
 const calculateOutOfBudget = (budget, invoices) => {
   let outOfBudgetInvoices = invoices.filter(i => i.sponsorQuotationCode === "Out of budget");
   outOfBudgetInvoices.forEach(i => {
-    console.log(i)
     if (i.type === 'INCOME') {
       budget.outOfBudget.incomes += i.totalCost;
       budget.incomes += i.totalCost;

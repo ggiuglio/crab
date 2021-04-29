@@ -21,6 +21,7 @@ import Quotation from "./quotation/quotation";
 import QuotationPrint from "./quotation/template/quotation-print";
 import NewProject from "./project/newProject";
 import ProjectDashboard from "./project/projectDashboard";
+import ProjectSettings from "./projectSettings/projectSettings";
 
 export const history = createBrowserHistory();
 export const FirebaseInstance = new Firebase();
@@ -47,11 +48,12 @@ class App extends Component {
     return (
       <Router history={history}>
         <Main>
-          <Route exact path='/'component={Projects} />
+          <Route exact path='/' component={Projects} />
           <Route path={"/login"} component={Login} />
           <Route path={"/projects"} component={Projects} />
           <Route path={"/new-project"} component={NewProject} />
           <Route exact path={"/project"} component={ProjectDashboard} />
+          <Route path={"/project/settings"} component={ProjectSettings} />
           <Route path={"/project/quotation"} component={Quotation} />
           <Route path={"/project/new-quotation"} component={Quotation} />
           <Route path={"/project/quotations"} component={Quotations} />

@@ -180,14 +180,6 @@ const Budget = ({
                     </div>
                   </div>
                 </div>
-                {/* <div className="col s2 center">
-                  <div className="row">
-                    <div className="col s12">OUT OF BUDGET INCOME</div>
-                    <div className="col s12">
-                      <h5>{budget.outOfBudgetIncomes}</h5>
-                    </div>
-                  </div>
-                </div> */}
                 <div className="col s2 center">
                   <div className="row">
                     <div className="col s12">NET INCOME</div>
@@ -214,10 +206,10 @@ const Budget = ({
           </div>
         </div>
       ) : (
-          <div className="center valign-page-center">
-            <Preloader classes="preloader-wrapper big active" />
-          </div>
-        )}
+        <div className="center valign-page-center">
+          <Preloader classes="preloader-wrapper big active" />
+        </div>
+      )}
     </div>
   );
 };

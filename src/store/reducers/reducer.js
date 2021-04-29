@@ -160,6 +160,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
       const quotations = action.project ? action.project.quotations : undefined;
       const invoices = action.project ? mapInvoiceList(action.project.invoices) : [];
       const project = action.project ? { ...action.project.project, id: action.projectId } : undefined;
+      const modules = action.project.modules
 
       const selectedProject = project ? {
         id: project.id,
@@ -171,6 +172,7 @@ const Reducer = (state = INITIAL_STATE, action) => {
         status: project.status,
         creationDate: project.creationDate,
         sponsor: project.sponsor,
+        modules: modules,
         viewMode: VIEW_MODES.VIEW,
       } : undefined;
 

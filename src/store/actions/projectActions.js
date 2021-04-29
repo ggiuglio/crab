@@ -50,14 +50,16 @@ export const loadProjectAction = (projectId) => {
 }
 
 export const createNewProject = (project) => {
-  return  (dipatch, getSate) => {
+  return (dipatch, getSate) => {
     const userId = getSate().user.uid;
+    const baseMosule = getSate().baseModules
     const projectData = {
       project: { ...project, ownerId: userId },
       quotations: {},
-      invoices: {}
+      invoices: {},
+      modules: baseMosule
     };
-    
+
     return FirebaseInstance.projects.push(projectData).then((res) => {
       const id = res.path.pieces_[1];
       project.id = id;
@@ -89,8 +91,8 @@ export const editSelectedProject = (project, projcetId) => {
       creationDate: project.creationDate,
       status: project.status
     };
-      return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).update(project).then((res) => {
-        return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).update(userProject).then((res) => {
+    return FirebaseInstance.dataRef.ref(`projects/${projcetId}/project`).update(project).then((res) => {
+      return FirebaseInstance.dataRef.ref(`userProjects/${userId}/projects/${projcetId}`).update(userProject).then((res) => {
       });
     });
   }
@@ -212,5 +214,43 @@ export const cancelProjectEdit = () => {
         type: CANCEL_PROJECT_EDIT
       }
     )
+  }
+}
+
+export const resetProjectModulesAction = (projectId) => {
+  return (dipatch, getSate) => {
+    const baseModules = getSate().baseModules;
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/modules`).set(baseModules).then((res) => {
+    })
+  }
+}
+
+export const removeProjectModuleAction = (projectId, moduleId) => {
+  return (dipatch, getSate) => {
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/modules/${moduleId}`).remove().then((res) => {
+    })
+  }
+}
+
+export const addProjectModuleAction = (projectId, module) => {
+  return (dipatch, getSate) => {
+    const ref = FirebaseInstance.dataRef.ref(`projects/${projectId}/modules`).push().then((res) => {
+      res.set(module)
+    });
+  }
+}
+
+export const addProjectActivityAction = (projectId, moduleId, activity) => {
+  return (dipatch, getSate) => {
+    const ref = FirebaseInstance.dataRef.ref(`projects/${projectId}/modules/${moduleId}/activities`).push().then((res) => {
+      res.set(activity)
+    });
+  }
+}
+
+export const removeProjectActivityAction = (projectId, moduleId, activityId) => {
+  return (dipatch, getSate) => {
+    return FirebaseInstance.dataRef.ref(`projects/${projectId}/modules/${moduleId}/activities/${activityId}`).remove().then((res) => {
+    })
   }
 }
