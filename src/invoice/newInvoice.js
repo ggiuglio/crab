@@ -221,7 +221,7 @@ const NewInvoice = ({ createInvoice, sponsorList, providerList, completeList, pr
         sponsorActivityId: selectedSponsorActivity.id,
         sponsorActivityCode: selectedSponsorActivity.code,
         sponsorActivityTitle: selectedSponsorActivity.title,
-        provider: activityType === "EXPENSE" && hasProvider === true ? providers.find((p) => (p.id = providerId)) : null,
+        provider: activityType === "EXPENSE" && hasProvider === true ? providers.find((p) => (p.id === providerId)) : null,
         providerQuotationId: providerQuotation ? providerQuotation.id : null,
         providerQuotationCode: providerQuotation ? providerQuotation.code : null,
         providerModuleId: selectedProviderModule ? selectedProviderModule.id : null,

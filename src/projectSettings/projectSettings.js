@@ -210,7 +210,7 @@ const ProjectSettings = ({ project, modules, selectedProjectId, chooseProject, l
         className="btn indigo lighten-1 z-depth-0"
         onClick={() => resetToDefaultProjetModule(project.id)}
       >
-        Rest to default
+        Reset to default
       </button>
 
       { newActivityModule ?
