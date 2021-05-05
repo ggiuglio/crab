@@ -254,3 +254,10 @@ export const removeProjectActivityAction = (projectId, moduleId, activityId) => 
     })
   }
 }
+
+export const archiveProject = (projectId) => {
+  return (dispatch, getSate) => {
+    const uid = getSate().user.uid;
+    return FirebaseInstance.dataRef.ref(`userProjects/${uid}/projects/${projectId}/archived`).set(true).then(() => { });
+  }
+}

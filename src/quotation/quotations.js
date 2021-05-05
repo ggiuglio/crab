@@ -14,7 +14,7 @@ import {
   getSponsorQuotations,
 } from "../store/selectors/quotationSelectors";
 import CustomNavLink from "../common/customNavLink";
-import { startNewQuotation } from "../store/actions/quotationActions";
+import { startNewQuotation, archiveQuotation } from "../store/actions/quotationActions";
 import QuotationTile from "./quotationTile";
 import Preloader from "../common/preloader";
 import M from "materialize-css/dist/js/materialize.min.js";
@@ -28,7 +28,10 @@ const Quotations = ({
   providerQuotations,
   sponsorQuotations,
   creatNewQuotation,
+  archiveQuotationAction
 }) => {
+  const [quotationToArchive, setQuotationToArchive] = React.useState("");
+
   useEffect(() => {
     if (!selectedProjectId) {
       const query = new URLSearchParams(history.location.search);
@@ -44,15 +47,26 @@ const Quotations = ({
       }
     }
 
+  });
+
+  useEffect(() => {
     if (providerQuotations !== undefined && sponsorQuotations !== undefined) {
       let tabs = document.getElementById("tabs-swipe-quotations");
       M.Tabs.init(tabs);
-      let modal = document.querySelector(".modal");
-      M.Modal.init(modal);
+      let modal = document.getElementById("modal-archive");
+      M.Modal.init(modal, {'onCloseEnd' : setQuotationToArchive("")});
       let tooltips = document.querySelectorAll(".tooltipped");
       M.Tooltip.init(tooltips);
     }
-  });
+  }, [providerQuotations, sponsorQuotations]);
+
+  const archiveQuotationFn = (quotation) => {
+    setQuotationToArchive(quotation);
+  };
+
+  const archiveQuotationClick = (quotationId) => {
+    archiveQuotationAction(quotationId);
+  };
 
   return (
     <div className="container">
@@ -92,6 +106,7 @@ const Quotations = ({
                     key={q.id}
                     projectId={project.id}
                     quotation={q}
+                    archiveQuotationFn={archiveQuotationFn}
                   />
                 ))}
               </div>
@@ -120,6 +135,7 @@ const Quotations = ({
                     key={q.id}
                     projectId={project.id}
                     quotation={q}
+                    archiveQuotationFn={archiveQuotationFn}
                   />
                 ))}
               </div>
@@ -141,7 +157,8 @@ const Quotations = ({
               <a
                 href="#!"
                 className="modal-close btn red darken-2 waves-effect waves-light"
-              >
+                onClick={() => archiveQuotationClick(quotationToArchive)}
+            >
                 Ok
               </a>
             </div>
@@ -170,6 +187,7 @@ const mapDispatchToProps = (dispatch) => {
     creatNewQuotation: (type) => dispatch(startNewQuotation(type)),
     chooseProject: (projectId) => dispatch(selectProject(projectId)),
     loadProject: (projectId) => dispatch(loadProjectAction(projectId)),
+    archiveQuotationAction: (quotation) => dispatch(archiveQuotation(quotation)),
   };
 };
 
