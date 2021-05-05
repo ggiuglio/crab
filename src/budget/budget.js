@@ -44,166 +44,172 @@ const Budget = ({
   return (
     <div>
       {project ? (
+
         <div className="row">
-          <div className="col s12">
-            <div id="budget-data" className="card indigo darken-1 white-text">
-              <div className="row hide-on-med-and-up bolder">
-                <div className="col s12 center">
-                  <span title="NET INCOME" className="space-right">NET INCOME</span>&nbsp;
+          { budget && budget.modules && budget.modules.length > 0 ?
+            <div className="col s12">
+              <div id="budget-data" className="card indigo darken-1 white-text">
+                <div className="row hide-on-med-and-up bolder">
+                  <div className="col s12 center">
+                    <span title="NET INCOME" className="space-right">NET INCOME</span>&nbsp;
                   <h5
-                    className={`inline-block ${budget.incomes - budget.expenses > 0
-                      ? "light-green-text"
-                      : "red-text"
-                      }`}
-                  >
-                    {budget.incomes - budget.expenses}
-                  </h5>
-                </div>
-                {/* <div className="col s6 center">
+                      className={`inline-block ${budget.incomes - budget.expenses > 0
+                        ? "light-green-text"
+                        : "red-text"
+                        }`}
+                    >
+                      {budget.incomes - budget.expenses}
+                    </h5>
+                  </div>
+                  {/* <div className="col s6 center">
                   <span title="OUT OF BUDGET INCOME">OUT BUDG IN</span>&nbsp;
                   <h5>{budget.outOfBudgetIncomes}</h5>
                 </div> */}
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="BUDGET">BUDG:</span>&nbsp;{budget.budget}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="INCOME">IN:</span>&nbsp;{budget.incomes}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="REMAINING BUDGET">REM B:</span>&nbsp;
-                    <span
-                      className={`${budget.budget - budget.incomes > 0
-                        ? "light-green-text"
-                        : "red-text"
-                        }`}
-                    >
-                      {budget.budget - budget.incomes}&nbsp; (
-                      {budget.budget
-                        ? printNumbers(100 -
-                          Math.round((budget.incomes / budget.budget) * 100))
-                        : 0}
-                      %)
-                    </span>
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="PLANNED EXPENSES">PLAN E:</span>&nbsp;
-                    {budget.plannedExpenses}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="EXPENSES">EXP:</span>&nbsp;{budget.expenses}
-                  </h6>
-                </div>
-                <div className="col s4">
-                  <h6 className="text-right">
-                    <span title="REMAINING EXPENSES">REM E:</span>&nbsp;
-                    <span
-                      className={`${budget.plannedExpenses - budget.expenses > 0
-                        ? "light-green-text"
-                        : "red-text"
-                        }`}
-                    >
-                      {Math.round((budget.plannedExpenses - budget.expenses) * 100) / 100}
-                      {budget.budget
-                        ? printNumbers(100 -
-                          Math.round(
-                            (budget.expenses / budget.plannedExpenses) * 100)
-                        )
-                        : 0}
-                      %)
-                    </span>
-                  </h6>
-                </div>
-              </div>
-              <div className="row hide-on-small-only bolder">
-                <div className="col s10">
-                  <div className="row">
-                    <div className="col s4 text-right">
-                      <h6>Budget:&nbsp;{budget.budget}</h6>
-                    </div>
-                    <div className="col s4 text-right">
-                      <h6>Income:&nbsp;{budget.incomes}</h6>
-                    </div>
-                    <div className="col s4 text-right">
-                      <h6>
-                        Remaining budget:&nbsp;
-                        <span
-                          className={`${budget.budget - budget.incomes > 0
-                            ? "light-green-text"
-                            : "red-text"
-                            }`}
-                        >
-                          {Math.round((budget.budget - budget.incomes) * 100) / 100}&nbsp;
-                          ({budget.budget
-                            ? printNumbers(100 -
-                              Math.round((budget.incomes / budget.budget) * 100))
-                            : 0}
-                          %)
-                        </span>
-                      </h6>
-                    </div>
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="BUDGET">BUDG:</span>&nbsp;{budget.budget}
+                    </h6>
                   </div>
-                  <div className="row">
-                    <div className="col s4 text-right">
-                      <h6>Planned expenses:&nbsp;{budget.plannedExpenses}</h6>
-                    </div>
-                    <div className="col s4 text-right">
-                      <h6>Expenses:&nbsp;{Math.round((budget.expenses) * 100) / 100}</h6>
-                    </div>
-                    <div className="col s4 text-right">
-                      <h6>
-                        Remaining expenses:&nbsp;
-                        <span
-                          className={`${budget.plannedExpenses - budget.expenses > 0
-                            ? "light-green-text"
-                            : "red-text"
-                            }`}
-                        >
-                          {Math.round((budget.plannedExpenses - budget.expenses) * 100) / 100} &nbsp;(
-                          {budget.budget
-                            ? printNumbers(100 -
-                              Math.round(
-                                (budget.expenses / budget.plannedExpenses) * 100)
-                            )
-                            : 0}
-                          %)
-                        </span>
-                      </h6>
-                    </div>
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="INCOME">IN:</span>&nbsp;{budget.incomes}
+                    </h6>
                   </div>
-                </div>
-                <div className="col s2 center">
-                  <div className="row">
-                    <div className="col s12">NET INCOME</div>
-                    <div className="col s12">
-                      <h5
-                        className={`${budget.incomes - budget.expenses > 0
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="REMAINING BUDGET">REM B:</span>&nbsp;
+                    <span
+                        className={`${budget.budget - budget.incomes > 0
                           ? "light-green-text"
                           : "red-text"
                           }`}
                       >
-                        {Math.round((budget.incomes - budget.expenses) * 100) / 100}
-                      </h5>
+                        {budget.budget - budget.incomes}&nbsp; (
+                      {budget.budget
+                          ? printNumbers(100 -
+                            Math.round((budget.incomes / budget.budget) * 100))
+                          : 0}
+                      %)
+                    </span>
+                    </h6>
+                  </div>
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="PLANNED EXPENSES">PLAN E:</span>&nbsp;
+                    {budget.plannedExpenses}
+                    </h6>
+                  </div>
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="EXPENSES">EXP:</span>&nbsp;{budget.expenses}
+                    </h6>
+                  </div>
+                  <div className="col s4">
+                    <h6 className="text-right">
+                      <span title="REMAINING EXPENSES">REM E:</span>&nbsp;
+                    <span
+                        className={`${budget.plannedExpenses - budget.expenses > 0
+                          ? "light-green-text"
+                          : "red-text"
+                          }`}
+                      >
+                        {Math.round((budget.plannedExpenses - budget.expenses) * 100) / 100}
+                        {budget.budget
+                          ? printNumbers(100 -
+                            Math.round(
+                              (budget.expenses / budget.plannedExpenses) * 100)
+                          )
+                          : 0}
+                      %)
+                    </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="row hide-on-small-only bolder">
+                  <div className="col s10">
+                    <div className="row">
+                      <div className="col s4 text-right">
+                        <h6>Budget:&nbsp;{budget.budget}</h6>
+                      </div>
+                      <div className="col s4 text-right">
+                        <h6>Income:&nbsp;{budget.incomes}</h6>
+                      </div>
+                      <div className="col s4 text-right">
+                        <h6>
+                          Remaining budget:&nbsp;
+                        <span
+                            className={`${budget.budget - budget.incomes > 0
+                              ? "light-green-text"
+                              : "red-text"
+                              }`}
+                          >
+                            {Math.round((budget.budget - budget.incomes) * 100) / 100}&nbsp;
+                          ({budget.budget
+                              ? printNumbers(100 -
+                                Math.round((budget.incomes / budget.budget) * 100))
+                              : 0}
+                          %)
+                        </span>
+                        </h6>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col s4 text-right">
+                        <h6>Planned expenses:&nbsp;{budget.plannedExpenses}</h6>
+                      </div>
+                      <div className="col s4 text-right">
+                        <h6>Expenses:&nbsp;{Math.round((budget.expenses) * 100) / 100}</h6>
+                      </div>
+                      <div className="col s4 text-right">
+                        <h6>
+                          Remaining expenses:&nbsp;
+                        <span
+                            className={`${budget.plannedExpenses - budget.expenses > 0
+                              ? "light-green-text"
+                              : "red-text"
+                              }`}
+                          >
+                            {Math.round((budget.plannedExpenses - budget.expenses) * 100) / 100} &nbsp;(
+                          {budget.budget
+                              ? printNumbers(100 -
+                                Math.round(
+                                  (budget.expenses / budget.plannedExpenses) * 100)
+                              )
+                              : 0}
+                          %)
+                        </span>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col s2 center">
+                    <div className="row">
+                      <div className="col s12">NET INCOME</div>
+                      <div className="col s12">
+                        <h5
+                          className={`${budget.incomes - budget.expenses > 0
+                            ? "light-green-text"
+                            : "red-text"
+                            }`}
+                        >
+                          {Math.round((budget.incomes - budget.expenses) * 100) / 100}
+                        </h5>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <ul className="collapsible">
+                {budget.modules.map((m) => (
+                  <BudgetModule key={m.code} module={m} />
+                ))}
+                <BudgetOOB oob={budget.outOfBudget} />
+              </ul>
             </div>
-            <ul className="collapsible">
-              {budget.modules.map((m) => (
-                <BudgetModule key={m.code} module={m} />
-              ))}
-              <BudgetOOB oob={budget.outOfBudget} />
-            </ul>
+            : <div>
+              You need at least an active quotation to calculate a budget
           </div>
+          }
         </div>
       ) : (
         <div className="center valign-page-center">
