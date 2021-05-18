@@ -4,6 +4,8 @@ import M from "materialize-css/dist/js/materialize.min.js";
 import Geo from "../geo/geo";
 import Site from "../geo/site";
 import CountrySelector from "./countrySelector";
+import { setProjectMenuAction } from "../store/actions/genericActions";
+import { getProjectMenu } from "../store/selectors/genericSelectors";
 import {
   setProjectGeos,
   setProjectTitle,
@@ -16,7 +18,7 @@ import { getSelectedProject } from "../store/selectors/projectSelectors";
 import { VIEW_MODES } from "../constants/constants";
 import ProjectViewMode from "./projectViewMode";
 
-const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, setProjectPM, addProjectProvider, removeProjectProvider }) => {
+const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, setProjectPM, addProjectProvider, removeProjectProvider, setProjectMenuAction, projectMenu }) => {
   useEffect(() => {
     if (project) {
       let collapsible = document.querySelectorAll(".collapsible");
@@ -42,6 +44,10 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
       setSites(selectedSites);
     }
   }, [project]);
+
+  useEffect(() => {
+    setProjectMenuAction("DSB");
+  }, [projectMenu]);
 
   const [siteName, setSiteName] = useState("");
   const [sites, setSites] = useState({});
@@ -313,7 +319,8 @@ const Project = ({ project, setProjectGeos, setProjectTitle, setProjectSponsor, 
 
 const mapStateToProps = (state) => {
   return {
-    project: getSelectedProject(state)
+    project: getSelectedProject(state),
+    projectMenu: getProjectMenu(state)
   };
 };
 
@@ -324,7 +331,8 @@ const mapDispatchToProps = (dispatch) => {
     setProjectSponsor: (sponsor) => dispatch(setProjectSponsor(sponsor)),
     setProjectPM: (pm) => dispatch(setProjectPM(pm)),
     addProjectProvider: (provider) => dispatch(addProjectProvider(provider)),
-    removeProjectProvider: (providerId) => dispatch(removeProjectProvider(providerId))
+    removeProjectProvider: (providerId) => dispatch(removeProjectProvider(providerId)),
+    setProjectMenuAction: (code) => dispatch(setProjectMenuAction(code)),
   };
 };
 

@@ -110,6 +110,12 @@ const NAVIGATION_CODES = {
     parent: "DSB",
     order: 3
   },
+  "SET": {
+    title: `Settings`,
+    url: `/project/settings?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,
+    parent: "DSB",
+    order: 3
+  },
   "ADA": {
     title: `Advanced analytics`,
     url: `/project/analytics?project=${NAVIGATION_REPLACERS.NAV_REPL_PROJECT_ID}`,

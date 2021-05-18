@@ -282,6 +282,10 @@ select.browser-default > option:checked {
   background-color: #fefefc !important;
 }
 
+.sidenav .collapsible-body>ul:not(.collapsible)>li.active, .sidenav.sidenav-fixed .collapsible-body>ul:not(.collapsible)>li.active {
+  background-color: #c5cae9 !important;
+}
+
 .tabs,
 .custom-tabs {
   height: 3rem !important;

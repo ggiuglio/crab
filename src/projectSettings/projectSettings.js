@@ -130,7 +130,7 @@ const ProjectSettings = ({ project, modules, selectedProjectId, chooseProject, l
           {
             modules ? modules.map((module) =>
               <>
-                <tr>
+                <tr key={`${module.id}_1`}>
                   <td>
                     {module.title}
                   </td>
@@ -155,7 +155,7 @@ const ProjectSettings = ({ project, modules, selectedProjectId, chooseProject, l
                     ></i>
                   </td>
                 </tr>
-                <tr>
+                <tr key={`${module.id}_2`}>
                   <td colSpan="5">
                     <table className="responsive-table">
                       <thead className="s-active">
@@ -180,7 +180,7 @@ const ProjectSettings = ({ project, modules, selectedProjectId, chooseProject, l
                       <tbody>
                         {
                           module.activities.map((activity) =>
-                            <tr>
+                            <tr key={`${module.id}-${activity.id}`}>
                               <td>&ensp;&ensp;</td>
                               <td>{activity.title}</td>
                               <td>{activity.code}</td>

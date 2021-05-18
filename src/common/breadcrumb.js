@@ -31,6 +31,9 @@ const Breadcrumb = ({ isPrintMode, breadcrumbCode, breadcrumb, setBreadcrumb, us
           case "budget":
             code = "BDG";
             break;
+          case "settings":
+            code = "SET";
+            break;
           case "analytics":
             code = "ADA";
             break;

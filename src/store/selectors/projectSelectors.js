@@ -11,7 +11,7 @@ export const getSelectedProjectModules = (state) => state.selectedProjectData ? 
 const mapProjectList = (projects) => {
   const projectList = [];
   Object.keys(projects).forEach((k) => {
-    console.log(projects[k])
+    // console.log(projects[k])
     if(projects[k].archived) return;
     projectList.push(projects[k]);
   });
