@@ -62,8 +62,13 @@ const ProjectSettings = ({
           "click",
           (e) => {
             if(!e.target.classList.contains('no-open')) {
-              openPanels[i].classList.toggle('active');
-              openPanels[i].querySelector(".collapsible-body").classList.toggle('block');
+              let body = openPanels[i].querySelector(".collapsible-body");
+              if(body.classList.contains('block')) {
+                body.classList.remove('block');
+              } else {
+                body.classList.add('block');
+              }
+              e.stopImmediatePropagation();
             }
           },
         );
@@ -214,10 +219,8 @@ const ProjectSettings = ({
                           </div>
                           <div className="col s1 center no-open">
                             <a
-                              className="modal-trigger transparent tooltipped no-open"
+                              className="modal-trigger transparent no-open"
                               href="#modal-activity"
-                              data-position="bottom"
-                              data-tooltip="Add activity"
                               onClick={() => setNewActivityModule(module)}
                             >
                               <i className="material-icons small no-open green-text text-darken-2 add" title="add">
@@ -225,45 +228,41 @@ const ProjectSettings = ({
                               </i>
                             </a>
                           </div>
-                          <div className="col s1 center">
+                          <div className="col s1 center no-open">
                             <a
-                              className="transparent tooltipped"
-                              data-position="bottom"
-                              data-tooltip="Delete module"
+                              className="transparent no-open"
                               onClickCapture={() => removeProjectModule(project.id, module.id) }
                             >
                               <i
-                                className="material-icons delete small red-text text-darken-2"
+                                className="material-icons delete small red-text text-darken-2 no-open"
                                 title="Delete"
                               ></i>
                             </a>
                           </div>
                         </div>
                       </div>
-                      <div className="collapsible-body">
-                        <div className="row">
-                          <div className="col offset-l1 s12 l10">
-                            <table className="settings-activity-table responsive-table">
+                      <div className="collapsible-body no-open">
+                        <div className="row no-open">
+                          <div className="col offset-l1 s12 l10 no-open">
+                            <table className="settings-activity-table responsive-table no-open">
                               <thead>
                                 <tr>
-                                  <th className="hide-on-med-and-down" width="60%">Activity title</th>
-                                  <th className="hide-on-med-and-down" width="35%">Activity code</th>
-                                  <th className="hide-on-med-and-down center" width="5%">Delete</th>
-                                  <th className="hide-on-large-only" width="60%">Title</th>
-                                  <th className="hide-on-large-only" width="35%">Code</th>
-                                  <th className="hide-on-large-only" width="5%">Del.</th>
+                                  <th className="hide-on-med-and-down no-open" width="60%">Activity title</th>
+                                  <th className="hide-on-med-and-down no-open" width="35%">Activity code</th>
+                                  <th className="hide-on-med-and-down center no-open" width="5%">Delete</th>
+                                  <th className="hide-on-large-only no-open" width="60%">Title</th>
+                                  <th className="hide-on-large-only no-open" width="35%">Code</th>
+                                  <th className="hide-on-large-only no-open" width="5%">Del.</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {module.activities.map((activity) => (
                                   <tr key={`${module.id}-${activity.id}`}>
-                                    <td>{activity.title}</td>
-                                    <td>{activity.code}</td>
-                                    <td className="delete-cell center">
+                                    <td className="no-open">{activity.title}</td>
+                                    <td className="center no-open">{activity.code}</td>
+                                    <td className="delete-cell center no-open">
                                       <a
-                                        className="transparent tooltipped"
-                                        data-position="bottom"
-                                        data-tooltip="Delete activity"
+                                        className="transparent no-open"
                                         onClick={() =>
                                           removeProjectActivity(
                                             project.id,
@@ -273,7 +272,7 @@ const ProjectSettings = ({
                                         }
                                       >
                                         <i
-                                          className="material-icons delete small"
+                                          className="material-icons delete small no-open"
                                           title="Delete"
                                         ></i>
                                       </a>
